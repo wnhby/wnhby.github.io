@@ -1,13 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
   <title>Just another blog</title>
-  
+  <icon>https://www.gravatar.com/avatar/83dad19bf42039d033d062e2d9174776</icon>
   <subtitle>momoda blog</subtitle>
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://wnhby.github.io/"/>
   <updated>2019-01-23T13:22:20.924Z</updated>
   <id>https://wnhby.github.io/</id>
+  
+  <author>
+    <name>momoda</name>
+    <email>momoda</email>
+  </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
   
