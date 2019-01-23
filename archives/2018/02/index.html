@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="utf-8">
+  
+  
+  <meta name="description" content="There is no accident. You must believe.">
+  
+
+  
+  <meta name="keywords" content="momoda">
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  <title>Archives: 2018/2 | Just another blog</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="There is no accident. You must believe.">
+<meta name="keywords" content="momoda">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Just another blog">
+<meta property="og:url" content="https://wnhby.github.io/archives/2018/02/index.html">
+<meta property="og:site_name" content="Just another blog">
+<meta property="og:description" content="There is no accident. You must believe.">
+<meta property="og:locale" content="zh-CN">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Just another blog">
+<meta name="twitter:description" content="There is no accident. You must believe.">
+  
+    <link rel="alternative" href="/atom.xml" title="Just another blog" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/css/images/favicon.ico">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  
+
+  
+  <!-- baidu webmaster push -->
+  <script src="//push.zhanzhang.baidu.com/push.js"></script>
+</head></html>
+<body class="home blog custom-background custom-font-enabled single-author">
+  <div id="page" class="hfeed site">
+      <header id="masthead" class="site-header" role="banner">
+    <hgroup>
+      <h1 class="site-title">
+        <a href="/" title="Just another blog" rel="home">Just another blog</a>
+      </h1>
+      
+        <h2 class="site-description">
+          <a href="/" id="subtitle">momoda blog</a>
+        </h2>
+      
+    </hgroup>
+
+    <nav id="site-navigation" class="main-navigation" role="navigation">
+            <button class="menu-toggle">菜单</button>
+            <a class="assistive-text" href="/#content" title="跳至内容">跳至内容</a><!--TODO-->
+            <div class="menu-main-container">
+                <ul id="menu-main" class="nav-menu">
+                
+                    <li class="menu-item menu-item-type-post_type menu-item-object-page"><a href="/">Home</a></li>
+                
+                    <li class="menu-item menu-item-type-post_type menu-item-object-page"><a href="/atom.xml">RSS</a></li>
+                
+                    <li class="menu-item menu-item-type-post_type menu-item-object-page"><a href="/sitemap.xml">Site map</a></li>
+                
+                    <li class="menu-item menu-item-type-post_type menu-item-object-page"><a href="/more/share.html">Share</a></li>
+                
+                </ul>
+            </div>
+    </nav>
+</header>
+      <div id="main" class="wrapper">
+        <div id="primary" class="site-content"><div id="content" role="main">
+  
+    <article id="post-将PEM证书转换为PFX,P12格式" class="post-将PEM证书转换为PFX,P12格式 post type-post status-publish format-standard hentry">
+    <!---->
+
+      <header class="entry-header">
+        
+        
+  
+    <h1 class="entry-title">
+      <a class="article-title" href="/将PEM证书转换为PFX,P12格式/">将PEM证书转换为PFX,P12格式</a>
+    </h1>
+  
+
+        
+        <div class="comments-link">
+            
+            <a href="javascript:void(0);" data-url="https://wnhby.github.io/将PEM证书转换为PFX,P12格式/" data-id="cjr9aqmve000a7fs67ng0g85s" class="leave-reply bdsharebuttonbox" data-cmd="more">分享</a>
+        </div><!-- .comments-link -->
+      </header><!-- .entry-header -->
+
+    <div class="entry-content">
+      
+        <h2 id="场景"><a href="#场景" class="headerlink" title="场景"></a>场景</h2><p>PEM 证书不受支持，它们必须转换为 PKCS#12 (PFX/P12) 格式。</p>
+<h2 id="证书转换"><a href="#证书转换" class="headerlink" title="证书转换"></a>证书转换</h2><blockquote>
+<ul>
+<li>转至 <a href="https://www.openssl.org/community/binaries.html" target="_blank" rel="noopener">https://www.openssl.org/community/binaries.html</a></li>
+<li>下载并安装openssl, 已经安装的则可直接使用openssl.</li>
+<li>从 OpenSSL 安装 bin 文件夹运行以下命令格式。<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"># openssl pkcs12 -export -out Cert.p12 -in cert.pem -inkey key.pem -passin pass:root -passout pass:root</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</blockquote>
+<p><strong>[Reference]</strong><br>将 PEM 证书转换为 PFX/P12 格式<br><a href="https://www.ibm.com/support/knowledgecenter/zh/SSPH29_9.0.3/com.ibm.help.common.infocenter.aps/t_ConvertthepfxCertificatetopemFormat068.html" target="_blank" rel="noopener">https://www.ibm.com/support/knowledgecenter/zh/SSPH29_9.0.3/com.ibm.help.common.infocenter.aps/t_ConvertthepfxCertificatetopemFormat068.html</a></p>
+<hr>
+<ul>
+<li><p><a href="/more/donate/index.html"><strong><em><font color="red">我觉得帮助到我了, 支持你一下.</font></em></strong></a><br>   </p>
+</li>
+<li><p><a href="https://www.paypal.me/momodainfo" target="_blank" rel="noopener"><strong><em><font color="red">If you think the article is helpful to you, you can reward me through paypal.</font></em></strong></a></p>
+</li>
+</ul>
+<h3 id="Ads"><a href="#Ads" class="headerlink" title="Ads"></a>Ads</h3><p><em>这是小广告! 如果有需要, 不妨支持一下吧~</em></p>
+<blockquote>
+<p> <a target="_blank" href="https://amazon.cn/gp/search?ie=UTF8&tag=momoda-23&linkCode=ur2&linkId=4a0e4fbec0cfa8dfe540ca999d0bf999&camp=536&creative=3200&index=books&keywords=编程">这些好书您看了吗?</a><img src="//ir-cn.amazon-adsystem.com/e/ir?t=momoda-23&l=ur2&o=28" width="1" height="1" border="0" alt="" style="border:none !important; margin:0px !important;"></p>
+</blockquote>
+<blockquote>
+<p>体育&amp;户外用品推荐</p>
+</blockquote>
+<div align="center"> <a href="https://www.amazon.cn/B07HWB88Z5/dp/B07HWB88Z5/ref=as_sl_pc_tf_til?tag=momoda-23&linkCode=w00&linkId=14df5124f2165d9eb3d65252e60ed2cf&creativeASIN=B07HWB88Z5" target="_blank" rel="noopener"><img src="/将PEM证书转换为PFX,P12格式/../more/ads/amazon.gif" width="100%"></a> </div>
+
+      
+    </div><!-- .entry-content -->
+
+    <footer class="entry-meta">
+    <a href="/将PEM证书转换为PFX,P12格式/">
+    <time datetime="2018-02-16T14:37:15.000Z" class="entry-date">
+        2月 16 2018
+    </time>
+</a>
+    
+  <span class="article-delim">&#8226;</span>
+  <div class="article-category">
+  <a class="article-category-link" href="/categories/协议证书/">协议证书</a>, <a class="article-category-link" href="/categories/协议证书/openssl/">openssl</a>
+  </div>
+
+    
+  <span class="article-delim">&#8226;</span>
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/PEM证书/">PEM证书</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/openssl/">openssl</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/p12/">p12</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/pfx/">pfx</a></li></ul>
+
+    </footer>
+</article>
+
+
+
+
+
+
+  
+  
+
+</div></div>
+        <div id="secondary" class="widget-area" role="complementary">
+  
+    <aside id="search" class="widget widget_search"><form role="search" method="get" accept-charset="utf-8" id="searchform" class="searchform" action="//google.com/search">
+    <div>
+        <input type="text" value="" name="q">
+        <input type="submit" id="searchsubmit" value="google搜索">
+    </div>
+</form></aside>
+
+  
+    
+  <aside class="widget">
+    <h3 class="widget-title">Recents</h3>
+    <div class="widget-content">
+      <ul>
+        
+          <li>
+            <a href="/系统剩余空间查看/">系统剩余空间查看</a>
+          </li>
+        
+          <li>
+            <a href="/数据库分类/">数据库分类</a>
+          </li>
+        
+          <li>
+            <a href="/Docker-Notes-by-CS-Notes/">Docker-Notesby-CS-Notes.md</a>
+          </li>
+        
+          <li>
+            <a href="/informationisbeautiful/">informationisbeautiful</a>
+          </li>
+        
+          <li>
+            <a href="/docker-qq/">docker-qq</a>
+          </li>
+        
+      </ul>
+    </div>
+  </aside>
+
+  
+    
+  <aside class="widget">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget-content">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/">一月 2019</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">十一月 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">二月 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/09/">九月 2017</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/01/">一月 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/11/">十一月 2015</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/01/">一月 2014</a><span class="archive-list-count">1</span></li></ul>
+    </div>
+  </aside>
+
+  
+    
+  <aside class="widget">
+    <h3 class="widget-title">Categories</h3>
+    <div class="widget-content">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Graphics/">Graphics</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Linux/">Linux</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Linux/Shell/">Shell</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/协议证书/">协议证书</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/协议证书/openssl/">openssl</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/数据库/">数据库</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/版本控制/">版本控制</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/版本控制/Git/">Git</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/网络通讯/">网络通讯</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/网络通讯/大小端/">大小端</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/路由器/">路由器</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/路由器/openwrt/">openwrt</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/通用技术/">通用技术</a><span class="category-list-count">2</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/通用技术/Docker/">Docker</a><span class="category-list-count">2</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/默认/">默认</a><span class="category-list-count">1</span></li></ul>
+    </div>
+  </aside>
+
+  
+    
+  <aside class="widget">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget-content">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/CS-Notes/">CS-Notes</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/PEM证书/">PEM证书</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Shell/">Shell</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/cron/">cron</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/database/">database</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/diagrams/">diagrams</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/docker/">docker</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/docker-qq/">docker-qq</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/git/">git</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/graphics/">graphics</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/informationisbeautiful/">informationisbeautiful</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/openssl/">openssl</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/openwrt/">openwrt</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/p12/">p12</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/pfx/">pfx</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/大小端/">大小端</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/数据库/">数据库</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/默认/">默认</a><span class="tag-list-count">1</span></li></ul>
+    </div>
+  </aside>
+
+  
+    
+  <aside class="widget">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget-content tagcloud">
+      <a href="/tags/CS-Notes/" style="font-size: 10px;">CS-Notes</a> <a href="/tags/PEM证书/" style="font-size: 10px;">PEM证书</a> <a href="/tags/Shell/" style="font-size: 10px;">Shell</a> <a href="/tags/cron/" style="font-size: 10px;">cron</a> <a href="/tags/database/" style="font-size: 10px;">database</a> <a href="/tags/diagrams/" style="font-size: 10px;">diagrams</a> <a href="/tags/docker/" style="font-size: 10px;">docker</a> <a href="/tags/docker-qq/" style="font-size: 10px;">docker-qq</a> <a href="/tags/git/" style="font-size: 10px;">git</a> <a href="/tags/graphics/" style="font-size: 10px;">graphics</a> <a href="/tags/informationisbeautiful/" style="font-size: 10px;">informationisbeautiful</a> <a href="/tags/openssl/" style="font-size: 10px;">openssl</a> <a href="/tags/openwrt/" style="font-size: 10px;">openwrt</a> <a href="/tags/p12/" style="font-size: 10px;">p12</a> <a href="/tags/pfx/" style="font-size: 10px;">pfx</a> <a href="/tags/大小端/" style="font-size: 10px;">大小端</a> <a href="/tags/数据库/" style="font-size: 10px;">数据库</a> <a href="/tags/默认/" style="font-size: 10px;">默认</a>
+    </div>
+  </aside>
+
+  
+    <aside class="widget">
+    <h3 class="widget-title">Links</h3>
+    <div class="widget-content">
+		<ul id="link-list">
+		<!-- link begin -->
+
+		<li><a href="https://www.jiumodiary.com/">jiumodiary</a></li>
+		<li><a href="http://www.led-card-china.com/">LED Card & LED Display Parts Online Store</a></li>
+		
+		<!-- link end -->
+		</ul>
+    </div>
+</aside>
+
+  
+    <aside class="widget">
+    <h3 class="widget-title">Ads</h3>
+    <div class="widget-content">
+	 
+			* <a target="_blank" href="https://amazon.cn/gp/search?ie=UTF8&tag=momoda-23&linkCode=ur2&linkId=4a0e4fbec0cfa8dfe540ca999d0bf999&camp=536&creative=3200&index=books&keywords=编程">这些好书您看了吗?</a><img src="//ir-cn.amazon-adsystem.com/e/ir?t=momoda-23&l=ur2&o=28" width="1" height="1" border="0" alt="" style="border:none !important; margin:0px !important;">
+			<br><br>
+			* 体育&户外用品推荐>
+			<div align="center"> <a href="https://www.amazon.cn/B07HWB88Z5/dp/B07HWB88Z5/ref=as_sl_pc_tf_til?tag=momoda-23&linkCode=w00&linkId=14df5124f2165d9eb3d65252e60ed2cf&creativeASIN=B07HWB88Z5"><img src="/more/ads/amazon.gif" width="100%"></a> </div>
+
+			<!-- <div style="clear:both;float:none;text-align:center;margin:2em auto;display: inline-block ! important;width: 100%;max-width: 100%;">
+			 	
+				<a href="http://www.aiqianduan.com/?ryf" title="爱前端" target="_blank" style="border:none;"><img alt="爱前端" src="https://www.wangbase.com/blogimg/asset/201811/bg2018110701.jpg" style="border:none;display: block ! important;max-width: 100%;width: 100%;max-width: 100%;"></a>
+				
+			</div>	 -->
+ 
+    </div>
+</aside>
+
+  
+</div>
+      </div>
+      <footer id="colophon" role="contentinfo">
+    <p>&copy; 2019 Just another blog
+    All rights reserved.</p>
+    <p>Powered by <a href="https://hexo.io/" target="_blank">Hexo</a></p>
+</footer>
+
+    <script>window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"1","bdMiniList":false,"bdPic":"","bdStyle":"2","bdSize":"16"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];</script>
+
+<script src="/js/jquery-2.0.3.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+<script src="/js/navigation.js"></script>
+
+
+
+<div id="bg"></div>
+
+  </div>
+</body>
+</html>

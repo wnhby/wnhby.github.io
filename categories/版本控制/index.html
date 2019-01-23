@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="utf-8">
+  
+  
+  <meta name="description" content="There is no accident. You must believe.">
+  
+
+  
+  <meta name="keywords" content="momoda">
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  <title>Category: 版本控制 | Just another blog</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="There is no accident. You must believe.">
+<meta name="keywords" content="momoda">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Just another blog">
+<meta property="og:url" content="https://wnhby.github.io/categories/版本控制/index.html">
+<meta property="og:site_name" content="Just another blog">
+<meta property="og:description" content="There is no accident. You must believe.">
+<meta property="og:locale" content="zh-CN">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Just another blog">
+<meta name="twitter:description" content="There is no accident. You must believe.">
+  
+    <link rel="alternative" href="/atom.xml" title="Just another blog" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/css/images/favicon.ico">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  
+
+  
+  <!-- baidu webmaster push -->
+  <script src="//push.zhanzhang.baidu.com/push.js"></script>
+</head></html>
+<body class="home blog custom-background custom-font-enabled single-author">
+  <div id="page" class="hfeed site">
+      <header id="masthead" class="site-header" role="banner">
+    <hgroup>
+      <h1 class="site-title">
+        <a href="/" title="Just another blog" rel="home">Just another blog</a>
+      </h1>
+      
+        <h2 class="site-description">
+          <a href="/" id="subtitle">momoda blog</a>
+        </h2>
+      
+    </hgroup>
+
+    <nav id="site-navigation" class="main-navigation" role="navigation">
+            <button class="menu-toggle">菜单</button>
+            <a class="assistive-text" href="/#content" title="跳至内容">跳至内容</a><!--TODO-->
+            <div class="menu-main-container">
+                <ul id="menu-main" class="nav-menu">
+                
+                    <li class="menu-item menu-item-type-post_type menu-item-object-page"><a href="/">Home</a></li>
+                
+                    <li class="menu-item menu-item-type-post_type menu-item-object-page"><a href="/atom.xml">RSS</a></li>
+                
+                    <li class="menu-item menu-item-type-post_type menu-item-object-page"><a href="/sitemap.xml">Site map</a></li>
+                
+                    <li class="menu-item menu-item-type-post_type menu-item-object-page"><a href="/more/share.html">Share</a></li>
+                
+                </ul>
+            </div>
+    </nav>
+</header>
+      <div id="main" class="wrapper">
+        <div id="primary" class="site-content"><div id="content" role="main">
+  
+    <article id="post-git-rebase" class="post-git-rebase post type-post status-publish format-standard hentry">
+    <!---->
+
+      <header class="entry-header">
+        
+        
+  
+    <h1 class="entry-title">
+      <a class="article-title" href="/git-rebase/">git-rebase</a>
+    </h1>
+  
+
+        
+        <div class="comments-link">
+            
+            <a href="javascript:void(0);" data-url="https://wnhby.github.io/git-rebase/" data-id="cjr9aqmv300057fs643xg72ah" class="leave-reply bdsharebuttonbox" data-cmd="more">分享</a>
+        </div><!-- .comments-link -->
+      </header><!-- .entry-header -->
+
+    <div class="entry-content">
+      
+        <h2 id="简要介绍"><a href="#简要介绍" class="headerlink" title="简要介绍"></a>简要介绍</h2><p><strong>字面意思</strong>  </p>
+<p>re base, 变基.将所有要合并进来的commit在新的基础上重新提交一次.<br>我们知道,还有个熟悉的命令: git merge, 每个commit都可以看到.<br>git rebase相比git merge更”清爽”.</p>
+<p><strong>git分支合并方法</strong>  </p>
+<ul>
+<li>git merge</li>
+<li>git rebase</li>
+<li>git cherry-pick</li>
+</ul>
+<h2 id="git-cherry-pick"><a href="#git-cherry-pick" class="headerlink" title="git cherry-pick"></a>git cherry-pick</h2><p>堪称”神器”,原因是灵活.想要合并某个commit, 直接cherry-pick过来即可.     </p>
+<p>需要注意, cherry-pick合入的不是分支,而是提交节点.   </p>
+<h2 id="git-rebase"><a href="#git-rebase" class="headerlink" title="git rebase"></a>git rebase</h2><p>rebase会将合入分支上超前的节点在待合入分支上重新提交一遍,换言之,git rebase <branch>会计算当前分支和目标分支的最近共同祖先，然后将最近共同祖先与当前分支之间的所有commit都变基到目标分支上，使得提交历史变成一条直线。</branch></p>
+<div align="center"> <img src="/git-rebase/1.png" width="100%"></div><br><br><br>merge与rebase后跟的分支名是不一样的。合并是合并进来，变基是变基过去.<br><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">C0 -- C1 -- C2 -- C3(master)</span><br><span class="line">       \</span><br><span class="line">        C4 -- C5 -- C6(HEAD -&gt; dev)</span><br></pre></td></tr></table></figure><br><br>执行git rebase master<br><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">C0 -- C1 -- C2 -- C3(master) -- C4&apos; -- C5&apos; -- C6&apos;(HEAD -&gt; dev)</span><br><span class="line">       \</span><br><span class="line">        C4 -- C5 -- C6</span><br></pre></td></tr></table></figure><br><br>最近共同祖先与当前分支之间的所有commit都被复制到master分支之后，并且将HEAD指针与当前分支指针切换过去。<br><br>原来的commit还在吗？还在，如果你记得它的commit校验和，仍然可以切换过去，git会提示你当前处于detached HEAD状态下。只不过没有任何分支指针指向它们，它们已经被抛弃了，剩余的时光就是等待git垃圾回收命令清理它们。<br><br>git rebase完并没有结束，因为我变基的目标分支是master，而当前分支是dev。我需要切换到master分支上，然后再合并一次。<br><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ git rebase master (当前分支是dev分支)</span><br><span class="line">$ git checkout master</span><br><span class="line">$ git merge dev</span><br></pre></td></tr></table></figure><br><br>注意: 这种合并是fast forward的，并不会生成一个新的合并commit。关于fast forward后面在对git merge进行说明时, 会讲到merge的三种方式.<br><br>如果我要变基的本体分支不是当前分支行不行？也是可以的。在任何一个分支上，将dev分支变基到master分支上，变基完成当前分支会变成dev分支。<br><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ git rebase master dev</span><br></pre></td></tr></table></figure><br><br>## git merge<br><br>### fast-forwar<br><br>如果待合并的分支在当前分支的下游，也就是说没有分叉时，会发生快速合并，从test分支切换到master分支，然后合并test分支<br><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ git checkout master</span><br><span class="line">$ git merge test</span><br></pre></td></tr></table></figure><br><br>这种方法相当于直接把master分支移动到test分支所在的地方，并移动HEAD指针.<br><br><div align="center"> <img src="/git-rebase/2.gif" width="100%"></div><br><br><br>### no-ff<br><br>如果我们不想要快速合并，那么我们可以强制指定为非快速合并，只需加上–no-ff参数<br><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ git checkout master</span><br><span class="line">$ git merge –no-ff test</span><br></pre></td></tr></table></figure><br><br>这种合并方法会在master分支上新建一个提交节点，从而完成合并<br><br><div align="center"> <img src="/git-rebase/3.gif" width="100%"></div><br><br><br><br>### squash<br><br>svn的在合并分支时采用的就是这种方式，squash会在当前分支新建一个提交节点<br><br>squash和no-ff非常类似，区别只有一点<strong>不会保留对合入分支的引用</strong><br><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ git checkout master</span><br><span class="line">$ git merge –squash test</span><br></pre></td></tr></table></figure><br><br><div align="center"> <img src="/git-rebase/4.gif" width="100%"></div><br><br><br>—<br><br><em> <a href="/more/donate/index.html"><strong><em><font color="red">我觉得帮助到我了, 支持你一下.</font></em></strong></a><br>   
+
+</em> <a href="https://www.paypal.me/momodainfo" target="_blank" rel="noopener"><strong><em><font color="red">If you think the article is helpful to you, you can reward me through paypal.</font></em></strong></a><br><br><br>### Ads<br><br><em>这是小广告! 如果有需要, 不妨支持一下吧~</em><br><br>&gt;  <a target="_blank" href="https://amazon.cn/gp/search?ie=UTF8&tag=momoda-23&linkCode=ur2&linkId=4a0e4fbec0cfa8dfe540ca999d0bf999&camp=536&creative=3200&index=books&keywords=编程">这些好书您看了吗?</a><img src="//ir-cn.amazon-adsystem.com/e/ir?t=momoda-23&l=ur2&o=28" width="1" height="1" border="0" alt="" style="border:none !important; margin:0px !important;"><br><br>&gt; 体育&amp;户外用品推荐<br><div align="center"> <a href="https://www.amazon.cn/B07HWB88Z5/dp/B07HWB88Z5/ref=as_sl_pc_tf_til?tag=momoda-23&linkCode=w00&linkId=14df5124f2165d9eb3d65252e60ed2cf&creativeASIN=B07HWB88Z5" target="_blank" rel="noopener"><img src="/git-rebase/../more/ads/amazon.gif" width="100%"></a> </div>
+
+      
+    </div><!-- .entry-content -->
+
+    <footer class="entry-meta">
+    <a href="/git-rebase/">
+    <time datetime="2016-01-15T13:32:21.000Z" class="entry-date">
+        1月 15 2016
+    </time>
+</a>
+    
+  <span class="article-delim">&#8226;</span>
+  <div class="article-category">
+  <a class="article-category-link" href="/categories/版本控制/">版本控制</a>, <a class="article-category-link" href="/categories/版本控制/Git/">Git</a>
+  </div>
+
+    
+  <span class="article-delim">&#8226;</span>
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/git/">git</a></li></ul>
+
+    </footer>
+</article>
+
+
+
+
+
+
+  
+  
+
+</div></div>
+        <div id="secondary" class="widget-area" role="complementary">
+  
+    <aside id="search" class="widget widget_search"><form role="search" method="get" accept-charset="utf-8" id="searchform" class="searchform" action="//google.com/search">
+    <div>
+        <input type="text" value="" name="q">
+        <input type="submit" id="searchsubmit" value="google搜索">
+    </div>
+</form></aside>
+
+  
+    
+  <aside class="widget">
+    <h3 class="widget-title">Recents</h3>
+    <div class="widget-content">
+      <ul>
+        
+          <li>
+            <a href="/系统剩余空间查看/">系统剩余空间查看</a>
+          </li>
+        
+          <li>
+            <a href="/数据库分类/">数据库分类</a>
+          </li>
+        
+          <li>
+            <a href="/Docker-Notes-by-CS-Notes/">Docker-Notesby-CS-Notes.md</a>
+          </li>
+        
+          <li>
+            <a href="/informationisbeautiful/">informationisbeautiful</a>
+          </li>
+        
+          <li>
+            <a href="/docker-qq/">docker-qq</a>
+          </li>
+        
+      </ul>
+    </div>
+  </aside>
+
+  
+    
+  <aside class="widget">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget-content">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/">一月 2019</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">十一月 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">二月 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/09/">九月 2017</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/01/">一月 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/11/">十一月 2015</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/01/">一月 2014</a><span class="archive-list-count">1</span></li></ul>
+    </div>
+  </aside>
+
+  
+    
+  <aside class="widget">
+    <h3 class="widget-title">Categories</h3>
+    <div class="widget-content">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Graphics/">Graphics</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Linux/">Linux</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Linux/Shell/">Shell</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/协议证书/">协议证书</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/协议证书/openssl/">openssl</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/数据库/">数据库</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/版本控制/">版本控制</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/版本控制/Git/">Git</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/网络通讯/">网络通讯</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/网络通讯/大小端/">大小端</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/路由器/">路由器</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/路由器/openwrt/">openwrt</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/通用技术/">通用技术</a><span class="category-list-count">2</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/通用技术/Docker/">Docker</a><span class="category-list-count">2</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/默认/">默认</a><span class="category-list-count">1</span></li></ul>
+    </div>
+  </aside>
+
+  
+    
+  <aside class="widget">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget-content">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/CS-Notes/">CS-Notes</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/PEM证书/">PEM证书</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Shell/">Shell</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/cron/">cron</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/database/">database</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/diagrams/">diagrams</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/docker/">docker</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/docker-qq/">docker-qq</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/git/">git</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/graphics/">graphics</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/informationisbeautiful/">informationisbeautiful</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/openssl/">openssl</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/openwrt/">openwrt</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/p12/">p12</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/pfx/">pfx</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/大小端/">大小端</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/数据库/">数据库</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/默认/">默认</a><span class="tag-list-count">1</span></li></ul>
+    </div>
+  </aside>
+
+  
+    
+  <aside class="widget">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget-content tagcloud">
+      <a href="/tags/CS-Notes/" style="font-size: 10px;">CS-Notes</a> <a href="/tags/PEM证书/" style="font-size: 10px;">PEM证书</a> <a href="/tags/Shell/" style="font-size: 10px;">Shell</a> <a href="/tags/cron/" style="font-size: 10px;">cron</a> <a href="/tags/database/" style="font-size: 10px;">database</a> <a href="/tags/diagrams/" style="font-size: 10px;">diagrams</a> <a href="/tags/docker/" style="font-size: 10px;">docker</a> <a href="/tags/docker-qq/" style="font-size: 10px;">docker-qq</a> <a href="/tags/git/" style="font-size: 10px;">git</a> <a href="/tags/graphics/" style="font-size: 10px;">graphics</a> <a href="/tags/informationisbeautiful/" style="font-size: 10px;">informationisbeautiful</a> <a href="/tags/openssl/" style="font-size: 10px;">openssl</a> <a href="/tags/openwrt/" style="font-size: 10px;">openwrt</a> <a href="/tags/p12/" style="font-size: 10px;">p12</a> <a href="/tags/pfx/" style="font-size: 10px;">pfx</a> <a href="/tags/大小端/" style="font-size: 10px;">大小端</a> <a href="/tags/数据库/" style="font-size: 10px;">数据库</a> <a href="/tags/默认/" style="font-size: 10px;">默认</a>
+    </div>
+  </aside>
+
+  
+    <aside class="widget">
+    <h3 class="widget-title">Links</h3>
+    <div class="widget-content">
+		<ul id="link-list">
+		<!-- link begin -->
+
+		<li><a href="https://www.jiumodiary.com/">jiumodiary</a></li>
+		<li><a href="http://www.led-card-china.com/">LED Card & LED Display Parts Online Store</a></li>
+		
+		<!-- link end -->
+		</ul>
+    </div>
+</aside>
+
+  
+    <aside class="widget">
+    <h3 class="widget-title">Ads</h3>
+    <div class="widget-content">
+	 
+			* <a target="_blank" href="https://amazon.cn/gp/search?ie=UTF8&tag=momoda-23&linkCode=ur2&linkId=4a0e4fbec0cfa8dfe540ca999d0bf999&camp=536&creative=3200&index=books&keywords=编程">这些好书您看了吗?</a><img src="//ir-cn.amazon-adsystem.com/e/ir?t=momoda-23&l=ur2&o=28" width="1" height="1" border="0" alt="" style="border:none !important; margin:0px !important;">
+			<br><br>
+			* 体育&户外用品推荐>
+			<div align="center"> <a href="https://www.amazon.cn/B07HWB88Z5/dp/B07HWB88Z5/ref=as_sl_pc_tf_til?tag=momoda-23&linkCode=w00&linkId=14df5124f2165d9eb3d65252e60ed2cf&creativeASIN=B07HWB88Z5"><img src="/more/ads/amazon.gif" width="100%"></a> </div>
+
+			<!-- <div style="clear:both;float:none;text-align:center;margin:2em auto;display: inline-block ! important;width: 100%;max-width: 100%;">
+			 	
+				<a href="http://www.aiqianduan.com/?ryf" title="爱前端" target="_blank" style="border:none;"><img alt="爱前端" src="https://www.wangbase.com/blogimg/asset/201811/bg2018110701.jpg" style="border:none;display: block ! important;max-width: 100%;width: 100%;max-width: 100%;"></a>
+				
+			</div>	 -->
+ 
+    </div>
+</aside>
+
+  
+</div>
+      </div>
+      <footer id="colophon" role="contentinfo">
+    <p>&copy; 2019 Just another blog
+    All rights reserved.</p>
+    <p>Powered by <a href="https://hexo.io/" target="_blank">Hexo</a></p>
+</footer>
+
+    <script>window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"1","bdMiniList":false,"bdPic":"","bdStyle":"2","bdSize":"16"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];</script>
+
+<script src="/js/jquery-2.0.3.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+<script src="/js/navigation.js"></script>
+
+
+
+<div id="bg"></div>
+
+  </div>
+</body>
+</html>

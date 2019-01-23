@@ -1,0 +1,479 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="utf-8">
+  
+  
+  <meta name="description" content="There is no accident. You must believe.">
+  
+
+  
+  <meta name="keywords" content="momoda">
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  <title>Archives: 2019/1 | Just another blog</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="There is no accident. You must believe.">
+<meta name="keywords" content="momoda">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Just another blog">
+<meta property="og:url" content="https://wnhby.github.io/archives/2019/01/index.html">
+<meta property="og:site_name" content="Just another blog">
+<meta property="og:description" content="There is no accident. You must believe.">
+<meta property="og:locale" content="zh-CN">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Just another blog">
+<meta name="twitter:description" content="There is no accident. You must believe.">
+  
+    <link rel="alternative" href="/atom.xml" title="Just another blog" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/css/images/favicon.ico">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  
+
+  
+  <!-- baidu webmaster push -->
+  <script src="//push.zhanzhang.baidu.com/push.js"></script>
+</head></html>
+<body class="home blog custom-background custom-font-enabled single-author">
+  <div id="page" class="hfeed site">
+      <header id="masthead" class="site-header" role="banner">
+    <hgroup>
+      <h1 class="site-title">
+        <a href="/" title="Just another blog" rel="home">Just another blog</a>
+      </h1>
+      
+        <h2 class="site-description">
+          <a href="/" id="subtitle">momoda blog</a>
+        </h2>
+      
+    </hgroup>
+
+    <nav id="site-navigation" class="main-navigation" role="navigation">
+            <button class="menu-toggle">菜单</button>
+            <a class="assistive-text" href="/#content" title="跳至内容">跳至内容</a><!--TODO-->
+            <div class="menu-main-container">
+                <ul id="menu-main" class="nav-menu">
+                
+                    <li class="menu-item menu-item-type-post_type menu-item-object-page"><a href="/">Home</a></li>
+                
+                    <li class="menu-item menu-item-type-post_type menu-item-object-page"><a href="/atom.xml">RSS</a></li>
+                
+                    <li class="menu-item menu-item-type-post_type menu-item-object-page"><a href="/sitemap.xml">Site map</a></li>
+                
+                    <li class="menu-item menu-item-type-post_type menu-item-object-page"><a href="/more/share.html">Share</a></li>
+                
+                </ul>
+            </div>
+    </nav>
+</header>
+      <div id="main" class="wrapper">
+        <div id="primary" class="site-content"><div id="content" role="main">
+  
+    <article id="post-系统剩余空间查看" class="post-系统剩余空间查看 post type-post status-publish format-standard hentry">
+    <!---->
+
+      <header class="entry-header">
+        
+        
+  
+    <h1 class="entry-title">
+      <a class="article-title" href="/系统剩余空间查看/">系统剩余空间查看</a>
+    </h1>
+  
+
+        
+        <div class="comments-link">
+            
+            <a href="javascript:void(0);" data-url="https://wnhby.github.io/系统剩余空间查看/" data-id="cjr9aqmvr000j7fs6jj6g2zhn" class="leave-reply bdsharebuttonbox" data-cmd="more">分享</a>
+        </div><!-- .comments-link -->
+      </header><!-- .entry-header -->
+
+    <div class="entry-content">
+      
+        <h2 id="code"><a href="#code" class="headerlink" title="code"></a>code</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span>!/bin/bash</span><br><span class="line"><span class="meta">#</span> 系统剩余磁盘空间查看等报告</span><br><span class="line">echo report date = `date`</span><br><span class="line">echo -e "\n"</span><br><span class="line"></span><br><span class="line">echo "MEM INFO:"</span><br><span class="line">echo mem total = `free -g |grep 'Mem' |awk '&#123;print $2&#125;'`G</span><br><span class="line">echo mem used = `free -g |grep 'Mem' |awk '&#123;print $3&#125;'`G</span><br><span class="line">echo -e "\n" </span><br><span class="line"></span><br><span class="line">echo "PROCESS INFO:"</span><br><span class="line">echo process num = `ps -elf |wc -l`</span><br><span class="line">echo zombie process num =`ps -elf |awk '&#123;print $2&#125;'|grep 'Z' |wc -l`</span><br><span class="line">echo -e "\n"</span><br><span class="line"></span><br><span class="line">echo "DISK SPACE INFO:"</span><br><span class="line">echo root_space_total = `df -h |grep '/dev/sda' |awk '&#123;print $2&#125;'`</span><br><span class="line">echo root_space_used = `df -h |grep '/dev/sda' |awk '&#123;print $3&#125;'`</span><br><span class="line">echo root_space_avliable = `df -h |grep '/dev/sda' |awk '&#123;print $4&#125;'`</span><br><span class="line">echo root_space_used_percent =  `df -h |grep '/dev/sda' |awk '&#123;print $5&#125;'`</span><br></pre></td></tr></table></figure>
+<h2 id="result"><a href="#result" class="headerlink" title="result"></a>result</h2><div align="center"> <img src="/系统剩余空间查看/2019-01-10 17-45-58屏幕截图.png" width="400px"><br>图1. 系统剩余空间查看示例</div><br><br><br>—<br><br><em> <a href="/more/donate/index.html"><strong><em><font color="red">我觉得帮助到我了, 支持你一下.</font></em></strong></a><br>   
+
+</em> <a href="https://www.paypal.me/momodainfo" target="_blank" rel="noopener"><strong><em><font color="red">If you think the article is helpful to you, you can reward me through paypal.</font></em></strong></a><br><br><br>### Ads<br><br><em>这是小广告! 如果有需要, 不妨支持一下吧~</em><br><br>&gt;  <a target="_blank" href="https://amazon.cn/gp/search?ie=UTF8&tag=momoda-23&linkCode=ur2&linkId=4a0e4fbec0cfa8dfe540ca999d0bf999&camp=536&creative=3200&index=books&keywords=编程">这些好书您看了吗?</a><img src="//ir-cn.amazon-adsystem.com/e/ir?t=momoda-23&l=ur2&o=28" width="1" height="1" border="0" alt="" style="border:none !important; margin:0px !important;"><br><br>&gt; 体育&amp;户外用品推荐<br><div align="center"> <a href="https://www.amazon.cn/B07HWB88Z5/dp/B07HWB88Z5/ref=as_sl_pc_tf_til?tag=momoda-23&linkCode=w00&linkId=14df5124f2165d9eb3d65252e60ed2cf&creativeASIN=B07HWB88Z5" target="_blank" rel="noopener"><img src="/系统剩余空间查看/../more/ads/amazon.gif" width="100%"></a> </div>
+
+      
+    </div><!-- .entry-content -->
+
+    <footer class="entry-meta">
+    <a href="/系统剩余空间查看/">
+    <time datetime="2019-01-10T08:11:51.000Z" class="entry-date">
+        1月 10 2019
+    </time>
+</a>
+    
+  <span class="article-delim">&#8226;</span>
+  <div class="article-category">
+  <a class="article-category-link" href="/categories/Linux/">Linux</a>, <a class="article-category-link" href="/categories/Linux/Shell/">Shell</a>
+  </div>
+
+    
+  <span class="article-delim">&#8226;</span>
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Shell/">Shell</a></li></ul>
+
+    </footer>
+</article>
+
+
+
+
+
+
+  
+    <article id="post-数据库分类" class="post-数据库分类 post type-post status-publish format-standard hentry">
+    <!---->
+
+      <header class="entry-header">
+        
+        
+  
+    <h1 class="entry-title">
+      <a class="article-title" href="/数据库分类/">数据库分类</a>
+    </h1>
+  
+
+        
+        <div class="comments-link">
+            
+            <a href="javascript:void(0);" data-url="https://wnhby.github.io/数据库分类/" data-id="cjr9aqmvj000d7fs6yiohqw0s" class="leave-reply bdsharebuttonbox" data-cmd="more">分享</a>
+        </div><!-- .comments-link -->
+      </header><!-- .entry-header -->
+
+    <div class="entry-content">
+      
+        <h2 id="数据库分类"><a href="#数据库分类" class="headerlink" title="数据库分类"></a>数据库分类</h2><div align="center"> <img src="/数据库分类/pics/database.png" width="100%"> </div>
+
+<hr>
+<ul>
+<li><p><a href="/more/donate/index.html"><strong><em><font color="red">我觉得帮助到我了, 支持你一下.</font></em></strong></a><br>   </p>
+</li>
+<li><p><a href="https://www.paypal.me/momodainfo" target="_blank" rel="noopener"><strong><em><font color="red">If you think the article is helpful to you, you can reward me through paypal.</font></em></strong></a></p>
+</li>
+</ul>
+<h3 id="Ads"><a href="#Ads" class="headerlink" title="Ads"></a>Ads</h3><p><em>这是小广告! 如果有需要, 不妨支持一下吧~</em></p>
+<blockquote>
+<p> <a target="_blank" href="https://amazon.cn/gp/search?ie=UTF8&tag=momoda-23&linkCode=ur2&linkId=4a0e4fbec0cfa8dfe540ca999d0bf999&camp=536&creative=3200&index=books&keywords=编程">这些好书您看了吗?</a><img src="//ir-cn.amazon-adsystem.com/e/ir?t=momoda-23&l=ur2&o=28" width="1" height="1" border="0" alt="" style="border:none !important; margin:0px !important;"></p>
+</blockquote>
+<blockquote>
+<p>体育&amp;户外用品推荐</p>
+</blockquote>
+<div align="center"> <a href="https://www.amazon.cn/B07HWB88Z5/dp/B07HWB88Z5/ref=as_sl_pc_tf_til?tag=momoda-23&linkCode=w00&linkId=14df5124f2165d9eb3d65252e60ed2cf&creativeASIN=B07HWB88Z5" target="_blank" rel="noopener"><img src="/数据库分类/../more/ads/amazon.gif" width="100%"></a> </div>
+
+      
+    </div><!-- .entry-content -->
+
+    <footer class="entry-meta">
+    <a href="/数据库分类/">
+    <time datetime="2019-01-07T13:46:03.000Z" class="entry-date">
+        1月 7 2019
+    </time>
+</a>
+    
+  <span class="article-delim">&#8226;</span>
+  <div class="article-category">
+  <a class="article-category-link" href="/categories/数据库/">数据库</a>
+  </div>
+
+    
+  <span class="article-delim">&#8226;</span>
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/database/">database</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/数据库/">数据库</a></li></ul>
+
+    </footer>
+</article>
+
+
+
+
+
+
+  
+    <article id="post-Docker-Notes-by-CS-Notes" class="post-Docker-Notes-by-CS-Notes post type-post status-publish format-standard hentry">
+    <!---->
+
+      <header class="entry-header">
+        
+        
+  
+    <h1 class="entry-title">
+      <a class="article-title" href="/Docker-Notes-by-CS-Notes/">Docker-Notesby-CS-Notes.md</a>
+    </h1>
+  
+
+        
+        <div class="comments-link">
+            
+            <a href="javascript:void(0);" data-url="https://wnhby.github.io/Docker-Notes-by-CS-Notes/" data-id="cjr9aqmuk00007fs6b2nur98k" class="leave-reply bdsharebuttonbox" data-cmd="more">分享</a>
+        </div><!-- .comments-link -->
+      </header><!-- .entry-header -->
+
+    <div class="entry-content">
+      
+        <!-- GFM-TOC -->
+<ul>
+<li><a href="#一解决的问题">一、解决的问题</a></li>
+<li><a href="#二与虚拟机的比较">二、与虚拟机的比较</a></li>
+<li><a href="#三优势">三、优势</a></li>
+<li><a href="#四使用场景">四、使用场景</a></li>
+<li><a href="#五镜像与容器">五、镜像与容器</a></li>
+<li><a href="#参考资料">参考资料</a><!-- GFM-TOC -->
+</li>
+</ul>
+<h1 id="一、解决的问题"><a href="#一、解决的问题" class="headerlink" title="一、解决的问题"></a>一、解决的问题</h1><p>由于不同的机器有不同的操作系统，以及不同的库和组件，在将一个应用部署到多台机器上需要进行大量的环境配置操作。</p>
+<p>Docker 主要解决环境配置问题，它是一种虚拟化技术，对进程进行隔离，被隔离的进程独立于宿主操作系统和其它隔离的进程。使用 Docker 可以不修改应用程序代码，不需要开发人员学习特定环境下的技术，就能够将现有的应用程序部署在其他机器中。</p>
+<div align="center"> <img src="/Docker-Notes-by-CS-Notes/pics/011f3ef6-d824-4d43-8b2c-36dab8eaaa72-1.png" width="400px"> </div><br><br><br># 二、与虚拟机的比较<br><br>虚拟机也是一种虚拟化技术，它与 Docker 最大的区别在于它是通过模拟硬件，并在硬件上安装操作系统来实现。<br><br><div align="center"> <img src="/Docker-Notes-by-CS-Notes/pics/71f61bc3-582d-4c27-8bdd-dc7fb135bf8f.png" width="250px"> </div><br><br><br><div align="center"> <img src="/Docker-Notes-by-CS-Notes/pics/7e873b60-44dc-4911-b080-defd5b8f0b49.png" width="250"> </div><br><br><br>## 启动速度<br><br>启动虚拟机需要启动虚拟机的操作系统，再启动应用，这个过程非常慢；<br><br>而启动 Docker 相当于启动宿主操作系统上的一个进程。<br><br>## 占用资源<br><br>虚拟机是一个完整的操作系统，需要占用大量的磁盘、内存和 CPU，一台机器只能开启几十个的虚拟机。<br><br>而 Docker 只是一个进程，只需要将应用以及相关的组件打包，在运行时占用很少的资源，一台机器可以开启成千上万个 Docker。<br><br># 三、优势<br><br>除了启动速度快以及占用资源少之外，Docker 具有以下优势：<br><br>## 更容易迁移<br><br>提供一致性的运行环境，可以在不同的机器上进行迁移，而不用担心环境变化导致无法运行。<br><br>## 更容易维护<br><br>使用分层技术和镜像，使得应用可以更容易复用重复部分。复用程度越高，维护工作也越容易。<br><br>## 更容易扩展<br><br>可以使用基础镜像进一步扩展得到新的镜像，并且官方和开源社区提供了大量的镜像，通过扩展这些镜像可以非常容易得到我们想要的镜像。<br><br># 四、使用场景<br><br>## 持续集成<br><br>持续集成指的是频繁地将代码集成到主干上，这样能够更快地发现错误。<br><br>Docker 具有轻量级以及隔离性的特点，在将代码集成到一个 Docker 中不会对其它 Docker 产生影响。<br><br>## 提供可伸缩的云服务<br><br>根据应用的负载情况，可以很容易地增加或者减少 Docker。<br><br>## 搭建微服务架构<br><br>Docker 轻量级的特点使得它很适合用于部署、维护、组合微服务。<br><br># 五、镜像与容器<br><br>镜像是一种静态的结构，可以看成面向对象里面的类，而容器是镜像的一个实例。<br><br>镜像包含着容器运行时所需要的代码以及其它组件，它是一种分层结构，每一层都是只读的（read-only layers）。构建镜像时，会一层一层构建，前一层是后一层的基础。镜像的这种分层存储结构很适合镜像的复用以及定制。<br><br>构建容器时，通过在镜像的基础上添加一个可写层（writable layer），用来保存着容器运行过程中的修改。<br><br><div align="center"> <img src="/Docker-Notes-by-CS-Notes/pics/docker-filesystems-busyboxrw.png"> </div><br><br><br># 参考资料<br><br>- <a href="https://blog.docker.com/2017/08/docker-101-introduction-docker-webinar-recap/" target="_blank" rel="noopener">DOCKER 101: INTRODUCTION TO DOCKER WEBINAR RECAP</a><br>- <a href="http://www.ruanyifeng.com/blog/2018/02/docker-tutorial.html" target="_blank" rel="noopener">Docker 入门教程</a><br>- <a href="http://www.bogotobogo.com/DevOps/Docker/Docker_Container_vs_Virtual_Machine.php" target="_blank" rel="noopener">Docker container vs Virtual machine</a><br>- <a href="https://linoxide.com/linux-how-to/dockerfile-create-docker-container/" target="_blank" rel="noopener">How to Create Docker Container using Dockerfile</a><br>- <a href="http://www.cnblogs.com/sammyliu/p/5877964.html" target="_blank" rel="noopener">理解 Docker（2）：Docker 镜像</a><br>- <a href="https://yeasy.gitbooks.io/docker_practice/introduction/why.html" target="_blank" rel="noopener">为什么要使用 Docker？</a><br>- <a href="https://www.docker.com/what-docker" target="_blank" rel="noopener">What is Docker</a><br>- <a href="http://www.ruanyifeng.com/blog/2015/09/continuous-integration.html" target="_blank" rel="noopener">持续集成是什么？</a><br><br>[转自]: <a href="https://github.com/CyC2018/" target="_blank" rel="noopener">https://github.com/CyC2018/</a><br><br><br>—<br><br><em> <a href="/more/donate/index.html"><strong><em><font color="red">我觉得帮助到我了, 支持你一下.</font></em></strong></a><br>   
+
+</em> <a href="https://www.paypal.me/momodainfo" target="_blank" rel="noopener"><strong><em><font color="red">If you think the article is helpful to you, you can reward me through paypal.</font></em></strong></a><br><br><br>### Ads<br><br><em>这是小广告! 如果有需要, 不妨支持一下吧~</em><br><br>&gt;  <a target="_blank" href="https://amazon.cn/gp/search?ie=UTF8&tag=momoda-23&linkCode=ur2&linkId=4a0e4fbec0cfa8dfe540ca999d0bf999&camp=536&creative=3200&index=books&keywords=编程">这些好书您看了吗?</a><img src="//ir-cn.amazon-adsystem.com/e/ir?t=momoda-23&l=ur2&o=28" width="1" height="1" border="0" alt="" style="border:none !important; margin:0px !important;"><br><br>&gt; 体育&amp;户外用品推荐<br><div align="center"> <a href="https://www.amazon.cn/B07HWB88Z5/dp/B07HWB88Z5/ref=as_sl_pc_tf_til?tag=momoda-23&linkCode=w00&linkId=14df5124f2165d9eb3d65252e60ed2cf&creativeASIN=B07HWB88Z5" target="_blank" rel="noopener"><img src="/Docker-Notes-by-CS-Notes/../more/ads/amazon.gif" width="100%"></a> </div>
+
+      
+    </div><!-- .entry-content -->
+
+    <footer class="entry-meta">
+    <a href="/Docker-Notes-by-CS-Notes/">
+    <time datetime="2019-01-03T13:49:30.000Z" class="entry-date">
+        1月 3 2019
+    </time>
+</a>
+    
+  <span class="article-delim">&#8226;</span>
+  <div class="article-category">
+  <a class="article-category-link" href="/categories/通用技术/">通用技术</a>, <a class="article-category-link" href="/categories/通用技术/Docker/">Docker</a>
+  </div>
+
+    
+  <span class="article-delim">&#8226;</span>
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/CS-Notes/">CS-Notes</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/docker/">docker</a></li></ul>
+
+    </footer>
+</article>
+
+
+
+
+
+
+  
+    <article id="post-informationisbeautiful" class="post-informationisbeautiful post type-post status-publish format-standard hentry">
+    <!---->
+
+      <header class="entry-header">
+        
+        
+  
+    <h1 class="entry-title">
+      <a class="article-title" href="/informationisbeautiful/">informationisbeautiful</a>
+    </h1>
+  
+
+        
+        <div class="comments-link">
+            
+            <a href="javascript:void(0);" data-url="https://wnhby.github.io/informationisbeautiful/" data-id="cjr9aqmv600067fs6ezhwm0wc" class="leave-reply bdsharebuttonbox" data-cmd="more">分享</a>
+        </div><!-- .comments-link -->
+      </header><!-- .entry-header -->
+
+    <div class="entry-content">
+      
+        <!-- TOC -->
+<ul>
+<li><a href="#informationisbeautiful">informationisbeautiful</a><ul>
+<li><a href="#about">About</a></li>
+<li><a href="#home">Home</a></li>
+<li><a href="#graffitidoodle">graffiti/doodle</a><ul>
+<li><a href="#ads">Ads</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<!-- /TOC -->
+<h1 id="informationisbeautiful"><a href="#informationisbeautiful" class="headerlink" title="informationisbeautiful"></a>informationisbeautiful</h1><h2 id="About"><a href="#About" class="headerlink" title="About"></a>About</h2><p>Data, information, knowledge: we distil it into beautiful, useful graphics &amp; diagrams.</p>
+<p>Founded by <a href="http://www.davidmccandless.com/" target="_blank" rel="noopener">David McCandless</a>, author of two bestselling <a href="https://informationisbeautiful.net/books" target="_blank" rel="noopener">infographics books</a>, Information is Beautiful is dedicated to helping you make clearer, more informed decisions about the world. All our visualizations are based on <a href="http://informationisbeautiful.net/data" target="_blank" rel="noopener">facts &amp; data</a>: constantly updated, revised &amp; revisioned.</p>
+<h2 id="Home"><a href="#Home" class="headerlink" title="Home"></a>Home</h2><p><a href="https://informationisbeautiful.net/" target="_blank" rel="noopener">https://informationisbeautiful.net/</a></p>
+<h2 id="graffiti-doodle"><a href="#graffiti-doodle" class="headerlink" title="graffiti/doodle"></a>graffiti/doodle</h2><p><img src="/informationisbeautiful/pics/iib-cover-main.jpg" alt="informationisbeautiful"></p>
+<div align="center"> <img src="/informationisbeautiful/pics/iib-cover-main.jpg" width="400px"><br>informationisbeautiful</div><br><br><br><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">printf</span>(<span class="string">"informationisbeautiful!"</span>);</span><br></pre></td></tr></table></figure><br><br><code>informationisbeautiful</code><br><br><em> informationisbeautiful<br><br>1. informationisbeautiful<br>1. informationisbeautiful<br>1. informationisbeautiful<br><br>- [ ] informationisbeautiful<br><br>&gt; informationisbeautiful<br><br>informationisbeautiful<br>———————-<br>Name | Adress<br>——- | ——-<br>informationisbeautiful | <a href="https://informationisbeautiful.net/" target="_blank" rel="noopener">https://informationisbeautiful.net/</a><br><br><br>—
+
+</em> <a href="/more/donate/index.html"><strong><em><font color="red">我觉得帮助到我了, 支持你一下.</font></em></strong></a><br><br><br>* <a href="https://www.paypal.me/momodainfo" target="_blank" rel="noopener"><strong><em><font color="red">If you think the article is helpful to you, you can reward me through paypal.</font></em></strong></a><br><br><br>### Ads<br><br><em>这是小广告! 如果有需要, 不妨支持一下吧~</em><br><br>&gt;  <a target="_blank" href="https://amazon.cn/gp/search?ie=UTF8&tag=momoda-23&linkCode=ur2&linkId=4a0e4fbec0cfa8dfe540ca999d0bf999&camp=536&creative=3200&index=books&keywords=编程">这些好书您看了吗?</a><img src="//ir-cn.amazon-adsystem.com/e/ir?t=momoda-23&l=ur2&o=28" width="1" height="1" border="0" alt="" style="border:none !important; margin:0px !important;"><br><br>&gt; 体育&amp;户外用品推荐<br><div align="center"> <a href="https://www.amazon.cn/B07HWB88Z5/dp/B07HWB88Z5/ref=as_sl_pc_tf_til?tag=momoda-23&linkCode=w00&linkId=14df5124f2165d9eb3d65252e60ed2cf&creativeASIN=B07HWB88Z5" target="_blank" rel="noopener"><img src="/informationisbeautiful/../more/ads/amazon.gif" width="100%"></a> </div>
+
+      
+    </div><!-- .entry-content -->
+
+    <footer class="entry-meta">
+    <a href="/informationisbeautiful/">
+    <time datetime="2019-01-01T13:15:22.000Z" class="entry-date">
+        1月 1 2019
+    </time>
+</a>
+    
+  <span class="article-delim">&#8226;</span>
+  <div class="article-category">
+  <a class="article-category-link" href="/categories/Graphics/">Graphics</a>
+  </div>
+
+    
+  <span class="article-delim">&#8226;</span>
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/diagrams/">diagrams</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/graphics/">graphics</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/informationisbeautiful/">informationisbeautiful</a></li></ul>
+
+    </footer>
+</article>
+
+
+
+
+
+
+  
+  
+
+</div></div>
+        <div id="secondary" class="widget-area" role="complementary">
+  
+    <aside id="search" class="widget widget_search"><form role="search" method="get" accept-charset="utf-8" id="searchform" class="searchform" action="//google.com/search">
+    <div>
+        <input type="text" value="" name="q">
+        <input type="submit" id="searchsubmit" value="google搜索">
+    </div>
+</form></aside>
+
+  
+    
+  <aside class="widget">
+    <h3 class="widget-title">Recents</h3>
+    <div class="widget-content">
+      <ul>
+        
+          <li>
+            <a href="/系统剩余空间查看/">系统剩余空间查看</a>
+          </li>
+        
+          <li>
+            <a href="/数据库分类/">数据库分类</a>
+          </li>
+        
+          <li>
+            <a href="/Docker-Notes-by-CS-Notes/">Docker-Notesby-CS-Notes.md</a>
+          </li>
+        
+          <li>
+            <a href="/informationisbeautiful/">informationisbeautiful</a>
+          </li>
+        
+          <li>
+            <a href="/docker-qq/">docker-qq</a>
+          </li>
+        
+      </ul>
+    </div>
+  </aside>
+
+  
+    
+  <aside class="widget">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget-content">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/">一月 2019</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">十一月 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">二月 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/09/">九月 2017</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/01/">一月 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/11/">十一月 2015</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/01/">一月 2014</a><span class="archive-list-count">1</span></li></ul>
+    </div>
+  </aside>
+
+  
+    
+  <aside class="widget">
+    <h3 class="widget-title">Categories</h3>
+    <div class="widget-content">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Graphics/">Graphics</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Linux/">Linux</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Linux/Shell/">Shell</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/协议证书/">协议证书</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/协议证书/openssl/">openssl</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/数据库/">数据库</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/版本控制/">版本控制</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/版本控制/Git/">Git</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/网络通讯/">网络通讯</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/网络通讯/大小端/">大小端</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/路由器/">路由器</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/路由器/openwrt/">openwrt</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/通用技术/">通用技术</a><span class="category-list-count">2</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/通用技术/Docker/">Docker</a><span class="category-list-count">2</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/默认/">默认</a><span class="category-list-count">1</span></li></ul>
+    </div>
+  </aside>
+
+  
+    
+  <aside class="widget">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget-content">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/CS-Notes/">CS-Notes</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/PEM证书/">PEM证书</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Shell/">Shell</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/cron/">cron</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/database/">database</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/diagrams/">diagrams</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/docker/">docker</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/docker-qq/">docker-qq</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/git/">git</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/graphics/">graphics</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/informationisbeautiful/">informationisbeautiful</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/openssl/">openssl</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/openwrt/">openwrt</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/p12/">p12</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/pfx/">pfx</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/大小端/">大小端</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/数据库/">数据库</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/默认/">默认</a><span class="tag-list-count">1</span></li></ul>
+    </div>
+  </aside>
+
+  
+    
+  <aside class="widget">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget-content tagcloud">
+      <a href="/tags/CS-Notes/" style="font-size: 10px;">CS-Notes</a> <a href="/tags/PEM证书/" style="font-size: 10px;">PEM证书</a> <a href="/tags/Shell/" style="font-size: 10px;">Shell</a> <a href="/tags/cron/" style="font-size: 10px;">cron</a> <a href="/tags/database/" style="font-size: 10px;">database</a> <a href="/tags/diagrams/" style="font-size: 10px;">diagrams</a> <a href="/tags/docker/" style="font-size: 10px;">docker</a> <a href="/tags/docker-qq/" style="font-size: 10px;">docker-qq</a> <a href="/tags/git/" style="font-size: 10px;">git</a> <a href="/tags/graphics/" style="font-size: 10px;">graphics</a> <a href="/tags/informationisbeautiful/" style="font-size: 10px;">informationisbeautiful</a> <a href="/tags/openssl/" style="font-size: 10px;">openssl</a> <a href="/tags/openwrt/" style="font-size: 10px;">openwrt</a> <a href="/tags/p12/" style="font-size: 10px;">p12</a> <a href="/tags/pfx/" style="font-size: 10px;">pfx</a> <a href="/tags/大小端/" style="font-size: 10px;">大小端</a> <a href="/tags/数据库/" style="font-size: 10px;">数据库</a> <a href="/tags/默认/" style="font-size: 10px;">默认</a>
+    </div>
+  </aside>
+
+  
+    <aside class="widget">
+    <h3 class="widget-title">Links</h3>
+    <div class="widget-content">
+		<ul id="link-list">
+		<!-- link begin -->
+
+		<li><a href="https://www.jiumodiary.com/">jiumodiary</a></li>
+		<li><a href="http://www.led-card-china.com/">LED Card & LED Display Parts Online Store</a></li>
+		
+		<!-- link end -->
+		</ul>
+    </div>
+</aside>
+
+  
+    <aside class="widget">
+    <h3 class="widget-title">Ads</h3>
+    <div class="widget-content">
+	 
+			* <a target="_blank" href="https://amazon.cn/gp/search?ie=UTF8&tag=momoda-23&linkCode=ur2&linkId=4a0e4fbec0cfa8dfe540ca999d0bf999&camp=536&creative=3200&index=books&keywords=编程">这些好书您看了吗?</a><img src="//ir-cn.amazon-adsystem.com/e/ir?t=momoda-23&l=ur2&o=28" width="1" height="1" border="0" alt="" style="border:none !important; margin:0px !important;">
+			<br><br>
+			* 体育&户外用品推荐>
+			<div align="center"> <a href="https://www.amazon.cn/B07HWB88Z5/dp/B07HWB88Z5/ref=as_sl_pc_tf_til?tag=momoda-23&linkCode=w00&linkId=14df5124f2165d9eb3d65252e60ed2cf&creativeASIN=B07HWB88Z5"><img src="/more/ads/amazon.gif" width="100%"></a> </div>
+
+			<!-- <div style="clear:both;float:none;text-align:center;margin:2em auto;display: inline-block ! important;width: 100%;max-width: 100%;">
+			 	
+				<a href="http://www.aiqianduan.com/?ryf" title="爱前端" target="_blank" style="border:none;"><img alt="爱前端" src="https://www.wangbase.com/blogimg/asset/201811/bg2018110701.jpg" style="border:none;display: block ! important;max-width: 100%;width: 100%;max-width: 100%;"></a>
+				
+			</div>	 -->
+ 
+    </div>
+</aside>
+
+  
+</div>
+      </div>
+      <footer id="colophon" role="contentinfo">
+    <p>&copy; 2019 Just another blog
+    All rights reserved.</p>
+    <p>Powered by <a href="https://hexo.io/" target="_blank">Hexo</a></p>
+</footer>
+
+    <script>window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"1","bdMiniList":false,"bdPic":"","bdStyle":"2","bdSize":"16"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];</script>
+
+<script src="/js/jquery-2.0.3.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+<script src="/js/navigation.js"></script>
+
+
+
+<div id="bg"></div>
+
+  </div>
+</body>
+</html>
