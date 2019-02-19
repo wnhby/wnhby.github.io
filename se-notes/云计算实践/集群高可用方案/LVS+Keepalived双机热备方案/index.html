@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="utf-8">
+  
+  
+  <meta name="description" content="momoda">
+  
+
+  
+  <meta name="keywords" content="momoda">
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  <title>LVS+Keepalived双机热备方案 | Just another blog</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="LVS + keepalived 双机高可用部署方案（CentOS） 前期准备 web 节点配置 LVS 节点配置 测试 参考文档 Ads     LVS + keepalived 双机高可用部署方案（CentOS）前期准备准备四台虚机，分别记作 LVS-master、LVS-slave、web-node1、web-node2。前两者作为 LVS 负载均衡调度器，后两者是提供应用服务的 web">
+<meta name="keywords" content="云计算,集群">
+<meta property="og:type" content="article">
+<meta property="og:title" content="LVS+Keepalived双机热备方案">
+<meta property="og:url" content="https://wnhby.github.io/se-notes/云计算实践/集群高可用方案/LVS+Keepalived双机热备方案/index.html">
+<meta property="og:site_name" content="Just another blog">
+<meta property="og:description" content="LVS + keepalived 双机高可用部署方案（CentOS） 前期准备 web 节点配置 LVS 节点配置 测试 参考文档 Ads     LVS + keepalived 双机高可用部署方案（CentOS）前期准备准备四台虚机，分别记作 LVS-master、LVS-slave、web-node1、web-node2。前两者作为 LVS 负载均衡调度器，后两者是提供应用服务的 web">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://ir-cn.amazon-adsystem.com/e/ir?t=momoda-23&l=ur2&o=28">
+<meta property="og:image" content="https://wnhby.github.io/se-notes/云计算实践/集群高可用方案/more/ads/amazon.gif">
+<meta property="og:updated_time" content="2019-02-19T05:21:55.796Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="LVS+Keepalived双机热备方案">
+<meta name="twitter:description" content="LVS + keepalived 双机高可用部署方案（CentOS） 前期准备 web 节点配置 LVS 节点配置 测试 参考文档 Ads     LVS + keepalived 双机高可用部署方案（CentOS）前期准备准备四台虚机，分别记作 LVS-master、LVS-slave、web-node1、web-node2。前两者作为 LVS 负载均衡调度器，后两者是提供应用服务的 web">
+<meta name="twitter:image" content="https://ir-cn.amazon-adsystem.com/e/ir?t=momoda-23&l=ur2&o=28">
+  
+    <link rel="alternative" href="/atom.xml" title="Just another blog" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/css/images/favicon.ico">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  
+
+  
+  <!-- baidu webmaster push -->
+  <script src="//push.zhanzhang.baidu.com/push.js"></script>
+</head></html>
+<body class="home blog custom-background custom-font-enabled single-author">
+  <div id="page" class="hfeed site">
+      <header id="masthead" class="site-header" role="banner">
+    <hgroup>
+      <h1 class="site-title">
+        <a href="/" title="Just another blog" rel="home">Just another blog</a>
+      </h1>
+      
+        <h2 class="site-description">
+          <a href="/" id="subtitle">momoda blog</a>
+        </h2>
+      
+    </hgroup>
+
+    <nav id="site-navigation" class="main-navigation" role="navigation">
+            <button class="menu-toggle">菜单</button>
+            <a class="assistive-text" href="/#content" title="跳至内容">跳至内容</a><!--TODO-->
+            <div class="menu-main-container">
+                <ul id="menu-main" class="nav-menu">
+                
+                    <li class="menu-item menu-item-type-post_type menu-item-object-page"><a href="/">Home</a></li>
+                
+                    <li class="menu-item menu-item-type-post_type menu-item-object-page"><a href="/atom.xml">RSS</a></li>
+                
+                    <li class="menu-item menu-item-type-post_type menu-item-object-page"><a href="/sitemap.xml">Site map</a></li>
+                
+                    <li class="menu-item menu-item-type-post_type menu-item-object-page"><a href="/more/share.html">Share</a></li>
+                
+                </ul>
+            </div>
+    </nav>
+</header>
+
+      <div id="main" class="wrapper">
+        <div id="primary" class="site-content"><div id="content" role="main"><article id="post-se-notes/云计算实践/集群高可用方案/LVS+Keepalived双机热备方案" class="post-se-notes/云计算实践/集群高可用方案/LVS+Keepalived双机热备方案 post type-post status-publish format-standard hentry">
+    <!---->
+
+      <header class="entry-header">
+        
+        
+  
+    <h1 class="entry-title article-title">
+      LVS+Keepalived双机热备方案
+    </h1>
+  
+
+        
+        <div class="comments-link">
+            
+            <a href="javascript:void(0);" data-url="https://wnhby.github.io/se-notes/云计算实践/集群高可用方案/LVS+Keepalived双机热备方案/" data-id="cjsbbbf1y00ase9s690ywus8e" class="leave-reply bdsharebuttonbox" data-cmd="more">分享</a>
+        </div><!-- .comments-link -->
+      </header><!-- .entry-header -->
+
+    <div class="entry-content">
+      
+        <!-- TOC -->
+<ul>
+<li><a href="#lvs--keepalived-%E5%8F%8C%E6%9C%BA%E9%AB%98%E5%8F%AF%E7%94%A8%E9%83%A8%E7%BD%B2%E6%96%B9%E6%A1%88centos">LVS + keepalived 双机高可用部署方案（CentOS）</a><ul>
+<li><a href="#%E5%89%8D%E6%9C%9F%E5%87%86%E5%A4%87">前期准备</a></li>
+<li><a href="#web-%E8%8A%82%E7%82%B9%E9%85%8D%E7%BD%AE">web 节点配置</a></li>
+<li><a href="#lvs-%E8%8A%82%E7%82%B9%E9%85%8D%E7%BD%AE">LVS 节点配置</a></li>
+<li><a href="#%E6%B5%8B%E8%AF%95">测试</a></li>
+<li><a href="#%E5%8F%82%E8%80%83%E6%96%87%E6%A1%A3">参考文档</a></li>
+<li><a href="#ads">Ads</a></li>
+</ul>
+</li>
+</ul>
+<!-- /TOC -->
+<h1 id="LVS-keepalived-双机高可用部署方案（CentOS）"><a href="#LVS-keepalived-双机高可用部署方案（CentOS）" class="headerlink" title="LVS + keepalived 双机高可用部署方案（CentOS）"></a>LVS + keepalived 双机高可用部署方案（CentOS）</h1><h3 id="前期准备"><a href="#前期准备" class="headerlink" title="前期准备"></a>前期准备</h3><p>准备四台虚机，分别记作 LVS-master、LVS-slave、web-node1、web-node2。前两者作为 LVS 负载均衡调度器，后两者是提供应用服务的 web 服务器。</p>
+<p>安装<code>epel-realease</code>源，关闭所有虚机的防火墙与 SELinux，编辑所有节点的<code>/etc/hosts</code>文件设置主机名互相解析。使用<code>yum install ntpdate</code>安装 ntpdate，并通过<code>ntpdate 202.120.2.101</code>命令进行时间同步。</p>
+<blockquote>
+<p>202.120.2.101 是上海交通大学网络中心 NTP 服务器的地址</p>
+</blockquote>
+<h3 id="web-节点配置"><a href="#web-节点配置" class="headerlink" title="web 节点配置"></a>web 节点配置</h3><p>在两台 web 机上开启 httpd 服务，并编辑 Real Server （真实服务器，简称 RS）用于绑定 VIP （虚拟 IP）脚本<code>realserver.sh</code>如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><span class="line">#!/bin/bash  </span><br><span class="line">#   </span><br><span class="line"># Script to start LVS DR real server.   </span><br><span class="line"># description: LVS DR real server   </span><br><span class="line">#   </span><br><span class="line">.  /etc/rc.d/init.d/functions</span><br><span class="line">VIP=192.168.18.200   # 在此处设置VIP  </span><br><span class="line">host=`/bin/hostname`</span><br><span class="line">case &quot;$1&quot; in  </span><br><span class="line">start)   </span><br><span class="line">       # Start LVS-DR real server on this machine.   </span><br><span class="line">        /sbin/ifconfig lo down   </span><br><span class="line">        /sbin/ifconfig lo up   </span><br><span class="line">        echo 1 &gt; /proc/sys/net/ipv4/conf/lo/arp_ignore   </span><br><span class="line">        echo 2 &gt; /proc/sys/net/ipv4/conf/lo/arp_announce   </span><br><span class="line">        echo 1 &gt; /proc/sys/net/ipv4/conf/all/arp_ignore   </span><br><span class="line">        echo 2 &gt; /proc/sys/net/ipv4/conf/all/arp_announce</span><br><span class="line">        /sbin/ifconfig lo:0 $VIP broadcast $VIP netmask 255.255.255.255 up  </span><br><span class="line">        /sbin/route add -host $VIP dev lo:0</span><br><span class="line">;;  </span><br><span class="line">stop)</span><br><span class="line">        # Stop LVS-DR real server loopback device(s).  </span><br><span class="line">        /sbin/ifconfig lo:0 down   </span><br><span class="line">        echo 0 &gt; /proc/sys/net/ipv4/conf/lo/arp_ignore   </span><br><span class="line">        echo 0 &gt; /proc/sys/net/ipv4/conf/lo/arp_announce   </span><br><span class="line">        echo 0 &gt; /proc/sys/net/ipv4/conf/all/arp_ignore   </span><br><span class="line">        echo 0 &gt; /proc/sys/net/ipv4/conf/all/arp_announce</span><br><span class="line">;;  </span><br><span class="line">status)</span><br><span class="line">        # Status of LVS-DR real server.  </span><br><span class="line">        islothere=`/sbin/ifconfig lo:0 | grep $VIP`   </span><br><span class="line">        isrothere=`netstat -rn | grep &quot;lo:0&quot; | grep $VIP`   </span><br><span class="line">        if [ ! &quot;$islothere&quot; -o ! &quot;isrothere&quot; ];then   </span><br><span class="line">            # Either the route or the lo:0 device   </span><br><span class="line">            # not found.   </span><br><span class="line">            echo &quot;LVS-DR real server Stopped.&quot;   </span><br><span class="line">        else   </span><br><span class="line">            echo &quot;LVS-DR real server Running.&quot;   </span><br><span class="line">        fi   </span><br><span class="line">;;   </span><br><span class="line">*)   </span><br><span class="line">            # Invalid entry.   </span><br><span class="line">            echo &quot;$0: Usage: $0 &#123;start|status|stop&#125;&quot;   </span><br><span class="line">            exit 1   </span><br><span class="line">;;   </span><br><span class="line">esac</span><br></pre></td></tr></table></figure>
+<p>使用 <code>chmod +x realserver.sh</code>命令给脚本文件添加执行权限，并通过<code>/.realserver.sh start</code>命令启动该脚本的服务。该服务的作用是使 RS 的网卡与 VIP 进行绑定，从而可允许 RS 处理来自负载调度器转发的请求（DR 模式）。启动该服务后可用<code>ifconfig</code>命令查看是否已绑定 VIP。</p>
+<h3 id="LVS-节点配置"><a href="#LVS-节点配置" class="headerlink" title="LVS 节点配置"></a>LVS 节点配置</h3><p>LVS 节点使用<code>yum install keepalived ipvsadm</code>命令安装 keepalived 服务与 LVS 服务。</p>
+<p>配置文件的路径是<code>/etc/keepalived/keepalived.conf</code>。keepalived 配置文件以 block 形式组织，每个块内容都包含在<code>{}</code>中。keepalived 配置分为三类：</p>
+<ul>
+<li>全局配置：对整个 keepalived 都生效的配置</li>
+<li>VRRPD 配置：核心配置，主要实现高可用功能</li>
+<li>LVS 配置：LVS 相关功能的配置</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br></pre></td><td class="code"><pre><span class="line">######################</span><br><span class="line">#  全局配置（大部分选项为邮件通知服务的参数。可设置为空）</span><br><span class="line">######################</span><br><span class="line">global_defs &#123;                               # global_defs 全局配置标识 </span><br><span class="line">                                            --------------------------------------</span><br><span class="line">   notification_email &#123;                     # notification_email用于设置报警邮件地址</span><br><span class="line">     acassen@firewall.loc                   # 可以设置多个，每行一个</span><br><span class="line">     failover@firewall.loc                  # 设置邮件报警，需开启本机Sendmail 服务</span><br><span class="line">     sysadmin@firewall.loc                  # yum -y install mailx sendmail</span><br><span class="line">   &#125;                                        --------------------------------------</span><br><span class="line">   </span><br><span class="line">   notification_email_from 233@qq.com  # 设置邮件发送地址</span><br><span class="line">   smtp_server 192.168.200.1           # 设置邮件的smtp server地址</span><br><span class="line">   smtp_connect_timeout 30             # 设置连接smtp sever超时时间</span><br><span class="line">   router_id LVS_DEVEL                 # 表示运行keepalived服务器标识</span><br><span class="line">									   # 发邮件时会显示在邮件主题中</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">######################</span><br><span class="line">#  VRRPD配置</span><br><span class="line">######################</span><br><span class="line"></span><br><span class="line">vrrp_instance VI_1 &#123;         # VRRPD 配置标识 VI_1是实例名称</span><br><span class="line"></span><br><span class="line">    state MASTER             # 指定Keepalvied角色。</span><br><span class="line">                             # MASTER表示此主机为主服务器，BACKUP则是表示为备用服务器</span><br><span class="line">    interface eth0           # 指定HA监测网络的接口。检查是否与ifconfig命令查看的网卡名称一致。</span><br><span class="line">    virtual_router_id 51     # 虚拟路由标识，标识为数字，同一个VRRP实例使用唯一的标识</span><br><span class="line">                             # 即可表示在同一个vrrp_instance下 MASTER_ID = BACKUP_ID</span><br><span class="line">    priority 100             # 定义节点优先级，数字越大表示节点的优先级越高</span><br><span class="line">                             # 同一个VRRP_instance下</span><br><span class="line">                             # 必须 MASTE_PRIORITY &gt; BACKUP_PRIORITY </span><br><span class="line">    advert_int 1             # 设定MASTER与BACKUP主机质检同步检查的时间间隔，单位为秒</span><br><span class="line">             </span><br><span class="line">    authentication &#123;         # 设定节点间通信验证类型和密码，验证类型主要有PASS和AH两种</span><br><span class="line">        auth_type PASS       # 同一个vrrp_instance，MASTER验证密码和BACKUP保持一致</span><br><span class="line">        auth_pass 1111</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    virtual_ipaddress &#123;      # 设置虚拟IP地址 (VIP)，也可仅设置一个</span><br><span class="line">        192.168.200.16</span><br><span class="line">        192.168.200.17</span><br><span class="line">        192.168.200.18</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">######################</span><br><span class="line"># LVS配置</span><br><span class="line">######################</span><br><span class="line"></span><br><span class="line">virtual_server 192.168.18.200 80 &#123;    # virtual_server LVS配置标识 </span><br><span class="line">                                      # 格式：virtual_server [VIP] [port]</span><br><span class="line">    delay_loop 6     # 设置健康检查时间间隔，单位为秒   </span><br><span class="line">    lb_algo rr       # 设置负载调度算法，可用的调度算法有：rr、wlc、lc、lblc、sh、dh等</span><br><span class="line">    lb_kind DR       # 设置LVS实现负载均衡的机制，有NAT、TUN和DR三种模式可选                   </span><br><span class="line">    nat_mask 255.255.255.0   # NAT子网掩码</span><br><span class="line">    persistence_timeout 50  # 会话保持时间 </span><br><span class="line">    protocol TCP             # 指定转发协议类型</span><br><span class="line">    </span><br><span class="line">#---------------------------------------------------------------------------------</span><br><span class="line"># persistence_timeout 会话保持时间对动态网页非常有用，为集群系统中的seesion共享提供了一个很好的解决方案</span><br><span class="line"># 用户的请求会一直分发到某个服务节点，直至超过这个会话的保持时间（指最大无响应超时时间）</span><br><span class="line"># =[用户操作动态页面如果在50s没有执行任何操作则被分发到另外的节点]</span><br><span class="line">#---------------------------------------------------------------------------------</span><br><span class="line"></span><br><span class="line">    real_server 192.168.18.201 80 &#123; # 设置real server段开始的标识 [IP为真实IP地址]</span><br><span class="line">        weight 1                    # 用于配置real server节点的权值，数字越大，权值越高</span><br><span class="line">                                    # 设置权值大小可以为不同性能的服务器分配不同的负载</span><br><span class="line">        HTTP_GET &#123;   </span><br><span class="line">            url &#123;   </span><br><span class="line">              path /   </span><br><span class="line">          status_code 200   </span><br><span class="line">            &#125;   </span><br><span class="line">            connect_timeout 2   </span><br><span class="line">            nb_get_retry 3   </span><br><span class="line">            delay_before_retry 1   </span><br><span class="line">        &#125;   </span><br><span class="line">    &#125;   </span><br><span class="line">    real_server 192.168.18.202 80 &#123;   </span><br><span class="line">        weight 1   </span><br><span class="line">        HTTP_GET &#123;   </span><br><span class="line">            url &#123;   </span><br><span class="line">              path /   </span><br><span class="line">              status_code 200   </span><br><span class="line">            &#125;   </span><br><span class="line">            connect_timeout 2   </span><br><span class="line">            nb_get_retry 3   </span><br><span class="line">            delay_before_retry 1   </span><br><span class="line">        &#125;   </span><br><span class="line">    &#125;   </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>keepalived 的配置文件路径在<code>/etc/keepalived/keepalived.conf</code>。LVS-master 与 LVS-slave 的配置文件除了 VRRPD 配置中的状态与优先级这两个参数不同外，其他参数应当相同。</p>
+<p>配置完成后，启动 LVS-master 与 LVS-slave的 keepalived 服务：<code>service keepalived start</code>，并可使用<code>ipvsadm -L -n</code>命令查看 LVS 状态。</p>
+<blockquote>
+<p>Tips：可使用<code>service keepalived status</code>命令查看 keepalived 服务的 log。</p>
+</blockquote>
+<h3 id="测试"><a href="#测试" class="headerlink" title="测试"></a>测试</h3><p>通过关闭与开启 LVS-master 的 keepalived 服务，观察 VIP 在 LVS 节点上的浮动情况。通过关闭与开启某一个 web 节点的 web 服务，观察集群的高可用是否生效。</p>
+<h3 id="参考文档"><a href="#参考文档" class="headerlink" title="参考文档"></a>参考文档</h3><p>实验步骤参考：<a href="http://freeloda.blog.51cto.com/2033581/1280962" target="_blank" rel="noopener">Linux 高可用集群之keepalived详解</a><br>详细配置参数参考：<a href="https://my.oschina.net/luciamoore/blog/607034" target="_blank" rel="noopener">Keepalived 工作原理及简要安装</a></p>
+<hr>
+<ul>
+<li><p><a href="/more/donate/index.html"><strong><em><font color="red">我觉得帮助到我了, 支持你一下.</font></em></strong></a><br>   </p>
+</li>
+<li><p><a href="https://www.paypal.me/momodainfo" target="_blank" rel="noopener"><strong><em><font color="red">If you think the article is helpful to you, you can reward me through paypal.</font></em></strong></a></p>
+</li>
+</ul>
+<h3 id="Ads"><a href="#Ads" class="headerlink" title="Ads"></a>Ads</h3><p><em>这是小广告! 如果有需要, 不妨支持一下吧~</em></p>
+<blockquote>
+<p> <a target="_blank" href="https://amazon.cn/gp/search?ie=UTF8&tag=momoda-23&linkCode=ur2&linkId=4a0e4fbec0cfa8dfe540ca999d0bf999&camp=536&creative=3200&index=books&keywords=编程">这些好书您看了吗?</a><img src="//ir-cn.amazon-adsystem.com/e/ir?t=momoda-23&l=ur2&o=28" width="1" height="1" border="0" alt="" style="border:none !important; margin:0px !important;"></p>
+</blockquote>
+<blockquote>
+<p>体育&amp;户外用品推荐</p>
+</blockquote>
+<div align="center"> <a href="https://www.amazon.cn/B07HWB88Z5/dp/B07HWB88Z5/ref=as_sl_pc_tf_til?tag=momoda-23&linkCode=w00&linkId=14df5124f2165d9eb3d65252e60ed2cf&creativeASIN=B07HWB88Z5" target="_blank" rel="noopener"><img src="/se-notes/云计算实践/集群高可用方案/LVS+Keepalived双机热备方案/../more/ads/amazon.gif" width="100%"></a> </div>
+      
+    </div><!-- .entry-content -->
+
+    <footer class="entry-meta">
+    <a href="/se-notes/云计算实践/集群高可用方案/LVS+Keepalived双机热备方案/">
+    <time datetime="2019-01-03T13:49:30.000Z" class="entry-date">
+        1月 3 2019
+    </time>
+</a>
+    
+  <span class="article-delim">&#8226;</span>
+  <div class="article-category">
+  <a class="article-category-link" href="/categories/通用技术/">通用技术</a>, <a class="article-category-link" href="/categories/通用技术/云计算实践/">云计算实践</a>, <a class="article-category-link" href="/categories/通用技术/云计算实践/集群高可用方案/">集群高可用方案</a>
+  </div>
+
+    
+  <span class="article-delim">&#8226;</span>
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/云计算/">云计算</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/集群/">集群</a></li></ul>
+
+    </footer>
+</article>
+
+
+    
+<nav class="nav-single">
+    <h3 class="assistive-text">文章导航</h3>
+    
+        <span class="nav-previous"><a href="/se-notes/云计算实践/Kubernetes部署/kubeadm部署多节点集群/" rel="prev"><span class="meta-nav">←</span> kubeadm部署多节点集群</a></span>
+    
+    
+        <span class="nav-next"><a href="/se-notes/Flask-Web工程手册/README/" rel="next">Flask-Web工程手册-README <span class="meta-nav">→</span></a></span>
+    
+</nav><!-- .nav-single -->
+
+
+
+
+
+
+
+</div></div>
+        <div id="secondary" class="widget-area" role="complementary">
+  
+    <aside id="search" class="widget widget_search"><form role="search" method="get" accept-charset="utf-8" id="searchform" class="searchform" action="//google.com/search">
+    <div>
+        <input type="text" value="" name="q">
+        <input type="submit" id="searchsubmit" value="google搜索">
+    </div>
+</form></aside>
+
+  
+    
+  <aside class="widget">
+    <h3 class="widget-title">Recents</h3>
+    <div class="widget-content">
+      <ul>
+        
+          <li>
+            <a href="/系统剩余空间查看/">系统剩余空间查看</a>
+          </li>
+        
+          <li>
+            <a href="/数据库分类/">数据库分类</a>
+          </li>
+        
+          <li>
+            <a href="/se-notes/Linux基础/README/">Linux基础-README</a>
+          </li>
+        
+          <li>
+            <a href="/se-notes/云计算实践/区块链相关/区块链简介/">区块链简介</a>
+          </li>
+        
+          <li>
+            <a href="/se-notes/云计算实践/集群高可用方案/Heartbeat双机热备方案/">Heartbeat双机热备方案</a>
+          </li>
+        
+      </ul>
+    </div>
+  </aside>
+
+  
+    
+  <aside class="widget">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget-content">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/">一月 2019</a><span class="archive-list-count">56</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">十一月 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">二月 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/09/">九月 2017</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/01/">一月 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/11/">十一月 2015</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/01/">一月 2014</a><span class="archive-list-count">1</span></li></ul>
+    </div>
+  </aside>
+
+  
+    
+  <aside class="widget">
+    <h3 class="widget-title">Categories</h3>
+    <div class="widget-content">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Graphics/">Graphics</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Linux/">Linux</a><span class="category-list-count">7</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Linux/Shell/">Shell</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Linux/linux基础/">linux基础</a><span class="category-list-count">6</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/协议证书/">协议证书</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/协议证书/openssl/">openssl</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/数据库/">数据库</a><span class="category-list-count">4</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/数据库/数据库基础/">数据库基础</a><span class="category-list-count">3</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/框架/">框架</a><span class="category-list-count">9</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/框架/python-web应用框架/">python-web应用框架</a><span class="category-list-count">9</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/版本控制/">版本控制</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/版本控制/Git/">Git</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/编程语言/">编程语言</a><span class="category-list-count">13</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/编程语言/java/">java</a><span class="category-list-count">13</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/网络通讯/">网络通讯</a><span class="category-list-count">11</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/网络通讯/大小端/">大小端</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/网络通讯/计算机网络基础/">计算机网络基础</a><span class="category-list-count">10</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/路由器/">路由器</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/路由器/openwrt/">openwrt</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/通用技术/">通用技术</a><span class="category-list-count">13</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/通用技术/Docker/">Docker</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/通用技术/云计算实践/">云计算实践</a><span class="category-list-count">11</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/通用技术/云计算实践/kubernetes部署/">kubernetes部署</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/通用技术/云计算实践/区块链/">区块链</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/通用技术/云计算实践/集群高可用方案/">集群高可用方案</a><span class="category-list-count">4</span></li></ul></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/默认/">默认</a><span class="category-list-count">1</span></li></ul>
+    </div>
+  </aside>
+
+  
+    
+  <aside class="widget">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget-content">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/CS-Notes/">CS-Notes</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/PEM证书/">PEM证书</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Shell/">Shell</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/cron/">cron</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/database/">database</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/diagrams/">diagrams</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/docker/">docker</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/docker-qq/">docker-qq</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/flask/">flask</a><span class="tag-list-count">9</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/git/">git</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/graphics/">graphics</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/http/">http</a><span class="tag-list-count">10</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/informationisbeautiful/">informationisbeautiful</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/java基础/">java基础</a><span class="tag-list-count">13</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/java语法/">java语法</a><span class="tag-list-count">13</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/kubernetes/">kubernetes</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/linux/">linux</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mysql/">mysql</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/network/">network</a><span class="tag-list-count">10</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/openssl/">openssl</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/openwrt/">openwrt</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/p12/">p12</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/pfx/">pfx</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/tcp-ip/">tcp/ip</a><span class="tag-list-count">10</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/web开发/">web开发</a><span class="tag-list-count">9</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/云计算/">云计算</a><span class="tag-list-count">11</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/区块链/">区块链</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/大小端/">大小端</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/数据库/">数据库</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/系统管理/">系统管理</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/计算机网络/">计算机网络</a><span class="tag-list-count">10</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/集群/">集群</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/默认/">默认</a><span class="tag-list-count">1</span></li></ul>
+    </div>
+  </aside>
+
+  
+    
+  <aside class="widget">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget-content tagcloud">
+      <a href="/tags/CS-Notes/" style="font-size: 10px;">CS-Notes</a> <a href="/tags/PEM证书/" style="font-size: 10px;">PEM证书</a> <a href="/tags/Shell/" style="font-size: 10px;">Shell</a> <a href="/tags/cron/" style="font-size: 10px;">cron</a> <a href="/tags/database/" style="font-size: 10px;">database</a> <a href="/tags/diagrams/" style="font-size: 10px;">diagrams</a> <a href="/tags/docker/" style="font-size: 15px;">docker</a> <a href="/tags/docker-qq/" style="font-size: 10px;">docker-qq</a> <a href="/tags/flask/" style="font-size: 16.25px;">flask</a> <a href="/tags/git/" style="font-size: 10px;">git</a> <a href="/tags/graphics/" style="font-size: 10px;">graphics</a> <a href="/tags/http/" style="font-size: 17.5px;">http</a> <a href="/tags/informationisbeautiful/" style="font-size: 10px;">informationisbeautiful</a> <a href="/tags/java基础/" style="font-size: 20px;">java基础</a> <a href="/tags/java语法/" style="font-size: 20px;">java语法</a> <a href="/tags/kubernetes/" style="font-size: 13.75px;">kubernetes</a> <a href="/tags/linux/" style="font-size: 15px;">linux</a> <a href="/tags/mysql/" style="font-size: 11.25px;">mysql</a> <a href="/tags/network/" style="font-size: 17.5px;">network</a> <a href="/tags/openssl/" style="font-size: 10px;">openssl</a> <a href="/tags/openwrt/" style="font-size: 10px;">openwrt</a> <a href="/tags/p12/" style="font-size: 10px;">p12</a> <a href="/tags/pfx/" style="font-size: 10px;">pfx</a> <a href="/tags/tcp-ip/" style="font-size: 17.5px;">tcp/ip</a> <a href="/tags/web开发/" style="font-size: 16.25px;">web开发</a> <a href="/tags/云计算/" style="font-size: 18.75px;">云计算</a> <a href="/tags/区块链/" style="font-size: 10px;">区块链</a> <a href="/tags/大小端/" style="font-size: 10px;">大小端</a> <a href="/tags/数据库/" style="font-size: 12.5px;">数据库</a> <a href="/tags/系统管理/" style="font-size: 15px;">系统管理</a> <a href="/tags/计算机网络/" style="font-size: 17.5px;">计算机网络</a> <a href="/tags/集群/" style="font-size: 13.75px;">集群</a> <a href="/tags/默认/" style="font-size: 10px;">默认</a>
+    </div>
+  </aside>
+
+  
+    <aside class="widget">
+    <h3 class="widget-title">Links</h3>
+    <div class="widget-content">
+		<ul id="link-list">
+		<!-- link begin -->
+
+		<li><a href="https://www.google.com/">google</a></li>
+		<li><a href="https://www.baidu.com/">baidu</a></li>
+		
+		<!-- link end -->
+		</ul>
+    </div>
+</aside>
+
+  
+    <aside class="widget">
+    <h3 class="widget-title">Ads</h3>
+    <div class="widget-content">
+	 
+			* <a target="_blank" href="https://amazon.cn/gp/search?ie=UTF8&tag=momoda-23&linkCode=ur2&linkId=4a0e4fbec0cfa8dfe540ca999d0bf999&camp=536&creative=3200&index=books&keywords=编程">这些好书您看了吗?</a><img src="//ir-cn.amazon-adsystem.com/e/ir?t=momoda-23&l=ur2&o=28" width="1" height="1" border="0" alt="" style="border:none !important; margin:0px !important;">
+			<br><br>
+			* 体育&户外用品推荐>
+			<div align="center"> <a href="https://www.amazon.cn/B07HWB88Z5/dp/B07HWB88Z5/ref=as_sl_pc_tf_til?tag=momoda-23&linkCode=w00&linkId=14df5124f2165d9eb3d65252e60ed2cf&creativeASIN=B07HWB88Z5"><img src="/more/ads/amazon.gif" width="100%"></a> </div>
+
+    </div>
+</aside>
+
+  
+</div>
+      </div>
+      <footer id="colophon" role="contentinfo">
+    <p>&copy; 2019 momoda
+    All rights reserved.</p>
+    <p>Powered by <a href="https://hexo.io/" target="_blank">Hexo</a></p>
+    <a href="javascript:scrollTo(0,0);">返回顶部</a>
+</footer>
+
+    <script>window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"1","bdMiniList":false,"bdPic":"","bdStyle":"2","bdSize":"16"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];</script>
+
+<script src="/js/jquery-2.0.3.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+<script src="/js/navigation.js"></script>
+
+
+<script type="text/javascript" src="https://js.users.51.la/19862371.js"></script>
+<div id="bg"></div>
+
+  </div>
+</body>
+</html>

@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="utf-8">
+  
+  
+  <meta name="description" content="momoda">
+  
+
+  
+  <meta name="keywords" content="momoda">
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  <title>设计模式——单例模式 | Just another blog</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="单例模式 遇到的问题 饿汉式单例 懒汉式单例 两种单例实现方式比较 一种更好的单例实现方法——IoDH 单例模式总结 Ads       单例模式在实际开发中，我们经常遇到这种情况：为了节约系统资源，有时需要确保系统中某个类只有唯一一个实例，当这个唯一实例创建成功之后，我们无法再创建一个同类型的其他对象，所有的操作都只能基于这个唯一实例。为了确保对象的唯一性，我们可以通过单例模式来实现。 单例">
+<meta name="keywords" content="java语法,java基础">
+<meta property="og:type" content="article">
+<meta property="og:title" content="设计模式——单例模式">
+<meta property="og:url" content="https://wnhby.github.io/se-notes/Java基础/设计模式——单例模式/index.html">
+<meta property="og:site_name" content="Just another blog">
+<meta property="og:description" content="单例模式 遇到的问题 饿汉式单例 懒汉式单例 两种单例实现方式比较 一种更好的单例实现方法——IoDH 单例模式总结 Ads       单例模式在实际开发中，我们经常遇到这种情况：为了节约系统资源，有时需要确保系统中某个类只有唯一一个实例，当这个唯一实例创建成功之后，我们无法再创建一个同类型的其他对象，所有的操作都只能基于这个唯一实例。为了确保对象的唯一性，我们可以通过单例模式来实现。 单例">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="http://my.csdn.net/uploads/201204/02/1333305124_9327.gif">
+<meta property="og:image" content="http://my.csdn.net/uploads/201204/02/1333305889_1823.gif">
+<meta property="og:image" content="http://my.csdn.net/uploads/201204/02/1333305983_8045.gif">
+<meta property="og:image" content="https://ir-cn.amazon-adsystem.com/e/ir?t=momoda-23&l=ur2&o=28">
+<meta property="og:image" content="https://wnhby.github.io/se-notes/Java基础/more/ads/amazon.gif">
+<meta property="og:updated_time" content="2019-02-19T05:19:28.024Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="设计模式——单例模式">
+<meta name="twitter:description" content="单例模式 遇到的问题 饿汉式单例 懒汉式单例 两种单例实现方式比较 一种更好的单例实现方法——IoDH 单例模式总结 Ads       单例模式在实际开发中，我们经常遇到这种情况：为了节约系统资源，有时需要确保系统中某个类只有唯一一个实例，当这个唯一实例创建成功之后，我们无法再创建一个同类型的其他对象，所有的操作都只能基于这个唯一实例。为了确保对象的唯一性，我们可以通过单例模式来实现。 单例">
+<meta name="twitter:image" content="http://my.csdn.net/uploads/201204/02/1333305124_9327.gif">
+  
+    <link rel="alternative" href="/atom.xml" title="Just another blog" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/css/images/favicon.ico">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  
+
+  
+  <!-- baidu webmaster push -->
+  <script src="//push.zhanzhang.baidu.com/push.js"></script>
+</head></html>
+<body class="home blog custom-background custom-font-enabled single-author">
+  <div id="page" class="hfeed site">
+      <header id="masthead" class="site-header" role="banner">
+    <hgroup>
+      <h1 class="site-title">
+        <a href="/" title="Just another blog" rel="home">Just another blog</a>
+      </h1>
+      
+        <h2 class="site-description">
+          <a href="/" id="subtitle">momoda blog</a>
+        </h2>
+      
+    </hgroup>
+
+    <nav id="site-navigation" class="main-navigation" role="navigation">
+            <button class="menu-toggle">菜单</button>
+            <a class="assistive-text" href="/#content" title="跳至内容">跳至内容</a><!--TODO-->
+            <div class="menu-main-container">
+                <ul id="menu-main" class="nav-menu">
+                
+                    <li class="menu-item menu-item-type-post_type menu-item-object-page"><a href="/">Home</a></li>
+                
+                    <li class="menu-item menu-item-type-post_type menu-item-object-page"><a href="/atom.xml">RSS</a></li>
+                
+                    <li class="menu-item menu-item-type-post_type menu-item-object-page"><a href="/sitemap.xml">Site map</a></li>
+                
+                    <li class="menu-item menu-item-type-post_type menu-item-object-page"><a href="/more/share.html">Share</a></li>
+                
+                </ul>
+            </div>
+    </nav>
+</header>
+
+      <div id="main" class="wrapper">
+        <div id="primary" class="site-content"><div id="content" role="main"><article id="post-se-notes/Java基础/设计模式——单例模式" class="post-se-notes/Java基础/设计模式——单例模式 post type-post status-publish format-standard hentry">
+    <!---->
+
+      <header class="entry-header">
+        
+        
+  
+    <h1 class="entry-title article-title">
+      设计模式——单例模式
+    </h1>
+  
+
+        
+        <div class="comments-link">
+            
+            <a href="javascript:void(0);" data-url="https://wnhby.github.io/se-notes/Java基础/设计模式——单例模式/" data-id="cjsbbbewu0027e9s6bsc304qz" class="leave-reply bdsharebuttonbox" data-cmd="more">分享</a>
+        </div><!-- .comments-link -->
+      </header><!-- .entry-header -->
+
+    <div class="entry-content">
+      
+        <!-- TOC -->
+<ul>
+<li><a href="#单例模式">单例模式</a><ul>
+<li><a href="#遇到的问题">遇到的问题</a></li>
+<li><a href="#饿汉式单例">饿汉式单例</a></li>
+<li><a href="#懒汉式单例">懒汉式单例</a></li>
+<li><a href="#两种单例实现方式比较">两种单例实现方式比较</a></li>
+<li><a href="#一种更好的单例实现方法iodh">一种更好的单例实现方法——IoDH</a></li>
+<li><a href="#单例模式总结">单例模式总结</a><ul>
+<li><a href="#ads">Ads</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<!-- /TOC -->
+<h1 id="单例模式"><a href="#单例模式" class="headerlink" title="单例模式"></a>单例模式</h1><p>在实际开发中，我们经常遇到这种情况：为了节约系统资源，有时需要确保系统中某个类只有唯一一个实例，当这个唯一实例创建成功之后，我们无法再创建一个同类型的其他对象，所有的操作都只能基于这个唯一实例。为了确保对象的唯一性，我们可以通过单例模式来实现。</p>
+<p>单例模式(Singleton Pattern)：确保某一个类只有一个实例，而且自行实例化并向整个系统提供这个实例，则这个类称为单例类，它提供全局访问的方法。单例模式是一种对象创建型模式。</p>
+<p><img src="http://my.csdn.net/uploads/201204/02/1333305124_9327.gif" alt="单例模式结构图"></p>
+<p>单例模式结构图中只包含一个单例角色：</p>
+<ul>
+<li>Singleton（单例）：在单例类的内部实现只生成一个实例，同时它提供一个静态的 getInstance() 工厂方法，让客户可以访问它的唯一实例；为了防止在外部对其实例化，将其构造函数设计为私有；在单例类内部定义了一个 Singleton 类型的静态对象，作为外部共享的唯一实例。</li>
+</ul>
+<h2 id="遇到的问题"><a href="#遇到的问题" class="headerlink" title="遇到的问题"></a>遇到的问题</h2><p>一个负载均衡器作为单例设计如下。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line">import java.util.*;  </span><br><span class="line"></span><br><span class="line">//负载均衡器LoadBalancer：单例类，真实环境下该类将非常复杂，包括大量初始化的工作和业务方法，考虑到代码的可读性和易理解性，只列出部分与模式相关的核心代码  </span><br><span class="line">class LoadBalancer &#123;  </span><br><span class="line">    //私有静态成员变量，存储唯一实例  </span><br><span class="line">    private static LoadBalancer instance = null;  </span><br><span class="line">    //服务器集合  </span><br><span class="line">    private List serverList = null;  </span><br><span class="line"></span><br><span class="line">    //私有构造函数  </span><br><span class="line">    private LoadBalancer() &#123;  </span><br><span class="line">        serverList = new ArrayList();  </span><br><span class="line">    &#125;  </span><br><span class="line"></span><br><span class="line">    //公有静态成员方法，返回唯一实例  </span><br><span class="line">    public static LoadBalancer getLoadBalancer() &#123;  </span><br><span class="line">        if (instance == null) &#123;  </span><br><span class="line">            instance = new LoadBalancer();  </span><br><span class="line">        &#125;  </span><br><span class="line">        return instance;  </span><br><span class="line">    &#125;  </span><br><span class="line"></span><br><span class="line">    //增加服务器  </span><br><span class="line">    public void addServer(String server) &#123;  </span><br><span class="line">        serverList.add(server);  </span><br><span class="line">    &#125;  </span><br><span class="line"></span><br><span class="line">    //删除服务器  </span><br><span class="line">    public void removeServer(String server) &#123;  </span><br><span class="line">        serverList.remove(server);  </span><br><span class="line">    &#125;  </span><br><span class="line"></span><br><span class="line">    //使用Random类随机获取服务器  </span><br><span class="line">    public String getServer() &#123;  </span><br><span class="line">        Random random = new Random();  </span><br><span class="line">        int i = random.nextInt(serverList.size());  </span><br><span class="line">        return (String)serverList.get(i);  </span><br><span class="line">    &#125;  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>使用单例模式实现了如上的负载均衡器的设计，但是在实际使用中出现了一个非常严重的问题，当负载均衡器在启动过程中用户再次启动该负载均衡器时，系统无任何异常，但当客户端提交请求时出现请求分发失败，通过仔细分析发现原来系统中还是存在多个负载均衡器对象，导致分发时目标服务器不一致，从而产生冲突。</p>
+<p>现在我们对负载均衡器的实现代码进行再次分析，当第一次调用 getLoadBalancer() 方法创建并启动负载均衡器时，instance 对象为 null 值，因此系统将执行代码 instance= new LoadBalancer()，在此过程中，由于要对 LoadBalancer 进行大量初始化工作，需要一段时间来创建 LoadBalancer 对象。而在此时，如果再一次调用 getLoadBalancer() 方法（通常发生在多线程环境中），由于 instance 尚未创建成功，仍为 null 值，判断条件 (instance== null) 为真值，因此代码 instance= new LoadBalancer() 将再次执行，导致最终创建了多个 instance 对象，这违背了单例模式的初衷，也导致系统运行发生错误。</p>
+<h2 id="饿汉式单例"><a href="#饿汉式单例" class="headerlink" title="饿汉式单例"></a>饿汉式单例</h2><p><img src="http://my.csdn.net/uploads/201204/02/1333305889_1823.gif" alt="enter image description here"></p>
+<p>在定义静态变量的时候实例化单例类，因此在类加载的时候就已经创建了单例对象，代码如下所示：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">class EagerSingleton &#123;   </span><br><span class="line">    private static final EagerSingleton instance = new EagerSingleton();   </span><br><span class="line">    private EagerSingleton() &#123; &#125;   </span><br><span class="line"></span><br><span class="line">    public static EagerSingleton getInstance() &#123;  </span><br><span class="line">        return instance;   </span><br><span class="line">    &#125;     </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>当类被加载时，静态变量 instance 会被初始化，此时类的私有构造函数会被调用，单例类的唯一实例将被创建。如果使用饿汉式单例来实现负载均衡器 LoadBalancer 类的设计，则不会出现创建多个单例对象的情况，可确保单例对象的唯一性。</p>
+<h2 id="懒汉式单例"><a href="#懒汉式单例" class="headerlink" title="懒汉式单例"></a>懒汉式单例</h2><p><img src="http://my.csdn.net/uploads/201204/02/1333305983_8045.gif" alt="enter image description here"></p>
+<p>懒汉式单例在第一次调用 getInstance() 方法时实例化，在类加载时并不自行实例化，这种技术又称为延迟加载(Lazy Load)技术，即需要的时候再加载实例。为了避免多个线程同时调用 getInstance() 方法，我们可以使用关键字 synchronized ，代码如下所示：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">class LazySingleton &#123;   </span><br><span class="line">    private static LazySingleton instance = null;   </span><br><span class="line"></span><br><span class="line">    private LazySingleton() &#123; &#125;   </span><br><span class="line"></span><br><span class="line">    synchronized public static LazySingleton getInstance() &#123;   </span><br><span class="line">        if (instance == null) &#123;  </span><br><span class="line">            instance = new LazySingleton();   </span><br><span class="line">        &#125;  </span><br><span class="line">        return instance;   </span><br><span class="line">    &#125;  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>该懒汉式单例类在 getInstance() 方法前面增加了关键字 synchronized 进行线程锁，以处理多个线程同时访问的问题。上述代码虽然解决了线程安全问题，但是每次调用 getInstance() 时都需要进行线程锁定判断，在多线程高并发访问环境中，将会导致系统性能大大降低。如何既解决线程安全问题又不影响系统性能呢？我们继续对懒汉式单例进行改进。事实上，我们无须对整个 getInstance() 方法进行锁定，只需对其中的代码 “instance = new LazySingleton();” 进行锁定即可。因此 getInstance() 方法可以进行如下改进：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">public static LazySingleton getInstance() &#123;   </span><br><span class="line">    if (instance == null) &#123;  </span><br><span class="line">        synchronized (LazySingleton.class) &#123;  </span><br><span class="line">            instance = new LazySingleton();   </span><br><span class="line">        &#125;  </span><br><span class="line">    &#125;  </span><br><span class="line">    return instance;   </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>问题貌似得以解决，事实并非如此。如果使用以上代码来实现单例，还是会存在单例对象不唯一。原因如下：</p>
+<p>假如在某一瞬间线程A和线程B都在调用 getInstance() 方法，此时 instance 对象为 null 值，均能通过 instance == null 的判断。由于实现了 synchronized 加锁机制，线程A进入 synchronized 锁定的代码中执行实例创建代码，线程B处于排队等待状态，必须等待线程A执行完毕后才可以进入 synchronized 锁定代码。但当A执行完毕时，线程B并不知道实例已经创建，将继续创建新的实例，导致产生多个单例对象，违背单例模式的设计思想。因此需要进行进一步改进，在 synchronized 中再进行一次 (instance == null) 判断，这种方式称为双重检查锁定(Double-Check Locking)。使用双重检查锁定实现的懒汉式单例类完整代码如下所示：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">class LazySingleton &#123;   </span><br><span class="line">    private volatile static LazySingleton instance = null;   </span><br><span class="line"></span><br><span class="line">    private LazySingleton() &#123; &#125;   </span><br><span class="line"></span><br><span class="line">    public static LazySingleton getInstance() &#123;   </span><br><span class="line">        //第一重判断  </span><br><span class="line">        if (instance == null) &#123;  </span><br><span class="line">            //锁定代码块  </span><br><span class="line">            synchronized (LazySingleton.class) &#123;  </span><br><span class="line">                //第二重判断  </span><br><span class="line">                if (instance == null) &#123;  </span><br><span class="line">                    instance = new LazySingleton(); //创建单例实例  </span><br><span class="line">                &#125;  </span><br><span class="line">            &#125;  </span><br><span class="line">        &#125;  </span><br><span class="line">        return instance;   </span><br><span class="line">    &#125;  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>需要注意的是，如果使用双重检查锁定来实现懒汉式单例类，需要在静态成员变量 instance 之前增加修饰符 volatile ，被 volatile 修饰的成员变量可以确保多个线程都能够正确处理，且该代码只能在 JDK 1.5 及以上版本中才能正确执行。由于 volatile 关键字会屏蔽 JVM 所做的一些代码优化，可能会导致系统运行效率降低，因此即使使用双重检查锁定来实现单例模式也不是一种完美的实现方式。</p>
+</blockquote>
+<h2 id="两种单例实现方式比较"><a href="#两种单例实现方式比较" class="headerlink" title="两种单例实现方式比较"></a>两种单例实现方式比较</h2><p>饿汉式单例类在类被加载时就将自己实例化，它的优点在于无须考虑多线程访问问题，可以确保实例的唯一性；从调用速度和反应时间角度来讲，由于单例对象一开始就得以创建，因此要优于懒汉式单例。但是无论系统在运行时是否需要使用该单例对象，由于在类加载时该对象就需要创建，因此从资源利用效率角度来讲，饿汉式单例不及懒汉式单例，而且在系统加载时由于需要创建饿汉式单例对象，加载时间可能会比较长。</p>
+<p>懒汉式单例类在第一次使用时创建，无须一直占用系统资源，实现了延迟加载，但是必须处理好多个线程同时访问的问题，特别是当单例类作为资源控制器，在实例化时必然涉及资源初始化，而资源初始化很有可能耗费大量时间，这意味着出现多线程同时首次引用此类的机率变得较大，需要通过双重检查锁定等机制进行控制，这将导致系统性能受到一定影响。</p>
+<h2 id="一种更好的单例实现方法——IoDH"><a href="#一种更好的单例实现方法——IoDH" class="headerlink" title="一种更好的单例实现方法——IoDH"></a>一种更好的单例实现方法——IoDH</h2><p>饿汉式单例类不能实现延迟加载，不管将来用不用始终占据内存；懒汉式单例类线程安全控制烦琐，而且性能受影响。Initialization Demand Holder (IoDH) 可以克服这两个缺点。</p>
+<p>在 IoDH 中，我们在单例类中增加一个静态内部类，在该内部类中创建单例对象，再将该单例对象通过 getInstance() 方法返回给外部使用，实现代码如下所示：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">//Initialization on Demand Holder  </span><br><span class="line">class Singleton &#123;  </span><br><span class="line">    private Singleton() &#123;  </span><br><span class="line">    &#125;  </span><br><span class="line"></span><br><span class="line">    private static class HolderClass &#123;  </span><br><span class="line">        private final static Singleton instance = new Singleton();  </span><br><span class="line">    &#125;  </span><br><span class="line"></span><br><span class="line">    public static Singleton getInstance() &#123;  </span><br><span class="line">        return HolderClass.instance;  </span><br><span class="line">    &#125;  </span><br><span class="line"></span><br><span class="line">    public static void main(String args[]) &#123;  </span><br><span class="line">        Singleton s1, s2;   </span><br><span class="line">            s1 = Singleton.getInstance();  </span><br><span class="line">        s2 = Singleton.getInstance();  </span><br><span class="line">        System.out.println(s1==s2);  </span><br><span class="line">    &#125;  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>编译并运行上述代码，运行结果为：true，即创建的单例对象 s1 和 s2 为同一对象。由于静态单例对象没有作为 Singleton 的成员变量直接实例化，因此类加载时不会实例化 Singleton ，第一次调用 getInstance() 时将加载内部类 HolderClass ，在该内部类中定义了一个 static 类型的变量 instance ，此时会首先初始化这个成员变量，由 Java 虚拟机来保证其线程安全性，确保该成员变量只能初始化一次。由于 getInstance() 方法没有任何线程锁定，因此其性能不会造成任何影响。</p>
+<p>通过使用 IoDH，我们既可以实现延迟加载，又可以保证线程安全，不影响系统性能，不失为一种最好的 Java 语言单例模式实现方式（其缺点是与编程语言本身的特性相关，很多面向对象语言不支持IoDH）。</p>
+<h2 id="单例模式总结"><a href="#单例模式总结" class="headerlink" title="单例模式总结"></a>单例模式总结</h2><p>单例模式作为一种目标明确、结构简单、理解容易的设计模式，在软件开发中使用频率相当高，在很多应用软件和框架中都得以广泛应用。</p>
+<p>单例模式的主要优点如下：</p>
+<ul>
+<li>单例模式提供了对唯一实例的受控访问。因为单例类封装了它的唯一实例，所以它可以严格控制客户怎样以及何时访问它。</li>
+<li>由于在系统内存中只存在一个对象，因此可以节约系统资源，对于一些需要频繁创建和销毁的对象单例模式无疑可以提高系统的性能。</li>
+<li>允许可变数目的实例。基于单例模式我们可以进行扩展，使用与单例控制相似的方法来获得指定个数的对象实例，既节省系统资源，又解决了单例单例对象共享过多有损性能的问题。</li>
+</ul>
+<p>单例模式的主要缺点如下：</p>
+<ul>
+<li>由于单例模式中没有抽象层，因此单例类的扩展有很大的困难。</li>
+<li>单例类的职责过重，在一定程度上违背了“单一职责原则”。因为单例类既充当了工厂角色，提供了工厂方法，同时又充当了产品角色，包含一些业务方法，将产品的创建和产品的本身的功能融合到一起。</li>
+<li>现在很多面向对象语言(如 Java 、C# )的运行环境都提供了自动垃圾回收的技术，因此，如果实例化的共享对象长时间不被利用，系统会认为它是垃圾，会自动销毁并回收资源，下次利用时又将重新实例化，这将导致共享的单例对象状态的丢失。</li>
+</ul>
+<p>在以下情况下可以考虑使用单例模式：</p>
+<ul>
+<li>系统只需要一个实例对象，如系统要求提供一个唯一的序列号生成器或资源管理器，或者需要考虑资源消耗太大而只允许创建一个对象。</li>
+<li>客户调用类的单个实例只允许使用一个公共访问点，除了该公共访问点，不能通过其他途径访问该实例。</li>
+</ul>
+<hr>
+<ul>
+<li><p><a href="/more/donate/index.html"><strong><em><font color="red">我觉得帮助到我了, 支持你一下.</font></em></strong></a><br>   </p>
+</li>
+<li><p><a href="https://www.paypal.me/momodainfo" target="_blank" rel="noopener"><strong><em><font color="red">If you think the article is helpful to you, you can reward me through paypal.</font></em></strong></a></p>
+</li>
+</ul>
+<h3 id="Ads"><a href="#Ads" class="headerlink" title="Ads"></a>Ads</h3><p><em>这是小广告! 如果有需要, 不妨支持一下吧~</em></p>
+<blockquote>
+<p> <a target="_blank" href="https://amazon.cn/gp/search?ie=UTF8&tag=momoda-23&linkCode=ur2&linkId=4a0e4fbec0cfa8dfe540ca999d0bf999&camp=536&creative=3200&index=books&keywords=编程">这些好书您看了吗?</a><img src="//ir-cn.amazon-adsystem.com/e/ir?t=momoda-23&l=ur2&o=28" width="1" height="1" border="0" alt="" style="border:none !important; margin:0px !important;"></p>
+</blockquote>
+<blockquote>
+<p>体育&amp;户外用品推荐</p>
+</blockquote>
+<div align="center"> <a href="https://www.amazon.cn/B07HWB88Z5/dp/B07HWB88Z5/ref=as_sl_pc_tf_til?tag=momoda-23&linkCode=w00&linkId=14df5124f2165d9eb3d65252e60ed2cf&creativeASIN=B07HWB88Z5" target="_blank" rel="noopener"><img src="/se-notes/Java基础/设计模式——单例模式/../more/ads/amazon.gif" width="100%"></a> </div>
+      
+    </div><!-- .entry-content -->
+
+    <footer class="entry-meta">
+    <a href="/se-notes/Java基础/设计模式——单例模式/">
+    <time datetime="2019-01-03T13:49:30.000Z" class="entry-date">
+        1月 3 2019
+    </time>
+</a>
+    
+  <span class="article-delim">&#8226;</span>
+  <div class="article-category">
+  <a class="article-category-link" href="/categories/编程语言/">编程语言</a>, <a class="article-category-link" href="/categories/编程语言/java/">java</a>
+  </div>
+
+    
+  <span class="article-delim">&#8226;</span>
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/java基础/">java基础</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/java语法/">java语法</a></li></ul>
+
+    </footer>
+</article>
+
+
+    
+<nav class="nav-single">
+    <h3 class="assistive-text">文章导航</h3>
+    
+        <span class="nav-previous"><a href="/se-notes/Java基础/泛型/" rel="prev"><span class="meta-nav">←</span> 泛型</a></span>
+    
+    
+        <span class="nav-next"><a href="/se-notes/Java基础/设计模式——工厂模式/" rel="next">设计模式——工厂模式 <span class="meta-nav">→</span></a></span>
+    
+</nav><!-- .nav-single -->
+
+
+
+
+
+
+
+</div></div>
+        <div id="secondary" class="widget-area" role="complementary">
+  
+    <aside id="search" class="widget widget_search"><form role="search" method="get" accept-charset="utf-8" id="searchform" class="searchform" action="//google.com/search">
+    <div>
+        <input type="text" value="" name="q">
+        <input type="submit" id="searchsubmit" value="google搜索">
+    </div>
+</form></aside>
+
+  
+    
+  <aside class="widget">
+    <h3 class="widget-title">Recents</h3>
+    <div class="widget-content">
+      <ul>
+        
+          <li>
+            <a href="/系统剩余空间查看/">系统剩余空间查看</a>
+          </li>
+        
+          <li>
+            <a href="/数据库分类/">数据库分类</a>
+          </li>
+        
+          <li>
+            <a href="/se-notes/Linux基础/README/">Linux基础-README</a>
+          </li>
+        
+          <li>
+            <a href="/se-notes/云计算实践/区块链相关/区块链简介/">区块链简介</a>
+          </li>
+        
+          <li>
+            <a href="/se-notes/云计算实践/集群高可用方案/Heartbeat双机热备方案/">Heartbeat双机热备方案</a>
+          </li>
+        
+      </ul>
+    </div>
+  </aside>
+
+  
+    
+  <aside class="widget">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget-content">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/">一月 2019</a><span class="archive-list-count">56</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">十一月 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">二月 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/09/">九月 2017</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/01/">一月 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/11/">十一月 2015</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/01/">一月 2014</a><span class="archive-list-count">1</span></li></ul>
+    </div>
+  </aside>
+
+  
+    
+  <aside class="widget">
+    <h3 class="widget-title">Categories</h3>
+    <div class="widget-content">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Graphics/">Graphics</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Linux/">Linux</a><span class="category-list-count">7</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Linux/Shell/">Shell</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Linux/linux基础/">linux基础</a><span class="category-list-count">6</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/协议证书/">协议证书</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/协议证书/openssl/">openssl</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/数据库/">数据库</a><span class="category-list-count">4</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/数据库/数据库基础/">数据库基础</a><span class="category-list-count">3</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/框架/">框架</a><span class="category-list-count">9</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/框架/python-web应用框架/">python-web应用框架</a><span class="category-list-count">9</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/版本控制/">版本控制</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/版本控制/Git/">Git</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/编程语言/">编程语言</a><span class="category-list-count">13</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/编程语言/java/">java</a><span class="category-list-count">13</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/网络通讯/">网络通讯</a><span class="category-list-count">11</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/网络通讯/大小端/">大小端</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/网络通讯/计算机网络基础/">计算机网络基础</a><span class="category-list-count">10</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/路由器/">路由器</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/路由器/openwrt/">openwrt</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/通用技术/">通用技术</a><span class="category-list-count">13</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/通用技术/Docker/">Docker</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/通用技术/云计算实践/">云计算实践</a><span class="category-list-count">11</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/通用技术/云计算实践/kubernetes部署/">kubernetes部署</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/通用技术/云计算实践/区块链/">区块链</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/通用技术/云计算实践/集群高可用方案/">集群高可用方案</a><span class="category-list-count">4</span></li></ul></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/默认/">默认</a><span class="category-list-count">1</span></li></ul>
+    </div>
+  </aside>
+
+  
+    
+  <aside class="widget">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget-content">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/CS-Notes/">CS-Notes</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/PEM证书/">PEM证书</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Shell/">Shell</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/cron/">cron</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/database/">database</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/diagrams/">diagrams</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/docker/">docker</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/docker-qq/">docker-qq</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/flask/">flask</a><span class="tag-list-count">9</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/git/">git</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/graphics/">graphics</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/http/">http</a><span class="tag-list-count">10</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/informationisbeautiful/">informationisbeautiful</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/java基础/">java基础</a><span class="tag-list-count">13</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/java语法/">java语法</a><span class="tag-list-count">13</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/kubernetes/">kubernetes</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/linux/">linux</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mysql/">mysql</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/network/">network</a><span class="tag-list-count">10</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/openssl/">openssl</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/openwrt/">openwrt</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/p12/">p12</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/pfx/">pfx</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/tcp-ip/">tcp/ip</a><span class="tag-list-count">10</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/web开发/">web开发</a><span class="tag-list-count">9</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/云计算/">云计算</a><span class="tag-list-count">11</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/区块链/">区块链</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/大小端/">大小端</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/数据库/">数据库</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/系统管理/">系统管理</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/计算机网络/">计算机网络</a><span class="tag-list-count">10</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/集群/">集群</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/默认/">默认</a><span class="tag-list-count">1</span></li></ul>
+    </div>
+  </aside>
+
+  
+    
+  <aside class="widget">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget-content tagcloud">
+      <a href="/tags/CS-Notes/" style="font-size: 10px;">CS-Notes</a> <a href="/tags/PEM证书/" style="font-size: 10px;">PEM证书</a> <a href="/tags/Shell/" style="font-size: 10px;">Shell</a> <a href="/tags/cron/" style="font-size: 10px;">cron</a> <a href="/tags/database/" style="font-size: 10px;">database</a> <a href="/tags/diagrams/" style="font-size: 10px;">diagrams</a> <a href="/tags/docker/" style="font-size: 15px;">docker</a> <a href="/tags/docker-qq/" style="font-size: 10px;">docker-qq</a> <a href="/tags/flask/" style="font-size: 16.25px;">flask</a> <a href="/tags/git/" style="font-size: 10px;">git</a> <a href="/tags/graphics/" style="font-size: 10px;">graphics</a> <a href="/tags/http/" style="font-size: 17.5px;">http</a> <a href="/tags/informationisbeautiful/" style="font-size: 10px;">informationisbeautiful</a> <a href="/tags/java基础/" style="font-size: 20px;">java基础</a> <a href="/tags/java语法/" style="font-size: 20px;">java语法</a> <a href="/tags/kubernetes/" style="font-size: 13.75px;">kubernetes</a> <a href="/tags/linux/" style="font-size: 15px;">linux</a> <a href="/tags/mysql/" style="font-size: 11.25px;">mysql</a> <a href="/tags/network/" style="font-size: 17.5px;">network</a> <a href="/tags/openssl/" style="font-size: 10px;">openssl</a> <a href="/tags/openwrt/" style="font-size: 10px;">openwrt</a> <a href="/tags/p12/" style="font-size: 10px;">p12</a> <a href="/tags/pfx/" style="font-size: 10px;">pfx</a> <a href="/tags/tcp-ip/" style="font-size: 17.5px;">tcp/ip</a> <a href="/tags/web开发/" style="font-size: 16.25px;">web开发</a> <a href="/tags/云计算/" style="font-size: 18.75px;">云计算</a> <a href="/tags/区块链/" style="font-size: 10px;">区块链</a> <a href="/tags/大小端/" style="font-size: 10px;">大小端</a> <a href="/tags/数据库/" style="font-size: 12.5px;">数据库</a> <a href="/tags/系统管理/" style="font-size: 15px;">系统管理</a> <a href="/tags/计算机网络/" style="font-size: 17.5px;">计算机网络</a> <a href="/tags/集群/" style="font-size: 13.75px;">集群</a> <a href="/tags/默认/" style="font-size: 10px;">默认</a>
+    </div>
+  </aside>
+
+  
+    <aside class="widget">
+    <h3 class="widget-title">Links</h3>
+    <div class="widget-content">
+		<ul id="link-list">
+		<!-- link begin -->
+
+		<li><a href="https://www.google.com/">google</a></li>
+		<li><a href="https://www.baidu.com/">baidu</a></li>
+		
+		<!-- link end -->
+		</ul>
+    </div>
+</aside>
+
+  
+    <aside class="widget">
+    <h3 class="widget-title">Ads</h3>
+    <div class="widget-content">
+	 
+			* <a target="_blank" href="https://amazon.cn/gp/search?ie=UTF8&tag=momoda-23&linkCode=ur2&linkId=4a0e4fbec0cfa8dfe540ca999d0bf999&camp=536&creative=3200&index=books&keywords=编程">这些好书您看了吗?</a><img src="//ir-cn.amazon-adsystem.com/e/ir?t=momoda-23&l=ur2&o=28" width="1" height="1" border="0" alt="" style="border:none !important; margin:0px !important;">
+			<br><br>
+			* 体育&户外用品推荐>
+			<div align="center"> <a href="https://www.amazon.cn/B07HWB88Z5/dp/B07HWB88Z5/ref=as_sl_pc_tf_til?tag=momoda-23&linkCode=w00&linkId=14df5124f2165d9eb3d65252e60ed2cf&creativeASIN=B07HWB88Z5"><img src="/more/ads/amazon.gif" width="100%"></a> </div>
+
+    </div>
+</aside>
+
+  
+</div>
+      </div>
+      <footer id="colophon" role="contentinfo">
+    <p>&copy; 2019 momoda
+    All rights reserved.</p>
+    <p>Powered by <a href="https://hexo.io/" target="_blank">Hexo</a></p>
+    <a href="javascript:scrollTo(0,0);">返回顶部</a>
+</footer>
+
+    <script>window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"1","bdMiniList":false,"bdPic":"","bdStyle":"2","bdSize":"16"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];</script>
+
+<script src="/js/jquery-2.0.3.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+<script src="/js/navigation.js"></script>
+
+
+<script type="text/javascript" src="https://js.users.51.la/19862371.js"></script>
+<div id="bg"></div>
+
+  </div>
+</body>
+</html>

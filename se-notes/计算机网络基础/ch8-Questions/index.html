@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="utf-8">
+  
+  
+  <meta name="description" content="momoda">
+  
+
+  
+  <meta name="keywords" content="momoda">
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  <title>ch8-Questions | Just another blog</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="访问网页过程 Ping 过程   QQ 传输层UDP 更多阅读- [Ads](#ads)    访问网页过程从网络模型的角度来分析，主要涉及  应用层：DNS、HTTP； 传输层：TCP 网络层：IP，路由选择协议RIP，OSPF(内部网关协议),BGP(外部网关协议） 数据链路层：ARP  应用层：客户端浏览器发起一个HTTP会话到服务器。客户端浏览器通过 DNS 解析到 www.baidu">
+<meta name="keywords" content="计算机网络,network,tcp&#x2F;ip,http">
+<meta property="og:type" content="article">
+<meta property="og:title" content="ch8-Questions">
+<meta property="og:url" content="https://wnhby.github.io/se-notes/计算机网络基础/ch8-Questions/index.html">
+<meta property="og:site_name" content="Just another blog">
+<meta property="og:description" content="访问网页过程 Ping 过程   QQ 传输层UDP 更多阅读- [Ads](#ads)    访问网页过程从网络模型的角度来分析，主要涉及  应用层：DNS、HTTP； 传输层：TCP 网络层：IP，路由选择协议RIP，OSPF(内部网关协议),BGP(外部网关协议） 数据链路层：ARP  应用层：客户端浏览器发起一个HTTP会话到服务器。客户端浏览器通过 DNS 解析到 www.baidu">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://ir-cn.amazon-adsystem.com/e/ir?t=momoda-23&l=ur2&o=28">
+<meta property="og:image" content="https://wnhby.github.io/se-notes/计算机网络基础/more/ads/amazon.gif">
+<meta property="og:updated_time" content="2019-02-19T05:23:33.600Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="ch8-Questions">
+<meta name="twitter:description" content="访问网页过程 Ping 过程   QQ 传输层UDP 更多阅读- [Ads](#ads)    访问网页过程从网络模型的角度来分析，主要涉及  应用层：DNS、HTTP； 传输层：TCP 网络层：IP，路由选择协议RIP，OSPF(内部网关协议),BGP(外部网关协议） 数据链路层：ARP  应用层：客户端浏览器发起一个HTTP会话到服务器。客户端浏览器通过 DNS 解析到 www.baidu">
+<meta name="twitter:image" content="https://ir-cn.amazon-adsystem.com/e/ir?t=momoda-23&l=ur2&o=28">
+  
+    <link rel="alternative" href="/atom.xml" title="Just another blog" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/css/images/favicon.ico">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  
+
+  
+  <!-- baidu webmaster push -->
+  <script src="//push.zhanzhang.baidu.com/push.js"></script>
+</head></html>
+<body class="home blog custom-background custom-font-enabled single-author">
+  <div id="page" class="hfeed site">
+      <header id="masthead" class="site-header" role="banner">
+    <hgroup>
+      <h1 class="site-title">
+        <a href="/" title="Just another blog" rel="home">Just another blog</a>
+      </h1>
+      
+        <h2 class="site-description">
+          <a href="/" id="subtitle">momoda blog</a>
+        </h2>
+      
+    </hgroup>
+
+    <nav id="site-navigation" class="main-navigation" role="navigation">
+            <button class="menu-toggle">菜单</button>
+            <a class="assistive-text" href="/#content" title="跳至内容">跳至内容</a><!--TODO-->
+            <div class="menu-main-container">
+                <ul id="menu-main" class="nav-menu">
+                
+                    <li class="menu-item menu-item-type-post_type menu-item-object-page"><a href="/">Home</a></li>
+                
+                    <li class="menu-item menu-item-type-post_type menu-item-object-page"><a href="/atom.xml">RSS</a></li>
+                
+                    <li class="menu-item menu-item-type-post_type menu-item-object-page"><a href="/sitemap.xml">Site map</a></li>
+                
+                    <li class="menu-item menu-item-type-post_type menu-item-object-page"><a href="/more/share.html">Share</a></li>
+                
+                </ul>
+            </div>
+    </nav>
+</header>
+
+      <div id="main" class="wrapper">
+        <div id="primary" class="site-content"><div id="content" role="main"><article id="post-se-notes/计算机网络基础/ch8-Questions" class="post-se-notes/计算机网络基础/ch8-Questions post type-post status-publish format-standard hentry">
+    <!---->
+
+      <header class="entry-header">
+        
+        
+  
+    <h1 class="entry-title article-title">
+      ch8-Questions
+    </h1>
+  
+
+        
+        <div class="comments-link">
+            
+            <a href="javascript:void(0);" data-url="https://wnhby.github.io/se-notes/计算机网络基础/ch8-Questions/" data-id="cjsbbbeyw004ke9s6ec09jk4f" class="leave-reply bdsharebuttonbox" data-cmd="more">分享</a>
+        </div><!-- .comments-link -->
+      </header><!-- .entry-header -->
+
+    <div class="entry-content">
+      
+        <!-- TOC -->
+<ul>
+<li><a href="#访问网页过程">访问网页过程</a><ul>
+<li><a href="#ping-过程">Ping 过程</a></li>
+</ul>
+</li>
+<li><a href="#qq-传输层udp">QQ 传输层UDP</a></li>
+<li><a href="#更多阅读">更多阅读</a><pre><code>- [Ads](#ads)
+</code></pre></li>
+</ul>
+<!-- /TOC -->
+<h1 id="访问网页过程"><a href="#访问网页过程" class="headerlink" title="访问网页过程"></a>访问网页过程</h1><p>从网络模型的角度来分析，主要涉及</p>
+<ul>
+<li>应用层：DNS、HTTP；</li>
+<li>传输层：TCP</li>
+<li>网络层：IP，路由选择协议RIP，OSPF(内部网关协议),BGP(外部网关协议）</li>
+<li>数据链路层：ARP</li>
+</ul>
+<p><code>应用层</code>：客户端浏览器发起一个HTTP会话到服务器。客户端浏览器通过 DNS 解析到 <a href="http://www.baidu.com" target="_blank" rel="noopener">www.baidu.com</a> 的IP地址，通过这个IP地址找到客户端到服务器的路径。</p>
+<p><code>传输层</code>：在客户端的传输层，把HTTP会话请求分成报文段，添加源和目的端口（服务器使用80端口监听客户端的请求，客户端由系统随机选择一个端口如5000），和服务器建立 TCP 连接后进行通信。</p>
+<p><code>网络层</code>：客户端的网络层不关心应用层或者传输层的东西，主要做的是通过查找路由表确定如何到达服务器，期间可能经过多个路由器。其中可能用到的路由选择协议有 RIP协议、OSPF协议、EGP协议。</p>
+<p><code>链路层</code>：包从路由器到达服务器的局域网后，通过 ARP 协议查找服务器IP地址对应的MAC地址，然后将数据帧传到服务器。</p>
+<h2 id="Ping-过程"><a href="#Ping-过程" class="headerlink" title="Ping 过程"></a>Ping 过程</h2><p>ping 程序用来探测主机到主机之间是否可通信，如果不能ping到某台主机，表明不能和这台主机建立连接。ping 使用的是ICMP协议，它发送icmp回送请求消息给目的主机。ICMP协议规定：目的主机必须返回ICMP回送应答消息给源主机。如果源主机在一定时间内收到应答，则认为主机可达。</p>
+<p>假定主机A的IP地址是192.168.1.1，主机B的IP地址是192.168.1.2，都在同一子网内，则当你在主机A上运行“Ping 192.168.1.2”后，都发生了些什么呢?</p>
+<p>首先，Ping命令会构建一个固定格式的ICMP请求数据包，然后由ICMP协议将这个数据包连同地址“192.168.1.2”一起交给IP层协议（和ICMP一样，实际上是一组后台运行的进程），IP层协议将以地址“192.168.1.2”作为目的地址，本机IP地址作为源地址，加上一些其他的控制信息，构建一个IP数据包，并在通过 ARP 协议查找出IP地址192.168.1.2所对应的物理地址，一并交给数据链路层。后者构建一个数据帧，目的地址是IP层传过来的物理地址，源地址则是本机的物理地址，还要附加上一些控制信息，依据以太网的介质访问规则，将它们传送出去。</p>
+<p>主机B收到这个数据帧后，先检查它的目的地址，并和本机的物理地址对比，如符合，则接收；否则丢弃。接收后检查该数据帧，将IP数据包从帧中提取出来，交给本机的IP层协议。同样，IP层检查后，将有用的信息提取后交给ICMP协议，后者处理后，马上构建一个ICMP应答包，发送给主机A，其过程和主机A发送ICMP请求包到主机B一模一样。</p>
+<h1 id="QQ-传输层UDP"><a href="#QQ-传输层UDP" class="headerlink" title="QQ 传输层UDP"></a>QQ 传输层UDP</h1><p>QQ 为什么采用 UDP 协议？</p>
+<p>最本质上UDP的优势还是<code>带宽的利用</code>。这一切要回归到99~03年的网络状况，当时网络的特点就是接入带宽很窄而且抖动特别厉害。所谓抖动可能是多方面的，例如延时突发性地暴增、也有可能是由于路由层面的变化突然导致路由黑洞，还各种等等等等的问题。TCP因为拥塞控制、保证有序等原因，在这种网络状态上对带宽的利用是非常低的。而且因为网络抖动的原因，应用层心跳超时（一般不依靠keepalive）应用层主动断掉socket之后TCP需要三次握手才能重新建立链接，一旦出现频繁的小抖动就会使得带宽利用更低。而等待四次挥手的时间，也会占用服务器上宝贵的资源。总结来说，当网络差到一定程度了，TCP的优势反而会成为劣势。</p>
+<p>使用UDP对抗网络抖动，说到底就是在应用层比TCP更快地探测和重传，一旦超过一定的时间没有收到回复，客户端可以选择马上重试，在服务器端则可以果断地断掉socket。而可以应用UDP的时候，往往是你的应用层协议本身已经具备了一定的面向连接的特性。如果你应用层的协议已经达到了一定程度的消息幂等，客户端可以几乎无脑地进行重传，这样就可以尽可能地降低网络抖动的影响，同时也可以尽可能地利用整个带宽。而刚好QQ的协议，就具备类似的特点。</p>
+<p>简单来说就是我们可以使用UDP实现一个面向连接协议，这个协议可以很好地适应当时的网络状况和QQ本身的业务。但凡事都有成本，成本就是你的应用层协议本身需要去实现抵抗网络异常带来的问题。例如<code>乱序</code>、重传，业务数据的分片和重组、网络状态探测等。</p>
+<p>（当然，也可能是因为当时没有epoll这种可以支持成千上万tcp并发连接的技术，所以他们使用了udp，然后在udp上面封装了模拟tcp，解决大并发的问题。）</p>
+<h1 id="更多阅读"><a href="#更多阅读" class="headerlink" title="更多阅读"></a>更多阅读</h1><p><a href="http://www.nowcoder.com/discuss/3853" target="_blank" rel="noopener">在浏览器中输入URL后执行的全部过程的个人总结</a><br><a href="https://www.zhihu.com/question/20292749" target="_blank" rel="noopener">QQ 为什么采用 UDP 协议，而不采用 TCP 协议实现</a>  </p>
+<hr>
+<ul>
+<li><p><a href="/more/donate/index.html"><strong><em><font color="red">我觉得帮助到我了, 支持你一下.</font></em></strong></a><br>   </p>
+</li>
+<li><p><a href="https://www.paypal.me/momodainfo" target="_blank" rel="noopener"><strong><em><font color="red">If you think the article is helpful to you, you can reward me through paypal.</font></em></strong></a></p>
+</li>
+</ul>
+<h3 id="Ads"><a href="#Ads" class="headerlink" title="Ads"></a>Ads</h3><p><em>这是小广告! 如果有需要, 不妨支持一下吧~</em></p>
+<blockquote>
+<p> <a target="_blank" href="https://amazon.cn/gp/search?ie=UTF8&tag=momoda-23&linkCode=ur2&linkId=4a0e4fbec0cfa8dfe540ca999d0bf999&camp=536&creative=3200&index=books&keywords=编程">这些好书您看了吗?</a><img src="//ir-cn.amazon-adsystem.com/e/ir?t=momoda-23&l=ur2&o=28" width="1" height="1" border="0" alt="" style="border:none !important; margin:0px !important;"></p>
+</blockquote>
+<blockquote>
+<p>体育&amp;户外用品推荐</p>
+</blockquote>
+<div align="center"> <a href="https://www.amazon.cn/B07HWB88Z5/dp/B07HWB88Z5/ref=as_sl_pc_tf_til?tag=momoda-23&linkCode=w00&linkId=14df5124f2165d9eb3d65252e60ed2cf&creativeASIN=B07HWB88Z5" target="_blank" rel="noopener"><img src="/se-notes/计算机网络基础/ch8-Questions/../more/ads/amazon.gif" width="100%"></a> </div>
+      
+    </div><!-- .entry-content -->
+
+    <footer class="entry-meta">
+    <a href="/se-notes/计算机网络基础/ch8-Questions/">
+    <time datetime="2019-01-03T13:49:30.000Z" class="entry-date">
+        1月 3 2019
+    </time>
+</a>
+    
+  <span class="article-delim">&#8226;</span>
+  <div class="article-category">
+  <a class="article-category-link" href="/categories/网络通讯/">网络通讯</a>, <a class="article-category-link" href="/categories/网络通讯/计算机网络基础/">计算机网络基础</a>
+  </div>
+
+    
+  <span class="article-delim">&#8226;</span>
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/http/">http</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/network/">network</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/tcp-ip/">tcp/ip</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/计算机网络/">计算机网络</a></li></ul>
+
+    </footer>
+</article>
+
+
+    
+<nav class="nav-single">
+    <h3 class="assistive-text">文章导航</h3>
+    
+        <span class="nav-previous"><a href="/se-notes/计算机网络基础/ch7-More/" rel="prev"><span class="meta-nav">←</span> ch7-More</a></span>
+    
+    
+        <span class="nav-next"><a href="/se-notes/计算机网络基础/ch9-SS_Surge/" rel="next">ch9-SS_Surge <span class="meta-nav">→</span></a></span>
+    
+</nav><!-- .nav-single -->
+
+
+
+
+
+
+
+</div></div>
+        <div id="secondary" class="widget-area" role="complementary">
+  
+    <aside id="search" class="widget widget_search"><form role="search" method="get" accept-charset="utf-8" id="searchform" class="searchform" action="//google.com/search">
+    <div>
+        <input type="text" value="" name="q">
+        <input type="submit" id="searchsubmit" value="google搜索">
+    </div>
+</form></aside>
+
+  
+    
+  <aside class="widget">
+    <h3 class="widget-title">Recents</h3>
+    <div class="widget-content">
+      <ul>
+        
+          <li>
+            <a href="/系统剩余空间查看/">系统剩余空间查看</a>
+          </li>
+        
+          <li>
+            <a href="/数据库分类/">数据库分类</a>
+          </li>
+        
+          <li>
+            <a href="/se-notes/Linux基础/README/">Linux基础-README</a>
+          </li>
+        
+          <li>
+            <a href="/se-notes/云计算实践/区块链相关/区块链简介/">区块链简介</a>
+          </li>
+        
+          <li>
+            <a href="/se-notes/云计算实践/集群高可用方案/Heartbeat双机热备方案/">Heartbeat双机热备方案</a>
+          </li>
+        
+      </ul>
+    </div>
+  </aside>
+
+  
+    
+  <aside class="widget">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget-content">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/">一月 2019</a><span class="archive-list-count">56</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">十一月 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">二月 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/09/">九月 2017</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/01/">一月 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/11/">十一月 2015</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/01/">一月 2014</a><span class="archive-list-count">1</span></li></ul>
+    </div>
+  </aside>
+
+  
+    
+  <aside class="widget">
+    <h3 class="widget-title">Categories</h3>
+    <div class="widget-content">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Graphics/">Graphics</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Linux/">Linux</a><span class="category-list-count">7</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Linux/Shell/">Shell</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Linux/linux基础/">linux基础</a><span class="category-list-count">6</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/协议证书/">协议证书</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/协议证书/openssl/">openssl</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/数据库/">数据库</a><span class="category-list-count">4</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/数据库/数据库基础/">数据库基础</a><span class="category-list-count">3</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/框架/">框架</a><span class="category-list-count">9</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/框架/python-web应用框架/">python-web应用框架</a><span class="category-list-count">9</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/版本控制/">版本控制</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/版本控制/Git/">Git</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/编程语言/">编程语言</a><span class="category-list-count">13</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/编程语言/java/">java</a><span class="category-list-count">13</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/网络通讯/">网络通讯</a><span class="category-list-count">11</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/网络通讯/大小端/">大小端</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/网络通讯/计算机网络基础/">计算机网络基础</a><span class="category-list-count">10</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/路由器/">路由器</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/路由器/openwrt/">openwrt</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/通用技术/">通用技术</a><span class="category-list-count">13</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/通用技术/Docker/">Docker</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/通用技术/云计算实践/">云计算实践</a><span class="category-list-count">11</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/通用技术/云计算实践/kubernetes部署/">kubernetes部署</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/通用技术/云计算实践/区块链/">区块链</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/通用技术/云计算实践/集群高可用方案/">集群高可用方案</a><span class="category-list-count">4</span></li></ul></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/默认/">默认</a><span class="category-list-count">1</span></li></ul>
+    </div>
+  </aside>
+
+  
+    
+  <aside class="widget">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget-content">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/CS-Notes/">CS-Notes</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/PEM证书/">PEM证书</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Shell/">Shell</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/cron/">cron</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/database/">database</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/diagrams/">diagrams</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/docker/">docker</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/docker-qq/">docker-qq</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/flask/">flask</a><span class="tag-list-count">9</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/git/">git</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/graphics/">graphics</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/http/">http</a><span class="tag-list-count">10</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/informationisbeautiful/">informationisbeautiful</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/java基础/">java基础</a><span class="tag-list-count">13</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/java语法/">java语法</a><span class="tag-list-count">13</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/kubernetes/">kubernetes</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/linux/">linux</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mysql/">mysql</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/network/">network</a><span class="tag-list-count">10</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/openssl/">openssl</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/openwrt/">openwrt</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/p12/">p12</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/pfx/">pfx</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/tcp-ip/">tcp/ip</a><span class="tag-list-count">10</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/web开发/">web开发</a><span class="tag-list-count">9</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/云计算/">云计算</a><span class="tag-list-count">11</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/区块链/">区块链</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/大小端/">大小端</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/数据库/">数据库</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/系统管理/">系统管理</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/计算机网络/">计算机网络</a><span class="tag-list-count">10</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/集群/">集群</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/默认/">默认</a><span class="tag-list-count">1</span></li></ul>
+    </div>
+  </aside>
+
+  
+    
+  <aside class="widget">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget-content tagcloud">
+      <a href="/tags/CS-Notes/" style="font-size: 10px;">CS-Notes</a> <a href="/tags/PEM证书/" style="font-size: 10px;">PEM证书</a> <a href="/tags/Shell/" style="font-size: 10px;">Shell</a> <a href="/tags/cron/" style="font-size: 10px;">cron</a> <a href="/tags/database/" style="font-size: 10px;">database</a> <a href="/tags/diagrams/" style="font-size: 10px;">diagrams</a> <a href="/tags/docker/" style="font-size: 15px;">docker</a> <a href="/tags/docker-qq/" style="font-size: 10px;">docker-qq</a> <a href="/tags/flask/" style="font-size: 16.25px;">flask</a> <a href="/tags/git/" style="font-size: 10px;">git</a> <a href="/tags/graphics/" style="font-size: 10px;">graphics</a> <a href="/tags/http/" style="font-size: 17.5px;">http</a> <a href="/tags/informationisbeautiful/" style="font-size: 10px;">informationisbeautiful</a> <a href="/tags/java基础/" style="font-size: 20px;">java基础</a> <a href="/tags/java语法/" style="font-size: 20px;">java语法</a> <a href="/tags/kubernetes/" style="font-size: 13.75px;">kubernetes</a> <a href="/tags/linux/" style="font-size: 15px;">linux</a> <a href="/tags/mysql/" style="font-size: 11.25px;">mysql</a> <a href="/tags/network/" style="font-size: 17.5px;">network</a> <a href="/tags/openssl/" style="font-size: 10px;">openssl</a> <a href="/tags/openwrt/" style="font-size: 10px;">openwrt</a> <a href="/tags/p12/" style="font-size: 10px;">p12</a> <a href="/tags/pfx/" style="font-size: 10px;">pfx</a> <a href="/tags/tcp-ip/" style="font-size: 17.5px;">tcp/ip</a> <a href="/tags/web开发/" style="font-size: 16.25px;">web开发</a> <a href="/tags/云计算/" style="font-size: 18.75px;">云计算</a> <a href="/tags/区块链/" style="font-size: 10px;">区块链</a> <a href="/tags/大小端/" style="font-size: 10px;">大小端</a> <a href="/tags/数据库/" style="font-size: 12.5px;">数据库</a> <a href="/tags/系统管理/" style="font-size: 15px;">系统管理</a> <a href="/tags/计算机网络/" style="font-size: 17.5px;">计算机网络</a> <a href="/tags/集群/" style="font-size: 13.75px;">集群</a> <a href="/tags/默认/" style="font-size: 10px;">默认</a>
+    </div>
+  </aside>
+
+  
+    <aside class="widget">
+    <h3 class="widget-title">Links</h3>
+    <div class="widget-content">
+		<ul id="link-list">
+		<!-- link begin -->
+
+		<li><a href="https://www.google.com/">google</a></li>
+		<li><a href="https://www.baidu.com/">baidu</a></li>
+		
+		<!-- link end -->
+		</ul>
+    </div>
+</aside>
+
+  
+    <aside class="widget">
+    <h3 class="widget-title">Ads</h3>
+    <div class="widget-content">
+	 
+			* <a target="_blank" href="https://amazon.cn/gp/search?ie=UTF8&tag=momoda-23&linkCode=ur2&linkId=4a0e4fbec0cfa8dfe540ca999d0bf999&camp=536&creative=3200&index=books&keywords=编程">这些好书您看了吗?</a><img src="//ir-cn.amazon-adsystem.com/e/ir?t=momoda-23&l=ur2&o=28" width="1" height="1" border="0" alt="" style="border:none !important; margin:0px !important;">
+			<br><br>
+			* 体育&户外用品推荐>
+			<div align="center"> <a href="https://www.amazon.cn/B07HWB88Z5/dp/B07HWB88Z5/ref=as_sl_pc_tf_til?tag=momoda-23&linkCode=w00&linkId=14df5124f2165d9eb3d65252e60ed2cf&creativeASIN=B07HWB88Z5"><img src="/more/ads/amazon.gif" width="100%"></a> </div>
+
+    </div>
+</aside>
+
+  
+</div>
+      </div>
+      <footer id="colophon" role="contentinfo">
+    <p>&copy; 2019 momoda
+    All rights reserved.</p>
+    <p>Powered by <a href="https://hexo.io/" target="_blank">Hexo</a></p>
+    <a href="javascript:scrollTo(0,0);">返回顶部</a>
+</footer>
+
+    <script>window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"1","bdMiniList":false,"bdPic":"","bdStyle":"2","bdSize":"16"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];</script>
+
+<script src="/js/jquery-2.0.3.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+<script src="/js/navigation.js"></script>
+
+
+<script type="text/javascript" src="https://js.users.51.la/19862371.js"></script>
+<div id="bg"></div>
+
+  </div>
+</body>
+</html>

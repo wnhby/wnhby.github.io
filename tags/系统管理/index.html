@@ -1,0 +1,1355 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="utf-8">
+  
+  
+  <meta name="description" content="momoda">
+  
+
+  
+  <meta name="keywords" content="momoda">
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  <title>Tag: 系统管理 | Just another blog</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="momoda">
+<meta name="keywords" content="momoda">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Just another blog">
+<meta property="og:url" content="https://wnhby.github.io/tags/系统管理/index.html">
+<meta property="og:site_name" content="Just another blog">
+<meta property="og:description" content="momoda">
+<meta property="og:locale" content="zh-CN">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Just another blog">
+<meta name="twitter:description" content="momoda">
+  
+    <link rel="alternative" href="/atom.xml" title="Just another blog" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/css/images/favicon.ico">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  
+
+  
+  <!-- baidu webmaster push -->
+  <script src="//push.zhanzhang.baidu.com/push.js"></script>
+</head></html>
+<body class="home blog custom-background custom-font-enabled single-author">
+  <div id="page" class="hfeed site">
+      <header id="masthead" class="site-header" role="banner">
+    <hgroup>
+      <h1 class="site-title">
+        <a href="/" title="Just another blog" rel="home">Just another blog</a>
+      </h1>
+      
+        <h2 class="site-description">
+          <a href="/" id="subtitle">momoda blog</a>
+        </h2>
+      
+    </hgroup>
+
+    <nav id="site-navigation" class="main-navigation" role="navigation">
+            <button class="menu-toggle">菜单</button>
+            <a class="assistive-text" href="/#content" title="跳至内容">跳至内容</a><!--TODO-->
+            <div class="menu-main-container">
+                <ul id="menu-main" class="nav-menu">
+                
+                    <li class="menu-item menu-item-type-post_type menu-item-object-page"><a href="/">Home</a></li>
+                
+                    <li class="menu-item menu-item-type-post_type menu-item-object-page"><a href="/atom.xml">RSS</a></li>
+                
+                    <li class="menu-item menu-item-type-post_type menu-item-object-page"><a href="/sitemap.xml">Site map</a></li>
+                
+                    <li class="menu-item menu-item-type-post_type menu-item-object-page"><a href="/more/share.html">Share</a></li>
+                
+                </ul>
+            </div>
+    </nav>
+</header>
+
+      <div id="main" class="wrapper">
+        <div id="primary" class="site-content"><div id="content" role="main">
+  
+    <article id="post-se-notes/Linux基础/README" class="post-se-notes/Linux基础/README post type-post status-publish format-standard hentry">
+    <!---->
+
+      <header class="entry-header">
+        
+        
+  
+    <h1 class="entry-title">
+      <a class="article-title" href="/se-notes/Linux基础/README/">Linux基础-README</a>
+    </h1>
+  
+
+        
+        <div class="comments-link">
+            
+            <a href="javascript:void(0);" data-url="https://wnhby.github.io/se-notes/Linux基础/README/" data-id="cjsbbbexj002le9s6ijaf02cm" class="leave-reply bdsharebuttonbox" data-cmd="more">分享</a>
+        </div><!-- .comments-link -->
+      </header><!-- .entry-header -->
+
+    <div class="entry-content">
+      
+        <!-- TOC -->
+<ul>
+<li><a href="#简介">简介</a></li>
+<li><a href="#操作系统的特征">操作系统的特征</a></li>
+<li><a href="#操作系统目标">操作系统目标</a></li>
+<li><a href="#操作系统的运行机制">操作系统的运行机制</a></li>
+<li><a href="#系统调用">系统调用</a><ul>
+<li><a href="#标准库函数">标准库函数</a></li>
+</ul>
+</li>
+<li><a href="#中断和异常">中断和异常</a></li>
+<li><a href="#用户态内核态">用户态、内核态</a></li>
+<li><a href="#-操作系统发展">* 操作系统发展</a><pre><code>- [手工操作阶段（此阶段无操作系统）](#手工操作阶段此阶段无操作系统)
+- [批处理阶段](#批处理阶段)
+- [分时操作系统](#分时操作系统)
+- [实时操作系统](#实时操作系统)
+- [分布式计算机系统](#分布式计算机系统)
+- [Ads](#ads)
+</code></pre></li>
+</ul>
+<!-- /TOC -->
+<h1 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h1><p>操作系统（Operating System, OS）是指控制和管理整个计算机系统的硬件和软件资源，并合理地组织调度计算机的工作和资源的分配，以提供给用户和其他软件方便的接口和环境的程序集合。计算机操作系统是随着计算机研究和应用的发展逐步形成并发展起来的，它是计算机系统中最基本的系统软件。</p>
+<blockquote>
+<p>操作系统三大功能：资源管理与分配、调度工作流程、封装接口与提供环境</p>
+</blockquote>
+<h1 id="操作系统的特征"><a href="#操作系统的特征" class="headerlink" title="操作系统的特征"></a>操作系统的特征</h1><p>操作系统是一种系统软件，但与其他的系统软件和应用软件有很大的不同，它有自己的基本特征。操作系统的基本特征包括<strong>并发</strong>、<strong>共享</strong>、<strong>虚拟</strong>和<strong>异步</strong>。</p>
+<ul>
+<li>并发（Concurrence）：并发是指多个事件在同一时间间隔内发生。操作系统的并发性是指计算机系统中同时存在多个运行着的程序，因此它具有处理和调度多个程序同时执行的能力。在操作系统中，引入进程的目的是使程序能并发执行。</li>
+<li>共享（Sharing）：资源共享是指系统中的资源可供内存中多个并发执行的进程共同使用。共享可分为以下两种资源共享方式：<ul>
+<li>互斥共享方式：系统中的某些资源，如打印机、磁带机，虽然它们可以提供给多个进程使用，但为使所打印或记录的结果不致造成混淆，应规定在一段时间内只允许一个进程访问该资源。</li>
+<li>同时访问方式：系统中还有另一类资源，允许在一段时间内由多个进程同时对它们进行访问。这里所谓的“同时”往往是宏观上的，而在微观上，这些进程可能是交替地对该资源进行访问即 “分时共享”。典型的可供多个进程“同时”访问的资源是磁盘设备，一些文件也可以被“同时”共享，即若干个用户同时访问该文件。</li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<p>PS：并发和共享是操作系统两个最基本的特征，这两者之间又是互为存在条件的：资源共享是以程序的并发为条件的，若系统不允许程序并发执行，则自然不存在资源共享问题；若系统不能对资源共享实施有效的管理，也必将影响到程序的并发执行，甚至根本无法并发执行。</p>
+</blockquote>
+<ul>
+<li><p>虛拟（Virtual）：虚拟是指把一个物理上的实体变为若干个逻辑上的对应物。用于实现虚拟的技术，称为虚拟技术。在操作系统中利用了多种虚拟技术，分别用来实现虚拟处理器、虚拟内存和虚拟外部设备等。</p>
+<ul>
+<li>如在虚拟处理器技术中，利用多道程序设计技术（即同时把多个程序放入内存，并允许它们交替在CPU中运行），把一个物理上的 CPU 虚拟为多个逻辑上的 CPU 。</li>
+</ul>
+</li>
+<li><p>异步（Asynchronism）：在多道程序环境下，允许多个程序并发执行，但由于资源有限，进程的执行不是一贯到底，而是走走停停，以不可预知的速度向前推进，这就是进程的异步性。</p>
+</li>
+</ul>
+<h1 id="操作系统目标"><a href="#操作系统目标" class="headerlink" title="操作系统目标"></a>操作系统目标</h1><p>为了给多道程序提供良好的运行环境，操作系统作为计算机系统资源的管理者具有以下几方面的功能：</p>
+<ul>
+<li>处理机管理（进程线程管理）：在多道程序环境下，处理机的分配和运行都以进程（或线程）为基本单位，因而对处理机的管理可归结为对进程（或线程）的管理。并发时在计算机内同时运行多个进程，进程何时创建、何时撤销、如何管理、如何避免冲突、合理共享是进程管理的主要任务。</li>
+<li>存储器管理：存储器管理是为了给多道程序的运行提供良好的环境，方便用户使用以及提高内存的利用率。</li>
+<li>文件管理：计算机中的信息都是以文件的形式存在的，操作系统中负责文件管理的部分称为文件系统。</li>
+<li>设备管理：设备管理的主要任务是完成用户的I/O请求，方便用户使用各种设备。</li>
+</ul>
+<p>为方便用户使用计算机，操作系统还提供了用户接口。操作系统提供的接口主要分为两类，一类是命令接口，用户利用这些操作命令来组织和控制作业的执行；另一类是程序接口，编程人员可以使用它们来请求操作系统服务。</p>
+<h1 id="操作系统的运行机制"><a href="#操作系统的运行机制" class="headerlink" title="操作系统的运行机制"></a>操作系统的运行机制</h1><p>计算机系统中，通常 CPU 执行两种不同性质的程序：一种是操作系统内核程序；另一种是用户自编程序或系统外层的应用程序。对操作系统而言，这两种程序的作用不同，前者是后者的管理者，因此“管理程序”要执行一些特权指令，而“被管理程序”出于安全考虑不能执行这些指令。所谓特权指令，是指计算机中不允许用户直接使用的指令，如 I/O 指令、 置中断指令，存取用于内存保护的寄存器、送程序状态字到程序状态字寄存器等指令。操作系统在具体实现上划分了用户态和核心态，以严格区分两类程序。</p>
+<p>内核是计算机上配置的底层软件，是计算机功能的延伸。不同系统对内核的定义稍有区别，大多数<strong>操作系统内核</strong>包括以下四个方面：</p>
+<ul>
+<li><p>时钟管理：在计算机的各种部件中，时钟是最关键的设备。操作系统需要通过时钟管理，向用户提供标准的系统时间。另外通过时钟中断的管理，可以实现进程的切换。诸如，在分时操作系统中，釆用时间片轮转调度的实现；在实时系统中，按截止时间控制运行的实现；在批处理系统中，通过时钟管理来衡量一个作业的运行程度等。</p>
+</li>
+<li><p>中断机制：引入中断技术的初衷是提高多道程序运行环境中 CPU 的利用率，而且主要是针对外部设备的。后来逐步得到发展，形成了多种类型，成为操作系统各项操作的基础。例如，键盘或鼠标信息的输入、进程的管理和调度、系统功能的调用、设备驱动、文件访问等，无不依赖于中断机制。可以说，现代操作系统是靠中断驱动的软件。</p>
+</li>
+<li><p>原语：按层次结构设计的操作系统，底层是一些可被调用的公用小程序，它们各自完成一个规定的操作。其特点是：它们处于操作系统的最底层，是最接近硬件的部分。这些程序的运行具有原子性，运行时间较短，而且调用频繁。通常把具有这些特点的程序称为原语（Atomic Operation）。定义原语的直接方法是关闭中断，让它的所有动作不可分割地进行完再打开中断。系统中的设备驱动、CPU 切换、进程通信等功能中的部分操作都可以定义为原语，使它们成为内核的组成部分。</p>
+</li>
+<li><p>系统控制的数据结构及处理：系统中用来登记状态信息的数据结构很多，比如作业控制块、进程控制块(PCB)、设备控制块、各类链表、消息队列、缓冲区、空闲区登记表、内存分配表等。为了实现有效的管理，系统需要一些基本的操作，常见的操作有以下三种：</p>
+<ul>
+<li>进程管理：进程状态管理、进程调度和分派、创建与撤销进程控制块等。</li>
+<li>存储器管理：存储器的空间分配和回收、内存信息保护程序、代码对换程序等。</li>
+<li>设备管理：缓冲区管理、设备分配和回收等。</li>
+</ul>
+</li>
+</ul>
+<h1 id="系统调用"><a href="#系统调用" class="headerlink" title="系统调用"></a>系统调用</h1><p>所有的操作系统都提供多种服务的入口点，由此程序向内核请求服务。各种版本的 UNIX 实现都提供良好定义、数量有限、直接进入内核的入口点，这些入口点被称为系统调用。简单来说，系统调用就是操作系统提供的用于实现系统各种核心功能的许多子程序，如 read()、write()、open() 等。</p>
+<p>这些系统调用按功能大致可分为如下几类：</p>
+<ul>
+<li>设备管理。完成设备的请求或释放，以及设备启动等功能。</li>
+<li>文件管理。完成文件的读、写、创建及删除等功能。</li>
+<li>进程控制。完成进程的创建、撤销、阻塞及唤醒等功能。</li>
+<li>进程通信。完成进程之间的消息传递或信号传递等功能。</li>
+<li>内存管理。完成内存的分配、回收以及获取作业占用内存区大小及始址等功能。</li>
+</ul>
+<p>显然，系统调用运行在系统的核心态。通过系统调用的方式来使用系统功能，可以保证系统的稳定性和安全性，防止用户随意更改或访问系统的数据或命令。系统调用命令是由操作系统提供的一个或多个子程序模块实现的。</p>
+<p>这样，操作系统的运行环境可以理解为：用户通过操作系统运行上层程序（如系统提供的命令解释程序或用户自编程序），而这个上层程序的运行依赖于操作系统的底层管理程序提供服务支持，当需要管理程序服务时，系统则通过<code>硬件中断</code>机制进入核心态，运行底层管理程序；也可能是程序运行<code>出现异常</code>情况，被动地需要底层管理程序的服务，这时就通过异常处理来进入核心态。当底层管理程序运行结束时，用户程序需要继续运行，则通过相应的保存的程序现场退出中断处理程序或异常处理程序，返回断点处继续执行。</p>
+<p>下面列举一些由用户态转向核心态的例子：</p>
+<ul>
+<li>用户程序要求操作系统的服务，即系统调用。</li>
+<li>发生一次中断。</li>
+<li>用户程序中产生了一个错误状态。</li>
+<li>用户程序中企图执行一条特权指令。</li>
+<li>从核心态转向用户态由一条指令实现，这条指令也是特权命令。一般是中断返回指令。</li>
+</ul>
+<p>注意：由用户态进入核心态，不仅仅是状态需要切换。而且，所使用的堆栈也可能需要由用户堆栈切换为系统堆栈，但这个系统堆栈也是属于该进程的。</p>
+<h2 id="标准库函数"><a href="#标准库函数" class="headerlink" title="标准库函数"></a>标准库函数</h2><p>库函数顾名思义是把函数放到库里，是把一些常用到的函数编完放到一个文件里，供别人用。libc 就是一个 C 标准库，里面存放一些基本函数，这些基本函数都是被标准化了的，而且这些函数通常都是用汇编直接实现的，如 printf、scanf 等。</p>
+<p>标准库函数构建在系统调用接口之上，应用程序既可以使用标准库函数，也可以使用系统调用。如下图：</p>
+<p><img src="https://camo.githubusercontent.com/382fca944c80316687d2a8d2dfd54fadc17e8525/687474703a2f2f3778726c75392e636f6d312e7a302e676c622e636c6f7564646e2e636f6d2f4c696e75785f4f535f322e706e67" alt="enter image description here"></p>
+<p>系统调用和标准库函数的区别如下：</p>
+<ul>
+<li>从程序完成的功能来看，函数库提供的函数通常不需要操作系统的服务。系统调用是要求操作系统为用户提供某种服务，通常是涉及系统的硬件资源和一些敏感的软件资源等。</li>
+<li>从程序执行的空间来说，标准库函数是在用户空间内执行的，除非函数涉及到 I/O 操作等，一般是不会切到内核态的。系统调用则运行于内核空间。</li>
+<li>从程序的可移植性的角度来看，相对于系统调用，C 语言的标准备函数库具备较高的可移植性。因为在所有的 ANSI C 编译器版本中，标准库函数是相同的；系统调用与系统有关，各个操作系统的系统调用是不同的。</li>
+</ul>
+<p>［<a href="http://www.nowcoder.com/questionTerminal/06be659534644b8eb3f164f9f1085a9d" target="_blank" rel="noopener">系统调用函数</a>］  </p>
+<h1 id="中断和异常"><a href="#中断和异常" class="headerlink" title="中断和异常"></a>中断和异常</h1><ul>
+<li>中断(Interruption)，也称外中断，指来自 CPU 执行指令以外的事件的发生，如设备发出的 I/O 结束中断，表示设备输入/输出处理已经完成，希望处理机能够向设备发下一个输入 / 输出请求，同时让完成输入/输出后的程序继续运行。时钟中断，表示一个固定的时间片已到，让处理机处理计时、启动定时运行的任务等。这一类中断通常是与当前程序运行无关的事件，即它们与当前处理机运行的程序无关。</li>
+<li>异常(Exception)，也称内中断、例外或陷入(Trap)，指源自 CPU 执行指令内部的事件，如程序的非法操作码、地址越界、算术溢出、虚存系统的缺页以及专门的陷入指令等引起的事件。对异常的处理一般要依赖于当前程序的运行现场，而且异常不能被屏蔽，一旦出现应立即处理。</li>
+</ul>
+<h1 id="用户态、内核态"><a href="#用户态、内核态" class="headerlink" title="用户态、内核态"></a>用户态、内核态</h1><p>操作系统的很多操作会消耗系统的物理资源，例如创建一个新进程时，要做很多底层的工作，如分配物理内存，从父进程拷贝相关信息，拷贝设置页目录、页表等，这些操作显然不能让任何程序都可以做。</p>
+<p>我们知道，Intel 的 X86 架构的 CPU 提供了 0 到 3 四个特权级（在CPU的设计中，用户态指非特权状态。在此状态下，执行的代码被硬件限定，不能进行某些操作，比如写入其他进程的存储空间，以防止给操作系统带来安全隐患）。</p>
+<p>在 Linux 操作系统操作系统的设计中主要采用了0和3两个特权级，也就是我们通常所说的内核态和用户态。运行于用户态的进程可以执行的操作和访问的资源都受到极大的限制，而运行于内核态的进程则可以执行任何操作并且在资源的使用上也没有限制。</p>
+<p>当一个任务（进程）陷入内核代码中执行时，我们就称进程处于内核运行态（或简称为内核态）。此时处理器处于特权级最高的（0 级）内核代码中执行。每个进程都有自己的内核栈和用户栈，当进程处于内核态时，执行的内核代码会使用当前进程的内核栈。当进程在执行用户自己的代码时，则称其处于用户运行态（用户态），此时处理器在特权级最低的（3 级）用户代码中运行。简单来说在内核态下， CPU 可执行任何指令，在用户态下 CPU 只能执行非特权指令。</p>
+<p>Linux 进程的 4GB 地址空间，3G-4G 是内核态的地址空间，存放整个内核的代码和所有的内核模块，以及内核所维护的数据。用户运行一个程序，该程序所创建的进程运行在用户态，如果要执行文件操作，网络数据发送等操作，必须通过 write，send 等系统调用，这些系统调用会调用内核中的代码来完成操作。这时必须切换到 Ring 0，然后进入 3GB-4GB 中的内核地址空间去执行这些代码完成操作，完成后切换回Ring 3，回到用户态。当程序处于内核态时可以随意进入用户态。</p>
+<p>很多程序开始时运行于用户态，但在执行的过程中，一些操作需要在内核权限下才能执行，这就涉及到一个从用户态切换到内核态的过程。用户态切换到内核态的 3 种方式：</p>
+<ul>
+<li>系统调用：这是处于用户态的进程主动请求切换到内核态的一种方式。用户态的进程通过系统调用申请使用操作系统提供的系统调用服务例程来处理任务</li>
+<li>产生异常：CPU 执行运行在用户态下的程序时，发生了某些事先不可知的异常，这时会切换到内核态，如缺页异常</li>
+<li>外围设备的中断：当外围设备完成用户请求的操作后，会向 CPU 发出相应的中断信号，这时 CPU 会暂停执行下一条即将要执行的指令转而去执行与中断信号对应的处理程序，如果先前执行的指令是用户态下的程序，那么这个转换的过程自然也就发生了由用户态到内核态的切换    </li>
+</ul>
+<h1 id="操作系统发展"><a href="#操作系统发展" class="headerlink" title="* 操作系统发展"></a>* 操作系统发展</h1><h3 id="手工操作阶段（此阶段无操作系统）"><a href="#手工操作阶段（此阶段无操作系统）" class="headerlink" title="手工操作阶段（此阶段无操作系统）"></a>手工操作阶段（此阶段无操作系统）</h3><p>用户在计算机上算题的所有工作都要人工干预，如程序的装入、运行、结果的输出等。随着计算机硬件的发展，人机矛盾（速度和资源利用）越来越大，必须寻求新的解决办法。</p>
+<h3 id="批处理阶段"><a href="#批处理阶段" class="headerlink" title="批处理阶段"></a>批处理阶段</h3><p>为了解决人机矛盾及CPU和I/O设备之间速度不匹配的矛盾，出现了批处理系统。它按发展历程又分为单道批处理系统、多道批处理系统（多道程序设计技术出现以后）。</p>
+<ul>
+<li>单道批处理系统：系统对作业的处理是成批进行的，但内存中始终只保持一道作业。当该程序完成或发生异常情况时，才换入其后继程序进入内存运行。</li>
+<li>多道批处理系统：多道程序设计技术允许多个程序同时进入内存并运行。即同时把多个程序放入内存，并允许它们交替在CPU中运行，它们共享系统中的各种硬、软件资源。当一道程序因I/O请求而暂停运行时，CPU便立即转去运行另一道程序。它没有用某些机制提高某一技术方面的瓶颈问题，而是让系统的各个组成部分都尽量去“忙”，花费很少时间去切换任务，达到了系统各部件之间的并行工作，使其整体在单位时间内的效率翻倍。</li>
+</ul>
+<h3 id="分时操作系统"><a href="#分时操作系统" class="headerlink" title="分时操作系统"></a>分时操作系统</h3><p>把处理器的运行时间分成很短的时间片，按时间片轮流把处理器分配给各联机作业使用。若某个作业在分配给它的时间片内不能完成其计算，则该作业暂时停止运行，把处理器让给其他作业使用，等待下一轮再继续运行。由于计算机速度很快，作业运行轮转得很快，给每个用户的感觉好像是自己独占一台计算机。多道批处理是实现作业自动控制而无需人工干预的系统，而分时系统是实现人机交互的系统。</p>
+<p>分时系统具有与批处理系统不同的特征，其主要特征如下：</p>
+<ul>
+<li>同时性。同时性也称多路性，指允许多个终端用户同时使用一台计算机。</li>
+<li>交互性。用户能够方便地与系统进行人-机对话。</li>
+<li>独立性。系统中多个用户可以彼此独立地进行操作，互不干扰。</li>
+<li>及时性。用户请求能在很短时间内获得响应。</li>
+</ul>
+<h3 id="实时操作系统"><a href="#实时操作系统" class="headerlink" title="实时操作系统"></a>实时操作系统</h3><p>为了能在某个时间限制内完成某些紧急任务而不需时间片排队，诞生了实时操作系统。这里的时间限制可以分为两种情况：如果某个动作必须绝对地在规定的时刻（或规定的时间范围）发生，则称为硬实时系统。例如，飞行器的飞行自动控制系统，这类系统必须提供绝对保证，让某个特定的动作在规定的时间内完成。如果能够接受偶尔违反时间规定，并且不会引起任何永久性的损害，则称为软实时系统，如飞机订票系统、银行管理系统。</p>
+<p>在实时操作系统的控制下，计算机系统接收到外部信号后及时进行处理，并且要在严格的时限内处理完接收的事件。实时橾作系统的主要特点是及时性和可靠性。</p>
+<h3 id="分布式计算机系统"><a href="#分布式计算机系统" class="headerlink" title="分布式计算机系统"></a>分布式计算机系统</h3><p>分布式计算机系统是由多台计算机组成并满足下列条件的系统：系统中任意两台计算机通过通信方式交换信息；系统中的每一台计算机都具有同等的地位，即没有主机也没有从机；每台计算机上的资源为所有用户共享；系统中的任意若千台计算机都可以构成一个子系统，并且还能重构；任何工作都可以分布在几台计算机上，由它们并行工作、协同完成。</p>
+<p>用于管理分布式计算机系统的操作系统称为分布式计算机系统。该系统的主要特点是：分布性和并行性。分布式操作系统与网络操作系统本质上的不同之处在于分布式操作系统中，若干台计算机相互协同完成同一任务。</p>
+<p>分布式领域 CAP 理论：</p>
+<ul>
+<li>Consistency(一致性)，数据一致更新，所有数据变动都是同步的</li>
+<li>Availability(可用性)，好的响应性能</li>
+<li>Partition tolerance(分区容错性)：可靠性</li>
+</ul>
+<p>定理：任何分布式系统只可同时满足二点，没法三者兼顾。<br>忠告：架构师不要将精力浪费在如何设计能满足三者的完美分布式系统，而是应该进行取舍。</p>
+<p>［<a href="http://www.nowcoder.com/questionTerminal/3666684e8eb142369092da0a559925bb" target="_blank" rel="noopener">分布式系统三个指标</a>］</p>
+<hr>
+<ul>
+<li><p><a href="/more/donate/index.html"><strong><em><font color="red">我觉得帮助到我了, 支持你一下.</font></em></strong></a><br>   </p>
+</li>
+<li><p><a href="https://www.paypal.me/momodainfo" target="_blank" rel="noopener"><strong><em><font color="red">If you think the article is helpful to you, you can reward me through paypal.</font></em></strong></a></p>
+</li>
+</ul>
+<h3 id="Ads"><a href="#Ads" class="headerlink" title="Ads"></a>Ads</h3><p><em>这是小广告! 如果有需要, 不妨支持一下吧~</em></p>
+<blockquote>
+<p> <a target="_blank" href="https://amazon.cn/gp/search?ie=UTF8&tag=momoda-23&linkCode=ur2&linkId=4a0e4fbec0cfa8dfe540ca999d0bf999&camp=536&creative=3200&index=books&keywords=编程">这些好书您看了吗?</a><img src="//ir-cn.amazon-adsystem.com/e/ir?t=momoda-23&l=ur2&o=28" width="1" height="1" border="0" alt="" style="border:none !important; margin:0px !important;"></p>
+</blockquote>
+<blockquote>
+<p>体育&amp;户外用品推荐</p>
+</blockquote>
+<div align="center"> <a href="https://www.amazon.cn/B07HWB88Z5/dp/B07HWB88Z5/ref=as_sl_pc_tf_til?tag=momoda-23&linkCode=w00&linkId=14df5124f2165d9eb3d65252e60ed2cf&creativeASIN=B07HWB88Z5" target="_blank" rel="noopener"><img src="/se-notes/Linux基础/README/../more/ads/amazon.gif" width="100%"></a> </div>
+      
+    </div><!-- .entry-content -->
+
+    <footer class="entry-meta">
+    <a href="/se-notes/Linux基础/README/">
+    <time datetime="2019-01-03T13:49:30.000Z" class="entry-date">
+        1月 3 2019
+    </time>
+</a>
+    
+  <span class="article-delim">&#8226;</span>
+  <div class="article-category">
+  <a class="article-category-link" href="/categories/Linux/">Linux</a>, <a class="article-category-link" href="/categories/Linux/linux基础/">linux基础</a>
+  </div>
+
+    
+  <span class="article-delim">&#8226;</span>
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/linux/">linux</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/系统管理/">系统管理</a></li></ul>
+
+    </footer>
+</article>
+
+
+
+
+
+
+  
+    <article id="post-se-notes/Linux基础/ch1-主机规划与磁盘分区" class="post-se-notes/Linux基础/ch1-主机规划与磁盘分区 post type-post status-publish format-standard hentry">
+    <!---->
+
+      <header class="entry-header">
+        
+        
+  
+    <h1 class="entry-title">
+      <a class="article-title" href="/se-notes/Linux基础/ch1-主机规划与磁盘分区/">ch1-主机规划与磁盘分区</a>
+    </h1>
+  
+
+        
+        <div class="comments-link">
+            
+            <a href="javascript:void(0);" data-url="https://wnhby.github.io/se-notes/Linux基础/ch1-主机规划与磁盘分区/" data-id="cjsbbbexn002pe9s6r1oqmnz9" class="leave-reply bdsharebuttonbox" data-cmd="more">分享</a>
+        </div><!-- .comments-link -->
+      </header><!-- .entry-header -->
+
+    <div class="entry-content">
+      
+        <!-- TOC -->
+<ul>
+<li><a href="#主机规划与磁盘分区">主机规划与磁盘分区</a><ul>
+<li><a href="#磁盘分区表">磁盘分区表</a></li>
+<li><a href="#mbr-与开机流程">MBR 与开机流程</a></li>
+<li><a href="#磁盘分区的选择">磁盘分区的选择</a><ul>
+<li><a href="#目录树结构">目录树结构</a></li>
+<li><a href="#挂载">挂载</a></li>
+<li><a href="#ads">Ads</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<!-- /TOC -->
+<h1 id="主机规划与磁盘分区"><a href="#主机规划与磁盘分区" class="headerlink" title="主机规划与磁盘分区"></a>主机规划与磁盘分区</h1><p>一块磁盘可以被划分为多个分区。分区的目的包括：</p>
+<ol>
+<li>数据安全性：每个分区的数据是互相隔离的。</li>
+<li>系统性能考虑：数据集中在某个分区，当要读取该分区数据时只需查询该分区对应的柱面区段，因此了提高数据读取的速度和性能。</li>
+</ol>
+<h2 id="磁盘分区表"><a href="#磁盘分区表" class="headerlink" title="磁盘分区表"></a>磁盘分区表</h2><p>磁盘的第一个扇区记录了两个重要信息：</p>
+<ol>
+<li>MBR（主引导分区）：用于引导系统加载程序，有446 bytes。</li>
+<li>分区表：记录整个硬盘的分区状态，有64 bytes。</li>
+</ol>
+<p><img src="http://cn.linux.vbird.org/linux_basic/0130designlinux_files/partition-1.png" alt="磁盘分区表"></p>
+<p>关于磁盘分区表：</p>
+<ul>
+<li>“分区”即为针对64 bytes 的分区表进行设置。但由于硬盘默认的分区表只有64 bytes ，因此最多仅能写入四组分区信息。</li>
+<li>这四组分区称为主（Primary）或扩展（Extended）分区。扩展分区最多仅有一个，主要用于扩展分区数量，可继续划分为逻辑分区。</li>
+<li>能够被格式化的是主分区和逻辑分区，扩展分区无法被格式化。</li>
+<li>分区的最小单位是<strong>柱面</strong>。分区表中的每组记录区记录了该区段的起始与结束的柱面号码。</li>
+<li>当系统要写入磁盘时，必须参考磁盘分区表，才能针对某个分区进行数据的处理。</li>
+</ul>
+<h2 id="MBR-与开机流程"><a href="#MBR-与开机流程" class="headerlink" title="MBR 与开机流程"></a>MBR 与开机流程</h2><p>开机流程涉及到 BIOS 与 CMOS ，其中 CMOS 是记录各项硬件参数且嵌入在主板上面的存储器，BIOS 则是一个主板上的驱动，是开机时计算机系统主动执行的第一个程序。</p>
+<p>整个开机流程如下：</p>
+<ol>
+<li>BIOS：开机时主动执行的驱动程序，根据用户的设置识别可开机的存储设备。</li>
+<li>MBR：可开机的存储设备中第一个扇区内的主引导分区，包含了引导加载程序。</li>
+<li>引导加载程序（Boot loader）：一个主要用于读取内核文件来执行的程序。其功能还包括：提供菜单、移交控制权给其他 loader。</li>
+<li>内核文件：开始操作系统的功能。</li>
+</ol>
+<h2 id="磁盘分区的选择"><a href="#磁盘分区的选择" class="headerlink" title="磁盘分区的选择"></a>磁盘分区的选择</h2><h3 id="目录树结构"><a href="#目录树结构" class="headerlink" title="目录树结构"></a>目录树结构</h3><p><img src="http://cn.linux.vbird.org/linux_basic/0130designlinux_files/dirtree.gif" alt="目录树"></p>
+<p>如上图所示，目录树中所有的文件都是由根目录(/)衍生来的，而次目录之下还能够有其他的数据存在。上图中长方形为目录， 波浪形则为文件。</p>
+<h3 id="挂载"><a href="#挂载" class="headerlink" title="挂载"></a>挂载</h3><p>挂载：利用一个目录当进入点，将磁盘分区的数据放置在该目录下，即：进入该目录就可以读取该分区。</p>
+<p><img src="http://cn.linux.vbird.org/linux_basic/0130designlinux_files/dir_3.png" alt="挂载"></p>
+<hr>
+<ul>
+<li><p><a href="/more/donate/index.html"><strong><em><font color="red">我觉得帮助到我了, 支持你一下.</font></em></strong></a><br>   </p>
+</li>
+<li><p><a href="https://www.paypal.me/momodainfo" target="_blank" rel="noopener"><strong><em><font color="red">If you think the article is helpful to you, you can reward me through paypal.</font></em></strong></a></p>
+</li>
+</ul>
+<h3 id="Ads"><a href="#Ads" class="headerlink" title="Ads"></a>Ads</h3><p><em>这是小广告! 如果有需要, 不妨支持一下吧~</em></p>
+<blockquote>
+<p> <a target="_blank" href="https://amazon.cn/gp/search?ie=UTF8&tag=momoda-23&linkCode=ur2&linkId=4a0e4fbec0cfa8dfe540ca999d0bf999&camp=536&creative=3200&index=books&keywords=编程">这些好书您看了吗?</a><img src="//ir-cn.amazon-adsystem.com/e/ir?t=momoda-23&l=ur2&o=28" width="1" height="1" border="0" alt="" style="border:none !important; margin:0px !important;"></p>
+</blockquote>
+<blockquote>
+<p>体育&amp;户外用品推荐</p>
+</blockquote>
+<div align="center"> <a href="https://www.amazon.cn/B07HWB88Z5/dp/B07HWB88Z5/ref=as_sl_pc_tf_til?tag=momoda-23&linkCode=w00&linkId=14df5124f2165d9eb3d65252e60ed2cf&creativeASIN=B07HWB88Z5" target="_blank" rel="noopener"><img src="/se-notes/Linux基础/ch1-主机规划与磁盘分区/../more/ads/amazon.gif" width="100%"></a> </div>
+      
+    </div><!-- .entry-content -->
+
+    <footer class="entry-meta">
+    <a href="/se-notes/Linux基础/ch1-主机规划与磁盘分区/">
+    <time datetime="2019-01-03T13:49:30.000Z" class="entry-date">
+        1月 3 2019
+    </time>
+</a>
+    
+  <span class="article-delim">&#8226;</span>
+  <div class="article-category">
+  <a class="article-category-link" href="/categories/Linux/">Linux</a>, <a class="article-category-link" href="/categories/Linux/linux基础/">linux基础</a>
+  </div>
+
+    
+  <span class="article-delim">&#8226;</span>
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/linux/">linux</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/系统管理/">系统管理</a></li></ul>
+
+    </footer>
+</article>
+
+
+
+
+
+
+  
+    <article id="post-se-notes/Linux基础/ch0-进程与线程" class="post-se-notes/Linux基础/ch0-进程与线程 post type-post status-publish format-standard hentry">
+    <!---->
+
+      <header class="entry-header">
+        
+        
+  
+    <h1 class="entry-title">
+      <a class="article-title" href="/se-notes/Linux基础/ch0-进程与线程/">ch0-进程与线程</a>
+    </h1>
+  
+
+        
+        <div class="comments-link">
+            
+            <a href="javascript:void(0);" data-url="https://wnhby.github.io/se-notes/Linux基础/ch0-进程与线程/" data-id="cjsbbbexp002se9s6nelob0n0" class="leave-reply bdsharebuttonbox" data-cmd="more">分享</a>
+        </div><!-- .comments-link -->
+      </header><!-- .entry-header -->
+
+    <div class="entry-content">
+      
+        <!-- TOC -->
+<ul>
+<li><a href="#进程">进程</a><ul>
+<li><a href="#进程创建终止">进程创建、终止</a></li>
+<li><a href="#进程状态转换">进程状态转换</a></li>
+<li><a href="#进程实现">进程实现</a></li>
+<li><a href="#僵尸孤儿进程">*僵尸、孤儿进程</a></li>
+</ul>
+</li>
+<li><a href="#线程">线程</a><ul>
+<li><a href="#线程实现">线程实现</a><ul>
+<li><a href="#用户级线程">用户级线程</a></li>
+<li><a href="#内核级线程">内核级线程</a></li>
+</ul>
+</li>
+<li><a href="#混合实现">混合实现</a></li>
+<li><a href="#线程同步">线程同步</a></li>
+<li><a href="#线程安全">线程安全</a></li>
+<li><a href="#进程与线程">进程与线程</a></li>
+</ul>
+</li>
+<li><a href="#调度">调度</a><ul>
+<li><a href="#并发并行">并发、并行</a></li>
+</ul>
+</li>
+<li><a href="#死锁">死锁</a></li>
+<li><a href="#更多阅读">更多阅读</a><pre><code>- [Ads](#ads)
+</code></pre></li>
+</ul>
+<!-- /TOC -->
+<p>在多道程序环境下，允许多个程序并发执行。为此引入了进程(Process)的概念，以便更好地描述和控制程序的并发执行，实现操作系统的并发性和共享性。简单来说，<strong>进程是对正在运行的程序的一个抽象</strong>，一个进程就是一个正在执行程序的实例，包括程序计数器、寄存器和变量的当前值。</p>
+<p><strong>进程用于把资源集中到一起，而线程则是在 CPU 上被调度执行的实体</strong>。在同一个进程中并行运行多个线程，是对在同一个计算机上并行运行多个进程的模拟。在前一种情形下，多个线程共享同一个地址空间和其他资源，而在后一种情况下，多个进程共享物理内存、磁盘、打印机和资源。</p>
+<h1 id="进程"><a href="#进程" class="headerlink" title="进程"></a>进程</h1><p>从不同的角度，进程可以有不同的定义，比较典型的定义有：</p>
+<ul>
+<li>进程是程序的一次执行过程。</li>
+<li>进程是一个程序及其数据在处理机上顺序执行时所发生的活动。</li>
+<li>进程是具有独立功能的程序在一个数据集合上运行的过程，它是系统进行资源分配和调度的一个独立单位。</li>
+</ul>
+<h2 id="进程创建、终止"><a href="#进程创建、终止" class="headerlink" title="进程创建、终止"></a>进程创建、终止</h2><p>操作系统需要有一种方式来创建进程，主要有4种事件导致进程的创建：</p>
+<ul>
+<li>系统初始化；</li>
+<li>执行了进程创建系统调用；</li>
+<li>用户请求创建一个新进程；</li>
+<li>一个批处理作业的初始化</li>
+</ul>
+<p>从技术上来看，所有这些情形中，新进程都是由于一个已经存在的进程执行了一个用于创建进程的系统调用而创建的。UNIX系统中，只有一个系统调用可以用来创建新进程：fork。这个系统调用会创建一个与调用进程相同的副本。调用了 fork 之后，这两个进程拥有相同的存储映像、同样的环境字符串和同样的打开文件。</p>
+<p>进程创建之后，子进程和父进程拥有不同的地址空间，如果其中某个进程在其地址空间修改了一个字，这个修改对其他进程是不可见的。</p>
+<p>一个进程迟早会结束，通常由下列条件引起：</p>
+<ul>
+<li>正常退出（自愿的）</li>
+<li>出错退出（自愿的）</li>
+<li>严重错误（非自愿）</li>
+<li>被其他进程杀死（非自愿）</li>
+</ul>
+<h2 id="进程状态转换"><a href="#进程状态转换" class="headerlink" title="进程状态转换"></a>进程状态转换</h2><p>进程在其生命周期内，由于系统中各进程之间的相互制约关系及系统的运行环境的变化，使得进程的状态也在不断地发生变化（一个进程会经历若干种不同状态）。通常进程有三种状态。</p>
+<ul>
+<li>运行状态：进程正在 CPU 上运行。在单处理机环境下，每一时刻最多只有一个进程处于运行状态。</li>
+<li>就绪状态：进程已处于准备运行的状态，即进程获得了除 CPU 之外的一切所需资源，一旦得到 CPU 即可运行。</li>
+<li>阻塞状态，又称等待状态：进程正在等待某一事件而暂停运行，如等待某资源为可用（不包括 CPU）或等待输入/输出完成。即使 CPU 空闲，该进程也不能运行。</li>
+</ul>
+<p>下图说明了进程间状态转换的过程：</p>
+<p><img src="http://7xrlu9.com1.z0.glb.clouddn.com/Linux_OS_ProcessThread_1.png" alt=""></p>
+<p>其中：</p>
+<ol>
+<li>进程因为等待资源或事件而阻塞；</li>
+<li>调度程序选择了另一个进程；</li>
+<li>调度程序选择这个进程</li>
+<li>进程获得资源或事件</li>
+</ol>
+<h2 id="进程实现"><a href="#进程实现" class="headerlink" title="进程实现"></a>进程实现</h2><p>为了实现进程模型，操作系统维护着一张表格（一个结构数组），即进程表，每个进程占用一个进程表项（也叫进程控制块, PCB）。系统利用<strong>进程控制块</strong>（Process Control Block, PCB）来描述进程的基本情况和运行状态，进而控制和管理进程。PCB是进程存在的唯一标志！典型 PCB 中的一些字段如下：</p>
+<p><img src="http://7xrlu9.com1.z0.glb.clouddn.com/Linux_OS_ProcessThread_2.png" alt=""></p>
+<h2 id="僵尸、孤儿进程"><a href="#僵尸、孤儿进程" class="headerlink" title="*僵尸、孤儿进程"></a>*僵尸、孤儿进程</h2><p>子进程先于父进程结束，而且父进程没有函数调用 wait() 或 waitpid() 等待子进程结束，也没有注册 SIGCHLD 信号处理函数，结果使得子进程的进程列表信息无法回收，这样子进程就变成了<code>僵尸进程（Zombie）</code>。</p>
+<p>所以简单<strong>来说一个已经终止，但是其父进程尚未对其进行善后处理</strong>（终止子进程的有关信息）的进程被称为僵尸进程。</p>
+<p>UNIX 提供了一种机制可以保证只要父进程想知道子进程结束时的状态信息，就可以得到。这种机制就是: 在每个进程( init 除外)退出的时候，内核释放该进程所有的资源，包括打开的文件，占用的内存等。但是仍然为其保留一定的信息（包括进程号PID，退出状态，运行时间等)，直到父进程通过 wait/waitpid 来取时才释放。</p>
+<p>如果父进程不调用 wait/waitpid 的话，那么保留的那段信息就不会释放，其进程号就会一直被占用（这时用ps命令就能看到子进程的状态是“Z”），但是系统所能使用的进程号是有限的，如果大量的产生僵死进程，将因为没有可用的进程号而导致系统不能产生新的进程。此即为僵尸进程的危害，应当避免。</p>
+<p>注意如果父进程先于子进程结束，这时的子进程应该称作<strong>孤儿进程</strong>（Orphan）。每当出现一个孤儿进程的时候，内核就把孤儿进程的父进程设置为 init ，而 init 进程会循环地调用 wait() 。这样，当一个孤儿进程结束其生命周期后，init 进程就会进行善后工作。因此孤儿进程并不会有什么危害。</p>
+<h1 id="线程"><a href="#线程" class="headerlink" title="线程"></a>线程</h1><p>线程最直接的理解就是“轻量级进程”，它是一个基本的 CPU 执行单元，也是程序执行流的最小单元，由线程ID、程序计数器、寄存器集合和堆栈组成。线程是进程中的一个实体，是被系统独立调度和分派的基本单位，线程自己不拥有系统资源，只拥有一点在运行中必不可少的资源，但它可与同属一个进程的其他线程共享进程所拥有的全部资源。</p>
+<p>进程中使用线程的主要原因有以下几个：</p>
+<ul>
+<li>通过将应用程序分解成可以准并行运行的多个顺序线程，可<strong>简化程序设计模型</strong>。因为有了多线程之后，并行实体可以共享同一个地址空间和所有可用数据，这是多进程模型（它们具有不同的地址空间）所无法表达的。</li>
+<li><strong>线程比进程更加轻量级</strong>，比进程更容易创建，也更容易撤销。</li>
+<li>如果存在着大量的计算和大量的 I/O 处理，拥有多个线程允许这些活动彼此重叠进行，从而<strong>加快应用程序执行的速度</strong>。</li>
+</ul>
+<blockquote>
+<p>进程用于把资源集中到一起，而线程则是在 CPU 上被调度执行的实体。在同一个进程中并行运行多个线程，是对在同一个计算机上并行运行多个进程的模拟。在前一种情形下，多个线程共享同一个地址空间和其他资源，而在后一种情况下，多个进程共享物理内存、磁盘、打印机和资源。</p>
+</blockquote>
+<p>进程中的不同线程不像不同进程之间那样存在很大的独立性，所有的线程都有完全一样的地址空间，它们也共享同样的全局变量。由于每个线程都可以访问进程地址空间中的每一个内存地址，所以一个线程可以读、写甚至清除另一个线程的堆栈。线程之间没有保护，一是没必要，二是不可能。</p>
+<p>和传统进程一样，线程可以处于若干个状态中的任何一个：运行、阻塞、就绪、终止，之间的互相转换和进程也是一样的。多线程情况下，进程通常会从当前的单个线程开始，这个线程有能力通过调用一个库函数（如 thread_create）创建新的线程，通常情况，线程之间是平等关系的。一个线程完成工作后，调用一个库过程（如 thread_exit）退出。</p>
+<p>线程除了共享进程所拥有的资源之外，每个线程还独有一些内容，如下：</p>
+<ul>
+<li>线程 ID</li>
+<li>寄存器</li>
+<li>线程的堆栈指针</li>
+<li>程序计数器</li>
+</ul>
+<p>线程间通信方式主要有：事件、临界区、互斥量、信号量。</p>
+<h2 id="线程实现"><a href="#线程实现" class="headerlink" title="线程实现"></a>线程实现</h2><p>有两种方式实现线程，在用户空间中和在内核中，各有利弊。</p>
+<h3 id="用户级线程"><a href="#用户级线程" class="headerlink" title="用户级线程"></a>用户级线程</h3><p>在用户级线程中，有关线程管理的所有工作都由应用程序完成，内核意识不到线程的存在。</p>
+<p>应用程序可以通过使用线程库设计成多线程程序。通常，应用程序从单线程起始，在该线程中开始运行，在其运行的任何时刻，可以通过调用线程库中的派生例程创建一个在相同进程中运行的新线程。</p>
+<p><img src="http://7xrlu9.com1.z0.glb.clouddn.com/Linux_OS_ProcessThread_3.png" alt=""></p>
+<p>优点主要有：</p>
+<ul>
+<li>可以在不支持线程的操作系统上实现（只需要有线程函数库即可）；</li>
+<li>线程切换比陷入内核要快一个数量级（调度程序也是本地程序，比内核调用效率高）；</li>
+<li>允许每个进程有自己定制的调度算法。</li>
+</ul>
+<p>当然，也有一些问题：</p>
+<ul>
+<li><strong>阻塞系统调用</strong>问题。对应用程序而言，同一进程中只能同时有一个线程在运行，一个线程的阻塞将导致整个进程中所有线程的阻塞。</li>
+<li><strong>页面故障</strong>问题。如果有页面引起缺页中断，通常会阻塞整个进程直到磁盘I/O完成，尽管其它的线程是可以运行的。</li>
+<li>如果一个线程开始运行，那么在该线程中的其它线程就不能运行，除非第一个线程自动放弃 CPU（thread_yelid）。</li>
+</ul>
+<h3 id="内核级线程"><a href="#内核级线程" class="headerlink" title="内核级线程"></a>内核级线程</h3><p>在内核级线程中，线程管理的所有工作由内核完成，应用程序没有进行线程管理的代码，只有一个到内核级线程的编程接口。内核为进程及其内部的每个线程维护上下文信息，调度也是在内核基于线程架构的基础上完成。</p>
+<p><img src="http://7xrlu9.com1.z0.glb.clouddn.com/Linux_OS_ProcessThread_4.png" alt=""></p>
+<p>内核级线程存在的一些问题：</p>
+<ul>
+<li>所有能够阻塞线程的调用都以系统调用的形式实现，代价相当可观（理解为：切换线程需陷入内核，代价大）</li>
+<li>多线程进程创建新的进程时，新进程是否需要复制所有的线程</li>
+</ul>
+<h2 id="混合实现"><a href="#混合实现" class="headerlink" title="混合实现"></a>混合实现</h2><p>在一些系统中，使用组合方式的多线程实现。线程创建完全在用户空间中完成，线程的调度和同步也在应用程序中进行。一个应用程序中的多个用户级线程被映射到一些（小于或等于用户级线程的数目）内核级线程上。</p>
+<p><img src="http://7xrlu9.com1.z0.glb.clouddn.com/Linux_OS_ProcessThread_5.gif" alt=""></p>
+<h2 id="线程同步"><a href="#线程同步" class="headerlink" title="线程同步"></a>线程同步</h2><p>线程间通信方式主要有：事件、临界区、互斥量、信号量。生产者消费者问题（Producer-consumer problem），是一个多线程同步问题的经典案例。生产者的主要作用是重复生成一定量的数据放到缓冲区中，与此同时，消费者也在缓冲区消耗这些数据。该问题的关键就是要保证生产者不会在缓冲区满时加入数据，消费者也不会在缓冲区中空时消耗数据。</p>
+<p>用<strong>信号量</strong>进行多线程的同步操作，信号量包括两个操作原语：</p>
+<ul>
+<li>down：检查信号量是否大于0。若该值大于0，将其值减 1（用掉一个保存的唤醒信号）并继续；若该值为0，则进程将睡眠，而且此时 down 操作并未结束。 </li>
+<li>up：对信号量的值增1，如果一个或多个进程在该信号量上睡眠，无法完成一个先前的 down 操作，则由系统选择其中的一个并允许进程完成它的 down 操作。（信号量的值增1和唤醒一个进程同样是不可分隔的）</li>
+</ul>
+<p>解决生产者消费者问题需要使用三个信号量：一个称为 full（初始为 0），用来记录充满的缓冲槽数目，一个称为 empty（初始为 N），用来记录空的缓冲槽数目，一个称为 mutex（初始为 1），用来确保生产者和消费者不会同时访问缓冲区。</p>
+<p>那么生产者、消费者可以如下进行：</p>
+<pre><code>#define N 100
+semaphore mutex=1;                  //临界区互斥信号量
+semaphore empty=n;                  //空闲缓冲区
+semaphore full=0;                   //缓冲区初始化为空
+
+producer() {                       //生产者
+    int item;
+    while(true){
+        item = produce_item();      //生产数据
+        down(&amp;empty);               //将空槽数目减1
+        down(&amp;mutex);               //进入临界区
+        insert(item);               //将新数据项加入到缓冲区中
+        up(&amp;mutex);                 //离开临界区,释放互斥信号量
+        up(&amp;full);                  //将满槽的数目加1
+    }
+}
+
+consumer() {                        //消费者
+    int item;
+    while(true){
+        down(&amp;full);                // 将满槽数目减1
+        down(&amp;mutex);               // 进入临界区
+        item = remove_item();       // 从缓冲区中取出数据项
+        up(&amp;mutex);                 // 离开临界区,释放互斥信号量
+        up(&amp;empty);                 // 将空槽数目加1
+        consum_item();              // 处理数据项
+    }
+}
+</code></pre><h2 id="线程安全"><a href="#线程安全" class="headerlink" title="线程安全"></a>线程安全</h2><p><strong>线程安全</strong>就是多线程访问时，采用了加锁机制，当一个线程访问某个数据时，进行保护，其他线程不能进行访问直到该线程访问完毕，其他线程才可使用。不会出现数据不一致或者数据污染。线程不安全就是不提供数据访问保护，有可能出现多个线程先后更改数据造成所得到的数据是脏数据。</p>
+<p>线程安全问题都是由<code>全局变量</code>或者<code>静态变量</code>引起的。若每个线程中对全局变量、静态变量只有读操作，而无写操作，一般来说是线程安全的；若有多个线程同时执行写操作，一般都需要考虑线程同步，否则的话就可能影响线程安全。</p>
+<p>POSIX 线程标准要求 C 标准库中的大多数函数具备线程安全性。</p>
+<p>［<a href="http://www.nowcoder.com/questionTerminal/80c7cc46948c4263bc806e3f0e049bbc" target="_blank" rel="noopener">线程并发执行结果</a>］</p>
+<h2 id="进程与线程"><a href="#进程与线程" class="headerlink" title="进程与线程"></a>进程与线程</h2><p>下面主要从调度、并发性、系统开销、拥有资源等方面来对线程与进程进行比较。</p>
+<ol>
+<li><strong>调度</strong>：线程作为调度和分配的基本单位，进程作为拥有资源的基本单位。</li>
+<li><strong>并发性</strong>：在引入线程的操作系统中，不仅进程之间可以并发执行，而且在一个进程中的多个线程之间也可以并发执行，使得操作系统具有更好的并发性，从而能更加有效地使用系统资源和提高系统的吞吐量。  </li>
+<li><strong>拥有资源</strong>：进程是拥有资源的基本单位，一般地说，线程自己不拥有系统资源（也有一点必不可少的资源），但它可以访问其所隶属进程的资源，即一个进程的代码段、数据段及所拥有的系统资源（如已打开的文件、I/O设备等），可供该进程中的所有线程所共享。</li>
+<li><strong>系统开销</strong>：在创建或撤销进程时，系统都要为之分配和回收进程控制块、内存空间、I/O 设备等，因此操作系统所付出的开销显著地大于创建或撤销线程时的开销。</li>
+<li><strong>上下文切换</strong>：在进行进程切换时，涉及到当前进程 CPU 环境的保存及新被调度运行进程 CPU 环境的设置。而线程的切换只需要保存和设置少量寄存器的内容，不涉及存储器管理方面的操作。可见，进程切换的开销也远大于线程切换的开销。</li>
+<li><strong>数据共享</strong>：由于同一个进程中的多个线程具有相同的地址空间，在同步和通信的实现方面线程也比进程容易。在一些操作系统中，线程的切换、同步和通信都无须操作系统内核的干预。</li>
+</ol>
+<h1 id="调度"><a href="#调度" class="headerlink" title="调度"></a>调度</h1><p>在多道程序系统中，进程的数量往往多于 CPU 的个数，进程争用 CPU 的情况就在所难免。调度是对 CPU 进行分配，就是从就绪队列中，按照一定的算法（公平、髙效）选择一个进程并将 CPU 分配给它运行，以实现进程并发地执行。</p>
+<p>调度的时机：</p>
+<ol>
+<li>创建一个新的进程之后，必须决定运行父进程还是子进程</li>
+<li>在一个进程退出时必须做出调度决策</li>
+<li>当一个进程阻塞在 I/O 或者信号量上或由于其它原因阻塞时，必须选择另一个进程运行</li>
+<li>在一个 I/O 中断发生时，必须做出调度决策</li>
+</ol>
+<p>不同的环境需要不同的调度算法，主要分下面三种环境：</p>
+<ul>
+<li>批处理：一定时间做好一定的事情</li>
+<li>交互式：快速响应用户的请求</li>
+<li>实时系统：或多或少必须满足截止时间</li>
+</ul>
+<p>什么是好的调度算法？</p>
+<ul>
+<li>批处理系统：通常检查三个指标：吞吐量（每小时最大作业数）、周转时间（从提交到终止间的最小时间）、CPU 利用率（保持 CPU 始终忙碌）</li>
+<li>交互式系统：最重要的指标是最小响应时间（满足快速响应请求），均衡性（满足用户的期望）</li>
+<li>实时系统：最主要的要求是满足所有（或大多数）的截止时间要求</li>
+</ul>
+<p>批处理系统中的调度算法：</p>
+<ul>
+<li>先来先服务（FCFS）。易于理解且便于在程序中运行，缺点是I/O密集型操作导致效率低下；</li>
+<li>最短作业优先（SPF）。非抢占式的批处理调度算法。</li>
+<li>最短剩余时间优先。抢占式的算法，调度程序总是选择剩余运行时间最短的那个进程运行。</li>
+</ul>
+<p>交互式系统的调度算法：</p>
+<ul>
+<li>轮转调度。每个进程被分配一个时间段（时间片），允许该进程在该时间段运行。时间片太短，过多的进程切换降低效率，过长引起对短的交互请求的响应时间变长。</li>
+<li>优先级调度。每个进程被赋予一个优先级，允许优先级最高的可运行进程先运行。</li>
+</ul>
+<p>［<a href="http://www.nowcoder.com/questionTerminal/683d207653d9460ba9b60418695f2c8d" target="_blank" rel="noopener">作业调度设备利用率</a>］<br>［<a href="http://www.nowcoder.com/questionTerminal/9a714e7cb8fe4d158aa230ec7277e6a1" target="_blank" rel="noopener">响应比高者优先调度</a>］</p>
+<h2 id="并发、并行"><a href="#并发、并行" class="headerlink" title="并发、并行"></a>并发、并行</h2><p>并发和并行的区别就是一个处理器同时处理多个任务和多个处理器或者是多核的处理器同时处理多个不同的任务。前者是逻辑上的同时发生，而后者是物理上的同时发生．</p>
+<ul>
+<li>并发(concurrent)：指能处理多个同时性活动的能力，并发事件之间不一定要同一时刻发生。</li>
+<li>并行(parallel)：指同时发生的两个并发事件，具有并发的含义，而并发则不一定并行。</li>
+</ul>
+<h1 id="死锁"><a href="#死锁" class="headerlink" title="死锁"></a>死锁</h1><p>死锁的规范定义如下：<strong>如果一个进程集合中的每个进程都在等待只能由该进程集合中其他进程才能引发的事件，那么该进程集合就是死锁的。</strong></p>
+<p>产生死锁的原因主要是：</p>
+<ul>
+<li>因为系统资源不足。</li>
+<li>进程运行推进的顺序不合适。</li>
+<li>资源分配不当等。</li>
+</ul>
+<p>产生死锁的四个必要条件：</p>
+<ol>
+<li>互斥条件：每个资源要么已经分配给了一个进程，要么就是可用的。</li>
+<li>占有和等待条件：已经得到了某个资源的进程可以再请求新的资源。</li>
+<li>不可抢占条件：已经分配给一个进程的资源不能强制性地被抢占，只能被占有它的进程显式地释放；</li>
+<li>环路等待条件：死锁发生时，系统中一定有两个或者两个以上的进程组成的一条环路，该环路中的每个进程都在等待着下一个进程所占有的资源。</li>
+</ol>
+<p>这四个条件是死锁的必要条件，只要系统发生死锁，这些条件必然成立，而只要上述条件之一不满足，就不会发生死锁。</p>
+<p>四种处理死锁的策略：</p>
+<ol>
+<li>鸵鸟策略（忽略死锁）；</li>
+<li>检测死锁并恢复；</li>
+<li>仔细对资源进行分配，动态地避免死锁；</li>
+<li>通过破坏引起死锁的四个必要条件之一，防止死锁的产生。</li>
+</ol>
+<p>避免死锁的主要算法是基于一个<code>安全状态</code>的概念。在任何时刻，如果没有死锁发生，并且即使所有进程忽然请求对资源的最大请求，也仍然存在某种调度次序能够使得每一个进程运行完毕，则称该状态是安全的。从安全状态出发，系统能够保证所有进程都能完成，而从不安全状态出发，就没有这样的保证。</p>
+<p><code>银行家算法</code>：判断对请求的满足是否会进入不安全状态，如果是，就拒绝请求，如果满足请求后系统仍然是安全的，就予以分配。不安全状态不一定引起死锁，因为客户不一定需要其最大贷款额度。</p>
+<p>［<a href="http://www.nowcoder.com/questionTerminal/28e91f200206451b9ee44dd1613f94ce" target="_blank" rel="noopener">死锁产生必要条件</a>］<br>［<a href="http://www.nowcoder.com/questionTerminal/18b1f01c1901424382735d5d158a8f7f" target="_blank" rel="noopener">资源一定，进程最多申请多少资源</a>］</p>
+<h1 id="更多阅读"><a href="#更多阅读" class="headerlink" title="更多阅读"></a>更多阅读</h1><p>《UNIX网络编程》<br>《现代操作系统》<br>《UNIX 环境高级编程》    </p>
+<p><a href="http://www.ruanyifeng.com/blog/2013/04/processes_and_threads.html" target="_blank" rel="noopener">进程与线程的一个简单解释</a><br><a href="http://www.cnblogs.com/cocowool/archive/2012/05/22/2513027.html" target="_blank" rel="noopener">Linux的IPC命令</a><br><a href="http://c.biancheng.net/cpp/u/xitong_2/" target="_blank" rel="noopener">操作系统(计算机)进程和线程管理</a><br><a href="http://www.jianshu.com/p/5a4fc2729c17" target="_blank" rel="noopener">内核线程与用户线程的一点小总结</a><br><a href="http://www.cnblogs.com/Anker/p/3271773.html" target="_blank" rel="noopener">孤儿进程与僵尸进程</a><br><a href="http://stackoverflow.com/questions/1413785/sem-init-on-os-x" target="_blank" rel="noopener">sem_init on OS X</a>  </p>
+<hr>
+<ul>
+<li><p><a href="/more/donate/index.html"><strong><em><font color="red">我觉得帮助到我了, 支持你一下.</font></em></strong></a><br>   </p>
+</li>
+<li><p><a href="https://www.paypal.me/momodainfo" target="_blank" rel="noopener"><strong><em><font color="red">If you think the article is helpful to you, you can reward me through paypal.</font></em></strong></a></p>
+</li>
+</ul>
+<h3 id="Ads"><a href="#Ads" class="headerlink" title="Ads"></a>Ads</h3><p><em>这是小广告! 如果有需要, 不妨支持一下吧~</em></p>
+<blockquote>
+<p> <a target="_blank" href="https://amazon.cn/gp/search?ie=UTF8&tag=momoda-23&linkCode=ur2&linkId=4a0e4fbec0cfa8dfe540ca999d0bf999&camp=536&creative=3200&index=books&keywords=编程">这些好书您看了吗?</a><img src="//ir-cn.amazon-adsystem.com/e/ir?t=momoda-23&l=ur2&o=28" width="1" height="1" border="0" alt="" style="border:none !important; margin:0px !important;"></p>
+</blockquote>
+<blockquote>
+<p>体育&amp;户外用品推荐</p>
+</blockquote>
+<div align="center"> <a href="https://www.amazon.cn/B07HWB88Z5/dp/B07HWB88Z5/ref=as_sl_pc_tf_til?tag=momoda-23&linkCode=w00&linkId=14df5124f2165d9eb3d65252e60ed2cf&creativeASIN=B07HWB88Z5" target="_blank" rel="noopener"><img src="/se-notes/Linux基础/ch0-进程与线程/../more/ads/amazon.gif" width="100%"></a> </div>
+      
+    </div><!-- .entry-content -->
+
+    <footer class="entry-meta">
+    <a href="/se-notes/Linux基础/ch0-进程与线程/">
+    <time datetime="2019-01-03T13:49:30.000Z" class="entry-date">
+        1月 3 2019
+    </time>
+</a>
+    
+  <span class="article-delim">&#8226;</span>
+  <div class="article-category">
+  <a class="article-category-link" href="/categories/Linux/">Linux</a>, <a class="article-category-link" href="/categories/Linux/linux基础/">linux基础</a>
+  </div>
+
+    
+  <span class="article-delim">&#8226;</span>
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/linux/">linux</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/系统管理/">系统管理</a></li></ul>
+
+    </footer>
+</article>
+
+
+
+
+
+
+  
+    <article id="post-se-notes/Linux基础/ch2-Linux的文件权限与目录配置" class="post-se-notes/Linux基础/ch2-Linux的文件权限与目录配置 post type-post status-publish format-standard hentry">
+    <!---->
+
+      <header class="entry-header">
+        
+        
+  
+    <h1 class="entry-title">
+      <a class="article-title" href="/se-notes/Linux基础/ch2-Linux的文件权限与目录配置/">ch2-Linux的文件权限与目录配置</a>
+    </h1>
+  
+
+        
+        <div class="comments-link">
+            
+            <a href="javascript:void(0);" data-url="https://wnhby.github.io/se-notes/Linux基础/ch2-Linux的文件权限与目录配置/" data-id="cjsbbbexs002xe9s6h6n34fg7" class="leave-reply bdsharebuttonbox" data-cmd="more">分享</a>
+        </div><!-- .comments-link -->
+      </header><!-- .entry-header -->
+
+    <div class="entry-content">
+      
+        <!-- TOC -->
+<ul>
+<li><a href="#linux的文件权限与目录配置">Linux的文件权限与目录配置</a><ul>
+<li><a href="#用户与用户组">用户与用户组</a></li>
+<li><a href="#linux文件权限概念">Linux文件权限概念</a><ul>
+<li><a href="#linux文件属性">Linux文件属性</a></li>
+<li><a href="#改变文件属性与权限">改变文件属性与权限</a><ul>
+<li><a href="#改变文件所属用户组chgrp">改变文件所属用户组：chgrp</a></li>
+<li><a href="#改变文件所有者chown">改变文件所有者：chown</a></li>
+<li><a href="#改变文件权限chmod">改变文件权限：chmod</a></li>
+</ul>
+</li>
+<li><a href="#目录与文件的权限意义">目录与文件的权限意义</a><ul>
+<li><a href="#文件的权限">文件的权限</a></li>
+<li><a href="#目录的权限">目录的权限</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#linux目录配置">Linux目录配置</a><ul>
+<li><a href="#ads">Ads</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<!-- /TOC -->
+<h1 id="Linux的文件权限与目录配置"><a href="#Linux的文件权限与目录配置" class="headerlink" title="Linux的文件权限与目录配置"></a>Linux的文件权限与目录配置</h1><h2 id="用户与用户组"><a href="#用户与用户组" class="headerlink" title="用户与用户组"></a>用户与用户组</h2><p>Linux的每个文件中，依据权限分为用户、用户组与其他人三种身份。用户可以有多个用户组的支持。</p>
+<ul>
+<li>默认情况下，系统上所有用户账号的相关信息都储存在 /etc/passwd 文件中。</li>
+<li>个人密码存储在 /etc/shadow 文件中</li>
+<li>所有组名都存储在 /etc/group 文件中</li>
+</ul>
+<h2 id="Linux文件权限概念"><a href="#Linux文件权限概念" class="headerlink" title="Linux文件权限概念"></a>Linux文件权限概念</h2><h3 id="Linux文件属性"><a href="#Linux文件属性" class="headerlink" title="Linux文件属性"></a>Linux文件属性</h3><p>使用命令<code># ls -al</code>可查看当前目录下所有文件的详细权限与属性，如：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">[root@www ~]# ls -al</span><br><span class="line">total 156</span><br><span class="line">drwxr-x---   4    root   root     4096   Sep  8 14:06 .</span><br><span class="line">drwxr-xr-x  23    root   root     4096   Sep  8 14:21 ..</span><br><span class="line">-rw-------   1    root   root     1474   Sep  4 18:27 anaconda-ks.cfg</span><br><span class="line">-rw-------   1    root   root      199   Sep  8 17:14 .bash_history</span><br><span class="line">-rw-r--r--   1    root   root       24   Jan  6  2007 .bash_logout</span><br><span class="line">-rw-r--r--   1    root   root      191   Jan  6  2007 .bash_profile</span><br><span class="line">-rw-r--r--   1    root   root      176   Jan  6  2007 .bashrc</span><br><span class="line">-rw-r--r--   1    root   root      100   Jan  6  2007 .cshrc</span><br><span class="line">drwx------   3    root   root     4096   Sep  5 10:37 .gconf      &lt;=范例说明处</span><br><span class="line">drwx------   2    root   root     4096   Sep  5 14:09 .gconfd</span><br><span class="line">-rw-r--r--   1    root   root    42304   Sep  4 18:26 install.log &lt;=范例说明处</span><br><span class="line">-rw-r--r--   1    root   root     5661   Sep  4 18:25 install.log.syslog</span><br><span class="line">[    1   ][  2 ][   3  ][  4 ][    5   ][     6     ][       7          ]</span><br><span class="line">[  权限  ][连结][拥有者][群组][文件容量][  修改日期 ][      文件名        ]</span><br></pre></td></tr></table></figure></p>
+<p>文件属性示意图如下：</p>
+<p><img src="http://cn.linux.vbird.org/linux_basic/0210filepermission_files/0210filepermission_2.gif" alt="enter image description here"></p>
+<p>第一列代表该文件的类型与权限，共计有十个字符：</p>
+<ul>
+<li>第一个字符代表该文件的类型：<ul>
+<li>[d] 表示目录</li>
+<li>[-] 表示文件</li>
+<li>[|] 表示链接文件</li>
+</ul>
+</li>
+<li>接下来的字符以3个为一组，且均为 “rwx” 的3个参数的组合。“rwx” 分别代表可读、可写与可执行。三个权限的位置不会改变，<strong>若没有权限则会出现[-]</strong>。<ul>
+<li>第一组为“文件所有者”的权限。</li>
+<li>第二组为“同用户组”的权限。</li>
+<li>第三组为“其他非本用户组的权限”。</li>
+</ul>
+</li>
+</ul>
+<p><img src="http://cn.linux.vbird.org/linux_basic/0210filepermission_files/0210filepermission_3.gif" alt="enter image description here"></p>
+<p>第二列表示有多少文件名链接到此节点（i-node）：</p>
+<ul>
+<li>每个文件会将它的权限与属性记录到文件系统的 i-node 中，由于目录树是使用文件名来记录，因此每个文件名就会链接到一个 i-node 。</li>
+<li>该属性记录有多少不同的文件名链接到同一个 i-node 。</li>
+</ul>
+<p>第三列表示该文件（或目录）的所有者用户。</p>
+<p>第四列表示该文件的所属用户组。</p>
+<p>第五列表示该文件的容量大小，默认单位为 Byte 。</p>
+<p>第六列表示该文件的创建文件日期或是最近的修改日期。</p>
+<p>第七列表示该文件的文件名，但如果文件名前多一个“ . ”，则表示该文件为“隐藏文件”。</p>
+<h3 id="改变文件属性与权限"><a href="#改变文件属性与权限" class="headerlink" title="改变文件属性与权限"></a>改变文件属性与权限</h3><p>在复制文件给其他用户等情况下，需要改变文件的所有者或者权限。</p>
+<h4 id="改变文件所属用户组：chgrp"><a href="#改变文件所属用户组：chgrp" class="headerlink" title="改变文件所属用户组：chgrp"></a>改变文件所属用户组：chgrp</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">#语法：</span><br><span class="line">[root@www ~]# chgrp [-R] 用户组名称 文件或目录名</span><br><span class="line"></span><br><span class="line">#-R : 进行递归(recursive)的持续变更，亦即连同次目录下的所有文件、目录都更新成为这个群组之意。</span><br><span class="line">     </span><br><span class="line">#范例：改变文件install.log的用户组为users</span><br><span class="line">[root@www ~]# chgrp users install.log</span><br></pre></td></tr></table></figure>
+<h4 id="改变文件所有者：chown"><a href="#改变文件所有者：chown" class="headerlink" title="改变文件所有者：chown"></a>改变文件所有者：chown</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">#语法：</span><br><span class="line">[root@www ~]# chown [-R] 账号名称 文件或目录</span><br><span class="line">[root@www ~]# chown [-R] 账号名称:组名 文件或目录</span><br><span class="line"></span><br><span class="line">#-R : 进行递归(recursive)的持续变更，亦即连同次目录下的所有文件都变更</span><br><span class="line"></span><br><span class="line">#范例：将install.log的拥有者改为bin这个log用户：</span><br><span class="line">[root@www ~]# chown bin install.log</span><br><span class="line"></span><br><span class="line">#范例：将install.log的拥有者与群组改回为root：</span><br><span class="line">[root@www ~]# chown root:root install.log</span><br></pre></td></tr></table></figure>
+<h4 id="改变文件权限：chmod"><a href="#改变文件权限：chmod" class="headerlink" title="改变文件权限：chmod"></a>改变文件权限：chmod</h4><p>有两种权限设置方法：数字类型更改权限与符号类型更改权限。</p>
+<ul>
+<li>数字类型更改权限<ul>
+<li>使用数字来代表“rwx”三个权限，其中 r：4；w：2；x：1。</li>
+<li>每种身份（owner，group，others）各自的三个权限数字需要累加。</li>
+<li>如当权限为 [-rwxrwx—] 时，分数则是：owner = rwx = 7 ；group = rwx = 7 ；others = — =0 。因此总的权限分数就是 770 。</li>
+<li>更改权限的命令语法：<code># chmod [-R] xyz 文件或目录</code>，xyz 即为总的权限分数。</li>
+</ul>
+</li>
+<li>符号类型改变文件权限<ul>
+<li>用 u、g、o 分别代表 user、group、others 3种身份，此外 a 代表 all，即全部的身份。读写的权限可以写成 r，w，x 。可使用的操作符号有 +（加入）、- （除去）、= （设置）。</li>
+<li>更改权限的命令语法：<code># chmod [-R] 操作表达式 文件或目录</code>，操作表达式是如<code>u=rwx,go=rx</code>或者<code>a+w,o-x</code>的式子。</li>
+</ul>
+</li>
+</ul>
+<h3 id="目录与文件的权限意义"><a href="#目录与文件的权限意义" class="headerlink" title="目录与文件的权限意义"></a>目录与文件的权限意义</h3><h4 id="文件的权限"><a href="#文件的权限" class="headerlink" title="文件的权限"></a>文件的权限</h4><ul>
+<li>r(read)：读取该文件的内容</li>
+<li>w(write)：编辑该文件的内容但<strong>不可删除该文件</strong></li>
+<li>x(execute)：该文件具有可被系统执行的权限。一个文件能否被执行与文件名没有绝对关系</li>
+</ul>
+<h4 id="目录的权限"><a href="#目录的权限" class="headerlink" title="目录的权限"></a>目录的权限</h4><ul>
+<li>r(read)：读取该目录结构列表的权限</li>
+<li>w(write)：读取该目录结构列表的权限，包括新建、删除、重命名该目录下的文件与目录</li>
+<li>x(execute)：用户能否进入该目录成为工作目录的权限</li>
+<li>开放目录给人浏览时，至少应给予 r 与 x 的权限，但 w 权限不可随便给予。</li>
+</ul>
+<h2 id="Linux目录配置"><a href="#Linux目录配置" class="headerlink" title="Linux目录配置"></a>Linux目录配置</h2><p>FHS（Filesystem Hierarchy Standard）的主要目的在于规范每个特定目录下放置什么样的数据。所定义的三层主目录为/、/var、/usr 。有五个目录不可与根目录放在不同的分区，分别为/etc, /bin, /lib, /dev, /sbin。</p>
+<p><img src="http://cn.linux.vbird.org/linux_basic/0210filepermission_files/directory_tree.gif" alt="enter image description here"></p>
+<hr>
+<ul>
+<li><p><a href="/more/donate/index.html"><strong><em><font color="red">我觉得帮助到我了, 支持你一下.</font></em></strong></a><br>   </p>
+</li>
+<li><p><a href="https://www.paypal.me/momodainfo" target="_blank" rel="noopener"><strong><em><font color="red">If you think the article is helpful to you, you can reward me through paypal.</font></em></strong></a></p>
+</li>
+</ul>
+<h3 id="Ads"><a href="#Ads" class="headerlink" title="Ads"></a>Ads</h3><p><em>这是小广告! 如果有需要, 不妨支持一下吧~</em></p>
+<blockquote>
+<p> <a target="_blank" href="https://amazon.cn/gp/search?ie=UTF8&tag=momoda-23&linkCode=ur2&linkId=4a0e4fbec0cfa8dfe540ca999d0bf999&camp=536&creative=3200&index=books&keywords=编程">这些好书您看了吗?</a><img src="//ir-cn.amazon-adsystem.com/e/ir?t=momoda-23&l=ur2&o=28" width="1" height="1" border="0" alt="" style="border:none !important; margin:0px !important;"></p>
+</blockquote>
+<blockquote>
+<p>体育&amp;户外用品推荐</p>
+</blockquote>
+<div align="center"> <a href="https://www.amazon.cn/B07HWB88Z5/dp/B07HWB88Z5/ref=as_sl_pc_tf_til?tag=momoda-23&linkCode=w00&linkId=14df5124f2165d9eb3d65252e60ed2cf&creativeASIN=B07HWB88Z5" target="_blank" rel="noopener"><img src="/se-notes/Linux基础/ch2-Linux的文件权限与目录配置/../more/ads/amazon.gif" width="100%"></a> </div>
+      
+    </div><!-- .entry-content -->
+
+    <footer class="entry-meta">
+    <a href="/se-notes/Linux基础/ch2-Linux的文件权限与目录配置/">
+    <time datetime="2019-01-03T13:49:30.000Z" class="entry-date">
+        1月 3 2019
+    </time>
+</a>
+    
+  <span class="article-delim">&#8226;</span>
+  <div class="article-category">
+  <a class="article-category-link" href="/categories/Linux/">Linux</a>, <a class="article-category-link" href="/categories/Linux/linux基础/">linux基础</a>
+  </div>
+
+    
+  <span class="article-delim">&#8226;</span>
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/linux/">linux</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/系统管理/">系统管理</a></li></ul>
+
+    </footer>
+</article>
+
+
+
+
+
+
+  
+    <article id="post-se-notes/Linux基础/ch3-Linux文件与目录管理" class="post-se-notes/Linux基础/ch3-Linux文件与目录管理 post type-post status-publish format-standard hentry">
+    <!---->
+
+      <header class="entry-header">
+        
+        
+  
+    <h1 class="entry-title">
+      <a class="article-title" href="/se-notes/Linux基础/ch3-Linux文件与目录管理/">ch3-Linux文件与目录管理</a>
+    </h1>
+  
+
+        
+        <div class="comments-link">
+            
+            <a href="javascript:void(0);" data-url="https://wnhby.github.io/se-notes/Linux基础/ch3-Linux文件与目录管理/" data-id="cjsbbbexy0035e9s63l1nbs2b" class="leave-reply bdsharebuttonbox" data-cmd="more">分享</a>
+        </div><!-- .comments-link -->
+      </header><!-- .entry-header -->
+
+    <div class="entry-content">
+      
+        <!-- TOC -->
+<ul>
+<li><a href="#linux文件与目录管理">Linux文件与目录管理</a><ul>
+<li><a href="#1目录与路径">1.目录与路径</a></li>
+<li><a href="#2文件与目录管理">2.文件与目录管理</a></li>
+<li><a href="#3文件内容查阅">3.文件内容查阅</a></li>
+<li><a href="#4文件与目录的默认权限与隐藏权限">4.文件与目录的默认权限与隐藏权限</a><ul>
+<li><a href="#文件默认权限umask">文件默认权限：umask</a></li>
+<li><a href="#文件隐藏属性">文件隐藏属性</a></li>
+<li><a href="#文件特殊权限suidsgidsbit">文件特殊权限：SUID、SGID、SBIT</a></li>
+</ul>
+</li>
+<li><a href="#5命令与文件的查询">5.命令与文件的查询</a><ul>
+<li><a href="#脚本文件名的查询">脚本文件名的查询</a></li>
+<li><a href="#文件名的查找">文件名的查找</a></li>
+<li><a href="#ads">Ads</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<!-- /TOC -->
+<h1 id="Linux文件与目录管理"><a href="#Linux文件与目录管理" class="headerlink" title="Linux文件与目录管理"></a>Linux文件与目录管理</h1><h2 id="1-目录与路径"><a href="#1-目录与路径" class="headerlink" title="1.目录与路径"></a>1.目录与路径</h2><ul>
+<li>常用的目录操作<ul>
+<li>cd：切换目录</li>
+<li>pwd：显示当前目录</li>
+<li>mkdir：新建一个目录</li>
+<li>rmdir：删除一个空目录</li>
+</ul>
+</li>
+<li>执行文件路径变量：$PATH<ul>
+<li>当执行一个命令时，系统会按照 PATH 的设置去其定义的目录下查询命令对应的可执行文件。</li>
+<li>多个目录下有与命令相同的文件时，按照先被查询的目录下的文件执行。</li>
+</ul>
+</li>
+</ul>
+<h2 id="2-文件与目录管理"><a href="#2-文件与目录管理" class="headerlink" title="2.文件与目录管理"></a>2.文件与目录管理</h2><ul>
+<li><p>查看文件与目录：ls</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">[root@www~]# ls [参数] [目录名称]</span><br><span class="line"></span><br><span class="line"># 常用参数：</span><br><span class="line"># -a：全部文件，包括隐藏文件</span><br><span class="line"># -d：仅列出目录本身，而非目录内文件数据</span><br><span class="line"># -l：列出长数据串，包含文件属性与权限等数据</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>复制文件或目录：cp</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">[root@www~]# cp [参数] 源文件 目标文件</span><br><span class="line"></span><br><span class="line"># 常用参数：</span><br><span class="line"># -a：相当于 -pdr</span><br><span class="line"># -i：若目标文件已经存在，覆盖时会先询问操作的进行</span><br><span class="line"># -p：连同文件的属性一起复制过去，而非使用默认属性。常用于备份</span><br><span class="line"># -d：若源文件为链接文件，则复制链接文件的属性而非实际文件本身</span><br><span class="line"># -r：递归持续复制，常用于目录的复制行为</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>默认条件下，cp 的源文件与目的文件的权限是不同的，目的文件的所有者通常是命令操作者本身。因此，在进行备份时，一些需特别注意的特别权限文件如密码文件等，不能直接用 cp 来复制，而必须要加上 -a 或者是 -p 等可以完整复制文件权限的参数。</p>
+<ul>
+<li><p>删除文件或目录：rm</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">[root@www~]# rm [参数] 文件</span><br><span class="line"></span><br><span class="line"># 常用参数：</span><br><span class="line"># -f：强制模式，忽略不存在的文件，不会出现警告信息</span><br><span class="line"># -i：互动模式，删除前询问用户是否操作</span><br><span class="line"># -r：递归删除，特别危险的参数（古往今来多少数据死于rm -rf）</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>移动文件或目录：mv</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">[root@www~]# mv [参数] 源文件 目标文件</span><br><span class="line">[root@www~]# mv [参数] 源文件1 源文件2 ... 目标目录</span><br><span class="line"></span><br><span class="line"># 常用参数：</span><br><span class="line"># -f：强制模式，若目标文件已经存在则不会询问，强行覆盖。</span><br><span class="line"># -i：互动模式。</span><br><span class="line"># -u：更新模式，若目标文件已经存在，且源文件比目标文件要新，才会更新。</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>取得路径的文件名与目录名称：basename 与 dirname</p>
+</li>
+</ul>
+<h2 id="3-文件内容查阅"><a href="#3-文件内容查阅" class="headerlink" title="3.文件内容查阅"></a>3.文件内容查阅</h2><p>直接查阅文件内容：</p>
+<ul>
+<li>cat：从第一行开始显示文件内容<ul>
+<li>参数 -b：打印行号，但空白行不标行号</li>
+<li>参数 -n：显示结尾断行字符 $ </li>
+<li>参数 -T：将 Tab 按键以 ^I 显示出来</li>
+</ul>
+</li>
+<li>tac：从最后一行开始倒序显示文件内容</li>
+<li>nl：显示时输出行号</li>
+</ul>
+<p>翻页查看：</p>
+<ul>
+<li>more：向后一页一页翻动</li>
+<li>less：既可向后、也可向前一页一页翻动</li>
+</ul>
+<p>数据选取：</p>
+<ul>
+<li>head：取出前面几行，<code># head [-n number] 文件名</code>，其中 number 为显示行数</li>
+<li>tail：取出后面几行，<code># head [-n number] 文件名</code>，其中 number 为显示行数</li>
+</ul>
+<p>查阅非纯文本文件：</p>
+<ul>
+<li>od：读取数据文件。<code># od [-t TYPE] 文件</code><ul>
+<li>参数 TYPE 为 a：使用默认的字符来输出</li>
+<li>参数 TYPE 为 c：使用 ASCII 方式来输出</li>
+</ul>
+</li>
+</ul>
+<p>其他操作：</p>
+<ul>
+<li>touch：修改文件时间或创建新文件</li>
+<li>file：查看文件类型</li>
+</ul>
+<h2 id="4-文件与目录的默认权限与隐藏权限"><a href="#4-文件与目录的默认权限与隐藏权限" class="headerlink" title="4.文件与目录的默认权限与隐藏权限"></a>4.文件与目录的默认权限与隐藏权限</h2><h3 id="文件默认权限：umask"><a href="#文件默认权限：umask" class="headerlink" title="文件默认权限：umask"></a>文件默认权限：umask</h3><p>即<strong>当前用户</strong>在新建文件或目录时的权限默认设置值。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">[root@www ~]# umask </span><br><span class="line">0022   #与一般权限有关的是后面三个数字 </span><br><span class="line">[root@www ~]# umask -S </span><br><span class="line">u=rwx,g=rx,o=rx  #以符号形式显示</span><br><span class="line">[root@www ~]# umask 002 </span><br><span class="line"># 设置 unmask 值为002</span><br></pre></td></tr></table></figure></p>
+<p>在原始默认权限的属性上，目录与文件是不一样的：</p>
+<ul>
+<li>若用户创建文件则默认没有 x 权限，默认权限为：-rw-rw-rw-</li>
+<li>若用户新建目录，由于 x 权限与是否可以进入此目录有关，因此默认所有权限开放，即：drwxrwxrwx</li>
+</ul>
+<p>注意的是，umask 的分数是指 “默认值<strong>再</strong>需要减去的权限”。因此当 umask 分数是022时，则用户新建文件的权限是 -rw-r–r–；新建目录的权限是 drwxr-xr-x 。</p>
+<h3 id="文件隐藏属性"><a href="#文件隐藏属性" class="headerlink" title="文件隐藏属性"></a>文件隐藏属性</h3><p>文件的隐藏属性主要用于系统安全方面。</p>
+<ul>
+<li><p>chattr：设置文件的隐藏属性</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">[root@www ~]# chattr [+-=] [参数] 文件或目录名</span><br><span class="line"></span><br><span class="line"># 参数：</span><br><span class="line"># +：增加某个特殊参数，其他已存在参数不动</span><br><span class="line"># -：删除某个特殊参数，其他已存在参数不动</span><br><span class="line"># =：仅有后面接的参数</span><br><span class="line"></span><br><span class="line"># a：让该文件只能增加数据，而不能删除与修改数据（主要用于日志文件）。只有root可设置本权限。</span><br><span class="line"># i：让该文件不可被删除、改名、设置链接、增写数据（无敌状态）。只有root可设置本权限。</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>lsattr：显示文件的隐藏属性</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">[root@www ~]# lsattr [参数] 文件或目录名</span><br><span class="line"></span><br><span class="line"># 参数：</span><br><span class="line"># -a：列出隐藏文件</span><br><span class="line"># -d：若接的是目录，则仅列出目录本身属性</span><br><span class="line"># -R：连同子目录的数据也列出来</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h3 id="文件特殊权限：SUID、SGID、SBIT"><a href="#文件特殊权限：SUID、SGID、SBIT" class="headerlink" title="文件特殊权限：SUID、SGID、SBIT"></a>文件特殊权限：SUID、SGID、SBIT</h3><ul>
+<li>文件具有SUID的特殊权限时，代表当使用者运行此 binary 程序时，在运行过程中使用者会暂时具有程序拥有者的权限，权限数字为4</li>
+<li>目录具有SGID的特殊权限时，代表使用者在这个目录底下新建的文件之群组都会与该目录的群组名称相同，权限数字为2</li>
+<li>目录具有SBIT的特殊权限时，代表在该目录下使用者创建的文件只有自己与root能够删除，权限数字为1</li>
+</ul>
+<h2 id="5-命令与文件的查询"><a href="#5-命令与文件的查询" class="headerlink" title="5.命令与文件的查询"></a>5.命令与文件的查询</h2><h3 id="脚本文件名的查询"><a href="#脚本文件名的查询" class="headerlink" title="脚本文件名的查询"></a>脚本文件名的查询</h3><ul>
+<li>which：寻找“执行文件”<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[root@www ~]# which [-a] command</span><br><span class="line"># 参数</span><br><span class="line"># -a：列出所有可以从PATH路径找到的同名执行文件</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h3 id="文件名的查找"><a href="#文件名的查找" class="headerlink" title="文件名的查找"></a>文件名的查找</h3><ul>
+<li><p>whereis（寻找特定文件）</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">[root@www ~]# whereis [-bmsu] 文件或目录</span><br><span class="line"># 参数</span><br><span class="line"># -b：只找二进制格式的文件</span><br><span class="line"># -m：只找在说明文件manual路径下的文件</span><br><span class="line"># -s：只找source源文件</span><br><span class="line"># -u：查找不在上述三个选项中的其他特殊文件</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>locate（关键字查找文件）<br>须安装 mlocate 方可使用。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">[root@www ~]# locate [-ir] keyword</span><br><span class="line"># 参数</span><br><span class="line"># -i：忽略大小写差异</span><br><span class="line"># -r：后面可接正则表达式的显示方式</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>find（功能最强的查询）</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">[root@www ~]# find [PATH] [option] [action]</span><br><span class="line"></span><br><span class="line"># 1.与时间有关的参数：共有 -atime、-ctime 和 -mtime</span><br><span class="line"># -mtime n ： n 为数字，表示在 n 天之前的“一天之内”被更改过的文件</span><br><span class="line"># -mtime +n ：列出在 n 天之前(不含 n 天本身)被更动过的文件</span><br><span class="line"># -mtime -n ：列出在 n 天之内(含 n 天本身)被更动过的文件</span><br><span class="line"># -newer file ：file 为一个存在的文件，列出比 file 还要新的文件</span><br><span class="line"></span><br><span class="line"># 2.与用户或用户组有关的参数：</span><br><span class="line"># -user name ：name 为用户名。例如 dmtsai</span><br><span class="line"># -group name ：name 为用户组，例如 users </span><br><span class="line"></span><br><span class="line"># 3.与文件权限及名称有关的参数：</span><br><span class="line"># -name filename：查找文件名为 filename 的文件</span><br><span class="line"># -size [+-]SIZE：查找比 SIZE 还要大(+)或小(-)的文件，如“-size +50k”</span><br><span class="line"># -type TYPE：查找文件类型为 TYPE 的文件，包括：一般文件(f)、目录(d)、链接文件(l)</span><br><span class="line"># -perm mode：查找文件权限刚好等于 mode 的文件</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<hr>
+<ul>
+<li><p><a href="/more/donate/index.html"><strong><em><font color="red">我觉得帮助到我了, 支持你一下.</font></em></strong></a><br>   </p>
+</li>
+<li><p><a href="https://www.paypal.me/momodainfo" target="_blank" rel="noopener"><strong><em><font color="red">If you think the article is helpful to you, you can reward me through paypal.</font></em></strong></a></p>
+</li>
+</ul>
+<h3 id="Ads"><a href="#Ads" class="headerlink" title="Ads"></a>Ads</h3><p><em>这是小广告! 如果有需要, 不妨支持一下吧~</em></p>
+<blockquote>
+<p> <a target="_blank" href="https://amazon.cn/gp/search?ie=UTF8&tag=momoda-23&linkCode=ur2&linkId=4a0e4fbec0cfa8dfe540ca999d0bf999&camp=536&creative=3200&index=books&keywords=编程">这些好书您看了吗?</a><img src="//ir-cn.amazon-adsystem.com/e/ir?t=momoda-23&l=ur2&o=28" width="1" height="1" border="0" alt="" style="border:none !important; margin:0px !important;"></p>
+</blockquote>
+<blockquote>
+<p>体育&amp;户外用品推荐</p>
+</blockquote>
+<div align="center"> <a href="https://www.amazon.cn/B07HWB88Z5/dp/B07HWB88Z5/ref=as_sl_pc_tf_til?tag=momoda-23&linkCode=w00&linkId=14df5124f2165d9eb3d65252e60ed2cf&creativeASIN=B07HWB88Z5" target="_blank" rel="noopener"><img src="/se-notes/Linux基础/ch3-Linux文件与目录管理/../more/ads/amazon.gif" width="100%"></a> </div>
+      
+    </div><!-- .entry-content -->
+
+    <footer class="entry-meta">
+    <a href="/se-notes/Linux基础/ch3-Linux文件与目录管理/">
+    <time datetime="2019-01-03T13:49:30.000Z" class="entry-date">
+        1月 3 2019
+    </time>
+</a>
+    
+  <span class="article-delim">&#8226;</span>
+  <div class="article-category">
+  <a class="article-category-link" href="/categories/Linux/">Linux</a>, <a class="article-category-link" href="/categories/Linux/linux基础/">linux基础</a>
+  </div>
+
+    
+  <span class="article-delim">&#8226;</span>
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/linux/">linux</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/系统管理/">系统管理</a></li></ul>
+
+    </footer>
+</article>
+
+
+
+
+
+
+  
+    <article id="post-se-notes/Linux基础/ch4-Linux磁盘与文件系统管理" class="post-se-notes/Linux基础/ch4-Linux磁盘与文件系统管理 post type-post status-publish format-standard hentry">
+    <!---->
+
+      <header class="entry-header">
+        
+        
+  
+    <h1 class="entry-title">
+      <a class="article-title" href="/se-notes/Linux基础/ch4-Linux磁盘与文件系统管理/">ch4-Linux磁盘与文件系统管理</a>
+    </h1>
+  
+
+        
+        <div class="comments-link">
+            
+            <a href="javascript:void(0);" data-url="https://wnhby.github.io/se-notes/Linux基础/ch4-Linux磁盘与文件系统管理/" data-id="cjsbbbey00038e9s6rfqzwnc9" class="leave-reply bdsharebuttonbox" data-cmd="more">分享</a>
+        </div><!-- .comments-link -->
+      </header><!-- .entry-header -->
+
+    <div class="entry-content">
+      
+        <!-- TOC -->
+<ul>
+<li><a href="#linux磁盘与文件系统管理">Linux磁盘与文件系统管理</a><ul>
+<li><a href="#1-ext2文件系统">1. EXT2文件系统</a><ul>
+<li><a href="#ext2文件系统的组成部分">EXT2文件系统的组成部分</a></li>
+<li><a href="#与目录树的关系">与目录树的关系</a></li>
+</ul>
+</li>
+<li><a href="#2-文件系统的简单操作">2. 文件系统的简单操作</a><ul>
+<li><a href="#磁盘与目录的容量dfdu">磁盘与目录的容量：df、du</a></li>
+<li><a href="#连接文件">连接文件</a><ul>
+<li><a href="#硬连接或实际连接hard-link">硬连接或实际连接（hard link）</a></li>
+<li><a href="#符号连接symbolic-link">符号连接（symbolic link）</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#3-磁盘的分区格式化检验和挂载">3. 磁盘的分区、格式化、检验和挂载</a></li>
+<li><a href="#4-设置开机挂载">4. 设置开机挂载</a></li>
+<li><a href="#5-内存交换空间swap的构建">5. 内存交换空间（swap）的构建</a><ul>
+<li><a href="#使用物理分区构建-swap">使用物理分区构建 swap</a></li>
+<li><a href="#使用文件构建-swap">使用文件构建 swap</a></li>
+<li><a href="#ads">Ads</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<!-- /TOC -->
+<h1 id="Linux磁盘与文件系统管理"><a href="#Linux磁盘与文件系统管理" class="headerlink" title="Linux磁盘与文件系统管理"></a>Linux磁盘与文件系统管理</h1><h2 id="1-EXT2文件系统"><a href="#1-EXT2文件系统" class="headerlink" title="1. EXT2文件系统"></a>1. EXT2文件系统</h2><p>Linux 操作系统的文件数据包括文件内容和文件属性，其中权限和属性放置到 inode 中，实际数据放置到 data block 中。每个 inode 与 block 都有编号。</p>
+<p><img src="http://cn.linux.vbird.org/linux_basic/0230filesystem_files/filesystem-1.jpg" alt="数据访问示意图"></p>
+<h3 id="EXT2文件系统的组成部分"><a href="#EXT2文件系统的组成部分" class="headerlink" title="EXT2文件系统的组成部分"></a>EXT2文件系统的组成部分</h3><p>EXT2 文件系统在格式化时被区分为多个块组（Block Group），每个块组有独立的 inode/block/superblock 系统。</p>
+<p><img src="http://cn.linux.vbird.org/linux_basic/0230filesystem_files/ext2_filesystem.jpg" alt="EXT2文件系统的组成部分"></p>
+<ul>
+<li>date block（数据块）<ul>
+<li>用于放置文件内容，若文件过大则会占用多个block</li>
+</ul>
+</li>
+<li>inode table （inode 表）<ul>
+<li>记录文件属性以及文件的实际内容所放置的 block 编号</li>
+<li>每个 inode 大小固定为128 Bytes，每个文件仅会占用一个 inode</li>
+<li>系统读取文件时需先读文件的 inode，若其所记录的权限允许，才可实际读取 block 的内容</li>
+</ul>
+</li>
+<li>superblock（超级块）<ul>
+<li>记录文件系统的整体信息，包括 inode 与 block 的总量、使用量、剩余量，以及文件系统的格式与相关信息等 </li>
+</ul>
+</li>
+<li>File system Description（文件系统描述说明）<ul>
+<li>描述每个 block group 的开始与结束的 block 号码</li>
+<li>说明每个区段（包括superblock、bitmap、inodemap、data block）分别介于哪个 block 号码之间</li>
+</ul>
+</li>
+<li>block bitmap（块对照表）<ul>
+<li>记录每个 block 的使用情况</li>
+</ul>
+</li>
+<li>inode bitmap（inode对照表）<ul>
+<li>记录每个 inode 的使用情况</li>
+</ul>
+</li>
+</ul>
+<h3 id="与目录树的关系"><a href="#与目录树的关系" class="headerlink" title="与目录树的关系"></a>与目录树的关系</h3><p>当新建一个文件时，该文件被分配一个 inode 以及适应文件大小的多个 block。</p>
+<p>当在 Ext2 文件系统中新建一个目录时，该目录被分配一个 inode 以及至少一个 block。其中 inode 记录该目录的相关权限与属性，并记录分配到的 block 的号码；而 block 记录在该目录下的文件名与该文件名占用的 inode 的编号，如下所示：</p>
+<p><img src="http://cn.linux.vbird.org/linux_basic/0230filesystem_files/dir_block.jpg" alt="目录block"></p>
+<p>当读取目录树时，系统读取挂载点的信息从而得到根目录（广义上的）的 inode 内容，并根据该 inode 读取根目录内的文件数据，逐层向下读直到读取正确的文件名。</p>
+<p>关于挂载：挂载是文件系统和目录树的结合；挂载点一定是目录，该目录为进入该文件系统的入口。</p>
+<h2 id="2-文件系统的简单操作"><a href="#2-文件系统的简单操作" class="headerlink" title="2. 文件系统的简单操作"></a>2. 文件系统的简单操作</h2><h3 id="磁盘与目录的容量：df、du"><a href="#磁盘与目录的容量：df、du" class="headerlink" title="磁盘与目录的容量：df、du"></a>磁盘与目录的容量：df、du</h3><p>df 用于列出文件系统整体磁盘使用量<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[root@www ~]# df [-ahikHTm] 目录或文件名</span><br><span class="line"># -h：以GB、MB、KB等格式自行显示</span><br><span class="line"># -i：不用硬盘容量，而以 inode 的数量来显示</span><br></pre></td></tr></table></figure></p>
+<p>du用于评估文件系统的磁盘使用量<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[root@www ~]# du [-ahskm] 目录或文件名</span><br><span class="line"># -h：以易读方式显示</span><br><span class="line"># -s：只列出总量</span><br></pre></td></tr></table></figure></p>
+<h3 id="连接文件"><a href="#连接文件" class="headerlink" title="连接文件"></a>连接文件</h3><h4 id="硬连接或实际连接（hard-link）"><a href="#硬连接或实际连接（hard-link）" class="headerlink" title="硬连接或实际连接（hard link）"></a>硬连接或实际连接（hard link）</h4><p>由于每个文件只会占用一个 inode，文件内容由 inode 的所指向的 block 来指定，且若要读取文件，必须经过目录记录的文件名来指向正确的 inode 。因此<strong>文件名只和目录有关，而文件内容只和 inode 有关</strong>。</p>
+<p>此种情况下，则可能有多个文件名对应到同一个 inode 。即：hard link 只是在某个目录下新建一条文件名连接到已有的某 inode 的关联记录而已。</p>
+<p><img src="http://cn.linux.vbird.org/linux_basic/0230filesystem_files/hard_link1.gif" alt="硬连接的文件读取"></p>
+<p>上图示意：可通过1或2的目录 inode 指定的 block 找到两个不同的文件名，而不管通过哪个文件名均可以指向 real 这个 inode 来读取最终数据。</p>
+<p>hard link 的限制：</p>
+<ol>
+<li>不能跨文件系统</li>
+<li>不能硬连接到目录（因为硬连接到目录时，连接数据需要连同被连接目录下的所有数据都建立连接，会造成大的复杂度）<em>#这里不太懂</em></li>
+</ol>
+<h4 id="符号连接（symbolic-link）"><a href="#符号连接（symbolic-link）" class="headerlink" title="符号连接（symbolic link）"></a>符号连接（symbolic link）</h4><p>符号连接即是创建一个<strong>独立</strong>（即拥有和源文件不一样的 inode）文件，该文件会让数据的读取指向其连接的那个文件的文件名，类似于“快捷方式”。</p>
+<p><img src="http://cn.linux.vbird.org/linux_basic/0230filesystem_files/symbolic_link1.gif" alt="符号连接的文件读取"></p>
+<p>上图示意：由1号 inode读取到连接文件的内容仅有文件名，根据文件名连接到正确的目录去取得目标文件的 inode，即可读取到正确数据。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[root@www ~]# ln [-sf] 源文件 目标文件</span><br><span class="line"># -s：如果不加任何参数，则是hard link，至于-s则是symbolic link</span><br><span class="line"># -f：目标文件存在时，删除目标文件再创建</span><br></pre></td></tr></table></figure>
+<h2 id="3-磁盘的分区、格式化、检验和挂载"><a href="#3-磁盘的分区、格式化、检验和挂载" class="headerlink" title="3. 磁盘的分区、格式化、检验和挂载"></a>3. 磁盘的分区、格式化、检验和挂载</h2><p>磁盘管理是对 Linux 系统管理中的重要一环。当想要在系统中新增一块硬盘时，应该：</p>
+<ol>
+<li>对磁盘进行分区，以新建可用的分区</li>
+<li>对该分区进行格式化，以创建系统可用的文件系统</li>
+<li>对新建文件系统进行检验</li>
+<li>在 Linux 系统上创建挂载点（也即目录），并将其挂载</li>
+</ol>
+<p>以下是几个常用的命令：</p>
+<ul>
+<li>磁盘分区：fdisk、parted</li>
+<li>磁盘格式化：mkfs</li>
+<li>磁盘检验：fsck、badblocks</li>
+<li>磁盘挂载与卸载：mount、umount</li>
+</ul>
+<p>略。</p>
+<h2 id="4-设置开机挂载"><a href="#4-设置开机挂载" class="headerlink" title="4. 设置开机挂载"></a>4. 设置开机挂载</h2><p>手动处理 mount 很麻烦，需要设置成让系统在开机时自动挂载。</p>
+<p>略。</p>
+<h2 id="5-内存交换空间（swap）的构建"><a href="#5-内存交换空间（swap）的构建" class="headerlink" title="5. 内存交换空间（swap）的构建"></a>5. 内存交换空间（swap）的构建</h2><p>swap 的功能是在物理内存不足时作为内存扩展（虚拟内存）。</p>
+<h3 id="使用物理分区构建-swap"><a href="#使用物理分区构建-swap" class="headerlink" title="使用物理分区构建 swap"></a>使用物理分区构建 swap</h3><ol>
+<li>分区：使用 fdisk 在磁盘中分出一个分区给系统作为 swap。</li>
+<li>格式化：<code>mkswap 设备文件名</code>即可格式化该分区。</li>
+<li>使用：<code>swapon 设备文件名</code>启动该 swap 设备。</li>
+<li>查看：通过<code>free</code>查看内存使用情况。</li>
+</ol>
+<h3 id="使用文件构建-swap"><a href="#使用文件构建-swap" class="headerlink" title="使用文件构建 swap"></a>使用文件构建 swap</h3><ol>
+<li>使用<code>dd</code>新增一个大文件（如128MB）在 /tmp 下</li>
+<li>使用<code>mkswap</code>将 /tmp/swap 这个文件格式化为 swap 的文件格式</li>
+<li>使用<code>mkswap</code>将 /tmp/swap 启动</li>
+<li>使用<code>swapoff</code>将 /tmp/swap 关闭</li>
+</ol>
+<hr>
+<ul>
+<li><p><a href="/more/donate/index.html"><strong><em><font color="red">我觉得帮助到我了, 支持你一下.</font></em></strong></a><br>   </p>
+</li>
+<li><p><a href="https://www.paypal.me/momodainfo" target="_blank" rel="noopener"><strong><em><font color="red">If you think the article is helpful to you, you can reward me through paypal.</font></em></strong></a></p>
+</li>
+</ul>
+<h3 id="Ads"><a href="#Ads" class="headerlink" title="Ads"></a>Ads</h3><p><em>这是小广告! 如果有需要, 不妨支持一下吧~</em></p>
+<blockquote>
+<p> <a target="_blank" href="https://amazon.cn/gp/search?ie=UTF8&tag=momoda-23&linkCode=ur2&linkId=4a0e4fbec0cfa8dfe540ca999d0bf999&camp=536&creative=3200&index=books&keywords=编程">这些好书您看了吗?</a><img src="//ir-cn.amazon-adsystem.com/e/ir?t=momoda-23&l=ur2&o=28" width="1" height="1" border="0" alt="" style="border:none !important; margin:0px !important;"></p>
+</blockquote>
+<blockquote>
+<p>体育&amp;户外用品推荐</p>
+</blockquote>
+<div align="center"> <a href="https://www.amazon.cn/B07HWB88Z5/dp/B07HWB88Z5/ref=as_sl_pc_tf_til?tag=momoda-23&linkCode=w00&linkId=14df5124f2165d9eb3d65252e60ed2cf&creativeASIN=B07HWB88Z5" target="_blank" rel="noopener"><img src="/se-notes/Linux基础/ch4-Linux磁盘与文件系统管理/../more/ads/amazon.gif" width="100%"></a> </div>
+      
+    </div><!-- .entry-content -->
+
+    <footer class="entry-meta">
+    <a href="/se-notes/Linux基础/ch4-Linux磁盘与文件系统管理/">
+    <time datetime="2019-01-03T13:49:30.000Z" class="entry-date">
+        1月 3 2019
+    </time>
+</a>
+    
+  <span class="article-delim">&#8226;</span>
+  <div class="article-category">
+  <a class="article-category-link" href="/categories/Linux/">Linux</a>, <a class="article-category-link" href="/categories/Linux/linux基础/">linux基础</a>
+  </div>
+
+    
+  <span class="article-delim">&#8226;</span>
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/linux/">linux</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/系统管理/">系统管理</a></li></ul>
+
+    </footer>
+</article>
+
+
+
+
+
+
+  
+  
+
+</div></div>
+        <div id="secondary" class="widget-area" role="complementary">
+  
+    <aside id="search" class="widget widget_search"><form role="search" method="get" accept-charset="utf-8" id="searchform" class="searchform" action="//google.com/search">
+    <div>
+        <input type="text" value="" name="q">
+        <input type="submit" id="searchsubmit" value="google搜索">
+    </div>
+</form></aside>
+
+  
+    
+  <aside class="widget">
+    <h3 class="widget-title">Recents</h3>
+    <div class="widget-content">
+      <ul>
+        
+          <li>
+            <a href="/系统剩余空间查看/">系统剩余空间查看</a>
+          </li>
+        
+          <li>
+            <a href="/数据库分类/">数据库分类</a>
+          </li>
+        
+          <li>
+            <a href="/se-notes/Linux基础/README/">Linux基础-README</a>
+          </li>
+        
+          <li>
+            <a href="/se-notes/云计算实践/区块链相关/区块链简介/">区块链简介</a>
+          </li>
+        
+          <li>
+            <a href="/se-notes/云计算实践/集群高可用方案/Heartbeat双机热备方案/">Heartbeat双机热备方案</a>
+          </li>
+        
+      </ul>
+    </div>
+  </aside>
+
+  
+    
+  <aside class="widget">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget-content">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/">一月 2019</a><span class="archive-list-count">56</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">十一月 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">二月 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/09/">九月 2017</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/01/">一月 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/11/">十一月 2015</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/01/">一月 2014</a><span class="archive-list-count">1</span></li></ul>
+    </div>
+  </aside>
+
+  
+    
+  <aside class="widget">
+    <h3 class="widget-title">Categories</h3>
+    <div class="widget-content">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Graphics/">Graphics</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Linux/">Linux</a><span class="category-list-count">7</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Linux/Shell/">Shell</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Linux/linux基础/">linux基础</a><span class="category-list-count">6</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/协议证书/">协议证书</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/协议证书/openssl/">openssl</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/数据库/">数据库</a><span class="category-list-count">4</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/数据库/数据库基础/">数据库基础</a><span class="category-list-count">3</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/框架/">框架</a><span class="category-list-count">9</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/框架/python-web应用框架/">python-web应用框架</a><span class="category-list-count">9</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/版本控制/">版本控制</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/版本控制/Git/">Git</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/编程语言/">编程语言</a><span class="category-list-count">13</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/编程语言/java/">java</a><span class="category-list-count">13</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/网络通讯/">网络通讯</a><span class="category-list-count">11</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/网络通讯/大小端/">大小端</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/网络通讯/计算机网络基础/">计算机网络基础</a><span class="category-list-count">10</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/路由器/">路由器</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/路由器/openwrt/">openwrt</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/通用技术/">通用技术</a><span class="category-list-count">13</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/通用技术/Docker/">Docker</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/通用技术/云计算实践/">云计算实践</a><span class="category-list-count">11</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/通用技术/云计算实践/kubernetes部署/">kubernetes部署</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/通用技术/云计算实践/区块链/">区块链</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/通用技术/云计算实践/集群高可用方案/">集群高可用方案</a><span class="category-list-count">4</span></li></ul></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/默认/">默认</a><span class="category-list-count">1</span></li></ul>
+    </div>
+  </aside>
+
+  
+    
+  <aside class="widget">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget-content">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/CS-Notes/">CS-Notes</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/PEM证书/">PEM证书</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Shell/">Shell</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/cron/">cron</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/database/">database</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/diagrams/">diagrams</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/docker/">docker</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/docker-qq/">docker-qq</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/flask/">flask</a><span class="tag-list-count">9</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/git/">git</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/graphics/">graphics</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/http/">http</a><span class="tag-list-count">10</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/informationisbeautiful/">informationisbeautiful</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/java基础/">java基础</a><span class="tag-list-count">13</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/java语法/">java语法</a><span class="tag-list-count">13</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/kubernetes/">kubernetes</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/linux/">linux</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mysql/">mysql</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/network/">network</a><span class="tag-list-count">10</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/openssl/">openssl</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/openwrt/">openwrt</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/p12/">p12</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/pfx/">pfx</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/tcp-ip/">tcp/ip</a><span class="tag-list-count">10</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/web开发/">web开发</a><span class="tag-list-count">9</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/云计算/">云计算</a><span class="tag-list-count">11</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/区块链/">区块链</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/大小端/">大小端</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/数据库/">数据库</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/系统管理/">系统管理</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/计算机网络/">计算机网络</a><span class="tag-list-count">10</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/集群/">集群</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/默认/">默认</a><span class="tag-list-count">1</span></li></ul>
+    </div>
+  </aside>
+
+  
+    
+  <aside class="widget">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget-content tagcloud">
+      <a href="/tags/CS-Notes/" style="font-size: 10px;">CS-Notes</a> <a href="/tags/PEM证书/" style="font-size: 10px;">PEM证书</a> <a href="/tags/Shell/" style="font-size: 10px;">Shell</a> <a href="/tags/cron/" style="font-size: 10px;">cron</a> <a href="/tags/database/" style="font-size: 10px;">database</a> <a href="/tags/diagrams/" style="font-size: 10px;">diagrams</a> <a href="/tags/docker/" style="font-size: 15px;">docker</a> <a href="/tags/docker-qq/" style="font-size: 10px;">docker-qq</a> <a href="/tags/flask/" style="font-size: 16.25px;">flask</a> <a href="/tags/git/" style="font-size: 10px;">git</a> <a href="/tags/graphics/" style="font-size: 10px;">graphics</a> <a href="/tags/http/" style="font-size: 17.5px;">http</a> <a href="/tags/informationisbeautiful/" style="font-size: 10px;">informationisbeautiful</a> <a href="/tags/java基础/" style="font-size: 20px;">java基础</a> <a href="/tags/java语法/" style="font-size: 20px;">java语法</a> <a href="/tags/kubernetes/" style="font-size: 13.75px;">kubernetes</a> <a href="/tags/linux/" style="font-size: 15px;">linux</a> <a href="/tags/mysql/" style="font-size: 11.25px;">mysql</a> <a href="/tags/network/" style="font-size: 17.5px;">network</a> <a href="/tags/openssl/" style="font-size: 10px;">openssl</a> <a href="/tags/openwrt/" style="font-size: 10px;">openwrt</a> <a href="/tags/p12/" style="font-size: 10px;">p12</a> <a href="/tags/pfx/" style="font-size: 10px;">pfx</a> <a href="/tags/tcp-ip/" style="font-size: 17.5px;">tcp/ip</a> <a href="/tags/web开发/" style="font-size: 16.25px;">web开发</a> <a href="/tags/云计算/" style="font-size: 18.75px;">云计算</a> <a href="/tags/区块链/" style="font-size: 10px;">区块链</a> <a href="/tags/大小端/" style="font-size: 10px;">大小端</a> <a href="/tags/数据库/" style="font-size: 12.5px;">数据库</a> <a href="/tags/系统管理/" style="font-size: 15px;">系统管理</a> <a href="/tags/计算机网络/" style="font-size: 17.5px;">计算机网络</a> <a href="/tags/集群/" style="font-size: 13.75px;">集群</a> <a href="/tags/默认/" style="font-size: 10px;">默认</a>
+    </div>
+  </aside>
+
+  
+    <aside class="widget">
+    <h3 class="widget-title">Links</h3>
+    <div class="widget-content">
+		<ul id="link-list">
+		<!-- link begin -->
+
+		<li><a href="https://www.google.com/">google</a></li>
+		<li><a href="https://www.baidu.com/">baidu</a></li>
+		
+		<!-- link end -->
+		</ul>
+    </div>
+</aside>
+
+  
+    <aside class="widget">
+    <h3 class="widget-title">Ads</h3>
+    <div class="widget-content">
+	 
+			* <a target="_blank" href="https://amazon.cn/gp/search?ie=UTF8&tag=momoda-23&linkCode=ur2&linkId=4a0e4fbec0cfa8dfe540ca999d0bf999&camp=536&creative=3200&index=books&keywords=编程">这些好书您看了吗?</a><img src="//ir-cn.amazon-adsystem.com/e/ir?t=momoda-23&l=ur2&o=28" width="1" height="1" border="0" alt="" style="border:none !important; margin:0px !important;">
+			<br><br>
+			* 体育&户外用品推荐>
+			<div align="center"> <a href="https://www.amazon.cn/B07HWB88Z5/dp/B07HWB88Z5/ref=as_sl_pc_tf_til?tag=momoda-23&linkCode=w00&linkId=14df5124f2165d9eb3d65252e60ed2cf&creativeASIN=B07HWB88Z5"><img src="/more/ads/amazon.gif" width="100%"></a> </div>
+
+    </div>
+</aside>
+
+  
+</div>
+      </div>
+      <footer id="colophon" role="contentinfo">
+    <p>&copy; 2019 momoda
+    All rights reserved.</p>
+    <p>Powered by <a href="https://hexo.io/" target="_blank">Hexo</a></p>
+    <a href="javascript:scrollTo(0,0);">返回顶部</a>
+</footer>
+
+    <script>window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"1","bdMiniList":false,"bdPic":"","bdStyle":"2","bdSize":"16"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];</script>
+
+<script src="/js/jquery-2.0.3.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+<script src="/js/navigation.js"></script>
+
+
+<script type="text/javascript" src="https://js.users.51.la/19862371.js"></script>
+<div id="bg"></div>
+
+  </div>
+</body>
+</html>

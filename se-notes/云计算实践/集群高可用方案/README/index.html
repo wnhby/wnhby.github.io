@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="utf-8">
+  
+  
+  <meta name="description" content="momoda">
+  
+
+  
+  <meta name="keywords" content="momoda">
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  <title>集群高可用方案-README | Just another blog</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="集群高可用方案概念介绍 双机热备 LVS Keepalived Heartbeat Keepalived VS Heartbeat DRBD Ads     集群高可用方案概念介绍双机热备双机热备特指高可用服务器集群中两台服务器的高可用，目标是实现如下场景：  两台 Web 服务器为主从备份，并同时开启，但只有主服务器对外提供服务。（或者通过负载均衡同时对外提供服务） 当主服务器宕机时，从服务">
+<meta name="keywords" content="云计算,集群">
+<meta property="og:type" content="article">
+<meta property="og:title" content="集群高可用方案-README">
+<meta property="og:url" content="https://wnhby.github.io/se-notes/云计算实践/集群高可用方案/README/index.html">
+<meta property="og:site_name" content="Just another blog">
+<meta property="og:description" content="集群高可用方案概念介绍 双机热备 LVS Keepalived Heartbeat Keepalived VS Heartbeat DRBD Ads     集群高可用方案概念介绍双机热备双机热备特指高可用服务器集群中两台服务器的高可用，目标是实现如下场景：  两台 Web 服务器为主从备份，并同时开启，但只有主服务器对外提供服务。（或者通过负载均衡同时对外提供服务） 当主服务器宕机时，从服务">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="http://img1.51cto.com/attachment/201104/110349553.png">
+<meta property="og:image" content="https://ir-cn.amazon-adsystem.com/e/ir?t=momoda-23&l=ur2&o=28">
+<meta property="og:image" content="https://wnhby.github.io/se-notes/云计算实践/集群高可用方案/more/ads/amazon.gif">
+<meta property="og:updated_time" content="2019-02-19T05:22:11.423Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="集群高可用方案-README">
+<meta name="twitter:description" content="集群高可用方案概念介绍 双机热备 LVS Keepalived Heartbeat Keepalived VS Heartbeat DRBD Ads     集群高可用方案概念介绍双机热备双机热备特指高可用服务器集群中两台服务器的高可用，目标是实现如下场景：  两台 Web 服务器为主从备份，并同时开启，但只有主服务器对外提供服务。（或者通过负载均衡同时对外提供服务） 当主服务器宕机时，从服务">
+<meta name="twitter:image" content="http://img1.51cto.com/attachment/201104/110349553.png">
+  
+    <link rel="alternative" href="/atom.xml" title="Just another blog" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/css/images/favicon.ico">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  
+
+  
+  <!-- baidu webmaster push -->
+  <script src="//push.zhanzhang.baidu.com/push.js"></script>
+</head></html>
+<body class="home blog custom-background custom-font-enabled single-author">
+  <div id="page" class="hfeed site">
+      <header id="masthead" class="site-header" role="banner">
+    <hgroup>
+      <h1 class="site-title">
+        <a href="/" title="Just another blog" rel="home">Just another blog</a>
+      </h1>
+      
+        <h2 class="site-description">
+          <a href="/" id="subtitle">momoda blog</a>
+        </h2>
+      
+    </hgroup>
+
+    <nav id="site-navigation" class="main-navigation" role="navigation">
+            <button class="menu-toggle">菜单</button>
+            <a class="assistive-text" href="/#content" title="跳至内容">跳至内容</a><!--TODO-->
+            <div class="menu-main-container">
+                <ul id="menu-main" class="nav-menu">
+                
+                    <li class="menu-item menu-item-type-post_type menu-item-object-page"><a href="/">Home</a></li>
+                
+                    <li class="menu-item menu-item-type-post_type menu-item-object-page"><a href="/atom.xml">RSS</a></li>
+                
+                    <li class="menu-item menu-item-type-post_type menu-item-object-page"><a href="/sitemap.xml">Site map</a></li>
+                
+                    <li class="menu-item menu-item-type-post_type menu-item-object-page"><a href="/more/share.html">Share</a></li>
+                
+                </ul>
+            </div>
+    </nav>
+</header>
+
+      <div id="main" class="wrapper">
+        <div id="primary" class="site-content"><div id="content" role="main"><article id="post-se-notes/云计算实践/集群高可用方案/README" class="post-se-notes/云计算实践/集群高可用方案/README post type-post status-publish format-standard hentry">
+    <!---->
+
+      <header class="entry-header">
+        
+        
+  
+    <h1 class="entry-title article-title">
+      集群高可用方案-README
+    </h1>
+  
+
+        
+        <div class="comments-link">
+            
+            <a href="javascript:void(0);" data-url="https://wnhby.github.io/se-notes/云计算实践/集群高可用方案/README/" data-id="cjsbbbf2100ave9s69lzss55a" class="leave-reply bdsharebuttonbox" data-cmd="more">分享</a>
+        </div><!-- .comments-link -->
+      </header><!-- .entry-header -->
+
+    <div class="entry-content">
+      
+        <!-- TOC -->
+<ul>
+<li><a href="#%E9%9B%86%E7%BE%A4%E9%AB%98%E5%8F%AF%E7%94%A8%E6%96%B9%E6%A1%88%E6%A6%82%E5%BF%B5%E4%BB%8B%E7%BB%8D">集群高可用方案概念介绍</a><ul>
+<li><a href="#%E5%8F%8C%E6%9C%BA%E7%83%AD%E5%A4%87">双机热备</a></li>
+<li><a href="#lvs">LVS</a></li>
+<li><a href="#keepalived">Keepalived</a></li>
+<li><a href="#heartbeat">Heartbeat</a></li>
+<li><a href="#keepalived-vs-heartbeat">Keepalived VS Heartbeat</a></li>
+<li><a href="#drbd">DRBD</a></li>
+<li><a href="#ads">Ads</a></li>
+</ul>
+</li>
+</ul>
+<!-- /TOC -->
+<h1 id="集群高可用方案概念介绍"><a href="#集群高可用方案概念介绍" class="headerlink" title="集群高可用方案概念介绍"></a>集群高可用方案概念介绍</h1><h3 id="双机热备"><a href="#双机热备" class="headerlink" title="双机热备"></a>双机热备</h3><p>双机热备特指高可用服务器集群中两台服务器的高可用，目标是实现如下场景：</p>
+<ul>
+<li>两台 Web 服务器为主从备份，并同时开启，但只有主服务器对外提供服务。（或者通过负载均衡同时对外提供服务）</li>
+<li>当主服务器宕机时，从服务器接管服务，且 IP 地址保持不变。</li>
+<li>主服务器与从服务器的数据库与静态文件资源保持实时一致。</li>
+</ul>
+<h3 id="LVS"><a href="#LVS" class="headerlink" title="LVS"></a>LVS</h3><p>LVS（Linux Virtual Server）即 Linux 虚拟服务器，采用 IP 负载均衡技术和基于内容请求分发技术，是一个高可伸缩、高可用网络服务的虚拟服务器集群系统，主要用于服务器集群的<strong>负载均衡</strong>。</p>
+<p>使用 LVS 架设的服务器集群系统有三个部分组成：</p>
+<ul>
+<li><strong>负载调度器</strong>（Load Balancer）：整个集群对外服务的前端机，负责将用户请求发送到一组服务器上执行，而用户认为服务只来自一个IP地址（即 Virtual IP）。</li>
+<li><strong>服务器集群</strong>（Server Array），是一组真正执行客户请求的服务器（Real Server），执行的服务包括但不限于 WEB、MAIL、FTP 和 DNS 等。</li>
+<li><strong>共享存储</strong>（Shared Storage）：为服务器池所提供的一个共享存储区，这样可使得服务器集群拥有相同的内容，提供相同的服务。</li>
+</ul>
+<blockquote>
+<p>LVS 集群中的负载调度器具有很好的吞吐率，可将请求均衡地转移到不同的服务器上执行，且负载调度器自动屏蔽掉服务器的故障，从而将一组服务器构成一个高性能的、高可用的虚拟服务器。整个服务器集群的结构对客户是黑箱状态，而且无需修改客户端和服务器端的程序。</p>
+</blockquote>
+<p><img src="http://img1.51cto.com/attachment/201104/110349553.png" alt="enter image description here"></p>
+<p>LVS 的实现方式主要分为 NAT（网络地址转换）与 DR（直接路由）两种。</p>
+<ul>
+<li>NAT：目标 IP 为 VIP（Virtual IP）的用户请求经过 DS （Director Server）时进行了 IP 地址转换，把 VIP 换成了 RS（Real Server） 的实际 IP。RS 处理完请求后需要把 response 再发回给 DS，再由 DS 转换为 VIP 后返回给请求的用户。（优点是服务器可以运行任何支持 TCP/IP 的操作系统；缺点是 response 都要经过 DS，伸缩能力有限，难以支持大集群）</li>
+<li>DR：目标 IP 为 VIP 的用户请求经过 DS 时进行了 MAC 地址转换，把 MAC 地址修改为了 RS 的实际 MAC 地址。RS 处理完请求后把 response 直接返回给用户。（优点是伸缩性强，但需要 DS 与 RS 在同一个物理子网）</li>
+</ul>
+<blockquote>
+<p>注意：LVS 集群中的负载调度器不可与真实服务器是同一台机器。因为 LVS 是<strong>四层负载均衡</strong>（基于传输层，请求的转发通过修改 IP 地址或目标 MAC 地址来实现），所以无法保证一个请求是交付给本机的负载均衡器进行调度还是交付给本机的应用程序处理，因此可能会陷入自己不断把请求发给自己的死循环。</p>
+</blockquote>
+<p><a href="http://www.linuxvirtualserver.org/zh/lvs1.html" target="_blank" rel="noopener">LVS 官方中文文档</a><br><a href="http://bbs.linuxtone.org/thread-20357-1-1.html" target="_blank" rel="noopener">LVS + Keepalived 中 Vip 不能访问</a></p>
+<h3 id="Keepalived"><a href="#Keepalived" class="headerlink" title="Keepalived"></a>Keepalived</h3><p>Keepalived 是一款高可用软件，它的功能主要包括两方面：</p>
+<ul>
+<li>基于 VRRP 协议，通过 IP 漂移实现服务的高可用：服务器集群共享一个虚拟 IP，同一时间只有一个服务器占有虚拟 IP 并对外提供服务。若该服务器不可用，则虚拟 IP 漂移至另一台服务器并对外提供服务；</li>
+<li>对 LVS 应用服务层的应用服务器集群进行状态监控：若应用服务器不可用，则 Keepalived 将其从集群中摘除，若应用服务器恢复，则 Keepalived 将其重新加入集群中。</li>
+</ul>
+<blockquote>
+<p>Keepalived 可以单独使用，即通过 IP 漂移实现服务的高可用，也可以结合 LVS 使用（即一方面通过IP漂移实现 LVS 负载均衡层的高可用，另一方面实现 LVS 应用服务层的状态监控）。</p>
+</blockquote>
+<h3 id="Heartbeat"><a href="#Heartbeat" class="headerlink" title="Heartbeat"></a>Heartbeat</h3><p>Heartbeat 是 Linux-HA 工程的一个组件，是集群管理中保证集群高可用的服务软件，它可以瞬间接管一台机器上的所有资源（包括访问资源、提供服务的资源和IP地址等等）。</p>
+<p>Heartbeat 最核心的两个部分是<strong>心跳监测</strong>和<strong>资源接管</strong>。<strong>心跳监测</strong>使设备之间相互发送报文来告诉对方自己当前的状态，如果在指定的时间内未收到对方发送的报文，那么就认为对方失效，这时需启动<strong>资源接管</strong>模块来接管运行在对方主机上的资源或者服务。</p>
+<h3 id="Keepalived-VS-Heartbeat"><a href="#Keepalived-VS-Heartbeat" class="headerlink" title="Keepalived VS Heartbeat"></a>Keepalived VS Heartbeat</h3><ul>
+<li>Keepalived 使用更简单：从安装、配置、使用、维护等角度上对比，Keepalived 都比 Heartbeat 要简单得多，尤其是 Heartbeat 2.1.4 后拆分成3个子项目，安装、配置、使用都比较复杂；而 Keepalived 只有1个安装文件和1个配置文件。</li>
+<li>Heartbeat 功能更强大：Heartbeat 虽然复杂，但功能更强大，配套工具更全，适合做大型集群管理；而 Keepalived 主要用于集群倒换，基本没有管理功能。</li>
+<li>协议不同：Keepalived 使用 VRRP 协议进行通信和选举，Heartbeat 使用心跳进行通信和选举；Heartbeat 除了网络外还可以通过串口通信，更加可靠。</li>
+<li>使用方式类似：如果要基于两者设计高可用方案，最终都要根据业务需要写自定义的脚本。Keepalived 的脚本没有约束；Heartbeat 的脚本有约束，即需要支持 service start/stop/restart 这种方式。</li>
+<li>接管方式不同：Keepalived 仅能用于接管IP地址，而 Heartbeat 可以接管IP、服务、存储等多种资源。且 Keepalived 集群中所有节点保证服务都开启，而 Heartbeat 集群只需要保证主节点服务开启即可（主节点宕机再由从节点开启服务）。</li>
+</ul>
+<blockquote>
+<p>建议：优先使用 Keepalived，当 Keepalived 功能不够用的时候才选择 Heartbeat</p>
+</blockquote>
+<p><a href="https://serverfault.com/questions/361071/what-is-the-difference-between-keepalive-and-heartbeat" target="_blank" rel="noopener">What is the difference between keepalive and heartbeat?</a></p>
+<h3 id="DRBD"><a href="#DRBD" class="headerlink" title="DRBD"></a>DRBD</h3><p>DRBD （Distributed Replicated Block Device）是一种基于软件的，无共享，复制的存储解决方案，在服务器之间对块设备（硬盘，分区，逻辑卷等）进行镜像。DRBD 负责接收数据，把数据写到本地磁盘，然后通过网络将同样的数据发送给另一个主机，另一个主机再将数据存到自己的磁盘中。</p>
+<p>工作原理：每个设备都有一个状态，可能是<strong>主状态</strong>或<strong>从状态</strong>。在主节点上，应用程序应能运行和访问 DRBD 设备（/dev/drbd*），且每次写入都会发往本地磁盘设备和从节点设备中。从节点只能简单地把数据写入它的磁盘设备上。 读取数据通常在本地进行。 如果主节点发生故障，心跳（heartbeat 或 corosync）将会把从节点转换到主状态，并启动其上的应用程序。如果发生故障的节点恢复工作，它就会成为新的从节点，而且必须使自己的内容与主节点的内容保持同步。</p>
+<hr>
+<ul>
+<li><p><a href="/more/donate/index.html"><strong><em><font color="red">我觉得帮助到我了, 支持你一下.</font></em></strong></a><br>   </p>
+</li>
+<li><p><a href="https://www.paypal.me/momodainfo" target="_blank" rel="noopener"><strong><em><font color="red">If you think the article is helpful to you, you can reward me through paypal.</font></em></strong></a></p>
+</li>
+</ul>
+<h3 id="Ads"><a href="#Ads" class="headerlink" title="Ads"></a>Ads</h3><p><em>这是小广告! 如果有需要, 不妨支持一下吧~</em></p>
+<blockquote>
+<p> <a target="_blank" href="https://amazon.cn/gp/search?ie=UTF8&tag=momoda-23&linkCode=ur2&linkId=4a0e4fbec0cfa8dfe540ca999d0bf999&camp=536&creative=3200&index=books&keywords=编程">这些好书您看了吗?</a><img src="//ir-cn.amazon-adsystem.com/e/ir?t=momoda-23&l=ur2&o=28" width="1" height="1" border="0" alt="" style="border:none !important; margin:0px !important;"></p>
+</blockquote>
+<blockquote>
+<p>体育&amp;户外用品推荐</p>
+</blockquote>
+<div align="center"> <a href="https://www.amazon.cn/B07HWB88Z5/dp/B07HWB88Z5/ref=as_sl_pc_tf_til?tag=momoda-23&linkCode=w00&linkId=14df5124f2165d9eb3d65252e60ed2cf&creativeASIN=B07HWB88Z5" target="_blank" rel="noopener"><img src="/se-notes/云计算实践/集群高可用方案/README/../more/ads/amazon.gif" width="100%"></a> </div>
+
+      
+    </div><!-- .entry-content -->
+
+    <footer class="entry-meta">
+    <a href="/se-notes/云计算实践/集群高可用方案/README/">
+    <time datetime="2019-01-03T13:49:30.000Z" class="entry-date">
+        1月 3 2019
+    </time>
+</a>
+    
+  <span class="article-delim">&#8226;</span>
+  <div class="article-category">
+  <a class="article-category-link" href="/categories/通用技术/">通用技术</a>, <a class="article-category-link" href="/categories/通用技术/云计算实践/">云计算实践</a>, <a class="article-category-link" href="/categories/通用技术/云计算实践/集群高可用方案/">集群高可用方案</a>
+  </div>
+
+    
+  <span class="article-delim">&#8226;</span>
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/云计算/">云计算</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/集群/">集群</a></li></ul>
+
+    </footer>
+</article>
+
+
+    
+<nav class="nav-single">
+    <h3 class="assistive-text">文章导航</h3>
+    
+        <span class="nav-previous"><a href="/se-notes/云计算实践/Kubernetes部署/Docker-CE安装/" rel="prev"><span class="meta-nav">←</span> Docker-CE安装</a></span>
+    
+    
+        <span class="nav-next"><a href="/informationisbeautiful/" rel="next">informationisbeautiful <span class="meta-nav">→</span></a></span>
+    
+</nav><!-- .nav-single -->
+
+
+
+
+
+
+
+</div></div>
+        <div id="secondary" class="widget-area" role="complementary">
+  
+    <aside id="search" class="widget widget_search"><form role="search" method="get" accept-charset="utf-8" id="searchform" class="searchform" action="//google.com/search">
+    <div>
+        <input type="text" value="" name="q">
+        <input type="submit" id="searchsubmit" value="google搜索">
+    </div>
+</form></aside>
+
+  
+    
+  <aside class="widget">
+    <h3 class="widget-title">Recents</h3>
+    <div class="widget-content">
+      <ul>
+        
+          <li>
+            <a href="/系统剩余空间查看/">系统剩余空间查看</a>
+          </li>
+        
+          <li>
+            <a href="/数据库分类/">数据库分类</a>
+          </li>
+        
+          <li>
+            <a href="/se-notes/Linux基础/README/">Linux基础-README</a>
+          </li>
+        
+          <li>
+            <a href="/se-notes/云计算实践/区块链相关/区块链简介/">区块链简介</a>
+          </li>
+        
+          <li>
+            <a href="/se-notes/云计算实践/集群高可用方案/Heartbeat双机热备方案/">Heartbeat双机热备方案</a>
+          </li>
+        
+      </ul>
+    </div>
+  </aside>
+
+  
+    
+  <aside class="widget">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget-content">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/">一月 2019</a><span class="archive-list-count">56</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">十一月 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">二月 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/09/">九月 2017</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/01/">一月 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/11/">十一月 2015</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/01/">一月 2014</a><span class="archive-list-count">1</span></li></ul>
+    </div>
+  </aside>
+
+  
+    
+  <aside class="widget">
+    <h3 class="widget-title">Categories</h3>
+    <div class="widget-content">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Graphics/">Graphics</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Linux/">Linux</a><span class="category-list-count">7</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Linux/Shell/">Shell</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Linux/linux基础/">linux基础</a><span class="category-list-count">6</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/协议证书/">协议证书</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/协议证书/openssl/">openssl</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/数据库/">数据库</a><span class="category-list-count">4</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/数据库/数据库基础/">数据库基础</a><span class="category-list-count">3</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/框架/">框架</a><span class="category-list-count">9</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/框架/python-web应用框架/">python-web应用框架</a><span class="category-list-count">9</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/版本控制/">版本控制</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/版本控制/Git/">Git</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/编程语言/">编程语言</a><span class="category-list-count">13</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/编程语言/java/">java</a><span class="category-list-count">13</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/网络通讯/">网络通讯</a><span class="category-list-count">11</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/网络通讯/大小端/">大小端</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/网络通讯/计算机网络基础/">计算机网络基础</a><span class="category-list-count">10</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/路由器/">路由器</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/路由器/openwrt/">openwrt</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/通用技术/">通用技术</a><span class="category-list-count">13</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/通用技术/Docker/">Docker</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/通用技术/云计算实践/">云计算实践</a><span class="category-list-count">11</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/通用技术/云计算实践/kubernetes部署/">kubernetes部署</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/通用技术/云计算实践/区块链/">区块链</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/通用技术/云计算实践/集群高可用方案/">集群高可用方案</a><span class="category-list-count">4</span></li></ul></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/默认/">默认</a><span class="category-list-count">1</span></li></ul>
+    </div>
+  </aside>
+
+  
+    
+  <aside class="widget">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget-content">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/CS-Notes/">CS-Notes</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/PEM证书/">PEM证书</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Shell/">Shell</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/cron/">cron</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/database/">database</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/diagrams/">diagrams</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/docker/">docker</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/docker-qq/">docker-qq</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/flask/">flask</a><span class="tag-list-count">9</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/git/">git</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/graphics/">graphics</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/http/">http</a><span class="tag-list-count">10</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/informationisbeautiful/">informationisbeautiful</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/java基础/">java基础</a><span class="tag-list-count">13</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/java语法/">java语法</a><span class="tag-list-count">13</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/kubernetes/">kubernetes</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/linux/">linux</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mysql/">mysql</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/network/">network</a><span class="tag-list-count">10</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/openssl/">openssl</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/openwrt/">openwrt</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/p12/">p12</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/pfx/">pfx</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/tcp-ip/">tcp/ip</a><span class="tag-list-count">10</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/web开发/">web开发</a><span class="tag-list-count">9</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/云计算/">云计算</a><span class="tag-list-count">11</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/区块链/">区块链</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/大小端/">大小端</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/数据库/">数据库</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/系统管理/">系统管理</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/计算机网络/">计算机网络</a><span class="tag-list-count">10</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/集群/">集群</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/默认/">默认</a><span class="tag-list-count">1</span></li></ul>
+    </div>
+  </aside>
+
+  
+    
+  <aside class="widget">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget-content tagcloud">
+      <a href="/tags/CS-Notes/" style="font-size: 10px;">CS-Notes</a> <a href="/tags/PEM证书/" style="font-size: 10px;">PEM证书</a> <a href="/tags/Shell/" style="font-size: 10px;">Shell</a> <a href="/tags/cron/" style="font-size: 10px;">cron</a> <a href="/tags/database/" style="font-size: 10px;">database</a> <a href="/tags/diagrams/" style="font-size: 10px;">diagrams</a> <a href="/tags/docker/" style="font-size: 15px;">docker</a> <a href="/tags/docker-qq/" style="font-size: 10px;">docker-qq</a> <a href="/tags/flask/" style="font-size: 16.25px;">flask</a> <a href="/tags/git/" style="font-size: 10px;">git</a> <a href="/tags/graphics/" style="font-size: 10px;">graphics</a> <a href="/tags/http/" style="font-size: 17.5px;">http</a> <a href="/tags/informationisbeautiful/" style="font-size: 10px;">informationisbeautiful</a> <a href="/tags/java基础/" style="font-size: 20px;">java基础</a> <a href="/tags/java语法/" style="font-size: 20px;">java语法</a> <a href="/tags/kubernetes/" style="font-size: 13.75px;">kubernetes</a> <a href="/tags/linux/" style="font-size: 15px;">linux</a> <a href="/tags/mysql/" style="font-size: 11.25px;">mysql</a> <a href="/tags/network/" style="font-size: 17.5px;">network</a> <a href="/tags/openssl/" style="font-size: 10px;">openssl</a> <a href="/tags/openwrt/" style="font-size: 10px;">openwrt</a> <a href="/tags/p12/" style="font-size: 10px;">p12</a> <a href="/tags/pfx/" style="font-size: 10px;">pfx</a> <a href="/tags/tcp-ip/" style="font-size: 17.5px;">tcp/ip</a> <a href="/tags/web开发/" style="font-size: 16.25px;">web开发</a> <a href="/tags/云计算/" style="font-size: 18.75px;">云计算</a> <a href="/tags/区块链/" style="font-size: 10px;">区块链</a> <a href="/tags/大小端/" style="font-size: 10px;">大小端</a> <a href="/tags/数据库/" style="font-size: 12.5px;">数据库</a> <a href="/tags/系统管理/" style="font-size: 15px;">系统管理</a> <a href="/tags/计算机网络/" style="font-size: 17.5px;">计算机网络</a> <a href="/tags/集群/" style="font-size: 13.75px;">集群</a> <a href="/tags/默认/" style="font-size: 10px;">默认</a>
+    </div>
+  </aside>
+
+  
+    <aside class="widget">
+    <h3 class="widget-title">Links</h3>
+    <div class="widget-content">
+		<ul id="link-list">
+		<!-- link begin -->
+
+		<li><a href="https://www.google.com/">google</a></li>
+		<li><a href="https://www.baidu.com/">baidu</a></li>
+		
+		<!-- link end -->
+		</ul>
+    </div>
+</aside>
+
+  
+    <aside class="widget">
+    <h3 class="widget-title">Ads</h3>
+    <div class="widget-content">
+	 
+			* <a target="_blank" href="https://amazon.cn/gp/search?ie=UTF8&tag=momoda-23&linkCode=ur2&linkId=4a0e4fbec0cfa8dfe540ca999d0bf999&camp=536&creative=3200&index=books&keywords=编程">这些好书您看了吗?</a><img src="//ir-cn.amazon-adsystem.com/e/ir?t=momoda-23&l=ur2&o=28" width="1" height="1" border="0" alt="" style="border:none !important; margin:0px !important;">
+			<br><br>
+			* 体育&户外用品推荐>
+			<div align="center"> <a href="https://www.amazon.cn/B07HWB88Z5/dp/B07HWB88Z5/ref=as_sl_pc_tf_til?tag=momoda-23&linkCode=w00&linkId=14df5124f2165d9eb3d65252e60ed2cf&creativeASIN=B07HWB88Z5"><img src="/more/ads/amazon.gif" width="100%"></a> </div>
+
+    </div>
+</aside>
+
+  
+</div>
+      </div>
+      <footer id="colophon" role="contentinfo">
+    <p>&copy; 2019 momoda
+    All rights reserved.</p>
+    <p>Powered by <a href="https://hexo.io/" target="_blank">Hexo</a></p>
+    <a href="javascript:scrollTo(0,0);">返回顶部</a>
+</footer>
+
+    <script>window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"1","bdMiniList":false,"bdPic":"","bdStyle":"2","bdSize":"16"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];</script>
+
+<script src="/js/jquery-2.0.3.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+<script src="/js/navigation.js"></script>
+
+
+<script type="text/javascript" src="https://js.users.51.la/19862371.js"></script>
+<div id="bg"></div>
+
+  </div>
+</body>
+</html>

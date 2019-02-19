@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="utf-8">
+  
+  
+  <meta name="description" content="momoda">
+  
+
+  
+  <meta name="keywords" content="momoda">
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  <title>多线程 | Just another blog</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="Java 多线程 创建任务和线程   Thread类 线程池 线程同步 同步语句   利用加锁同步 Volatile 关键字- [使用场景](#使用场景)  线程间协作 避免死锁- [Ads](#ads)    Java 多线程一个程序可能包含多个并发运行的任务，线程是指一个任务从头至尾的执行流。Java 可以在一个程序中并发地启动多个线程，这些线程可以在多处理器系统上同时运行。 创建任务和线">
+<meta name="keywords" content="java语法,java基础">
+<meta property="og:type" content="article">
+<meta property="og:title" content="多线程">
+<meta property="og:url" content="https://wnhby.github.io/se-notes/Java基础/多线程/index.html">
+<meta property="og:site_name" content="Just another blog">
+<meta property="og:description" content="Java 多线程 创建任务和线程   Thread类 线程池 线程同步 同步语句   利用加锁同步 Volatile 关键字- [使用场景](#使用场景)  线程间协作 避免死锁- [Ads](#ads)    Java 多线程一个程序可能包含多个并发运行的任务，线程是指一个任务从头至尾的执行流。Java 可以在一个程序中并发地启动多个线程，这些线程可以在多处理器系统上同时运行。 创建任务和线">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="http://images2015.cnblogs.com/blog/731716/201607/731716-20160708224602686-2141387366.png">
+<meta property="og:image" content="https://ir-cn.amazon-adsystem.com/e/ir?t=momoda-23&l=ur2&o=28">
+<meta property="og:image" content="https://wnhby.github.io/se-notes/Java基础/more/ads/amazon.gif">
+<meta property="og:updated_time" content="2019-02-19T05:19:13.066Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="多线程">
+<meta name="twitter:description" content="Java 多线程 创建任务和线程   Thread类 线程池 线程同步 同步语句   利用加锁同步 Volatile 关键字- [使用场景](#使用场景)  线程间协作 避免死锁- [Ads](#ads)    Java 多线程一个程序可能包含多个并发运行的任务，线程是指一个任务从头至尾的执行流。Java 可以在一个程序中并发地启动多个线程，这些线程可以在多处理器系统上同时运行。 创建任务和线">
+<meta name="twitter:image" content="http://images2015.cnblogs.com/blog/731716/201607/731716-20160708224602686-2141387366.png">
+  
+    <link rel="alternative" href="/atom.xml" title="Just another blog" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/css/images/favicon.ico">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  
+
+  
+  <!-- baidu webmaster push -->
+  <script src="//push.zhanzhang.baidu.com/push.js"></script>
+</head></html>
+<body class="home blog custom-background custom-font-enabled single-author">
+  <div id="page" class="hfeed site">
+      <header id="masthead" class="site-header" role="banner">
+    <hgroup>
+      <h1 class="site-title">
+        <a href="/" title="Just another blog" rel="home">Just another blog</a>
+      </h1>
+      
+        <h2 class="site-description">
+          <a href="/" id="subtitle">momoda blog</a>
+        </h2>
+      
+    </hgroup>
+
+    <nav id="site-navigation" class="main-navigation" role="navigation">
+            <button class="menu-toggle">菜单</button>
+            <a class="assistive-text" href="/#content" title="跳至内容">跳至内容</a><!--TODO-->
+            <div class="menu-main-container">
+                <ul id="menu-main" class="nav-menu">
+                
+                    <li class="menu-item menu-item-type-post_type menu-item-object-page"><a href="/">Home</a></li>
+                
+                    <li class="menu-item menu-item-type-post_type menu-item-object-page"><a href="/atom.xml">RSS</a></li>
+                
+                    <li class="menu-item menu-item-type-post_type menu-item-object-page"><a href="/sitemap.xml">Site map</a></li>
+                
+                    <li class="menu-item menu-item-type-post_type menu-item-object-page"><a href="/more/share.html">Share</a></li>
+                
+                </ul>
+            </div>
+    </nav>
+</header>
+
+      <div id="main" class="wrapper">
+        <div id="primary" class="site-content"><div id="content" role="main"><article id="post-se-notes/Java基础/多线程" class="post-se-notes/Java基础/多线程 post type-post status-publish format-standard hentry">
+    <!---->
+
+      <header class="entry-header">
+        
+        
+  
+    <h1 class="entry-title article-title">
+      多线程
+    </h1>
+  
+
+        
+        <div class="comments-link">
+            
+            <a href="javascript:void(0);" data-url="https://wnhby.github.io/se-notes/Java基础/多线程/" data-id="cjsbbbewp0022e9s609nphyjc" class="leave-reply bdsharebuttonbox" data-cmd="more">分享</a>
+        </div><!-- .comments-link -->
+      </header><!-- .entry-header -->
+
+    <div class="entry-content">
+      
+        <!-- TOC -->
+<ul>
+<li><a href="#java-多线程">Java 多线程</a><ul>
+<li><a href="#创建任务和线程">创建任务和线程</a></li>
+</ul>
+</li>
+<li><a href="#thread类">Thread类</a></li>
+<li><a href="#线程池">线程池</a></li>
+<li><a href="#线程同步">线程同步</a><ul>
+<li><a href="#同步语句">同步语句</a></li>
+</ul>
+</li>
+<li><a href="#利用加锁同步">利用加锁同步</a></li>
+<li><a href="#volatile-关键字">Volatile 关键字</a><pre><code>- [使用场景](#使用场景)
+</code></pre></li>
+<li><a href="#线程间协作">线程间协作</a></li>
+<li><a href="#避免死锁">避免死锁</a><pre><code>- [Ads](#ads)
+</code></pre></li>
+</ul>
+<!-- /TOC -->
+<h1 id="Java-多线程"><a href="#Java-多线程" class="headerlink" title="Java 多线程"></a>Java 多线程</h1><p>一个程序可能包含多个并发运行的任务，线程是指一个任务从头至尾的执行流。Java 可以在一个程序中并发地启动多个线程，这些线程可以在多处理器系统上同时运行。</p>
+<h2 id="创建任务和线程"><a href="#创建任务和线程" class="headerlink" title="创建任务和线程"></a>创建任务和线程</h2><p>任务就是对象。为了创建任务，必须为任务定义一个实现了 Runnable 接口的类。Runnable 接口只包含了一个 run 方法，该方法告诉系统线程如何运行。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">TaskClass</span> <span class="keyword">implements</span> <span class="title">Runnable</span></span>&#123;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="title">TaskClass</span><span class="params">()</span></span>&#123;&#125;</span><br><span class="line">	</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span></span>&#123;</span><br><span class="line">	    <span class="comment">// Tell system how to run custom thread</span></span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>运行线程：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">TaskClass task = new TaskClass(); //根据任务类，创建任务</span><br><span class="line">Thread thread = new Thread(task); //创建任务的线程</span><br><span class="line">thread.start(); //启动线程</span><br></pre></td></tr></table></figure></p>
+<h1 id="Thread类"><a href="#Thread类" class="headerlink" title="Thread类"></a>Thread类</h1><p>Thread 类包含为任务而创建的线程的构造方法，以及控制线程的方法。</p>
+<ul>
+<li>方法 yield()：可为其他线程临时让出 CPU 时间。</li>
+<li>方法 sleep(long mills)：可以将线程设置为休眠以确保其他线程的执行，休眠时间为指定的毫秒数。也可能抛出必检异常，因此需要放到 try-catch 块中。</li>
+<li>方法 join()：使一个线程等待另一个线程的结束。</li>
+<li>Java 为每个线程都指定了一个优先级（1~10），可用 setPriority 方法设置优先级，用 getPriority 方法获取优先级。JVM 总是选择当前优先级最高的可运行线程，较低优先级的线程只有在没有比它更高优先级的线程运行时才能运行。</li>
+</ul>
+<blockquote>
+<p>注：由于 Thread 类也实现了 Runnable 接口，所以可以定义一个 Thread 的扩展类，在里面实现 run 方法来实现线程。但<strong>不推荐</strong>使用这种方式，因为把任务和运行任务的机制混在了一起。把任务从线程中分离出来是比较好的选择。</p>
+</blockquote>
+<h1 id="线程池"><a href="#线程池" class="headerlink" title="线程池"></a>线程池</h1><p>对于大量的任务而言，为每一个任务开始一个新线程是不够高效的。线程池是管理并发执行任务个数的理想办法。Java 提供 Executor 接口来执行线程池里的任务，提供 ExecutorService 接口来管理和控制任务。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">import java.util.concurrent.*;</span><br><span class="line"></span><br><span class="line">public class ExecutorDemo&#123;</span><br><span class="line">	public static void main(String[] args)&#123;</span><br><span class="line">		// 创建一个固定线程数的线程池</span><br><span class="line">		ExecutorService executor = Executors.newFixedThreadPool(3);</span><br><span class="line">		</span><br><span class="line">		// 或者按需创建线程池</span><br><span class="line">		// ExecutorService executor = Executors.newCachedThreadPool();</span><br><span class="line">		</span><br><span class="line">		// 执行任务（PrintChar实现了Runnable接口）</span><br><span class="line">		executor.execute(new PrintChar(&apos;a&apos;,100));</span><br><span class="line">		executor.execute(new PrintChar(&apos;b&apos;,100));</span><br><span class="line">		executor.execute(new PrintChar(&apos;c&apos;,100));</span><br><span class="line">		// 关闭执行器，之后便不能接受新的任务</span><br><span class="line">		executor.shutdown();</span><br><span class="line">		// 判断所有任务是否已结束，返回boolean型</span><br><span class="line">		executor.isTerminated();</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1 id="线程同步"><a href="#线程同步" class="headerlink" title="线程同步"></a>线程同步</h1><p>如果一个共享资源被多个线程同时访问，可能会遭到破坏。当任务1和任务2以一种会引起冲突的方式访问一个公共资源时，该问题称为<strong>竞争状态</strong>。如果一个类的对象在多线程程序中没有导致竞争状态，则称这样的类是<strong>线程安全的</strong>。</p>
+<p>为了避免竞争状态，应该防止多个线程同时进入程序的某一特定部分，这部分称为<strong>临界区</strong>。通过使用关键字 <strong>synchronized</strong> 来同步方法，以便一次只有一个线程可以访问该方法。如：<code>public synchronized void deposit(double amount)</code>。</p>
+<p>一个同步方法在执行之前需要加锁；调用一个对象的同步实例方法要求给该对象加锁；调用一个类的同步静态方法要求对该类加锁。如果一个线程调用一个对象上的同步实例方法（静态方法），首先给该对象（类）加锁，然后执行该方法，最后解锁。在解锁之前，另一个调用该对象（类）中该方法的线程将会被阻塞。</p>
+<h2 id="同步语句"><a href="#同步语句" class="headerlink" title="同步语句"></a>同步语句</h2><p>当执行方法中某一个代码块时，同步语句不仅可用于对 this 对象加锁，而且可用于对任何对象加锁。这个代码块称为“同步块”。由于同步语句允许设置同步方法中的部分代码而不必是整个方法，从而大大增强了程序的并发能力。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">synchronized(expr)&#123;</span><br><span class="line">	statements;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>表达式 expr 必须求出对象的引用。若对象已经被另一个线程锁定，则在解锁之前，该线程将被阻塞。当获准对一个对象加锁时，该线程执行同步块中语句，然后解除给对象加的锁。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">/*  任何同步实例方法可转换为同步语句。</span><br><span class="line">    以下两个实例方法是等价的。 */</span><br><span class="line">public synchronized void xMethod()&#123;</span><br><span class="line">	// method body</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">public void xMethod()&#123;</span><br><span class="line">	synchronized(this)&#123;</span><br><span class="line">		// method body</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1 id="利用加锁同步"><a href="#利用加锁同步" class="headerlink" title="利用加锁同步"></a>利用加锁同步</h1><p>同步的实例方法在执行方法之前都隐式地加锁，而 Java 也可以显式地加锁。</p>
+<p>一个锁是一个 Lock 接口的实例，它定义了加锁和释放锁的方法。<strong>ReentrantLock</strong> 类是为创建互斥锁的 Lock 的具体实现。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">import java.util.concurrent.locks.*</span><br><span class="line"></span><br><span class="line">public class Account&#123;</span><br><span class="line">    	private static Lock lock = new ReentrantLock();</span><br><span class="line">    	private int balance = 0;</span><br><span class="line">    	</span><br><span class="line">    	public int getBalancs()&#123;</span><br><span class="line">    		return this.balance;</span><br><span class="line">    	&#125;</span><br><span class="line">    	</span><br><span class="line">    	public void deposit(int amount)&#123;</span><br><span class="line">    		lock.lock(); // 加锁</span><br><span class="line">    		try&#123;</span><br><span class="line">    			int newBalance = balance + amount;</span><br><span class="line">    			Thread.sleep(5);</span><br><span class="line">    			balance = newBalance;</span><br><span class="line">    		&#125;</span><br><span class="line">    		catch(InterruptedException ex)&#123;   			</span><br><span class="line">    		&#125;</span><br><span class="line">    		finally&#123;</span><br><span class="line">    			lock.unlock(); // 解锁</span><br><span class="line">    		&#125;</span><br><span class="line">    	&#125;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+<h1 id="Volatile-关键字"><a href="#Volatile-关键字" class="headerlink" title="Volatile 关键字"></a>Volatile 关键字</h1><p>Java 提供了一种稍弱的同步机制，即 volatile 变量，用来确保将变量的更新操作立刻对其他线程可见。当把变量声明为 volatile 类型后，编译器与 JVM 都会注意到这个变量是共享的，因此不会将该变量上的操作与其他内存操作一起重排序，也不会使该变量被线程缓存。因此在读取 volatile 类型的变量时总会返回最新写入的值。volatile 修饰的变量<strong>不允许被线程缓存和重排序</strong>（不被缓存即直接修改内存），因此对其他线程实现了可见性。</p>
+<blockquote>
+<p><strong>指令重排序</strong>是编译器或运行时环境为了优化程序性能而采取的对指令进行重新排序执行的一种手段，因此多线程下指令执行的顺序可能是无法预测的。<strong>指令重排序不会影响单个线程的执行，但是会影响到线程并发执行的正确性</strong>。</p>
+</blockquote>
+<p>在访问 volatile 变量时不会执行加锁操作，也就不会使执行线程阻塞。因此 <strong>volatile 变量是一种比 sychronized 关键字更轻量级的同步机制</strong>。</p>
+<p><img src="http://images2015.cnblogs.com/blog/731716/201607/731716-20160708224602686-2141387366.png" alt="enter image description here"></p>
+<blockquote>
+<p>读写非 volatile 变量时，每个线程先从内存拷贝变量到 CPU 缓存中。如果计算机有多个 CPU ，每个线程可能在不同的 CPU 上被处理，这意味着每个线程可以拷贝到不同的 CPU cache 中。而声明变量是 volatile 的，JVM 保证了每次读变量都从内存中读，跳过 CPU cache 这一步。</p>
+</blockquote>
+<blockquote>
+<p>注意：volatile 只能让其所修饰的变量具有可见性（即更新后的操作会立即对其他线程可见），但不能保证具有原子性，因此也会有线程安全的问题。</p>
+</blockquote>
+<h3 id="使用场景"><a href="#使用场景" class="headerlink" title="使用场景"></a>使用场景</h3><p>synchronized 关键字是防止多个线程同时执行一段代码，那么就会很影响程序执行效率，而 volatile 关键字在某些情况下性能要优于 synchronized ，但要注意 volatile 关键字是无法替代 synchronized 关键字的，因为 volatile 关键字无法保证操作的原子性。</p>
+<p>通常来说，使用 volatile 必须具备以下条件：</p>
+<ol>
+<li>对变量的写操作不依赖于当前值</li>
+<li>该变量没有包含在具有其他变量的不变式中</li>
+</ol>
+<p>这些条件表明，可以被写入 volatile 变量的这些有效值独立于任何程序的状态，包括变量的当前状态。</p>
+<p><a href="http://blog.csdn.net/libing13820393394/article/details/48582999" target="_blank" rel="noopener">volatile 详解</a></p>
+<h1 id="线程间协作"><a href="#线程间协作" class="headerlink" title="线程间协作"></a>线程间协作</h1><p>通过保证在临界区上多个线程的相互排斥，线程同步完全可以避免竞争状态的发生，但是有时还需要线程之间的相互协作。Java 中使用<strong>条件</strong>来便于线程间通信，一个线程可以指定在某种条件下该做什么。</p>
+<p><strong>条件</strong>是通过调用 Lock 对象的 newCondition() 方法而创建的对象，一旦创建了条件，就可以使用 await()、signal()、signalAll() 方法来实现线程间的互相通信：</p>
+<ul>
+<li>await()：让当前线程处于等待状态，直到被唤醒</li>
+<li>signal()：唤醒一个等待的线程</li>
+<li>signalAll()：唤醒所有等待的线程</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br></pre></td><td class="code"><pre><span class="line">import java.util.concurrent.*;</span><br><span class="line">import java.util.concurrent.locks.*;</span><br><span class="line"></span><br><span class="line">public class TestLockCondition &#123;</span><br><span class="line"></span><br><span class="line">	private static Account account = new Account();</span><br><span class="line">	</span><br><span class="line">	public static void main(String[] args) &#123;</span><br><span class="line">		System.out.println(&quot;Thread 1\t\tThread 2\t\tBalance&quot;);</span><br><span class="line">		</span><br><span class="line">		ExecutorService executor = Executors.newFixedThreadPool(2);</span><br><span class="line">		executor.execute(new DepositTask());</span><br><span class="line">		executor.execute(new SubstactTask());</span><br><span class="line">		executor.shutdown();</span><br><span class="line">		</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	public static class DepositTask implements Runnable&#123;</span><br><span class="line"></span><br><span class="line">		@Override</span><br><span class="line">		public void run() &#123;</span><br><span class="line">			try&#123;</span><br><span class="line">				while(true)&#123;</span><br><span class="line">					account.deposit((int)(Math.random() * 10) + 2);</span><br><span class="line">					Thread.sleep(2000);</span><br><span class="line">				&#125;</span><br><span class="line">			&#125;</span><br><span class="line">			catch(Exception e)&#123;</span><br><span class="line">				e.printStackTrace();</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	public static class SubstactTask implements Runnable&#123;</span><br><span class="line"></span><br><span class="line">		@Override</span><br><span class="line">		public void run() &#123;</span><br><span class="line">			while(true)&#123;</span><br><span class="line">				account.substract((int)(Math.random() * 10)+1);</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">		</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	public static class Account&#123;</span><br><span class="line">		</span><br><span class="line">		private int balance = 0;</span><br><span class="line">		private Lock lock = new ReentrantLock();</span><br><span class="line">		private Condition condition = lock.newCondition();</span><br><span class="line">		</span><br><span class="line">		public int getBalance()&#123;</span><br><span class="line">			return balance;</span><br><span class="line">		&#125;</span><br><span class="line">		</span><br><span class="line">		public void substract(int amount)&#123;</span><br><span class="line">			lock.lock();</span><br><span class="line">			try&#123;</span><br><span class="line">				while(amount &gt; balance)&#123;</span><br><span class="line">					System.out.println(&quot;\t\t\twait for a deposit&quot;);</span><br><span class="line">					condition.await();</span><br><span class="line">				&#125;</span><br><span class="line">				balance -= amount;</span><br><span class="line">				System.out.println(&quot;\t\t\tSubstract &quot; + amount +&quot;\t\t&quot; + getBalance());</span><br><span class="line">			&#125;</span><br><span class="line">			catch(Exception e)&#123;</span><br><span class="line">				e.printStackTrace();</span><br><span class="line">			&#125;</span><br><span class="line">			finally&#123;</span><br><span class="line">				lock.unlock();</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">		</span><br><span class="line">		public void deposit(int amount)&#123;</span><br><span class="line">			lock.lock();</span><br><span class="line">			try&#123;</span><br><span class="line">				balance += amount;</span><br><span class="line">				System.out.println(&quot;Deposit &quot; + amount +&quot;\t\t\t\t\t&quot; + getBalance());</span><br><span class="line">				condition.signalAll();</span><br><span class="line">			&#125;</span><br><span class="line">			finally&#123;</span><br><span class="line">				lock.unlock();</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>一旦线程调用条件上的 await()，线程就进入等待状态，等待恢复的信号。如果忘记调用 signal()、signalAll() ，那么线程将永久等待下去。</p>
+</blockquote>
+<blockquote>
+<p>条件由 Lock 对象所创建，为了调用 await()、signal()、signalAll() 等方法，必须首先获取该条件对应的锁。如果没有获取锁就调用这些方法就会抛出异常。</p>
+</blockquote>
+<h1 id="避免死锁"><a href="#避免死锁" class="headerlink" title="避免死锁"></a>避免死锁</h1><p>有时两个或多个线程需要在几个共享对象上获取锁，可能会导致死锁，即：每个线程已经锁定一个对象，而且正在等待锁定另一个对象。</p>
+<p>使用<strong>资源排序</strong>可以轻易地避免死锁的发生。该技术是给每一个需要锁的对象指定一个顺序，确保每个线程都按照这个顺序来获得锁。</p>
+<hr>
+<ul>
+<li><p><a href="/more/donate/index.html"><strong><em><font color="red">我觉得帮助到我了, 支持你一下.</font></em></strong></a><br>   </p>
+</li>
+<li><p><a href="https://www.paypal.me/momodainfo" target="_blank" rel="noopener"><strong><em><font color="red">If you think the article is helpful to you, you can reward me through paypal.</font></em></strong></a></p>
+</li>
+</ul>
+<h3 id="Ads"><a href="#Ads" class="headerlink" title="Ads"></a>Ads</h3><p><em>这是小广告! 如果有需要, 不妨支持一下吧~</em></p>
+<blockquote>
+<p> <a target="_blank" href="https://amazon.cn/gp/search?ie=UTF8&tag=momoda-23&linkCode=ur2&linkId=4a0e4fbec0cfa8dfe540ca999d0bf999&camp=536&creative=3200&index=books&keywords=编程">这些好书您看了吗?</a><img src="//ir-cn.amazon-adsystem.com/e/ir?t=momoda-23&l=ur2&o=28" width="1" height="1" border="0" alt="" style="border:none !important; margin:0px !important;"></p>
+</blockquote>
+<blockquote>
+<p>体育&amp;户外用品推荐</p>
+</blockquote>
+<div align="center"> <a href="https://www.amazon.cn/B07HWB88Z5/dp/B07HWB88Z5/ref=as_sl_pc_tf_til?tag=momoda-23&linkCode=w00&linkId=14df5124f2165d9eb3d65252e60ed2cf&creativeASIN=B07HWB88Z5" target="_blank" rel="noopener"><img src="/se-notes/Java基础/多线程/../more/ads/amazon.gif" width="100%"></a> </div>
+      
+    </div><!-- .entry-content -->
+
+    <footer class="entry-meta">
+    <a href="/se-notes/Java基础/多线程/">
+    <time datetime="2019-01-03T13:49:30.000Z" class="entry-date">
+        1月 3 2019
+    </time>
+</a>
+    
+  <span class="article-delim">&#8226;</span>
+  <div class="article-category">
+  <a class="article-category-link" href="/categories/编程语言/">编程语言</a>, <a class="article-category-link" href="/categories/编程语言/java/">java</a>
+  </div>
+
+    
+  <span class="article-delim">&#8226;</span>
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/java基础/">java基础</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/java语法/">java语法</a></li></ul>
+
+    </footer>
+</article>
+
+
+    
+<nav class="nav-single">
+    <h3 class="assistive-text">文章导航</h3>
+    
+        <span class="nav-previous"><a href="/se-notes/Java基础/Spring概述/" rel="prev"><span class="meta-nav">←</span> Spring概述</a></span>
+    
+    
+        <span class="nav-next"><a href="/se-notes/Java基础/泛型/" rel="next">泛型 <span class="meta-nav">→</span></a></span>
+    
+</nav><!-- .nav-single -->
+
+
+
+
+
+
+
+</div></div>
+        <div id="secondary" class="widget-area" role="complementary">
+  
+    <aside id="search" class="widget widget_search"><form role="search" method="get" accept-charset="utf-8" id="searchform" class="searchform" action="//google.com/search">
+    <div>
+        <input type="text" value="" name="q">
+        <input type="submit" id="searchsubmit" value="google搜索">
+    </div>
+</form></aside>
+
+  
+    
+  <aside class="widget">
+    <h3 class="widget-title">Recents</h3>
+    <div class="widget-content">
+      <ul>
+        
+          <li>
+            <a href="/系统剩余空间查看/">系统剩余空间查看</a>
+          </li>
+        
+          <li>
+            <a href="/数据库分类/">数据库分类</a>
+          </li>
+        
+          <li>
+            <a href="/se-notes/Linux基础/README/">Linux基础-README</a>
+          </li>
+        
+          <li>
+            <a href="/se-notes/云计算实践/区块链相关/区块链简介/">区块链简介</a>
+          </li>
+        
+          <li>
+            <a href="/se-notes/云计算实践/集群高可用方案/Heartbeat双机热备方案/">Heartbeat双机热备方案</a>
+          </li>
+        
+      </ul>
+    </div>
+  </aside>
+
+  
+    
+  <aside class="widget">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget-content">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/">一月 2019</a><span class="archive-list-count">56</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">十一月 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">二月 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/09/">九月 2017</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/01/">一月 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/11/">十一月 2015</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/01/">一月 2014</a><span class="archive-list-count">1</span></li></ul>
+    </div>
+  </aside>
+
+  
+    
+  <aside class="widget">
+    <h3 class="widget-title">Categories</h3>
+    <div class="widget-content">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Graphics/">Graphics</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Linux/">Linux</a><span class="category-list-count">7</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Linux/Shell/">Shell</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Linux/linux基础/">linux基础</a><span class="category-list-count">6</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/协议证书/">协议证书</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/协议证书/openssl/">openssl</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/数据库/">数据库</a><span class="category-list-count">4</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/数据库/数据库基础/">数据库基础</a><span class="category-list-count">3</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/框架/">框架</a><span class="category-list-count">9</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/框架/python-web应用框架/">python-web应用框架</a><span class="category-list-count">9</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/版本控制/">版本控制</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/版本控制/Git/">Git</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/编程语言/">编程语言</a><span class="category-list-count">13</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/编程语言/java/">java</a><span class="category-list-count">13</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/网络通讯/">网络通讯</a><span class="category-list-count">11</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/网络通讯/大小端/">大小端</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/网络通讯/计算机网络基础/">计算机网络基础</a><span class="category-list-count">10</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/路由器/">路由器</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/路由器/openwrt/">openwrt</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/通用技术/">通用技术</a><span class="category-list-count">13</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/通用技术/Docker/">Docker</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/通用技术/云计算实践/">云计算实践</a><span class="category-list-count">11</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/通用技术/云计算实践/kubernetes部署/">kubernetes部署</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/通用技术/云计算实践/区块链/">区块链</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/通用技术/云计算实践/集群高可用方案/">集群高可用方案</a><span class="category-list-count">4</span></li></ul></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/默认/">默认</a><span class="category-list-count">1</span></li></ul>
+    </div>
+  </aside>
+
+  
+    
+  <aside class="widget">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget-content">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/CS-Notes/">CS-Notes</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/PEM证书/">PEM证书</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Shell/">Shell</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/cron/">cron</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/database/">database</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/diagrams/">diagrams</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/docker/">docker</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/docker-qq/">docker-qq</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/flask/">flask</a><span class="tag-list-count">9</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/git/">git</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/graphics/">graphics</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/http/">http</a><span class="tag-list-count">10</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/informationisbeautiful/">informationisbeautiful</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/java基础/">java基础</a><span class="tag-list-count">13</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/java语法/">java语法</a><span class="tag-list-count">13</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/kubernetes/">kubernetes</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/linux/">linux</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mysql/">mysql</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/network/">network</a><span class="tag-list-count">10</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/openssl/">openssl</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/openwrt/">openwrt</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/p12/">p12</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/pfx/">pfx</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/tcp-ip/">tcp/ip</a><span class="tag-list-count">10</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/web开发/">web开发</a><span class="tag-list-count">9</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/云计算/">云计算</a><span class="tag-list-count">11</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/区块链/">区块链</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/大小端/">大小端</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/数据库/">数据库</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/系统管理/">系统管理</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/计算机网络/">计算机网络</a><span class="tag-list-count">10</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/集群/">集群</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/默认/">默认</a><span class="tag-list-count">1</span></li></ul>
+    </div>
+  </aside>
+
+  
+    
+  <aside class="widget">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget-content tagcloud">
+      <a href="/tags/CS-Notes/" style="font-size: 10px;">CS-Notes</a> <a href="/tags/PEM证书/" style="font-size: 10px;">PEM证书</a> <a href="/tags/Shell/" style="font-size: 10px;">Shell</a> <a href="/tags/cron/" style="font-size: 10px;">cron</a> <a href="/tags/database/" style="font-size: 10px;">database</a> <a href="/tags/diagrams/" style="font-size: 10px;">diagrams</a> <a href="/tags/docker/" style="font-size: 15px;">docker</a> <a href="/tags/docker-qq/" style="font-size: 10px;">docker-qq</a> <a href="/tags/flask/" style="font-size: 16.25px;">flask</a> <a href="/tags/git/" style="font-size: 10px;">git</a> <a href="/tags/graphics/" style="font-size: 10px;">graphics</a> <a href="/tags/http/" style="font-size: 17.5px;">http</a> <a href="/tags/informationisbeautiful/" style="font-size: 10px;">informationisbeautiful</a> <a href="/tags/java基础/" style="font-size: 20px;">java基础</a> <a href="/tags/java语法/" style="font-size: 20px;">java语法</a> <a href="/tags/kubernetes/" style="font-size: 13.75px;">kubernetes</a> <a href="/tags/linux/" style="font-size: 15px;">linux</a> <a href="/tags/mysql/" style="font-size: 11.25px;">mysql</a> <a href="/tags/network/" style="font-size: 17.5px;">network</a> <a href="/tags/openssl/" style="font-size: 10px;">openssl</a> <a href="/tags/openwrt/" style="font-size: 10px;">openwrt</a> <a href="/tags/p12/" style="font-size: 10px;">p12</a> <a href="/tags/pfx/" style="font-size: 10px;">pfx</a> <a href="/tags/tcp-ip/" style="font-size: 17.5px;">tcp/ip</a> <a href="/tags/web开发/" style="font-size: 16.25px;">web开发</a> <a href="/tags/云计算/" style="font-size: 18.75px;">云计算</a> <a href="/tags/区块链/" style="font-size: 10px;">区块链</a> <a href="/tags/大小端/" style="font-size: 10px;">大小端</a> <a href="/tags/数据库/" style="font-size: 12.5px;">数据库</a> <a href="/tags/系统管理/" style="font-size: 15px;">系统管理</a> <a href="/tags/计算机网络/" style="font-size: 17.5px;">计算机网络</a> <a href="/tags/集群/" style="font-size: 13.75px;">集群</a> <a href="/tags/默认/" style="font-size: 10px;">默认</a>
+    </div>
+  </aside>
+
+  
+    <aside class="widget">
+    <h3 class="widget-title">Links</h3>
+    <div class="widget-content">
+		<ul id="link-list">
+		<!-- link begin -->
+
+		<li><a href="https://www.google.com/">google</a></li>
+		<li><a href="https://www.baidu.com/">baidu</a></li>
+		
+		<!-- link end -->
+		</ul>
+    </div>
+</aside>
+
+  
+    <aside class="widget">
+    <h3 class="widget-title">Ads</h3>
+    <div class="widget-content">
+	 
+			* <a target="_blank" href="https://amazon.cn/gp/search?ie=UTF8&tag=momoda-23&linkCode=ur2&linkId=4a0e4fbec0cfa8dfe540ca999d0bf999&camp=536&creative=3200&index=books&keywords=编程">这些好书您看了吗?</a><img src="//ir-cn.amazon-adsystem.com/e/ir?t=momoda-23&l=ur2&o=28" width="1" height="1" border="0" alt="" style="border:none !important; margin:0px !important;">
+			<br><br>
+			* 体育&户外用品推荐>
+			<div align="center"> <a href="https://www.amazon.cn/B07HWB88Z5/dp/B07HWB88Z5/ref=as_sl_pc_tf_til?tag=momoda-23&linkCode=w00&linkId=14df5124f2165d9eb3d65252e60ed2cf&creativeASIN=B07HWB88Z5"><img src="/more/ads/amazon.gif" width="100%"></a> </div>
+
+    </div>
+</aside>
+
+  
+</div>
+      </div>
+      <footer id="colophon" role="contentinfo">
+    <p>&copy; 2019 momoda
+    All rights reserved.</p>
+    <p>Powered by <a href="https://hexo.io/" target="_blank">Hexo</a></p>
+    <a href="javascript:scrollTo(0,0);">返回顶部</a>
+</footer>
+
+    <script>window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"1","bdMiniList":false,"bdPic":"","bdStyle":"2","bdSize":"16"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];</script>
+
+<script src="/js/jquery-2.0.3.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+<script src="/js/navigation.js"></script>
+
+
+<script type="text/javascript" src="https://js.users.51.la/19862371.js"></script>
+<div id="bg"></div>
+
+  </div>
+</body>
+</html>

@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="utf-8">
+  
+  
+  <meta name="description" content="momoda">
+  
+
+  
+  <meta name="keywords" content="momoda">
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  <title>ch3-Linux文件与目录管理 | Just another blog</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="Linux文件与目录管理 1.目录与路径 2.文件与目录管理 3.文件内容查阅 4.文件与目录的默认权限与隐藏权限 文件默认权限：umask 文件隐藏属性 文件特殊权限：SUID、SGID、SBIT   5.命令与文件的查询 脚本文件名的查询 文件名的查找 Ads       Linux文件与目录管理1.目录与路径 常用的目录操作 cd：切换目录 pwd：显示当前目录 mkdir：新建一个目录">
+<meta name="keywords" content="linux,系统管理">
+<meta property="og:type" content="article">
+<meta property="og:title" content="ch3-Linux文件与目录管理">
+<meta property="og:url" content="https://wnhby.github.io/se-notes/Linux基础/ch3-Linux文件与目录管理/index.html">
+<meta property="og:site_name" content="Just another blog">
+<meta property="og:description" content="Linux文件与目录管理 1.目录与路径 2.文件与目录管理 3.文件内容查阅 4.文件与目录的默认权限与隐藏权限 文件默认权限：umask 文件隐藏属性 文件特殊权限：SUID、SGID、SBIT   5.命令与文件的查询 脚本文件名的查询 文件名的查找 Ads       Linux文件与目录管理1.目录与路径 常用的目录操作 cd：切换目录 pwd：显示当前目录 mkdir：新建一个目录">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://ir-cn.amazon-adsystem.com/e/ir?t=momoda-23&l=ur2&o=28">
+<meta property="og:image" content="https://wnhby.github.io/se-notes/Linux基础/more/ads/amazon.gif">
+<meta property="og:updated_time" content="2019-02-19T05:20:31.346Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="ch3-Linux文件与目录管理">
+<meta name="twitter:description" content="Linux文件与目录管理 1.目录与路径 2.文件与目录管理 3.文件内容查阅 4.文件与目录的默认权限与隐藏权限 文件默认权限：umask 文件隐藏属性 文件特殊权限：SUID、SGID、SBIT   5.命令与文件的查询 脚本文件名的查询 文件名的查找 Ads       Linux文件与目录管理1.目录与路径 常用的目录操作 cd：切换目录 pwd：显示当前目录 mkdir：新建一个目录">
+<meta name="twitter:image" content="https://ir-cn.amazon-adsystem.com/e/ir?t=momoda-23&l=ur2&o=28">
+  
+    <link rel="alternative" href="/atom.xml" title="Just another blog" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/css/images/favicon.ico">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  
+
+  
+  <!-- baidu webmaster push -->
+  <script src="//push.zhanzhang.baidu.com/push.js"></script>
+</head></html>
+<body class="home blog custom-background custom-font-enabled single-author">
+  <div id="page" class="hfeed site">
+      <header id="masthead" class="site-header" role="banner">
+    <hgroup>
+      <h1 class="site-title">
+        <a href="/" title="Just another blog" rel="home">Just another blog</a>
+      </h1>
+      
+        <h2 class="site-description">
+          <a href="/" id="subtitle">momoda blog</a>
+        </h2>
+      
+    </hgroup>
+
+    <nav id="site-navigation" class="main-navigation" role="navigation">
+            <button class="menu-toggle">菜单</button>
+            <a class="assistive-text" href="/#content" title="跳至内容">跳至内容</a><!--TODO-->
+            <div class="menu-main-container">
+                <ul id="menu-main" class="nav-menu">
+                
+                    <li class="menu-item menu-item-type-post_type menu-item-object-page"><a href="/">Home</a></li>
+                
+                    <li class="menu-item menu-item-type-post_type menu-item-object-page"><a href="/atom.xml">RSS</a></li>
+                
+                    <li class="menu-item menu-item-type-post_type menu-item-object-page"><a href="/sitemap.xml">Site map</a></li>
+                
+                    <li class="menu-item menu-item-type-post_type menu-item-object-page"><a href="/more/share.html">Share</a></li>
+                
+                </ul>
+            </div>
+    </nav>
+</header>
+
+      <div id="main" class="wrapper">
+        <div id="primary" class="site-content"><div id="content" role="main"><article id="post-se-notes/Linux基础/ch3-Linux文件与目录管理" class="post-se-notes/Linux基础/ch3-Linux文件与目录管理 post type-post status-publish format-standard hentry">
+    <!---->
+
+      <header class="entry-header">
+        
+        
+  
+    <h1 class="entry-title article-title">
+      ch3-Linux文件与目录管理
+    </h1>
+  
+
+        
+        <div class="comments-link">
+            
+            <a href="javascript:void(0);" data-url="https://wnhby.github.io/se-notes/Linux基础/ch3-Linux文件与目录管理/" data-id="cjsbbbexy0035e9s63l1nbs2b" class="leave-reply bdsharebuttonbox" data-cmd="more">分享</a>
+        </div><!-- .comments-link -->
+      </header><!-- .entry-header -->
+
+    <div class="entry-content">
+      
+        <!-- TOC -->
+<ul>
+<li><a href="#linux文件与目录管理">Linux文件与目录管理</a><ul>
+<li><a href="#1目录与路径">1.目录与路径</a></li>
+<li><a href="#2文件与目录管理">2.文件与目录管理</a></li>
+<li><a href="#3文件内容查阅">3.文件内容查阅</a></li>
+<li><a href="#4文件与目录的默认权限与隐藏权限">4.文件与目录的默认权限与隐藏权限</a><ul>
+<li><a href="#文件默认权限umask">文件默认权限：umask</a></li>
+<li><a href="#文件隐藏属性">文件隐藏属性</a></li>
+<li><a href="#文件特殊权限suidsgidsbit">文件特殊权限：SUID、SGID、SBIT</a></li>
+</ul>
+</li>
+<li><a href="#5命令与文件的查询">5.命令与文件的查询</a><ul>
+<li><a href="#脚本文件名的查询">脚本文件名的查询</a></li>
+<li><a href="#文件名的查找">文件名的查找</a></li>
+<li><a href="#ads">Ads</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<!-- /TOC -->
+<h1 id="Linux文件与目录管理"><a href="#Linux文件与目录管理" class="headerlink" title="Linux文件与目录管理"></a>Linux文件与目录管理</h1><h2 id="1-目录与路径"><a href="#1-目录与路径" class="headerlink" title="1.目录与路径"></a>1.目录与路径</h2><ul>
+<li>常用的目录操作<ul>
+<li>cd：切换目录</li>
+<li>pwd：显示当前目录</li>
+<li>mkdir：新建一个目录</li>
+<li>rmdir：删除一个空目录</li>
+</ul>
+</li>
+<li>执行文件路径变量：$PATH<ul>
+<li>当执行一个命令时，系统会按照 PATH 的设置去其定义的目录下查询命令对应的可执行文件。</li>
+<li>多个目录下有与命令相同的文件时，按照先被查询的目录下的文件执行。</li>
+</ul>
+</li>
+</ul>
+<h2 id="2-文件与目录管理"><a href="#2-文件与目录管理" class="headerlink" title="2.文件与目录管理"></a>2.文件与目录管理</h2><ul>
+<li><p>查看文件与目录：ls</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">[root@www~]# ls [参数] [目录名称]</span><br><span class="line"></span><br><span class="line"># 常用参数：</span><br><span class="line"># -a：全部文件，包括隐藏文件</span><br><span class="line"># -d：仅列出目录本身，而非目录内文件数据</span><br><span class="line"># -l：列出长数据串，包含文件属性与权限等数据</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>复制文件或目录：cp</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">[root@www~]# cp [参数] 源文件 目标文件</span><br><span class="line"></span><br><span class="line"># 常用参数：</span><br><span class="line"># -a：相当于 -pdr</span><br><span class="line"># -i：若目标文件已经存在，覆盖时会先询问操作的进行</span><br><span class="line"># -p：连同文件的属性一起复制过去，而非使用默认属性。常用于备份</span><br><span class="line"># -d：若源文件为链接文件，则复制链接文件的属性而非实际文件本身</span><br><span class="line"># -r：递归持续复制，常用于目录的复制行为</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>默认条件下，cp 的源文件与目的文件的权限是不同的，目的文件的所有者通常是命令操作者本身。因此，在进行备份时，一些需特别注意的特别权限文件如密码文件等，不能直接用 cp 来复制，而必须要加上 -a 或者是 -p 等可以完整复制文件权限的参数。</p>
+<ul>
+<li><p>删除文件或目录：rm</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">[root@www~]# rm [参数] 文件</span><br><span class="line"></span><br><span class="line"># 常用参数：</span><br><span class="line"># -f：强制模式，忽略不存在的文件，不会出现警告信息</span><br><span class="line"># -i：互动模式，删除前询问用户是否操作</span><br><span class="line"># -r：递归删除，特别危险的参数（古往今来多少数据死于rm -rf）</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>移动文件或目录：mv</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">[root@www~]# mv [参数] 源文件 目标文件</span><br><span class="line">[root@www~]# mv [参数] 源文件1 源文件2 ... 目标目录</span><br><span class="line"></span><br><span class="line"># 常用参数：</span><br><span class="line"># -f：强制模式，若目标文件已经存在则不会询问，强行覆盖。</span><br><span class="line"># -i：互动模式。</span><br><span class="line"># -u：更新模式，若目标文件已经存在，且源文件比目标文件要新，才会更新。</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>取得路径的文件名与目录名称：basename 与 dirname</p>
+</li>
+</ul>
+<h2 id="3-文件内容查阅"><a href="#3-文件内容查阅" class="headerlink" title="3.文件内容查阅"></a>3.文件内容查阅</h2><p>直接查阅文件内容：</p>
+<ul>
+<li>cat：从第一行开始显示文件内容<ul>
+<li>参数 -b：打印行号，但空白行不标行号</li>
+<li>参数 -n：显示结尾断行字符 $ </li>
+<li>参数 -T：将 Tab 按键以 ^I 显示出来</li>
+</ul>
+</li>
+<li>tac：从最后一行开始倒序显示文件内容</li>
+<li>nl：显示时输出行号</li>
+</ul>
+<p>翻页查看：</p>
+<ul>
+<li>more：向后一页一页翻动</li>
+<li>less：既可向后、也可向前一页一页翻动</li>
+</ul>
+<p>数据选取：</p>
+<ul>
+<li>head：取出前面几行，<code># head [-n number] 文件名</code>，其中 number 为显示行数</li>
+<li>tail：取出后面几行，<code># head [-n number] 文件名</code>，其中 number 为显示行数</li>
+</ul>
+<p>查阅非纯文本文件：</p>
+<ul>
+<li>od：读取数据文件。<code># od [-t TYPE] 文件</code><ul>
+<li>参数 TYPE 为 a：使用默认的字符来输出</li>
+<li>参数 TYPE 为 c：使用 ASCII 方式来输出</li>
+</ul>
+</li>
+</ul>
+<p>其他操作：</p>
+<ul>
+<li>touch：修改文件时间或创建新文件</li>
+<li>file：查看文件类型</li>
+</ul>
+<h2 id="4-文件与目录的默认权限与隐藏权限"><a href="#4-文件与目录的默认权限与隐藏权限" class="headerlink" title="4.文件与目录的默认权限与隐藏权限"></a>4.文件与目录的默认权限与隐藏权限</h2><h3 id="文件默认权限：umask"><a href="#文件默认权限：umask" class="headerlink" title="文件默认权限：umask"></a>文件默认权限：umask</h3><p>即<strong>当前用户</strong>在新建文件或目录时的权限默认设置值。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">[root@www ~]# umask </span><br><span class="line">0022   #与一般权限有关的是后面三个数字 </span><br><span class="line">[root@www ~]# umask -S </span><br><span class="line">u=rwx,g=rx,o=rx  #以符号形式显示</span><br><span class="line">[root@www ~]# umask 002 </span><br><span class="line"># 设置 unmask 值为002</span><br></pre></td></tr></table></figure></p>
+<p>在原始默认权限的属性上，目录与文件是不一样的：</p>
+<ul>
+<li>若用户创建文件则默认没有 x 权限，默认权限为：-rw-rw-rw-</li>
+<li>若用户新建目录，由于 x 权限与是否可以进入此目录有关，因此默认所有权限开放，即：drwxrwxrwx</li>
+</ul>
+<p>注意的是，umask 的分数是指 “默认值<strong>再</strong>需要减去的权限”。因此当 umask 分数是022时，则用户新建文件的权限是 -rw-r–r–；新建目录的权限是 drwxr-xr-x 。</p>
+<h3 id="文件隐藏属性"><a href="#文件隐藏属性" class="headerlink" title="文件隐藏属性"></a>文件隐藏属性</h3><p>文件的隐藏属性主要用于系统安全方面。</p>
+<ul>
+<li><p>chattr：设置文件的隐藏属性</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">[root@www ~]# chattr [+-=] [参数] 文件或目录名</span><br><span class="line"></span><br><span class="line"># 参数：</span><br><span class="line"># +：增加某个特殊参数，其他已存在参数不动</span><br><span class="line"># -：删除某个特殊参数，其他已存在参数不动</span><br><span class="line"># =：仅有后面接的参数</span><br><span class="line"></span><br><span class="line"># a：让该文件只能增加数据，而不能删除与修改数据（主要用于日志文件）。只有root可设置本权限。</span><br><span class="line"># i：让该文件不可被删除、改名、设置链接、增写数据（无敌状态）。只有root可设置本权限。</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>lsattr：显示文件的隐藏属性</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">[root@www ~]# lsattr [参数] 文件或目录名</span><br><span class="line"></span><br><span class="line"># 参数：</span><br><span class="line"># -a：列出隐藏文件</span><br><span class="line"># -d：若接的是目录，则仅列出目录本身属性</span><br><span class="line"># -R：连同子目录的数据也列出来</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h3 id="文件特殊权限：SUID、SGID、SBIT"><a href="#文件特殊权限：SUID、SGID、SBIT" class="headerlink" title="文件特殊权限：SUID、SGID、SBIT"></a>文件特殊权限：SUID、SGID、SBIT</h3><ul>
+<li>文件具有SUID的特殊权限时，代表当使用者运行此 binary 程序时，在运行过程中使用者会暂时具有程序拥有者的权限，权限数字为4</li>
+<li>目录具有SGID的特殊权限时，代表使用者在这个目录底下新建的文件之群组都会与该目录的群组名称相同，权限数字为2</li>
+<li>目录具有SBIT的特殊权限时，代表在该目录下使用者创建的文件只有自己与root能够删除，权限数字为1</li>
+</ul>
+<h2 id="5-命令与文件的查询"><a href="#5-命令与文件的查询" class="headerlink" title="5.命令与文件的查询"></a>5.命令与文件的查询</h2><h3 id="脚本文件名的查询"><a href="#脚本文件名的查询" class="headerlink" title="脚本文件名的查询"></a>脚本文件名的查询</h3><ul>
+<li>which：寻找“执行文件”<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[root@www ~]# which [-a] command</span><br><span class="line"># 参数</span><br><span class="line"># -a：列出所有可以从PATH路径找到的同名执行文件</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h3 id="文件名的查找"><a href="#文件名的查找" class="headerlink" title="文件名的查找"></a>文件名的查找</h3><ul>
+<li><p>whereis（寻找特定文件）</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">[root@www ~]# whereis [-bmsu] 文件或目录</span><br><span class="line"># 参数</span><br><span class="line"># -b：只找二进制格式的文件</span><br><span class="line"># -m：只找在说明文件manual路径下的文件</span><br><span class="line"># -s：只找source源文件</span><br><span class="line"># -u：查找不在上述三个选项中的其他特殊文件</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>locate（关键字查找文件）<br>须安装 mlocate 方可使用。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">[root@www ~]# locate [-ir] keyword</span><br><span class="line"># 参数</span><br><span class="line"># -i：忽略大小写差异</span><br><span class="line"># -r：后面可接正则表达式的显示方式</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>find（功能最强的查询）</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">[root@www ~]# find [PATH] [option] [action]</span><br><span class="line"></span><br><span class="line"># 1.与时间有关的参数：共有 -atime、-ctime 和 -mtime</span><br><span class="line"># -mtime n ： n 为数字，表示在 n 天之前的“一天之内”被更改过的文件</span><br><span class="line"># -mtime +n ：列出在 n 天之前(不含 n 天本身)被更动过的文件</span><br><span class="line"># -mtime -n ：列出在 n 天之内(含 n 天本身)被更动过的文件</span><br><span class="line"># -newer file ：file 为一个存在的文件，列出比 file 还要新的文件</span><br><span class="line"></span><br><span class="line"># 2.与用户或用户组有关的参数：</span><br><span class="line"># -user name ：name 为用户名。例如 dmtsai</span><br><span class="line"># -group name ：name 为用户组，例如 users </span><br><span class="line"></span><br><span class="line"># 3.与文件权限及名称有关的参数：</span><br><span class="line"># -name filename：查找文件名为 filename 的文件</span><br><span class="line"># -size [+-]SIZE：查找比 SIZE 还要大(+)或小(-)的文件，如“-size +50k”</span><br><span class="line"># -type TYPE：查找文件类型为 TYPE 的文件，包括：一般文件(f)、目录(d)、链接文件(l)</span><br><span class="line"># -perm mode：查找文件权限刚好等于 mode 的文件</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<hr>
+<ul>
+<li><p><a href="/more/donate/index.html"><strong><em><font color="red">我觉得帮助到我了, 支持你一下.</font></em></strong></a><br>   </p>
+</li>
+<li><p><a href="https://www.paypal.me/momodainfo" target="_blank" rel="noopener"><strong><em><font color="red">If you think the article is helpful to you, you can reward me through paypal.</font></em></strong></a></p>
+</li>
+</ul>
+<h3 id="Ads"><a href="#Ads" class="headerlink" title="Ads"></a>Ads</h3><p><em>这是小广告! 如果有需要, 不妨支持一下吧~</em></p>
+<blockquote>
+<p> <a target="_blank" href="https://amazon.cn/gp/search?ie=UTF8&tag=momoda-23&linkCode=ur2&linkId=4a0e4fbec0cfa8dfe540ca999d0bf999&camp=536&creative=3200&index=books&keywords=编程">这些好书您看了吗?</a><img src="//ir-cn.amazon-adsystem.com/e/ir?t=momoda-23&l=ur2&o=28" width="1" height="1" border="0" alt="" style="border:none !important; margin:0px !important;"></p>
+</blockquote>
+<blockquote>
+<p>体育&amp;户外用品推荐</p>
+</blockquote>
+<div align="center"> <a href="https://www.amazon.cn/B07HWB88Z5/dp/B07HWB88Z5/ref=as_sl_pc_tf_til?tag=momoda-23&linkCode=w00&linkId=14df5124f2165d9eb3d65252e60ed2cf&creativeASIN=B07HWB88Z5" target="_blank" rel="noopener"><img src="/se-notes/Linux基础/ch3-Linux文件与目录管理/../more/ads/amazon.gif" width="100%"></a> </div>
+      
+    </div><!-- .entry-content -->
+
+    <footer class="entry-meta">
+    <a href="/se-notes/Linux基础/ch3-Linux文件与目录管理/">
+    <time datetime="2019-01-03T13:49:30.000Z" class="entry-date">
+        1月 3 2019
+    </time>
+</a>
+    
+  <span class="article-delim">&#8226;</span>
+  <div class="article-category">
+  <a class="article-category-link" href="/categories/Linux/">Linux</a>, <a class="article-category-link" href="/categories/Linux/linux基础/">linux基础</a>
+  </div>
+
+    
+  <span class="article-delim">&#8226;</span>
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/linux/">linux</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/系统管理/">系统管理</a></li></ul>
+
+    </footer>
+</article>
+
+
+    
+<nav class="nav-single">
+    <h3 class="assistive-text">文章导航</h3>
+    
+        <span class="nav-previous"><a href="/se-notes/数据库基础/README/" rel="prev"><span class="meta-nav">←</span> 数据库基础-README</a></span>
+    
+    
+        <span class="nav-next"><a href="/se-notes/Linux基础/ch4-Linux磁盘与文件系统管理/" rel="next">ch4-Linux磁盘与文件系统管理 <span class="meta-nav">→</span></a></span>
+    
+</nav><!-- .nav-single -->
+
+
+
+
+
+
+
+</div></div>
+        <div id="secondary" class="widget-area" role="complementary">
+  
+    <aside id="search" class="widget widget_search"><form role="search" method="get" accept-charset="utf-8" id="searchform" class="searchform" action="//google.com/search">
+    <div>
+        <input type="text" value="" name="q">
+        <input type="submit" id="searchsubmit" value="google搜索">
+    </div>
+</form></aside>
+
+  
+    
+  <aside class="widget">
+    <h3 class="widget-title">Recents</h3>
+    <div class="widget-content">
+      <ul>
+        
+          <li>
+            <a href="/系统剩余空间查看/">系统剩余空间查看</a>
+          </li>
+        
+          <li>
+            <a href="/数据库分类/">数据库分类</a>
+          </li>
+        
+          <li>
+            <a href="/se-notes/Linux基础/README/">Linux基础-README</a>
+          </li>
+        
+          <li>
+            <a href="/se-notes/云计算实践/区块链相关/区块链简介/">区块链简介</a>
+          </li>
+        
+          <li>
+            <a href="/se-notes/云计算实践/集群高可用方案/Heartbeat双机热备方案/">Heartbeat双机热备方案</a>
+          </li>
+        
+      </ul>
+    </div>
+  </aside>
+
+  
+    
+  <aside class="widget">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget-content">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/">一月 2019</a><span class="archive-list-count">56</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">十一月 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">二月 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/09/">九月 2017</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/01/">一月 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/11/">十一月 2015</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/01/">一月 2014</a><span class="archive-list-count">1</span></li></ul>
+    </div>
+  </aside>
+
+  
+    
+  <aside class="widget">
+    <h3 class="widget-title">Categories</h3>
+    <div class="widget-content">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Graphics/">Graphics</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Linux/">Linux</a><span class="category-list-count">7</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Linux/Shell/">Shell</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Linux/linux基础/">linux基础</a><span class="category-list-count">6</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/协议证书/">协议证书</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/协议证书/openssl/">openssl</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/数据库/">数据库</a><span class="category-list-count">4</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/数据库/数据库基础/">数据库基础</a><span class="category-list-count">3</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/框架/">框架</a><span class="category-list-count">9</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/框架/python-web应用框架/">python-web应用框架</a><span class="category-list-count">9</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/版本控制/">版本控制</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/版本控制/Git/">Git</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/编程语言/">编程语言</a><span class="category-list-count">13</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/编程语言/java/">java</a><span class="category-list-count">13</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/网络通讯/">网络通讯</a><span class="category-list-count">11</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/网络通讯/大小端/">大小端</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/网络通讯/计算机网络基础/">计算机网络基础</a><span class="category-list-count">10</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/路由器/">路由器</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/路由器/openwrt/">openwrt</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/通用技术/">通用技术</a><span class="category-list-count">13</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/通用技术/Docker/">Docker</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/通用技术/云计算实践/">云计算实践</a><span class="category-list-count">11</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/通用技术/云计算实践/kubernetes部署/">kubernetes部署</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/通用技术/云计算实践/区块链/">区块链</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/通用技术/云计算实践/集群高可用方案/">集群高可用方案</a><span class="category-list-count">4</span></li></ul></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/默认/">默认</a><span class="category-list-count">1</span></li></ul>
+    </div>
+  </aside>
+
+  
+    
+  <aside class="widget">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget-content">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/CS-Notes/">CS-Notes</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/PEM证书/">PEM证书</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Shell/">Shell</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/cron/">cron</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/database/">database</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/diagrams/">diagrams</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/docker/">docker</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/docker-qq/">docker-qq</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/flask/">flask</a><span class="tag-list-count">9</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/git/">git</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/graphics/">graphics</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/http/">http</a><span class="tag-list-count">10</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/informationisbeautiful/">informationisbeautiful</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/java基础/">java基础</a><span class="tag-list-count">13</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/java语法/">java语法</a><span class="tag-list-count">13</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/kubernetes/">kubernetes</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/linux/">linux</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mysql/">mysql</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/network/">network</a><span class="tag-list-count">10</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/openssl/">openssl</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/openwrt/">openwrt</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/p12/">p12</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/pfx/">pfx</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/tcp-ip/">tcp/ip</a><span class="tag-list-count">10</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/web开发/">web开发</a><span class="tag-list-count">9</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/云计算/">云计算</a><span class="tag-list-count">11</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/区块链/">区块链</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/大小端/">大小端</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/数据库/">数据库</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/系统管理/">系统管理</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/计算机网络/">计算机网络</a><span class="tag-list-count">10</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/集群/">集群</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/默认/">默认</a><span class="tag-list-count">1</span></li></ul>
+    </div>
+  </aside>
+
+  
+    
+  <aside class="widget">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget-content tagcloud">
+      <a href="/tags/CS-Notes/" style="font-size: 10px;">CS-Notes</a> <a href="/tags/PEM证书/" style="font-size: 10px;">PEM证书</a> <a href="/tags/Shell/" style="font-size: 10px;">Shell</a> <a href="/tags/cron/" style="font-size: 10px;">cron</a> <a href="/tags/database/" style="font-size: 10px;">database</a> <a href="/tags/diagrams/" style="font-size: 10px;">diagrams</a> <a href="/tags/docker/" style="font-size: 15px;">docker</a> <a href="/tags/docker-qq/" style="font-size: 10px;">docker-qq</a> <a href="/tags/flask/" style="font-size: 16.25px;">flask</a> <a href="/tags/git/" style="font-size: 10px;">git</a> <a href="/tags/graphics/" style="font-size: 10px;">graphics</a> <a href="/tags/http/" style="font-size: 17.5px;">http</a> <a href="/tags/informationisbeautiful/" style="font-size: 10px;">informationisbeautiful</a> <a href="/tags/java基础/" style="font-size: 20px;">java基础</a> <a href="/tags/java语法/" style="font-size: 20px;">java语法</a> <a href="/tags/kubernetes/" style="font-size: 13.75px;">kubernetes</a> <a href="/tags/linux/" style="font-size: 15px;">linux</a> <a href="/tags/mysql/" style="font-size: 11.25px;">mysql</a> <a href="/tags/network/" style="font-size: 17.5px;">network</a> <a href="/tags/openssl/" style="font-size: 10px;">openssl</a> <a href="/tags/openwrt/" style="font-size: 10px;">openwrt</a> <a href="/tags/p12/" style="font-size: 10px;">p12</a> <a href="/tags/pfx/" style="font-size: 10px;">pfx</a> <a href="/tags/tcp-ip/" style="font-size: 17.5px;">tcp/ip</a> <a href="/tags/web开发/" style="font-size: 16.25px;">web开发</a> <a href="/tags/云计算/" style="font-size: 18.75px;">云计算</a> <a href="/tags/区块链/" style="font-size: 10px;">区块链</a> <a href="/tags/大小端/" style="font-size: 10px;">大小端</a> <a href="/tags/数据库/" style="font-size: 12.5px;">数据库</a> <a href="/tags/系统管理/" style="font-size: 15px;">系统管理</a> <a href="/tags/计算机网络/" style="font-size: 17.5px;">计算机网络</a> <a href="/tags/集群/" style="font-size: 13.75px;">集群</a> <a href="/tags/默认/" style="font-size: 10px;">默认</a>
+    </div>
+  </aside>
+
+  
+    <aside class="widget">
+    <h3 class="widget-title">Links</h3>
+    <div class="widget-content">
+		<ul id="link-list">
+		<!-- link begin -->
+
+		<li><a href="https://www.google.com/">google</a></li>
+		<li><a href="https://www.baidu.com/">baidu</a></li>
+		
+		<!-- link end -->
+		</ul>
+    </div>
+</aside>
+
+  
+    <aside class="widget">
+    <h3 class="widget-title">Ads</h3>
+    <div class="widget-content">
+	 
+			* <a target="_blank" href="https://amazon.cn/gp/search?ie=UTF8&tag=momoda-23&linkCode=ur2&linkId=4a0e4fbec0cfa8dfe540ca999d0bf999&camp=536&creative=3200&index=books&keywords=编程">这些好书您看了吗?</a><img src="//ir-cn.amazon-adsystem.com/e/ir?t=momoda-23&l=ur2&o=28" width="1" height="1" border="0" alt="" style="border:none !important; margin:0px !important;">
+			<br><br>
+			* 体育&户外用品推荐>
+			<div align="center"> <a href="https://www.amazon.cn/B07HWB88Z5/dp/B07HWB88Z5/ref=as_sl_pc_tf_til?tag=momoda-23&linkCode=w00&linkId=14df5124f2165d9eb3d65252e60ed2cf&creativeASIN=B07HWB88Z5"><img src="/more/ads/amazon.gif" width="100%"></a> </div>
+
+    </div>
+</aside>
+
+  
+</div>
+      </div>
+      <footer id="colophon" role="contentinfo">
+    <p>&copy; 2019 momoda
+    All rights reserved.</p>
+    <p>Powered by <a href="https://hexo.io/" target="_blank">Hexo</a></p>
+    <a href="javascript:scrollTo(0,0);">返回顶部</a>
+</footer>
+
+    <script>window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"1","bdMiniList":false,"bdPic":"","bdStyle":"2","bdSize":"16"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];</script>
+
+<script src="/js/jquery-2.0.3.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+<script src="/js/navigation.js"></script>
+
+
+<script type="text/javascript" src="https://js.users.51.la/19862371.js"></script>
+<div id="bg"></div>
+
+  </div>
+</body>
+</html>

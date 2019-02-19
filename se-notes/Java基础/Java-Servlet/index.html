@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="utf-8">
+  
+  
+  <meta name="description" content="momoda">
+  
+
+  
+  <meta name="keywords" content="momoda">
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  <title>Java-Servlet | Just another blog</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="简介 生命周期- [init() 方法](#init-方法) - [service() 方法](#service-方法) - [destroy() 方法](#destroy-方法) - [一个典型的 Servlet 生命周期图](#一个典型的-servlet-生命周期图)  面试题- [Servlet 和 GCI 的区别](#servlet-和-gci-的区别) - [Servlet 生命周期">
+<meta name="keywords" content="java语法,java基础">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Java-Servlet">
+<meta property="og:url" content="https://wnhby.github.io/se-notes/Java基础/Java-Servlet/index.html">
+<meta property="og:site_name" content="Just another blog">
+<meta property="og:description" content="简介 生命周期- [init() 方法](#init-方法) - [service() 方法](#service-方法) - [destroy() 方法](#destroy-方法) - [一个典型的 Servlet 生命周期图](#一个典型的-servlet-生命周期图)  面试题- [Servlet 和 GCI 的区别](#servlet-和-gci-的区别) - [Servlet 生命周期">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="http://www.runoob.com/wp-content/uploads/2014/07/servlet-arch.jpg">
+<meta property="og:image" content="http://www.runoob.com/wp-content/uploads/2014/07/Servlet-LifeCycle.jpg">
+<meta property="og:image" content="https://ir-cn.amazon-adsystem.com/e/ir?t=momoda-23&l=ur2&o=28">
+<meta property="og:image" content="https://wnhby.github.io/se-notes/Java基础/more/ads/amazon.gif">
+<meta property="og:updated_time" content="2019-02-19T05:18:29.769Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Java-Servlet">
+<meta name="twitter:description" content="简介 生命周期- [init() 方法](#init-方法) - [service() 方法](#service-方法) - [destroy() 方法](#destroy-方法) - [一个典型的 Servlet 生命周期图](#一个典型的-servlet-生命周期图)  面试题- [Servlet 和 GCI 的区别](#servlet-和-gci-的区别) - [Servlet 生命周期">
+<meta name="twitter:image" content="http://www.runoob.com/wp-content/uploads/2014/07/servlet-arch.jpg">
+  
+    <link rel="alternative" href="/atom.xml" title="Just another blog" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/css/images/favicon.ico">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  
+
+  
+  <!-- baidu webmaster push -->
+  <script src="//push.zhanzhang.baidu.com/push.js"></script>
+</head></html>
+<body class="home blog custom-background custom-font-enabled single-author">
+  <div id="page" class="hfeed site">
+      <header id="masthead" class="site-header" role="banner">
+    <hgroup>
+      <h1 class="site-title">
+        <a href="/" title="Just another blog" rel="home">Just another blog</a>
+      </h1>
+      
+        <h2 class="site-description">
+          <a href="/" id="subtitle">momoda blog</a>
+        </h2>
+      
+    </hgroup>
+
+    <nav id="site-navigation" class="main-navigation" role="navigation">
+            <button class="menu-toggle">菜单</button>
+            <a class="assistive-text" href="/#content" title="跳至内容">跳至内容</a><!--TODO-->
+            <div class="menu-main-container">
+                <ul id="menu-main" class="nav-menu">
+                
+                    <li class="menu-item menu-item-type-post_type menu-item-object-page"><a href="/">Home</a></li>
+                
+                    <li class="menu-item menu-item-type-post_type menu-item-object-page"><a href="/atom.xml">RSS</a></li>
+                
+                    <li class="menu-item menu-item-type-post_type menu-item-object-page"><a href="/sitemap.xml">Site map</a></li>
+                
+                    <li class="menu-item menu-item-type-post_type menu-item-object-page"><a href="/more/share.html">Share</a></li>
+                
+                </ul>
+            </div>
+    </nav>
+</header>
+
+      <div id="main" class="wrapper">
+        <div id="primary" class="site-content"><div id="content" role="main"><article id="post-se-notes/Java基础/Java-Servlet" class="post-se-notes/Java基础/Java-Servlet post type-post status-publish format-standard hentry">
+    <!---->
+
+      <header class="entry-header">
+        
+        
+  
+    <h1 class="entry-title article-title">
+      Java-Servlet
+    </h1>
+  
+
+        
+        <div class="comments-link">
+            
+            <a href="javascript:void(0);" data-url="https://wnhby.github.io/se-notes/Java基础/Java-Servlet/" data-id="cjsbbbez2004se9s6mcoetc0s" class="leave-reply bdsharebuttonbox" data-cmd="more">分享</a>
+        </div><!-- .comments-link -->
+      </header><!-- .entry-header -->
+
+    <div class="entry-content">
+      
+        <!-- TOC -->
+<ul>
+<li><a href="#简介">简介</a></li>
+<li><a href="#生命周期">生命周期</a><pre><code>- [init() 方法](#init-方法)
+- [service() 方法](#service-方法)
+- [destroy() 方法](#destroy-方法)
+- [一个典型的 Servlet 生命周期图](#一个典型的-servlet-生命周期图)
+</code></pre></li>
+<li><a href="#面试题">面试题</a><pre><code>- [Servlet 和 GCI 的区别](#servlet-和-gci-的区别)
+- [Servlet 生命周期](#servlet-生命周期)
+- [Servle 和 JSP 的区别](#servle-和-jsp-的区别)
+- [JSP有哪些内置对象？作用是什么？](#jsp有哪些内置对象作用是什么)
+- [JSP有哪些基本动作？作用是什么？](#jsp有哪些基本动作作用是什么)
+- [JSP 中动态 INCLUDE 与静态 INCLUDE 的区别？](#jsp-中动态-include-与静态-include-的区别)
+- [四种会话跟踪技术作用域](#四种会话跟踪技术作用域)
+</code></pre></li>
+<li><a href="#参考文档">参考文档</a><pre><code>- [Ads](#ads)
+</code></pre></li>
+</ul>
+<!-- /TOC -->
+<h1 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h1><p>Java Servlet 是运行在 Web 服务器上的程序，它是作为来自 Web 浏览器或其他 HTTP 客户端的请求和 HTTP 服务器上的数据库或应用程序之间的中间层。</p>
+<p>Servlet 架构如下所示：</p>
+<p><img src="http://www.runoob.com/wp-content/uploads/2014/07/servlet-arch.jpg" alt="Servlet架构"></p>
+<p>Servlet 执行以下主要任务：</p>
+<ul>
+<li>读取客户端（浏览器）发送的数据</li>
+<li>处理数据并生成响应结果（该过程可能需要访问数据库等操作）</li>
+<li>发送响应数据到客户端（浏览器）</li>
+</ul>
+<h1 id="生命周期"><a href="#生命周期" class="headerlink" title="生命周期"></a>生命周期</h1><p>Servlet 生命周期可被定义为从创建直到毁灭的整个过程：</p>
+<ul>
+<li>Servlet 通过调用 init () 方法进行初始化。</li>
+<li>Servlet 调用 service() 方法来处理客户端的请求。</li>
+<li>Servlet 通过调用 destroy() 方法终止。</li>
+<li>Servlet 最后由 JVM 的垃圾回收器进行垃圾回收。</li>
+</ul>
+<h3 id="init-方法"><a href="#init-方法" class="headerlink" title="init() 方法"></a>init() 方法</h3><p>init 方法只能调用一次。它在第一次创建 Servlet 时被调用，在后续每次用户请求时不再调用。当用户调用一个 Servlet 时，就会创建一个 Servlet 实例，每一个用户请求都会产生一个新的线程，适当的时候移交给 doGet 或 doPost 方法。</p>
+<blockquote>
+<p>init() 方法简单地创建或加载一些数据，这些数据将被用于 Servlet 的整个生命周期。</p>
+</blockquote>
+<h3 id="service-方法"><a href="#service-方法" class="headerlink" title="service() 方法"></a>service() 方法</h3><p>service() 方法是执行实际任务的主要方法。Servlet 容器（即 Web 服务器）调用 service() 方法来处理来自客户端（浏览器）的请求，并把格式化的响应写回给客户端。</p>
+<p>每次服务器接收到一个 Servlet 请求时，服务器会产生一个新的线程并调用服务。service() 方法检查 HTTP 请求类型（GET、POST、PUT、DELETE 等），并在适当的时候调用 doGet、doPost、doPut，doDelete 等方法。</p>
+<blockquote>
+<p>service() 方法由容器调用，service 方法在适当的时候调用 doGet、doPost、doPut、doDelete 等方法。所以，开发者一般不用对 service() 方法做任何动作，只需要根据来自客户端的请求类型来重写 doGet() 或 doPost() 即可。</p>
+</blockquote>
+<h3 id="destroy-方法"><a href="#destroy-方法" class="headerlink" title="destroy() 方法"></a>destroy() 方法</h3><p>destroy() 方法只会被调用一次，在 Servlet 生命周期结束时被调用。destroy() 方法可以让 Servlet 关闭数据库连接、停止后台线程等清理活动。</p>
+<h3 id="一个典型的-Servlet-生命周期图"><a href="#一个典型的-Servlet-生命周期图" class="headerlink" title="一个典型的 Servlet 生命周期图"></a>一个典型的 Servlet 生命周期图</h3><p><img src="http://www.runoob.com/wp-content/uploads/2014/07/Servlet-LifeCycle.jpg" alt="生命周期图"></p>
+<ul>
+<li>第一个到达服务器的 HTTP 请求被委派到 Servlet 容器。</li>
+<li>Servlet 容器在调用 service() 方法之前加载 Servlet。</li>
+<li>然后 Servlet 容器处理由多个线程产生的多个请求，每个线程执行一个单一的 Servlet 实例的 service() 方法。</li>
+</ul>
+<h1 id="面试题"><a href="#面试题" class="headerlink" title="面试题"></a>面试题</h1><h3 id="Servlet-和-GCI-的区别"><a href="#Servlet-和-GCI-的区别" class="headerlink" title="Servlet 和 GCI 的区别"></a>Servlet 和 GCI 的区别</h3><p>Servlet 是基于 Java 编写的，处于服务器进程中，它能够通过多线程方式运行 service() 方法，一个实例可以服务于多个请求，而且一般不会销毁；而 CGI 对每个请求都生产新的进程，服务完成后销毁，所以从效率上低于 Servlet。</p>
+<h3 id="Servlet-生命周期"><a href="#Servlet-生命周期" class="headerlink" title="Servlet 生命周期"></a>Servlet 生命周期</h3><p>Servlet生命周期包括三部分：</p>
+<ul>
+<li>初始化：Web 容器加载 servlet，调用 init() 方法</li>
+<li>处理请求：当请求到达时，运行其 service() 方法。service() 自动派遣运行与请求相对应的 doXXX（doGet 或者 doPost）方法。</li>
+<li>销毁：服务结束，Web 容器会调用 servlet 的 distroy() 方法销毁 servlet。</li>
+</ul>
+<h3 id="Servle-和-JSP-的区别"><a href="#Servle-和-JSP-的区别" class="headerlink" title="Servle 和 JSP 的区别"></a>Servle 和 JSP 的区别</h3><p>服务器端有一个 JSP 容器，主要处理 JSP 页面请求，容器首先把 JSP 转成一个 Servlet，所有的 JSP 元素都会被转换为 Java 代码，然后编译这个 Servlet 类。</p>
+<p>Servlet 和 JSP 最主要的不同点在于，Servlet 的应用逻辑是在 Java 文件中，并且完全从表示层中的 HTML 里分离开来。而 JSP 的情况是 Java 和 HTML 可以组合成一个扩展名为 .jsp 的文件。JSP 侧重于视图，Servlet 主要用于控制逻辑。</p>
+<h3 id="JSP有哪些内置对象？作用是什么？"><a href="#JSP有哪些内置对象？作用是什么？" class="headerlink" title="JSP有哪些内置对象？作用是什么？"></a>JSP有哪些内置对象？作用是什么？</h3><p>JSP 共有以下 9 种基本内置组件：</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>名称</th>
+<th>作用</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td></td>
+<td>request</td>
+<td>包含用户端请求的信息</td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td>response</td>
+<td>包含服务器传回客户端的响应信息</td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td>page</td>
+<td>网页本身</td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td>pageContext</td>
+<td>管理网页属性</td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td>session</td>
+<td>与请求有关的会话</td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td>application</td>
+<td>伴随服务器的生命周期，为多个应用程序保存信息</td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td>out</td>
+<td>向客户端输出数据</td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td>config</td>
+<td>servlet的架构部件</td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td>exception</td>
+<td>针对错误页面才可使用</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h3 id="JSP有哪些基本动作？作用是什么？"><a href="#JSP有哪些基本动作？作用是什么？" class="headerlink" title="JSP有哪些基本动作？作用是什么？"></a>JSP有哪些基本动作？作用是什么？</h3><ul>
+<li>jsp:include：在页面被请求的时候引入一个文件。 </li>
+<li>jsp:useBean：寻找或者实例化一个JavaBean。 </li>
+<li>jsp:setProperty：设置 JavaBean 的属性。</li>
+<li>jsp:getProperty：输出某个 JavaBean 的属性。 </li>
+<li>jsp:forward：把请求转到一个新的页面。</li>
+<li>jsp:plugin：根据浏览器类型为 Java 插件生成 OBJECT 或 EMBED 标记</li>
+</ul>
+<h3 id="JSP-中动态-INCLUDE-与静态-INCLUDE-的区别？"><a href="#JSP-中动态-INCLUDE-与静态-INCLUDE-的区别？" class="headerlink" title="JSP 中动态 INCLUDE 与静态 INCLUDE 的区别？"></a>JSP 中动态 INCLUDE 与静态 INCLUDE 的区别？</h3><p>动态 INCLUDE 用 jsp:include 动作实现，它总是会检查所含文件中的变化，适合用于包含动态页面，并且可以带参数；静态 INCLUDE 用 include 伪码实现，不会检查所含文件的变化，适用于包含静态页面。</p>
+<h3 id="四种会话跟踪技术作用域"><a href="#四种会话跟踪技术作用域" class="headerlink" title="四种会话跟踪技术作用域"></a>四种会话跟踪技术作用域</h3><ul>
+<li>page：一个页面</li>
+<li>request：：一次请求，一个请求可能跨越多个 page</li>
+<li>session：一次会话，一个会话可能跨越多个 request</li>
+<li>application：代表与整个 Web 应用程序相关的对象和属性，跨越了整个 Web 应用程序。</li>
+</ul>
+<h1 id="参考文档"><a href="#参考文档" class="headerlink" title="参考文档"></a>参考文档</h1><p><a href="http://www.runoob.com/servlet/servlet-tutorial.html" target="_blank" rel="noopener">Servlet 教程</a></p>
+<hr>
+<ul>
+<li><p><a href="/more/donate/index.html"><strong><em><font color="red">我觉得帮助到我了, 支持你一下.</font></em></strong></a><br>   </p>
+</li>
+<li><p><a href="https://www.paypal.me/momodainfo" target="_blank" rel="noopener"><strong><em><font color="red">If you think the article is helpful to you, you can reward me through paypal.</font></em></strong></a></p>
+</li>
+</ul>
+<h3 id="Ads"><a href="#Ads" class="headerlink" title="Ads"></a>Ads</h3><p><em>这是小广告! 如果有需要, 不妨支持一下吧~</em></p>
+<blockquote>
+<p> <a target="_blank" href="https://amazon.cn/gp/search?ie=UTF8&tag=momoda-23&linkCode=ur2&linkId=4a0e4fbec0cfa8dfe540ca999d0bf999&camp=536&creative=3200&index=books&keywords=编程">这些好书您看了吗?</a><img src="//ir-cn.amazon-adsystem.com/e/ir?t=momoda-23&l=ur2&o=28" width="1" height="1" border="0" alt="" style="border:none !important; margin:0px !important;"></p>
+</blockquote>
+<blockquote>
+<p>体育&amp;户外用品推荐</p>
+</blockquote>
+<div align="center"> <a href="https://www.amazon.cn/B07HWB88Z5/dp/B07HWB88Z5/ref=as_sl_pc_tf_til?tag=momoda-23&linkCode=w00&linkId=14df5124f2165d9eb3d65252e60ed2cf&creativeASIN=B07HWB88Z5" target="_blank" rel="noopener"><img src="/se-notes/Java基础/Java-Servlet/../more/ads/amazon.gif" width="100%"></a> </div>
+      
+    </div><!-- .entry-content -->
+
+    <footer class="entry-meta">
+    <a href="/se-notes/Java基础/Java-Servlet/">
+    <time datetime="2019-01-03T13:49:30.000Z" class="entry-date">
+        1月 3 2019
+    </time>
+</a>
+    
+  <span class="article-delim">&#8226;</span>
+  <div class="article-category">
+  <a class="article-category-link" href="/categories/编程语言/">编程语言</a>, <a class="article-category-link" href="/categories/编程语言/java/">java</a>
+  </div>
+
+    
+  <span class="article-delim">&#8226;</span>
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/java基础/">java基础</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/java语法/">java语法</a></li></ul>
+
+    </footer>
+</article>
+
+
+    
+<nav class="nav-single">
+    <h3 class="assistive-text">文章导航</h3>
+    
+        <span class="nav-previous"><a href="/se-notes/计算机网络基础/ch9-SS_Surge/" rel="prev"><span class="meta-nav">←</span> ch9-SS_Surge</a></span>
+    
+    
+        <span class="nav-next"><a href="/se-notes/云计算实践/Kubernetes部署/Docker配置网络代理/" rel="next">Docker配置网络代理 <span class="meta-nav">→</span></a></span>
+    
+</nav><!-- .nav-single -->
+
+
+
+
+
+
+
+</div></div>
+        <div id="secondary" class="widget-area" role="complementary">
+  
+    <aside id="search" class="widget widget_search"><form role="search" method="get" accept-charset="utf-8" id="searchform" class="searchform" action="//google.com/search">
+    <div>
+        <input type="text" value="" name="q">
+        <input type="submit" id="searchsubmit" value="google搜索">
+    </div>
+</form></aside>
+
+  
+    
+  <aside class="widget">
+    <h3 class="widget-title">Recents</h3>
+    <div class="widget-content">
+      <ul>
+        
+          <li>
+            <a href="/系统剩余空间查看/">系统剩余空间查看</a>
+          </li>
+        
+          <li>
+            <a href="/数据库分类/">数据库分类</a>
+          </li>
+        
+          <li>
+            <a href="/se-notes/Linux基础/README/">Linux基础-README</a>
+          </li>
+        
+          <li>
+            <a href="/se-notes/云计算实践/区块链相关/区块链简介/">区块链简介</a>
+          </li>
+        
+          <li>
+            <a href="/se-notes/云计算实践/集群高可用方案/Heartbeat双机热备方案/">Heartbeat双机热备方案</a>
+          </li>
+        
+      </ul>
+    </div>
+  </aside>
+
+  
+    
+  <aside class="widget">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget-content">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/">一月 2019</a><span class="archive-list-count">56</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">十一月 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">二月 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/09/">九月 2017</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/01/">一月 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/11/">十一月 2015</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/01/">一月 2014</a><span class="archive-list-count">1</span></li></ul>
+    </div>
+  </aside>
+
+  
+    
+  <aside class="widget">
+    <h3 class="widget-title">Categories</h3>
+    <div class="widget-content">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Graphics/">Graphics</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Linux/">Linux</a><span class="category-list-count">7</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Linux/Shell/">Shell</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Linux/linux基础/">linux基础</a><span class="category-list-count">6</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/协议证书/">协议证书</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/协议证书/openssl/">openssl</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/数据库/">数据库</a><span class="category-list-count">4</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/数据库/数据库基础/">数据库基础</a><span class="category-list-count">3</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/框架/">框架</a><span class="category-list-count">9</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/框架/python-web应用框架/">python-web应用框架</a><span class="category-list-count">9</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/版本控制/">版本控制</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/版本控制/Git/">Git</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/编程语言/">编程语言</a><span class="category-list-count">13</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/编程语言/java/">java</a><span class="category-list-count">13</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/网络通讯/">网络通讯</a><span class="category-list-count">11</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/网络通讯/大小端/">大小端</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/网络通讯/计算机网络基础/">计算机网络基础</a><span class="category-list-count">10</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/路由器/">路由器</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/路由器/openwrt/">openwrt</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/通用技术/">通用技术</a><span class="category-list-count">13</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/通用技术/Docker/">Docker</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/通用技术/云计算实践/">云计算实践</a><span class="category-list-count">11</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/通用技术/云计算实践/kubernetes部署/">kubernetes部署</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/通用技术/云计算实践/区块链/">区块链</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/通用技术/云计算实践/集群高可用方案/">集群高可用方案</a><span class="category-list-count">4</span></li></ul></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/默认/">默认</a><span class="category-list-count">1</span></li></ul>
+    </div>
+  </aside>
+
+  
+    
+  <aside class="widget">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget-content">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/CS-Notes/">CS-Notes</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/PEM证书/">PEM证书</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Shell/">Shell</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/cron/">cron</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/database/">database</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/diagrams/">diagrams</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/docker/">docker</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/docker-qq/">docker-qq</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/flask/">flask</a><span class="tag-list-count">9</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/git/">git</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/graphics/">graphics</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/http/">http</a><span class="tag-list-count">10</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/informationisbeautiful/">informationisbeautiful</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/java基础/">java基础</a><span class="tag-list-count">13</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/java语法/">java语法</a><span class="tag-list-count">13</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/kubernetes/">kubernetes</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/linux/">linux</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mysql/">mysql</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/network/">network</a><span class="tag-list-count">10</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/openssl/">openssl</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/openwrt/">openwrt</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/p12/">p12</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/pfx/">pfx</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/tcp-ip/">tcp/ip</a><span class="tag-list-count">10</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/web开发/">web开发</a><span class="tag-list-count">9</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/云计算/">云计算</a><span class="tag-list-count">11</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/区块链/">区块链</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/大小端/">大小端</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/数据库/">数据库</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/系统管理/">系统管理</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/计算机网络/">计算机网络</a><span class="tag-list-count">10</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/集群/">集群</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/默认/">默认</a><span class="tag-list-count">1</span></li></ul>
+    </div>
+  </aside>
+
+  
+    
+  <aside class="widget">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget-content tagcloud">
+      <a href="/tags/CS-Notes/" style="font-size: 10px;">CS-Notes</a> <a href="/tags/PEM证书/" style="font-size: 10px;">PEM证书</a> <a href="/tags/Shell/" style="font-size: 10px;">Shell</a> <a href="/tags/cron/" style="font-size: 10px;">cron</a> <a href="/tags/database/" style="font-size: 10px;">database</a> <a href="/tags/diagrams/" style="font-size: 10px;">diagrams</a> <a href="/tags/docker/" style="font-size: 15px;">docker</a> <a href="/tags/docker-qq/" style="font-size: 10px;">docker-qq</a> <a href="/tags/flask/" style="font-size: 16.25px;">flask</a> <a href="/tags/git/" style="font-size: 10px;">git</a> <a href="/tags/graphics/" style="font-size: 10px;">graphics</a> <a href="/tags/http/" style="font-size: 17.5px;">http</a> <a href="/tags/informationisbeautiful/" style="font-size: 10px;">informationisbeautiful</a> <a href="/tags/java基础/" style="font-size: 20px;">java基础</a> <a href="/tags/java语法/" style="font-size: 20px;">java语法</a> <a href="/tags/kubernetes/" style="font-size: 13.75px;">kubernetes</a> <a href="/tags/linux/" style="font-size: 15px;">linux</a> <a href="/tags/mysql/" style="font-size: 11.25px;">mysql</a> <a href="/tags/network/" style="font-size: 17.5px;">network</a> <a href="/tags/openssl/" style="font-size: 10px;">openssl</a> <a href="/tags/openwrt/" style="font-size: 10px;">openwrt</a> <a href="/tags/p12/" style="font-size: 10px;">p12</a> <a href="/tags/pfx/" style="font-size: 10px;">pfx</a> <a href="/tags/tcp-ip/" style="font-size: 17.5px;">tcp/ip</a> <a href="/tags/web开发/" style="font-size: 16.25px;">web开发</a> <a href="/tags/云计算/" style="font-size: 18.75px;">云计算</a> <a href="/tags/区块链/" style="font-size: 10px;">区块链</a> <a href="/tags/大小端/" style="font-size: 10px;">大小端</a> <a href="/tags/数据库/" style="font-size: 12.5px;">数据库</a> <a href="/tags/系统管理/" style="font-size: 15px;">系统管理</a> <a href="/tags/计算机网络/" style="font-size: 17.5px;">计算机网络</a> <a href="/tags/集群/" style="font-size: 13.75px;">集群</a> <a href="/tags/默认/" style="font-size: 10px;">默认</a>
+    </div>
+  </aside>
+
+  
+    <aside class="widget">
+    <h3 class="widget-title">Links</h3>
+    <div class="widget-content">
+		<ul id="link-list">
+		<!-- link begin -->
+
+		<li><a href="https://www.google.com/">google</a></li>
+		<li><a href="https://www.baidu.com/">baidu</a></li>
+		
+		<!-- link end -->
+		</ul>
+    </div>
+</aside>
+
+  
+    <aside class="widget">
+    <h3 class="widget-title">Ads</h3>
+    <div class="widget-content">
+	 
+			* <a target="_blank" href="https://amazon.cn/gp/search?ie=UTF8&tag=momoda-23&linkCode=ur2&linkId=4a0e4fbec0cfa8dfe540ca999d0bf999&camp=536&creative=3200&index=books&keywords=编程">这些好书您看了吗?</a><img src="//ir-cn.amazon-adsystem.com/e/ir?t=momoda-23&l=ur2&o=28" width="1" height="1" border="0" alt="" style="border:none !important; margin:0px !important;">
+			<br><br>
+			* 体育&户外用品推荐>
+			<div align="center"> <a href="https://www.amazon.cn/B07HWB88Z5/dp/B07HWB88Z5/ref=as_sl_pc_tf_til?tag=momoda-23&linkCode=w00&linkId=14df5124f2165d9eb3d65252e60ed2cf&creativeASIN=B07HWB88Z5"><img src="/more/ads/amazon.gif" width="100%"></a> </div>
+
+    </div>
+</aside>
+
+  
+</div>
+      </div>
+      <footer id="colophon" role="contentinfo">
+    <p>&copy; 2019 momoda
+    All rights reserved.</p>
+    <p>Powered by <a href="https://hexo.io/" target="_blank">Hexo</a></p>
+    <a href="javascript:scrollTo(0,0);">返回顶部</a>
+</footer>
+
+    <script>window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"1","bdMiniList":false,"bdPic":"","bdStyle":"2","bdSize":"16"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];</script>
+
+<script src="/js/jquery-2.0.3.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+<script src="/js/navigation.js"></script>
+
+
+<script type="text/javascript" src="https://js.users.51.la/19862371.js"></script>
+<div id="bg"></div>
+
+  </div>
+</body>
+</html>

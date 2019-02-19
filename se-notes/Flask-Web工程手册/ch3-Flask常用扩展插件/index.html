@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="utf-8">
+  
+  
+  <meta name="description" content="momoda">
+  
+
+  
+  <meta name="keywords" content="momoda">
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  <title>ch3-Flask常用扩展插件 | Just another blog</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="Flask 常用扩展插件 Flask-SQLAlchemy 初始化应用 模型声明   Flask-Script 与 Flask-Migrate MySQL-python 参考文章   Flask-Login 初始化应用 相关配置 使用方法   Flask_Babel 初始化应用 配置参数 生成翻译模板 创建翻译文本 编译 修改翻译   Flask-Mail 初始化应用 参数配置 发送邮件">
+<meta name="keywords" content="web开发,flask">
+<meta property="og:type" content="article">
+<meta property="og:title" content="ch3-Flask常用扩展插件">
+<meta property="og:url" content="https://wnhby.github.io/se-notes/Flask-Web工程手册/ch3-Flask常用扩展插件/index.html">
+<meta property="og:site_name" content="Just another blog">
+<meta property="og:description" content="Flask 常用扩展插件 Flask-SQLAlchemy 初始化应用 模型声明   Flask-Script 与 Flask-Migrate MySQL-python 参考文章   Flask-Login 初始化应用 相关配置 使用方法   Flask_Babel 初始化应用 配置参数 生成翻译模板 创建翻译文本 编译 修改翻译   Flask-Mail 初始化应用 参数配置 发送邮件">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://ir-cn.amazon-adsystem.com/e/ir?t=momoda-23&l=ur2&o=28">
+<meta property="og:image" content="https://wnhby.github.io/se-notes/Flask-Web工程手册/more/ads/amazon.gif">
+<meta property="og:updated_time" content="2019-02-19T05:17:29.059Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="ch3-Flask常用扩展插件">
+<meta name="twitter:description" content="Flask 常用扩展插件 Flask-SQLAlchemy 初始化应用 模型声明   Flask-Script 与 Flask-Migrate MySQL-python 参考文章   Flask-Login 初始化应用 相关配置 使用方法   Flask_Babel 初始化应用 配置参数 生成翻译模板 创建翻译文本 编译 修改翻译   Flask-Mail 初始化应用 参数配置 发送邮件">
+<meta name="twitter:image" content="https://ir-cn.amazon-adsystem.com/e/ir?t=momoda-23&l=ur2&o=28">
+  
+    <link rel="alternative" href="/atom.xml" title="Just another blog" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/css/images/favicon.ico">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  
+
+  
+  <!-- baidu webmaster push -->
+  <script src="//push.zhanzhang.baidu.com/push.js"></script>
+</head></html>
+<body class="home blog custom-background custom-font-enabled single-author">
+  <div id="page" class="hfeed site">
+      <header id="masthead" class="site-header" role="banner">
+    <hgroup>
+      <h1 class="site-title">
+        <a href="/" title="Just another blog" rel="home">Just another blog</a>
+      </h1>
+      
+        <h2 class="site-description">
+          <a href="/" id="subtitle">momoda blog</a>
+        </h2>
+      
+    </hgroup>
+
+    <nav id="site-navigation" class="main-navigation" role="navigation">
+            <button class="menu-toggle">菜单</button>
+            <a class="assistive-text" href="/#content" title="跳至内容">跳至内容</a><!--TODO-->
+            <div class="menu-main-container">
+                <ul id="menu-main" class="nav-menu">
+                
+                    <li class="menu-item menu-item-type-post_type menu-item-object-page"><a href="/">Home</a></li>
+                
+                    <li class="menu-item menu-item-type-post_type menu-item-object-page"><a href="/atom.xml">RSS</a></li>
+                
+                    <li class="menu-item menu-item-type-post_type menu-item-object-page"><a href="/sitemap.xml">Site map</a></li>
+                
+                    <li class="menu-item menu-item-type-post_type menu-item-object-page"><a href="/more/share.html">Share</a></li>
+                
+                </ul>
+            </div>
+    </nav>
+</header>
+
+      <div id="main" class="wrapper">
+        <div id="primary" class="site-content"><div id="content" role="main"><article id="post-se-notes/Flask-Web工程手册/ch3-Flask常用扩展插件" class="post-se-notes/Flask-Web工程手册/ch3-Flask常用扩展插件 post type-post status-publish format-standard hentry">
+    <!---->
+
+      <header class="entry-header">
+        
+        
+  
+    <h1 class="entry-title article-title">
+      ch3-Flask常用扩展插件
+    </h1>
+  
+
+        
+        <div class="comments-link">
+            
+            <a href="javascript:void(0);" data-url="https://wnhby.github.io/se-notes/Flask-Web工程手册/ch3-Flask常用扩展插件/" data-id="cjsbbbeub0005e9s6rjbwv2fy" class="leave-reply bdsharebuttonbox" data-cmd="more">分享</a>
+        </div><!-- .comments-link -->
+      </header><!-- .entry-header -->
+
+    <div class="entry-content">
+      
+        <!-- TOC -->
+<ul>
+<li><a href="#flask-常用扩展插件">Flask 常用扩展插件</a><ul>
+<li><a href="#flask-sqlalchemy">Flask-SQLAlchemy</a><ul>
+<li><a href="#初始化应用">初始化应用</a></li>
+<li><a href="#模型声明">模型声明</a></li>
+</ul>
+</li>
+<li><a href="#flask-script-与-flask-migrate">Flask-Script 与 Flask-Migrate</a></li>
+<li><a href="#mysql-python">MySQL-python</a><ul>
+<li><a href="#参考文章">参考文章</a></li>
+</ul>
+</li>
+<li><a href="#flask-login">Flask-Login</a><ul>
+<li><a href="#初始化应用-1">初始化应用</a></li>
+<li><a href="#相关配置">相关配置</a></li>
+<li><a href="#使用方法">使用方法</a></li>
+</ul>
+</li>
+<li><a href="#flask_babel">Flask_Babel</a><ul>
+<li><a href="#初始化应用-2">初始化应用</a></li>
+<li><a href="#配置参数">配置参数</a></li>
+<li><a href="#生成翻译模板">生成翻译模板</a></li>
+<li><a href="#创建翻译文本">创建翻译文本</a></li>
+<li><a href="#编译">编译</a></li>
+<li><a href="#修改翻译">修改翻译</a></li>
+</ul>
+</li>
+<li><a href="#flask-mail">Flask-Mail</a><ul>
+<li><a href="#初始化应用-3">初始化应用</a></li>
+<li><a href="#参数配置">参数配置</a></li>
+<li><a href="#发送邮件">发送邮件</a></li>
+</ul>
+</li>
+<li><a href="#自定义模板过滤器">自定义模板过滤器</a></li>
+</ul>
+</li>
+</ul>
+<!-- /TOC -->
+<h1 id="Flask-常用扩展插件"><a href="#Flask-常用扩展插件" class="headerlink" title="Flask 常用扩展插件"></a>Flask 常用扩展插件</h1><p>仅仅靠 Flask 基础库的功能是不够的，Flask 拥有多种扩展插件来实现各种模块化的功能。以下按照常用的配置目录，来介绍 Flask 中较为常见的功能插件。</p>
+<h2 id="Flask-SQLAlchemy"><a href="#Flask-SQLAlchemy" class="headerlink" title="Flask-SQLAlchemy"></a>Flask-SQLAlchemy</h2><p>一个从模型到数据库的映射框架，在 Flask 中提供了模型以及数据库操作。</p>
+<h3 id="初始化应用"><a href="#初始化应用" class="headerlink" title="初始化应用"></a>初始化应用</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"># app/init.py</span><br><span class="line">from flask import Flask</span><br><span class="line">from flask_sqlalchemy import SQLAlchemy</span><br><span class="line">from config import config</span><br><span class="line"></span><br><span class="line"># 由于是全局的实例，此后其他模块引入需SQLAlchemy时只需引入db即可</span><br><span class="line">db = SQLAlchemy() </span><br><span class="line"></span><br><span class="line">def create_app(config_name):</span><br><span class="line">    app = Flask(__name__)</span><br><span class="line">    app.config.from_object(config[config_name])</span><br><span class="line">    config[config_name].init_app(app)</span><br><span class="line"></span><br><span class="line">    db.init_app(app)</span><br></pre></td></tr></table></figure>
+<h3 id="模型声明"><a href="#模型声明" class="headerlink" title="模型声明"></a>模型声明</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"># app/models.py</span><br><span class="line">from . import db</span><br><span class="line"></span><br><span class="line">class User(db.Model):</span><br><span class="line">    __tablename__ = &apos;users&apos;   # 将创建的数据库的实际表名</span><br><span class="line">    id = db.Column(db.Integer, primary_key=True)</span><br><span class="line">    username = db.Column(db.String(80), unique=True)</span><br><span class="line">    email = db.Column(db.String(120), unique=True)</span><br><span class="line"></span><br><span class="line">    def __init__(self, username, email):</span><br><span class="line">        self.username = username</span><br><span class="line">        self.email = email</span><br></pre></td></tr></table></figure>
+<p>详细的模型关系说明请看 <a href="https://github.com/xuelangZF/ehpc/wiki/Flask-sqlalchemy-%E6%95%B0%E6%8D%AE%E5%BA%93%E6%93%8D%E4%BD%9C%E6%96%87%E6%A1%A3" target="_blank" rel="noopener">Flask sqlalchemy 数据库操作文档</a> 。</p>
+<h2 id="Flask-Script-与-Flask-Migrate"><a href="#Flask-Script-与-Flask-Migrate" class="headerlink" title="Flask-Script 与 Flask-Migrate"></a>Flask-Script 与 Flask-Migrate</h2><p>Flask-Script 为 Flask 提供了可通过外部脚本使用命令行运行程序的功能，如启动服务、数据库迁移、在环境上下文中启动 shell 等。而 Flask-Migrate 用于进行数据库迁移。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"># manage.py</span><br><span class="line"></span><br><span class="line">import os</span><br><span class="line">from app import app</span><br><span class="line">from flask_script import Manager</span><br><span class="line">from flask_migrate import Migrate, MigrateCommand</span><br><span class="line"></span><br><span class="line">manager = Manager(app)</span><br><span class="line">migrate = Migrate(app, db)</span><br><span class="line"></span><br><span class="line">manager.add_command(&apos;db&apos;, MigrateCommand)</span><br><span class="line"></span><br><span class="line">if __name__ == &apos;__main__&apos;:</span><br><span class="line">    manager.run()</span><br></pre></td></tr></table></figure></p>
+<p>数据库迁移的命令主要包括：</p>
+<ul>
+<li>初始化迁移库：<code># python manage.py db init</code></li>
+<li>创建迁移脚本：<code># python manage.py db migrate</code></li>
+<li>更新数据库：<code># python manage.py db upgrade</code></li>
+</ul>
+<h2 id="MySQL-python"><a href="#MySQL-python" class="headerlink" title="MySQL-python"></a>MySQL-python</h2><p>MySQL-python 是 python 环境与 mysql 数据库的底层交互接口。作为一个必需库，在安装时经常会遇到安装失败的情况。因此一般是在 windows 开发环境下使用 exe 进行安装后再把库文件复制到已部署项目的虚拟环境中。</p>
+<p>在 centos 系统中使用 pip 安装 MySQL-python 时遇到的一些问题的解决方法：</p>
+<ol>
+<li>执行<code>pip install mysql-python</code>时，报错 <code>EnvironmentError: mysql_config not found</code> ，解决方法为：<code>yum install mysql-devel</code></li>
+<li>再次执行<code>pip install mysql-python</code>安装时，仍然报错<code>error: command &#39;gcc&#39; failed with exit status 1</code>， 解决方法：<code>yum install gcc python-devel</code></li>
+</ol>
+<h3 id="参考文章"><a href="#参考文章" class="headerlink" title="参考文章"></a>参考文章</h3><p><a href="http://www.cnblogs.com/yangxia-test/p/4691947.html" target="_blank" rel="noopener">centos下pip安装mysql_python</a></p>
+<h2 id="Flask-Login"><a href="#Flask-Login" class="headerlink" title="Flask-Login"></a>Flask-Login</h2><p>Flask-Login 为 Flask 提供了会话管理。它处理日常的登入、登出并长期保留用户会话。</p>
+<h3 id="初始化应用-1"><a href="#初始化应用-1" class="headerlink" title="初始化应用"></a>初始化应用</h3><p>Flask-Login 最重要的部分就是登录管理器类 LoginManager ，实例化后对应用进行初始化。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"># app/init.py</span><br><span class="line"></span><br><span class="line">from flask_login import LoginManager</span><br><span class="line"></span><br><span class="line">login_manager = LoginManager()</span><br><span class="line">login_manager.init_app(app)</span><br><span class="line"></span><br><span class="line">#设置会话保护强度：None、&quot;basic&quot; 或 &quot;strong&quot;</span><br><span class="line">login_manager.session_protection = &apos;strong&apos;</span><br><span class="line">#设置登录视图</span><br><span class="line">login_manager.login_view = &apos;user.signin&apos;</span><br></pre></td></tr></table></figure></p>
+<h3 id="相关配置"><a href="#相关配置" class="headerlink" title="相关配置"></a>相关配置</h3><p>需要设置一个 user_loader 回调函数，这个函数用于从会话中存储的用户 ID 重新加载用户对象（注意：如果 ID 无效，它应该返回 None，而不是抛出异常），如：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">@login_manager.user_loader</span><br><span class="line">def load_user(userid):</span><br><span class="line">    return User.get(userid)</span><br></pre></td></tr></table></figure></p>
+<h3 id="使用方法"><a href="#使用方法" class="headerlink" title="使用方法"></a>使用方法</h3><p>当用户通过验证后，用 login_user 函数来登入他们：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">@app.route(&quot;/login&quot;, methods=[&quot;GET&quot;, &quot;POST&quot;])</span><br><span class="line">def login():</span><br><span class="line">    form = LoginForm()</span><br><span class="line">    if form.validate_on_submit():</span><br><span class="line">        # login and validate the user...</span><br><span class="line">        login_user(user)</span><br><span class="line">        flash(&quot;Logged in successfully.&quot;)</span><br><span class="line">        return redirect(request.args.get(&quot;next&quot;) or url_for(&quot;index&quot;))</span><br><span class="line">    return render_template(&quot;login.html&quot;, form=form)</span><br></pre></td></tr></table></figure></p>
+<p>可以通过 current_user 代理访问当前会话中已登录的用户。但当用户未登录时，current_user 被设置为一个 AnonymousUser 对象，它包含下列属性： </p>
+<ul>
+<li>is_active 和 is_authenticated 返回 False </li>
+<li>is_active 返回 True </li>
+<li>get_id 返回 None。</li>
+</ul>
+<p>需要用户登入的视图可以用 login_required 装饰器来装饰，被 login_required 装饰器拦截的请求会跳转到登录视图。当重定向到登入视图，请求字符串中往往会额外设置一个 next 变量，值为用户之前试图访问的页面。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">@app.route(&quot;/settings&quot;)</span><br><span class="line">@login_required</span><br><span class="line">def settings():</span><br><span class="line">    pass</span><br></pre></td></tr></table></figure></p>
+<p>当用户要登出时：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">@app.route(&quot;/logout&quot;)</span><br><span class="line">@login_required</span><br><span class="line">def logout():</span><br><span class="line">    logout_user()</span><br><span class="line">    return redirect(somewhere)</span><br></pre></td></tr></table></figure></p>
+<h2 id="Flask-Babel"><a href="#Flask-Babel" class="headerlink" title="Flask_Babel"></a>Flask_Babel</h2><p>Flask_Babel 是 Flask 的翻译扩展工具，可配置指定文字的翻译文本。</p>
+<h3 id="初始化应用-2"><a href="#初始化应用-2" class="headerlink" title="初始化应用"></a>初始化应用</h3><p>使用命令<code>$ pip install Flask-Babel</code>进行安装。</p>
+<p>在完成 app 的基本配置初始化后，使用 Babel 对 app 进行初始化：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">from flask import Flask</span><br><span class="line">from config import config</span><br><span class="line">from flask_babel import Babel</span><br><span class="line"></span><br><span class="line">app = Flask(__name__)</span><br><span class="line">app.config.from_object(config[config_name])</span><br><span class="line">babel = Babel(app)</span><br></pre></td></tr></table></figure></p>
+<h3 id="配置参数"><a href="#配置参数" class="headerlink" title="配置参数"></a>配置参数</h3><p>首先在 app 的 config 中设置 Babel 的配置参数，分别代表翻译文本的默认语言以及其默认时区。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">BABEL_DEFAULT_LOCALE = &apos;zh&apos;</span><br><span class="line">BABEL_DEFAULT_TIMEZONE = &apos;CST&apos;</span><br></pre></td></tr></table></figure></p>
+<p>在 app 目录下创建配置文件 babel.cfg，用于设置 babel 要从哪些位置搜索需翻译的字符串：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[python: **.py]</span><br><span class="line">[jinja2: **/templates/**.html]</span><br><span class="line">extensions=jinja2.ext.autoescape,jinja2.ext.with_</span><br></pre></td></tr></table></figure></p>
+<h3 id="生成翻译模板"><a href="#生成翻译模板" class="headerlink" title="生成翻译模板"></a>生成翻译模板</h3><p>使用<code># pybabel extract -F babel.cfg -o messages.pot .</code>命令生成翻译模板<code>messages.pot</code>。该模板自动查找 babel.cfg 中所配置的区域中需要翻译的字符串。</p>
+<h3 id="创建翻译文本"><a href="#创建翻译文本" class="headerlink" title="创建翻译文本"></a>创建翻译文本</h3><p>使用<code># pybabel init -i messages.pot -d translations -l zh</code>创建中文翻译。这句命令会在 app 主目录中生成一个 translations 目录。要确保 flask 能找到翻译内容，translations 目录要和 templates 目录在同一个目录中。接下来我们就可以进行翻译了，修改 <code>translations/zh_Hans_CN/LC_MESSAGES/messages.po</code>文件添加翻译文本。</p>
+<h3 id="编译"><a href="#编译" class="headerlink" title="编译"></a>编译</h3><p>翻译完后执行命令<code># pybabel compile -d translations</code>进行编译，编译结果为 message.mo 文件。编译成功后，即可在应用的网页上看到翻译后的文本。</p>
+<h3 id="修改翻译"><a href="#修改翻译" class="headerlink" title="修改翻译"></a>修改翻译</h3><p>有时我们需要对程序和模板做修改，翻译也要随之更新。更新后需要用前面的命令重新生成 messages.pot 文件，然后使用命令<code># pybabel update -i messages.pot -d translations</code>将更新的内容 merge 到原来的翻译中，最后再到对应 locale 的文件夹下更新翻译并 compile 即可。</p>
+<p>若只是修改翻译文本而未更改程序和模板，则只需修改 messages.po 文件里的文本后重新编译即可。</p>
+<h2 id="Flask-Mail"><a href="#Flask-Mail" class="headerlink" title="Flask-Mail"></a>Flask-Mail</h2><p>Flask-Mail 用于自动发送邮件。</p>
+<h3 id="初始化应用-3"><a href="#初始化应用-3" class="headerlink" title="初始化应用"></a>初始化应用</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"># app/init.py</span><br><span class="line">from flask_mail import Mail</span><br><span class="line"></span><br><span class="line">mail = Mail()</span><br><span class="line">mail.init_app(app)</span><br></pre></td></tr></table></figure>
+<h3 id="参数配置"><a href="#参数配置" class="headerlink" title="参数配置"></a>参数配置</h3><p>可参考 <a href="http://www.pythondoc.com/flask-mail/index.html" target="_blank" rel="noopener">Flask-Mail 文档</a> 进行如下内置参数配置：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"># config.py</span><br><span class="line"></span><br><span class="line"># If use QQ email, please see http://service.mail.qq.com/cgi-bin/help?id=28 firstly.</span><br><span class="line">MAIL_SERVER = &apos;smtp.sina.com&apos;</span><br><span class="line">MAIL_PORT = 465</span><br><span class="line">MAIL_USE_SSL = True</span><br><span class="line">MAIL_USERNAME = os.environ.get(&apos;MAIL_USERNAME&apos;) or &apos;milanlanlanlan@sina.com&apos;</span><br><span class="line">MAIL_PASSWORD = os.environ.get(&apos;MAIL_PASSWORD&apos;) or &apos;1970025901a&apos;</span><br></pre></td></tr></table></figure></p>
+<p>除了设置参数以外，还应当确保邮件服务器可提供服务。</p>
+<h3 id="发送邮件"><a href="#发送邮件" class="headerlink" title="发送邮件"></a>发送邮件</h3><p>为了能够发送邮件，首先需要创建一个 Message 实例:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">from flask_mail import Message</span><br><span class="line">@app.route(&quot;/&quot;)</span><br><span class="line">def index():</span><br><span class="line">    msg = Message(&quot;Hello&quot;,     # 此处构造函数的首个参数的值&quot;Hello&quot;是邮件标题</span><br><span class="line">                  sender=&quot;from@example.com&quot;,</span><br><span class="line">                  recipients=[&quot;to@example.com&quot;])</span><br></pre></td></tr></table></figure>
+<p>可设置一个或者多个收件人:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">msg.recipients = [&quot;you@example.com&quot;]</span><br><span class="line">msg.add_recipient(&quot;somebodyelse@example.com&quot;)</span><br></pre></td></tr></table></figure></p>
+<p>若设置了 MAIL_DEFAULT_SENDER，就不必再次填写发件人，默认情况下将会使用配置项的发件人。</p>
+<p>邮件内容可以直接包含 body 或者包含 HTML:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">msg.body = &quot;testing&quot;</span><br><span class="line">msg.html = &quot;&lt;b&gt;testing&lt;/b&gt;&quot;</span><br></pre></td></tr></table></figure></p>
+<p>最后，发送邮件的时候请使用 Flask 应用设置的 Mail 实例:<code>mail.send(msg)</code></p>
+<h2 id="自定义模板过滤器"><a href="#自定义模板过滤器" class="headerlink" title="自定义模板过滤器"></a>自定义模板过滤器</h2><p>为了使视图层和控制层解耦，往往使用自定义的模板过滤器，而不是在控制层中增加逻辑。</p>
+<p><code>`</code> </p>
+<h1 id="app-util-init-py"><a href="#app-util-init-py" class="headerlink" title="app/util/init.py"></a>app/util/init.py</h1><p>from flask import Blueprint<br>filter_blueprint = Blueprint(‘filters’, <strong>name</strong>)</p>
+<h1 id="Register-all-the-filter"><a href="#Register-all-the-filter" class="headerlink" title="Register all the filter."></a>Register all the filter.</h1><h1 id="往往不是把所有过滤器写入同一个文件中，而是分多个文件，然后在本文件中用-import-引用。"><a href="#往往不是把所有过滤器写入同一个文件中，而是分多个文件，然后在本文件中用-import-引用。" class="headerlink" title="往往不是把所有过滤器写入同一个文件中，而是分多个文件，然后在本文件中用 import 引用。"></a>往往不是把所有过滤器写入同一个文件中，而是分多个文件，然后在本文件中用 import 引用。</h1><p>@filter_blueprint.app_template_filter(‘reversel’)<br>def reverse_filter(s):<br>    return s[::-1]</p>
+<hr>
+<ul>
+<li><p><a href="/more/donate/index.html"><strong><em><font color="red">我觉得帮助到我了, 支持你一下.</font></em></strong></a><br>   </p>
+</li>
+<li><p><a href="https://www.paypal.me/momodainfo" target="_blank" rel="noopener"><strong><em><font color="red">If you think the article is helpful to you, you can reward me through paypal.</font></em></strong></a></p>
+</li>
+</ul>
+<h3 id="Ads"><a href="#Ads" class="headerlink" title="Ads"></a>Ads</h3><p><em>这是小广告! 如果有需要, 不妨支持一下吧~</em></p>
+<blockquote>
+<p> <a target="_blank" href="https://amazon.cn/gp/search?ie=UTF8&tag=momoda-23&linkCode=ur2&linkId=4a0e4fbec0cfa8dfe540ca999d0bf999&camp=536&creative=3200&index=books&keywords=编程">这些好书您看了吗?</a><img src="//ir-cn.amazon-adsystem.com/e/ir?t=momoda-23&l=ur2&o=28" width="1" height="1" border="0" alt="" style="border:none !important; margin:0px !important;"></p>
+</blockquote>
+<blockquote>
+<p>体育&amp;户外用品推荐</p>
+</blockquote>
+<div align="center"> <a href="https://www.amazon.cn/B07HWB88Z5/dp/B07HWB88Z5/ref=as_sl_pc_tf_til?tag=momoda-23&linkCode=w00&linkId=14df5124f2165d9eb3d65252e60ed2cf&creativeASIN=B07HWB88Z5" target="_blank" rel="noopener"><img src="/se-notes/Flask-Web工程手册/ch3-Flask常用扩展插件/../more/ads/amazon.gif" width="100%"></a> </div>
+      
+    </div><!-- .entry-content -->
+
+    <footer class="entry-meta">
+    <a href="/se-notes/Flask-Web工程手册/ch3-Flask常用扩展插件/">
+    <time datetime="2019-01-03T13:49:30.000Z" class="entry-date">
+        1月 3 2019
+    </time>
+</a>
+    
+  <span class="article-delim">&#8226;</span>
+  <div class="article-category">
+  <a class="article-category-link" href="/categories/框架/">框架</a>, <a class="article-category-link" href="/categories/框架/python-web应用框架/">python-web应用框架</a>
+  </div>
+
+    
+  <span class="article-delim">&#8226;</span>
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/flask/">flask</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/web开发/">web开发</a></li></ul>
+
+    </footer>
+</article>
+
+
+    
+<nav class="nav-single">
+    <h3 class="assistive-text">文章导航</h3>
+    
+        <span class="nav-previous"><a href="/se-notes/Flask-Web工程手册/ch1-创建Python虚拟环境/" rel="prev"><span class="meta-nav">←</span> ch1-创建Python虚拟环境</a></span>
+    
+    
+        <span class="nav-next"><a href="/se-notes/Flask-Web工程手册/ch4-Linux服务器部署/" rel="next">ch4-Linux服务器部署 <span class="meta-nav">→</span></a></span>
+    
+</nav><!-- .nav-single -->
+
+
+
+
+
+
+
+</div></div>
+        <div id="secondary" class="widget-area" role="complementary">
+  
+    <aside id="search" class="widget widget_search"><form role="search" method="get" accept-charset="utf-8" id="searchform" class="searchform" action="//google.com/search">
+    <div>
+        <input type="text" value="" name="q">
+        <input type="submit" id="searchsubmit" value="google搜索">
+    </div>
+</form></aside>
+
+  
+    
+  <aside class="widget">
+    <h3 class="widget-title">Recents</h3>
+    <div class="widget-content">
+      <ul>
+        
+          <li>
+            <a href="/系统剩余空间查看/">系统剩余空间查看</a>
+          </li>
+        
+          <li>
+            <a href="/数据库分类/">数据库分类</a>
+          </li>
+        
+          <li>
+            <a href="/se-notes/Linux基础/README/">Linux基础-README</a>
+          </li>
+        
+          <li>
+            <a href="/se-notes/云计算实践/区块链相关/区块链简介/">区块链简介</a>
+          </li>
+        
+          <li>
+            <a href="/se-notes/云计算实践/集群高可用方案/Heartbeat双机热备方案/">Heartbeat双机热备方案</a>
+          </li>
+        
+      </ul>
+    </div>
+  </aside>
+
+  
+    
+  <aside class="widget">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget-content">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/">一月 2019</a><span class="archive-list-count">56</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">十一月 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">二月 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/09/">九月 2017</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/01/">一月 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/11/">十一月 2015</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/01/">一月 2014</a><span class="archive-list-count">1</span></li></ul>
+    </div>
+  </aside>
+
+  
+    
+  <aside class="widget">
+    <h3 class="widget-title">Categories</h3>
+    <div class="widget-content">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Graphics/">Graphics</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Linux/">Linux</a><span class="category-list-count">7</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Linux/Shell/">Shell</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Linux/linux基础/">linux基础</a><span class="category-list-count">6</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/协议证书/">协议证书</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/协议证书/openssl/">openssl</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/数据库/">数据库</a><span class="category-list-count">4</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/数据库/数据库基础/">数据库基础</a><span class="category-list-count">3</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/框架/">框架</a><span class="category-list-count">9</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/框架/python-web应用框架/">python-web应用框架</a><span class="category-list-count">9</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/版本控制/">版本控制</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/版本控制/Git/">Git</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/编程语言/">编程语言</a><span class="category-list-count">13</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/编程语言/java/">java</a><span class="category-list-count">13</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/网络通讯/">网络通讯</a><span class="category-list-count">11</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/网络通讯/大小端/">大小端</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/网络通讯/计算机网络基础/">计算机网络基础</a><span class="category-list-count">10</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/路由器/">路由器</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/路由器/openwrt/">openwrt</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/通用技术/">通用技术</a><span class="category-list-count">13</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/通用技术/Docker/">Docker</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/通用技术/云计算实践/">云计算实践</a><span class="category-list-count">11</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/通用技术/云计算实践/kubernetes部署/">kubernetes部署</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/通用技术/云计算实践/区块链/">区块链</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/通用技术/云计算实践/集群高可用方案/">集群高可用方案</a><span class="category-list-count">4</span></li></ul></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/默认/">默认</a><span class="category-list-count">1</span></li></ul>
+    </div>
+  </aside>
+
+  
+    
+  <aside class="widget">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget-content">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/CS-Notes/">CS-Notes</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/PEM证书/">PEM证书</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Shell/">Shell</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/cron/">cron</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/database/">database</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/diagrams/">diagrams</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/docker/">docker</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/docker-qq/">docker-qq</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/flask/">flask</a><span class="tag-list-count">9</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/git/">git</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/graphics/">graphics</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/http/">http</a><span class="tag-list-count">10</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/informationisbeautiful/">informationisbeautiful</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/java基础/">java基础</a><span class="tag-list-count">13</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/java语法/">java语法</a><span class="tag-list-count">13</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/kubernetes/">kubernetes</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/linux/">linux</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mysql/">mysql</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/network/">network</a><span class="tag-list-count">10</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/openssl/">openssl</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/openwrt/">openwrt</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/p12/">p12</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/pfx/">pfx</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/tcp-ip/">tcp/ip</a><span class="tag-list-count">10</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/web开发/">web开发</a><span class="tag-list-count">9</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/云计算/">云计算</a><span class="tag-list-count">11</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/区块链/">区块链</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/大小端/">大小端</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/数据库/">数据库</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/系统管理/">系统管理</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/计算机网络/">计算机网络</a><span class="tag-list-count">10</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/集群/">集群</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/默认/">默认</a><span class="tag-list-count">1</span></li></ul>
+    </div>
+  </aside>
+
+  
+    
+  <aside class="widget">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget-content tagcloud">
+      <a href="/tags/CS-Notes/" style="font-size: 10px;">CS-Notes</a> <a href="/tags/PEM证书/" style="font-size: 10px;">PEM证书</a> <a href="/tags/Shell/" style="font-size: 10px;">Shell</a> <a href="/tags/cron/" style="font-size: 10px;">cron</a> <a href="/tags/database/" style="font-size: 10px;">database</a> <a href="/tags/diagrams/" style="font-size: 10px;">diagrams</a> <a href="/tags/docker/" style="font-size: 15px;">docker</a> <a href="/tags/docker-qq/" style="font-size: 10px;">docker-qq</a> <a href="/tags/flask/" style="font-size: 16.25px;">flask</a> <a href="/tags/git/" style="font-size: 10px;">git</a> <a href="/tags/graphics/" style="font-size: 10px;">graphics</a> <a href="/tags/http/" style="font-size: 17.5px;">http</a> <a href="/tags/informationisbeautiful/" style="font-size: 10px;">informationisbeautiful</a> <a href="/tags/java基础/" style="font-size: 20px;">java基础</a> <a href="/tags/java语法/" style="font-size: 20px;">java语法</a> <a href="/tags/kubernetes/" style="font-size: 13.75px;">kubernetes</a> <a href="/tags/linux/" style="font-size: 15px;">linux</a> <a href="/tags/mysql/" style="font-size: 11.25px;">mysql</a> <a href="/tags/network/" style="font-size: 17.5px;">network</a> <a href="/tags/openssl/" style="font-size: 10px;">openssl</a> <a href="/tags/openwrt/" style="font-size: 10px;">openwrt</a> <a href="/tags/p12/" style="font-size: 10px;">p12</a> <a href="/tags/pfx/" style="font-size: 10px;">pfx</a> <a href="/tags/tcp-ip/" style="font-size: 17.5px;">tcp/ip</a> <a href="/tags/web开发/" style="font-size: 16.25px;">web开发</a> <a href="/tags/云计算/" style="font-size: 18.75px;">云计算</a> <a href="/tags/区块链/" style="font-size: 10px;">区块链</a> <a href="/tags/大小端/" style="font-size: 10px;">大小端</a> <a href="/tags/数据库/" style="font-size: 12.5px;">数据库</a> <a href="/tags/系统管理/" style="font-size: 15px;">系统管理</a> <a href="/tags/计算机网络/" style="font-size: 17.5px;">计算机网络</a> <a href="/tags/集群/" style="font-size: 13.75px;">集群</a> <a href="/tags/默认/" style="font-size: 10px;">默认</a>
+    </div>
+  </aside>
+
+  
+    <aside class="widget">
+    <h3 class="widget-title">Links</h3>
+    <div class="widget-content">
+		<ul id="link-list">
+		<!-- link begin -->
+
+		<li><a href="https://www.google.com/">google</a></li>
+		<li><a href="https://www.baidu.com/">baidu</a></li>
+		
+		<!-- link end -->
+		</ul>
+    </div>
+</aside>
+
+  
+    <aside class="widget">
+    <h3 class="widget-title">Ads</h3>
+    <div class="widget-content">
+	 
+			* <a target="_blank" href="https://amazon.cn/gp/search?ie=UTF8&tag=momoda-23&linkCode=ur2&linkId=4a0e4fbec0cfa8dfe540ca999d0bf999&camp=536&creative=3200&index=books&keywords=编程">这些好书您看了吗?</a><img src="//ir-cn.amazon-adsystem.com/e/ir?t=momoda-23&l=ur2&o=28" width="1" height="1" border="0" alt="" style="border:none !important; margin:0px !important;">
+			<br><br>
+			* 体育&户外用品推荐>
+			<div align="center"> <a href="https://www.amazon.cn/B07HWB88Z5/dp/B07HWB88Z5/ref=as_sl_pc_tf_til?tag=momoda-23&linkCode=w00&linkId=14df5124f2165d9eb3d65252e60ed2cf&creativeASIN=B07HWB88Z5"><img src="/more/ads/amazon.gif" width="100%"></a> </div>
+
+    </div>
+</aside>
+
+  
+</div>
+      </div>
+      <footer id="colophon" role="contentinfo">
+    <p>&copy; 2019 momoda
+    All rights reserved.</p>
+    <p>Powered by <a href="https://hexo.io/" target="_blank">Hexo</a></p>
+    <a href="javascript:scrollTo(0,0);">返回顶部</a>
+</footer>
+
+    <script>window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"1","bdMiniList":false,"bdPic":"","bdStyle":"2","bdSize":"16"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];</script>
+
+<script src="/js/jquery-2.0.3.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+<script src="/js/navigation.js"></script>
+
+
+<script type="text/javascript" src="https://js.users.51.la/19862371.js"></script>
+<div id="bg"></div>
+
+  </div>
+</body>
+</html>

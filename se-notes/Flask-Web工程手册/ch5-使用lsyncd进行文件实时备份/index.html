@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="utf-8">
+  
+  
+  <meta name="description" content="momoda">
+  
+
+  
+  <meta name="keywords" content="momoda">
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  <title>ch5-使用lsyncd进行文件实时备份 | Just another blog</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="安装 Ubuntu 环境 CentOS 环境   配置 配置选项说明 启动 lsyncd   SSH 密钥配置 备份服务器操作 主服务器操作   配置文件模式示例 参考文档 Ads     Lysncd 实际上是 lua 语言封装了 inotify 和 rsync 工具，采用了 Linux 内核（2.6.13 及以后）里的 inotify 触发机制，然后通过 rsync 去差异同步，达到实时的">
+<meta name="keywords" content="web开发,flask">
+<meta property="og:type" content="article">
+<meta property="og:title" content="ch5-使用lsyncd进行文件实时备份">
+<meta property="og:url" content="https://wnhby.github.io/se-notes/Flask-Web工程手册/ch5-使用lsyncd进行文件实时备份/index.html">
+<meta property="og:site_name" content="Just another blog">
+<meta property="og:description" content="安装 Ubuntu 环境 CentOS 环境   配置 配置选项说明 启动 lsyncd   SSH 密钥配置 备份服务器操作 主服务器操作   配置文件模式示例 参考文档 Ads     Lysncd 实际上是 lua 语言封装了 inotify 和 rsync 工具，采用了 Linux 内核（2.6.13 及以后）里的 inotify 触发机制，然后通过 rsync 去差异同步，达到实时的">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://ir-cn.amazon-adsystem.com/e/ir?t=momoda-23&l=ur2&o=28">
+<meta property="og:image" content="https://wnhby.github.io/se-notes/Flask-Web工程手册/more/ads/amazon.gif">
+<meta property="og:updated_time" content="2019-02-19T05:17:43.891Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="ch5-使用lsyncd进行文件实时备份">
+<meta name="twitter:description" content="安装 Ubuntu 环境 CentOS 环境   配置 配置选项说明 启动 lsyncd   SSH 密钥配置 备份服务器操作 主服务器操作   配置文件模式示例 参考文档 Ads     Lysncd 实际上是 lua 语言封装了 inotify 和 rsync 工具，采用了 Linux 内核（2.6.13 及以后）里的 inotify 触发机制，然后通过 rsync 去差异同步，达到实时的">
+<meta name="twitter:image" content="https://ir-cn.amazon-adsystem.com/e/ir?t=momoda-23&l=ur2&o=28">
+  
+    <link rel="alternative" href="/atom.xml" title="Just another blog" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/css/images/favicon.ico">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  
+
+  
+  <!-- baidu webmaster push -->
+  <script src="//push.zhanzhang.baidu.com/push.js"></script>
+</head></html>
+<body class="home blog custom-background custom-font-enabled single-author">
+  <div id="page" class="hfeed site">
+      <header id="masthead" class="site-header" role="banner">
+    <hgroup>
+      <h1 class="site-title">
+        <a href="/" title="Just another blog" rel="home">Just another blog</a>
+      </h1>
+      
+        <h2 class="site-description">
+          <a href="/" id="subtitle">momoda blog</a>
+        </h2>
+      
+    </hgroup>
+
+    <nav id="site-navigation" class="main-navigation" role="navigation">
+            <button class="menu-toggle">菜单</button>
+            <a class="assistive-text" href="/#content" title="跳至内容">跳至内容</a><!--TODO-->
+            <div class="menu-main-container">
+                <ul id="menu-main" class="nav-menu">
+                
+                    <li class="menu-item menu-item-type-post_type menu-item-object-page"><a href="/">Home</a></li>
+                
+                    <li class="menu-item menu-item-type-post_type menu-item-object-page"><a href="/atom.xml">RSS</a></li>
+                
+                    <li class="menu-item menu-item-type-post_type menu-item-object-page"><a href="/sitemap.xml">Site map</a></li>
+                
+                    <li class="menu-item menu-item-type-post_type menu-item-object-page"><a href="/more/share.html">Share</a></li>
+                
+                </ul>
+            </div>
+    </nav>
+</header>
+
+      <div id="main" class="wrapper">
+        <div id="primary" class="site-content"><div id="content" role="main"><article id="post-se-notes/Flask-Web工程手册/ch5-使用lsyncd进行文件实时备份" class="post-se-notes/Flask-Web工程手册/ch5-使用lsyncd进行文件实时备份 post type-post status-publish format-standard hentry">
+    <!---->
+
+      <header class="entry-header">
+        
+        
+  
+    <h1 class="entry-title article-title">
+      ch5-使用lsyncd进行文件实时备份
+    </h1>
+  
+
+        
+        <div class="comments-link">
+            
+            <a href="javascript:void(0);" data-url="https://wnhby.github.io/se-notes/Flask-Web工程手册/ch5-使用lsyncd进行文件实时备份/" data-id="cjsbbbeui0009e9s65f1pzowc" class="leave-reply bdsharebuttonbox" data-cmd="more">分享</a>
+        </div><!-- .comments-link -->
+      </header><!-- .entry-header -->
+
+    <div class="entry-content">
+      
+        <!-- TOC -->
+<ul>
+<li><a href="#安装">安装</a><ul>
+<li><a href="#ubuntu-环境">Ubuntu 环境</a></li>
+<li><a href="#centos-环境">CentOS 环境</a></li>
+</ul>
+</li>
+<li><a href="#配置">配置</a><ul>
+<li><a href="#配置选项说明">配置选项说明</a></li>
+<li><a href="#启动-lsyncd">启动 lsyncd</a></li>
+</ul>
+</li>
+<li><a href="#ssh-密钥配置">SSH 密钥配置</a><ul>
+<li><a href="#备份服务器操作">备份服务器操作</a></li>
+<li><a href="#主服务器操作">主服务器操作</a></li>
+</ul>
+</li>
+<li><a href="#配置文件模式示例">配置文件模式示例</a></li>
+<li><a href="#参考文档">参考文档</a><ul>
+<li><a href="#ads">Ads</a></li>
+</ul>
+</li>
+</ul>
+<!-- /TOC -->
+<p>Lysncd 实际上是 lua 语言封装了 inotify 和 rsync 工具，采用了 Linux 内核（2.6.13 及以后）里的 inotify 触发机制，然后通过 rsync 去差异同步，达到实时的效果。它完美解决了 inotify + rsync 海量文件同步带来的文件频繁发送文件列表的问题 —— 通过时间延迟或累计触发事件次数实现。</p>
+<p>另外，它的配置方式很简单，lua 本身就是一种配置语言，可读性非常强。lsyncd 也有多种工作模式可以选择（本地目录 cp，本地目录 rsync，远程目录 rsyncssh）。</p>
+<h2 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h2><h3 id="Ubuntu-环境"><a href="#Ubuntu-环境" class="headerlink" title="Ubuntu 环境"></a>Ubuntu 环境</h3><p>已经收录在 ubuntu 的官方镜像源里，直接通过<code>apt-get install lsyncd</code>命令安装。</p>
+<h3 id="CentOS-环境"><a href="#CentOS-环境" class="headerlink" title="CentOS 环境"></a>CentOS 环境</h3><p>安装了 epel-release 扩展源后，通过<code>yum install lsyncd</code>命令安装。</p>
+<h2 id="配置"><a href="#配置" class="headerlink" title="配置"></a>配置</h2><p>lsyncd 安装完后默认并没有提供配置文件，因此需要我们自行创建。配置文件 lsyncd.conf 的一个示例如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"># cd /usr/local/lsyncd-2.1.5</span><br><span class="line"># mkdir etc var</span><br><span class="line"># vi etc/lsyncd.conf</span><br><span class="line"></span><br><span class="line">settings &#123;</span><br><span class="line">    logfile = &quot;/home/ubuntu/Desktop/lsyncd.log&quot;,</span><br><span class="line">    statusFile = &quot;/home/ubuntu/Desktop/lsyncd.status&quot;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">sync &#123;</span><br><span class="line">    default.rsyncssh,</span><br><span class="line">    source = &quot;/home/ubuntu/Desktop/src&quot;,</span><br><span class="line">    host = &quot;192.168.10.133&quot;,</span><br><span class="line">    targetdir = &quot;/home/ubuntu/Desktop/dst&quot;,</span><br><span class="line">    delay = 15</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="配置选项说明"><a href="#配置选项说明" class="headerlink" title="配置选项说明"></a>配置选项说明</h3><p><strong>settings</strong>里是全局设置，<code>--</code>开头表示注释，下面是几个常用选项说明：</p>
+<ul>
+<li><code>logfile</code> ：设置日志文件</li>
+<li><code>stausFile</code> ：设置状态文件</li>
+<li><code>statusInterval</code> ：将 lsyncd 的状态写入上面的statusFile的间隔，默认10秒</li>
+<li><code>inotifyMode</code> ：指定inotify监控的事件，默认是<code>CloseWrite</code>，还可以是<code>Modify</code>或<code>CloseWrite or Modify</code></li>
+<li><code>maxProcesses</code> ：同步进程的最大个数。假如同时有20个文件需要同步，而<code>maxProcesses = 8</code>，则最大能看到有8个rysnc进程</li>
+<li><code>maxDelays</code> ：累计到多少所监控的事件激活一次同步，即使后面的<code>delay</code>延迟时间还未到</li>
+</ul>
+<p><strong>sync</strong>里是定义同步参数。</p>
+<p>一般第一个参数指定 lsyncd serv以什么模式运行：<strong>rsync</strong>、<strong>rsyncssh</strong>、<strong>direct</strong> 三种模式：</p>
+<ul>
+<li><code>default.rsync</code> ：<strong>本地目录间同步</strong>。使用 rsync 也可以达到使用 ssh 形式的远程 rsync 效果<br><code>default.direct</code> ：<strong>本地目录间同步</strong>，使用 cp、rm 等命令完成差异文件备份<br><code>default.rsyncssh</code> ：<strong>同步到远程主机目录</strong>，rsync 的 ssh 模式，需要使用 key 来认证</li>
+<li><code>source</code> ：同步的源目录，使用绝对路径。</li>
+<li><code>target</code> ：同步的目的目录，在不同模式下有不同的写法。</li>
+<li><code>init</code> ：当<code>init=false</code>时表示跳过初始同步，启动时即使原目录有差异时也不会同步。默认值为<code>true</code>。</li>
+<li><code>delay</code> ：等待同步的延时，默认15s，即每15s同步一次。</li>
+<li><code>excludeFrom</code>： 排除选项，后面指定排除的列表文件.</li>
+</ul>
+<p>更多参数设置可以在参考文档中查看。</p>
+<h3 id="启动-lsyncd"><a href="#启动-lsyncd" class="headerlink" title="启动 lsyncd"></a>启动 lsyncd</h3><p>使用命令加载配置文件启动：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">lsyncd -log Exec [CONFIG-FILE]</span><br></pre></td></tr></table></figure>
+<p>[CONFIG-FILE]为配置文件所在路径。</p>
+<blockquote>
+<p>更加详细的说明可以通过<code>lsyncd -help</code>查看。</p>
+</blockquote>
+<h2 id="SSH-密钥配置"><a href="#SSH-密钥配置" class="headerlink" title="SSH 密钥配置"></a>SSH 密钥配置</h2><p>为了让<code>lysncd</code>能够以 rsyncssh 模式进行工作，我们还需要对备份服务器进行一些配置。</p>
+<blockquote>
+<p>主服务器是指需要被备份的服务器，备份服务器是指用来实现主服务器备份的服务器。</p>
+</blockquote>
+<h3 id="备份服务器操作"><a href="#备份服务器操作" class="headerlink" title="备份服务器操作"></a>备份服务器操作</h3><p>在备份服务器中创建一个密钥对，直接回车即可，然后设置为<code>authorized_keys</code>。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">ssh-keygen -t rsa</span><br><span class="line">cd ~/.ssh</span><br><span class="line">cat id_rsa.pub &gt;&gt; authorized_keys</span><br></pre></td></tr></table></figure>
+<p>然后检查备份服务器有没有安装<code>openssh-server</code>，没有的话需要安装。</p>
+<h3 id="主服务器操作"><a href="#主服务器操作" class="headerlink" title="主服务器操作"></a>主服务器操作</h3><p>将备份服务器中生成的私钥<code>id_rsa</code>拷贝到主服务器的<code>~/.ssh/</code>里面。然后设置好权限，并且测试是否能够正常登陆。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">chmod 600 ~/.ssh/id_rsa</span><br><span class="line">ssh [USER]@[REMOTE_IP]</span><br></pre></td></tr></table></figure>
+<p>[USER]和[REMOTE_IP]为登陆的用户和备份服务器的IP。如果能成功登陆的话则表示配置成功。</p>
+<blockquote>
+<p>也可以在主服务器中生成一对密钥，把公钥拷贝到备份服务器的<code>~/.ssh/authorized_keys</code>中。</p>
+</blockquote>
+<h2 id="配置文件模式示例"><a href="#配置文件模式示例" class="headerlink" title="配置文件模式示例"></a>配置文件模式示例</h2><p>下面的内容几乎涵盖了所有同步的模式。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br></pre></td><td class="code"><pre><span class="line">settings &#123;</span><br><span class="line">    logfile =&quot;/usr/local/lsyncd-2.1.5/var/lsyncd.log&quot;,</span><br><span class="line">    statusFile =&quot;/usr/local/lsyncd-2.1.5/var/lsyncd.status&quot;,</span><br><span class="line">    inotifyMode = &quot;CloseWrite&quot;,</span><br><span class="line">    maxProcesses = 8,</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">-- I. 本地目录同步，direct：cp/rm/mv。 适用：500+万文件，变动不大</span><br><span class="line">sync &#123;</span><br><span class="line">    default.direct,</span><br><span class="line">    source    = &quot;/tmp/src&quot;,</span><br><span class="line">    target    = &quot;/tmp/dest&quot;,</span><br><span class="line">    delay = 1</span><br><span class="line">    maxProcesses = 1</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">-- II. 本地目录同步，rsync模式：rsync</span><br><span class="line">sync &#123;</span><br><span class="line">    default.rsync,</span><br><span class="line">    source    = &quot;/tmp/src&quot;,</span><br><span class="line">    target    = &quot;/tmp/dest1&quot;,</span><br><span class="line">    excludeFrom = &quot;/etc/rsyncd.d/rsync_exclude.lst&quot;,</span><br><span class="line">    rsync     = &#123;</span><br><span class="line">        binary = &quot;/usr/bin/rsync&quot;,</span><br><span class="line">        archive = true,</span><br><span class="line">        compress = true,</span><br><span class="line">        bwlimit   = 2000</span><br><span class="line">        &#125; </span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">-- III. 远程目录同步，rsync模式 + rsyncd daemon</span><br><span class="line">sync &#123;</span><br><span class="line">    default.rsync,</span><br><span class="line">    source    = &quot;/tmp/src&quot;,</span><br><span class="line">    target    = &quot;syncuser@172.29.88.223::module1&quot;,</span><br><span class="line">    delete=&quot;running&quot;,</span><br><span class="line">    exclude = &#123; &quot;.*&quot;, &quot;.tmp&quot; &#125;,</span><br><span class="line">    delay = 30,</span><br><span class="line">    init = false,</span><br><span class="line">    rsync     = &#123;</span><br><span class="line">        binary = &quot;/usr/bin/rsync&quot;,</span><br><span class="line">        archive = true,</span><br><span class="line">        compress = true,</span><br><span class="line">        verbose   = true,</span><br><span class="line">        password_file = &quot;/etc/rsyncd.d/rsync.pwd&quot;,</span><br><span class="line">        _extra    = &#123;&quot;--bwlimit=200&quot;&#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">-- IV. 远程目录同步，rsync模式 + ssh shell</span><br><span class="line">sync &#123;</span><br><span class="line">    default.rsync,</span><br><span class="line">    source    = &quot;/tmp/src&quot;,</span><br><span class="line">    target    = &quot;172.29.88.223:/tmp/dest&quot;,</span><br><span class="line">    -- target    = &quot;root@172.29.88.223:/remote/dest&quot;,</span><br><span class="line">    -- 上面target，注意如果是普通用户，必须拥有写权限</span><br><span class="line">    maxDelays = 5,</span><br><span class="line">    delay = 30,</span><br><span class="line">    -- init = true,</span><br><span class="line">    rsync     = &#123;</span><br><span class="line">        binary = &quot;/usr/bin/rsync&quot;,</span><br><span class="line">        archive = true,</span><br><span class="line">        compress = true,</span><br><span class="line">        bwlimit   = 2000</span><br><span class="line">        -- rsh = &quot;/usr/bin/ssh -p 22 -o StrictHostKeyChecking=no&quot;</span><br><span class="line">        -- 如果要指定其它端口，请用上面的rsh</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">-- V. 远程目录同步，rsync模式 + rsyncssh，效果与上面相同</span><br><span class="line">sync &#123;</span><br><span class="line">    default.rsyncssh,</span><br><span class="line">    source    = &quot;/tmp/src2&quot;,</span><br><span class="line">    host      = &quot;172.29.88.223&quot;,</span><br><span class="line">    targetdir = &quot;/remote/dir&quot;,</span><br><span class="line">    excludeFrom = &quot;/etc/rsyncd.d/rsync_exclude.lst&quot;,</span><br><span class="line">    -- maxDelays = 5,</span><br><span class="line">    delay = 0,</span><br><span class="line">    -- init = false,</span><br><span class="line">    rsync    = &#123;</span><br><span class="line">        binary = &quot;/usr/bin/rsync&quot;,</span><br><span class="line">        archive = true,</span><br><span class="line">        compress = true,</span><br><span class="line">        verbose   = true,</span><br><span class="line">        _extra = &#123;&quot;--bwlimit=2000&quot;&#125;,</span><br><span class="line">        &#125;,</span><br><span class="line">    ssh      = &#123;</span><br><span class="line">        port  =  1234</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure></p>
+<h2 id="参考文档"><a href="#参考文档" class="headerlink" title="参考文档"></a>参考文档</h2><p><a href="https://axkibe.github.io/lsyncd/manual/config/layer4/" target="_blank" rel="noopener">Config Layer 4: Default Config</a></p>
+<p><a href="http://clavinli.github.io/2013/11/12/linux-server-lsyncd/" target="_blank" rel="noopener">Lsyncd | 使用lsyncd同步文件目录</a>    </p>
+<p><a href="http://seanlook.com/2015/05/06/lsyncd-synchronize-realtime/" target="_blank" rel="noopener">lsyncd实时同步搭建指南——取代rsync+inotify</a></p>
+<hr>
+<ul>
+<li><p><a href="/more/donate/index.html"><strong><em><font color="red">我觉得帮助到我了, 支持你一下.</font></em></strong></a><br>   </p>
+</li>
+<li><p><a href="https://www.paypal.me/momodainfo" target="_blank" rel="noopener"><strong><em><font color="red">If you think the article is helpful to you, you can reward me through paypal.</font></em></strong></a></p>
+</li>
+</ul>
+<h3 id="Ads"><a href="#Ads" class="headerlink" title="Ads"></a>Ads</h3><p><em>这是小广告! 如果有需要, 不妨支持一下吧~</em></p>
+<blockquote>
+<p> <a target="_blank" href="https://amazon.cn/gp/search?ie=UTF8&tag=momoda-23&linkCode=ur2&linkId=4a0e4fbec0cfa8dfe540ca999d0bf999&camp=536&creative=3200&index=books&keywords=编程">这些好书您看了吗?</a><img src="//ir-cn.amazon-adsystem.com/e/ir?t=momoda-23&l=ur2&o=28" width="1" height="1" border="0" alt="" style="border:none !important; margin:0px !important;"></p>
+</blockquote>
+<blockquote>
+<p>体育&amp;户外用品推荐</p>
+</blockquote>
+<div align="center"> <a href="https://www.amazon.cn/B07HWB88Z5/dp/B07HWB88Z5/ref=as_sl_pc_tf_til?tag=momoda-23&linkCode=w00&linkId=14df5124f2165d9eb3d65252e60ed2cf&creativeASIN=B07HWB88Z5" target="_blank" rel="noopener"><img src="/se-notes/Flask-Web工程手册/ch5-使用lsyncd进行文件实时备份/../more/ads/amazon.gif" width="100%"></a> </div>
+      
+    </div><!-- .entry-content -->
+
+    <footer class="entry-meta">
+    <a href="/se-notes/Flask-Web工程手册/ch5-使用lsyncd进行文件实时备份/">
+    <time datetime="2019-01-03T13:49:30.000Z" class="entry-date">
+        1月 3 2019
+    </time>
+</a>
+    
+  <span class="article-delim">&#8226;</span>
+  <div class="article-category">
+  <a class="article-category-link" href="/categories/框架/">框架</a>, <a class="article-category-link" href="/categories/框架/python-web应用框架/">python-web应用框架</a>
+  </div>
+
+    
+  <span class="article-delim">&#8226;</span>
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/flask/">flask</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/web开发/">web开发</a></li></ul>
+
+    </footer>
+</article>
+
+
+    
+<nav class="nav-single">
+    <h3 class="assistive-text">文章导航</h3>
+    
+        <span class="nav-previous"><a href="/se-notes/Flask-Web工程手册/ch4-Linux服务器部署/" rel="prev"><span class="meta-nav">←</span> ch4-Linux服务器部署</a></span>
+    
+    
+        <span class="nav-next"><a href="/se-notes/Flask-Web工程手册/ch8-高可用与负载均衡集群部署-Ubuntu/" rel="next">ch8-高可用与负载均衡集群部署-Ubuntu <span class="meta-nav">→</span></a></span>
+    
+</nav><!-- .nav-single -->
+
+
+
+
+
+
+
+</div></div>
+        <div id="secondary" class="widget-area" role="complementary">
+  
+    <aside id="search" class="widget widget_search"><form role="search" method="get" accept-charset="utf-8" id="searchform" class="searchform" action="//google.com/search">
+    <div>
+        <input type="text" value="" name="q">
+        <input type="submit" id="searchsubmit" value="google搜索">
+    </div>
+</form></aside>
+
+  
+    
+  <aside class="widget">
+    <h3 class="widget-title">Recents</h3>
+    <div class="widget-content">
+      <ul>
+        
+          <li>
+            <a href="/系统剩余空间查看/">系统剩余空间查看</a>
+          </li>
+        
+          <li>
+            <a href="/数据库分类/">数据库分类</a>
+          </li>
+        
+          <li>
+            <a href="/se-notes/Linux基础/README/">Linux基础-README</a>
+          </li>
+        
+          <li>
+            <a href="/se-notes/云计算实践/区块链相关/区块链简介/">区块链简介</a>
+          </li>
+        
+          <li>
+            <a href="/se-notes/云计算实践/集群高可用方案/Heartbeat双机热备方案/">Heartbeat双机热备方案</a>
+          </li>
+        
+      </ul>
+    </div>
+  </aside>
+
+  
+    
+  <aside class="widget">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget-content">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/">一月 2019</a><span class="archive-list-count">56</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">十一月 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">二月 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/09/">九月 2017</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/01/">一月 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/11/">十一月 2015</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/01/">一月 2014</a><span class="archive-list-count">1</span></li></ul>
+    </div>
+  </aside>
+
+  
+    
+  <aside class="widget">
+    <h3 class="widget-title">Categories</h3>
+    <div class="widget-content">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Graphics/">Graphics</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Linux/">Linux</a><span class="category-list-count">7</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Linux/Shell/">Shell</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Linux/linux基础/">linux基础</a><span class="category-list-count">6</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/协议证书/">协议证书</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/协议证书/openssl/">openssl</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/数据库/">数据库</a><span class="category-list-count">4</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/数据库/数据库基础/">数据库基础</a><span class="category-list-count">3</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/框架/">框架</a><span class="category-list-count">9</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/框架/python-web应用框架/">python-web应用框架</a><span class="category-list-count">9</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/版本控制/">版本控制</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/版本控制/Git/">Git</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/编程语言/">编程语言</a><span class="category-list-count">13</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/编程语言/java/">java</a><span class="category-list-count">13</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/网络通讯/">网络通讯</a><span class="category-list-count">11</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/网络通讯/大小端/">大小端</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/网络通讯/计算机网络基础/">计算机网络基础</a><span class="category-list-count">10</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/路由器/">路由器</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/路由器/openwrt/">openwrt</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/通用技术/">通用技术</a><span class="category-list-count">13</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/通用技术/Docker/">Docker</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/通用技术/云计算实践/">云计算实践</a><span class="category-list-count">11</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/通用技术/云计算实践/kubernetes部署/">kubernetes部署</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/通用技术/云计算实践/区块链/">区块链</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/通用技术/云计算实践/集群高可用方案/">集群高可用方案</a><span class="category-list-count">4</span></li></ul></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/默认/">默认</a><span class="category-list-count">1</span></li></ul>
+    </div>
+  </aside>
+
+  
+    
+  <aside class="widget">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget-content">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/CS-Notes/">CS-Notes</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/PEM证书/">PEM证书</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Shell/">Shell</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/cron/">cron</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/database/">database</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/diagrams/">diagrams</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/docker/">docker</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/docker-qq/">docker-qq</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/flask/">flask</a><span class="tag-list-count">9</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/git/">git</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/graphics/">graphics</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/http/">http</a><span class="tag-list-count">10</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/informationisbeautiful/">informationisbeautiful</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/java基础/">java基础</a><span class="tag-list-count">13</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/java语法/">java语法</a><span class="tag-list-count">13</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/kubernetes/">kubernetes</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/linux/">linux</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mysql/">mysql</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/network/">network</a><span class="tag-list-count">10</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/openssl/">openssl</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/openwrt/">openwrt</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/p12/">p12</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/pfx/">pfx</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/tcp-ip/">tcp/ip</a><span class="tag-list-count">10</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/web开发/">web开发</a><span class="tag-list-count">9</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/云计算/">云计算</a><span class="tag-list-count">11</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/区块链/">区块链</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/大小端/">大小端</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/数据库/">数据库</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/系统管理/">系统管理</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/计算机网络/">计算机网络</a><span class="tag-list-count">10</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/集群/">集群</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/默认/">默认</a><span class="tag-list-count">1</span></li></ul>
+    </div>
+  </aside>
+
+  
+    
+  <aside class="widget">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget-content tagcloud">
+      <a href="/tags/CS-Notes/" style="font-size: 10px;">CS-Notes</a> <a href="/tags/PEM证书/" style="font-size: 10px;">PEM证书</a> <a href="/tags/Shell/" style="font-size: 10px;">Shell</a> <a href="/tags/cron/" style="font-size: 10px;">cron</a> <a href="/tags/database/" style="font-size: 10px;">database</a> <a href="/tags/diagrams/" style="font-size: 10px;">diagrams</a> <a href="/tags/docker/" style="font-size: 15px;">docker</a> <a href="/tags/docker-qq/" style="font-size: 10px;">docker-qq</a> <a href="/tags/flask/" style="font-size: 16.25px;">flask</a> <a href="/tags/git/" style="font-size: 10px;">git</a> <a href="/tags/graphics/" style="font-size: 10px;">graphics</a> <a href="/tags/http/" style="font-size: 17.5px;">http</a> <a href="/tags/informationisbeautiful/" style="font-size: 10px;">informationisbeautiful</a> <a href="/tags/java基础/" style="font-size: 20px;">java基础</a> <a href="/tags/java语法/" style="font-size: 20px;">java语法</a> <a href="/tags/kubernetes/" style="font-size: 13.75px;">kubernetes</a> <a href="/tags/linux/" style="font-size: 15px;">linux</a> <a href="/tags/mysql/" style="font-size: 11.25px;">mysql</a> <a href="/tags/network/" style="font-size: 17.5px;">network</a> <a href="/tags/openssl/" style="font-size: 10px;">openssl</a> <a href="/tags/openwrt/" style="font-size: 10px;">openwrt</a> <a href="/tags/p12/" style="font-size: 10px;">p12</a> <a href="/tags/pfx/" style="font-size: 10px;">pfx</a> <a href="/tags/tcp-ip/" style="font-size: 17.5px;">tcp/ip</a> <a href="/tags/web开发/" style="font-size: 16.25px;">web开发</a> <a href="/tags/云计算/" style="font-size: 18.75px;">云计算</a> <a href="/tags/区块链/" style="font-size: 10px;">区块链</a> <a href="/tags/大小端/" style="font-size: 10px;">大小端</a> <a href="/tags/数据库/" style="font-size: 12.5px;">数据库</a> <a href="/tags/系统管理/" style="font-size: 15px;">系统管理</a> <a href="/tags/计算机网络/" style="font-size: 17.5px;">计算机网络</a> <a href="/tags/集群/" style="font-size: 13.75px;">集群</a> <a href="/tags/默认/" style="font-size: 10px;">默认</a>
+    </div>
+  </aside>
+
+  
+    <aside class="widget">
+    <h3 class="widget-title">Links</h3>
+    <div class="widget-content">
+		<ul id="link-list">
+		<!-- link begin -->
+
+		<li><a href="https://www.google.com/">google</a></li>
+		<li><a href="https://www.baidu.com/">baidu</a></li>
+		
+		<!-- link end -->
+		</ul>
+    </div>
+</aside>
+
+  
+    <aside class="widget">
+    <h3 class="widget-title">Ads</h3>
+    <div class="widget-content">
+	 
+			* <a target="_blank" href="https://amazon.cn/gp/search?ie=UTF8&tag=momoda-23&linkCode=ur2&linkId=4a0e4fbec0cfa8dfe540ca999d0bf999&camp=536&creative=3200&index=books&keywords=编程">这些好书您看了吗?</a><img src="//ir-cn.amazon-adsystem.com/e/ir?t=momoda-23&l=ur2&o=28" width="1" height="1" border="0" alt="" style="border:none !important; margin:0px !important;">
+			<br><br>
+			* 体育&户外用品推荐>
+			<div align="center"> <a href="https://www.amazon.cn/B07HWB88Z5/dp/B07HWB88Z5/ref=as_sl_pc_tf_til?tag=momoda-23&linkCode=w00&linkId=14df5124f2165d9eb3d65252e60ed2cf&creativeASIN=B07HWB88Z5"><img src="/more/ads/amazon.gif" width="100%"></a> </div>
+
+    </div>
+</aside>
+
+  
+</div>
+      </div>
+      <footer id="colophon" role="contentinfo">
+    <p>&copy; 2019 momoda
+    All rights reserved.</p>
+    <p>Powered by <a href="https://hexo.io/" target="_blank">Hexo</a></p>
+    <a href="javascript:scrollTo(0,0);">返回顶部</a>
+</footer>
+
+    <script>window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"1","bdMiniList":false,"bdPic":"","bdStyle":"2","bdSize":"16"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];</script>
+
+<script src="/js/jquery-2.0.3.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+<script src="/js/navigation.js"></script>
+
+
+<script type="text/javascript" src="https://js.users.51.la/19862371.js"></script>
+<div id="bg"></div>
+
+  </div>
+</body>
+</html>

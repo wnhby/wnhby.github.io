@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="utf-8">
+  
+  
+  <meta name="description" content="momoda">
+  
+
+  
+  <meta name="keywords" content="momoda">
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  <title>ch8-高可用与负载均衡集群部署-Ubuntu | Just another blog</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="EHPC负载均衡及高可用集群部署说明 一.物理架构及技术简介 HAProxy Keepalived NFS   二.部署准备 三.数据库节点配置 NFS 服务配置 MySQL 服务配置   四.Web服务节点配置 五.HAProxy代理节点配置 如何进行项目文件更新 架构中将来可能遇到的问题 部署问题汇总 ubuntu系统设置DNS失败 启动 80 端口的 web 节点的服务时提示端口被占用">
+<meta name="keywords" content="web开发,flask">
+<meta property="og:type" content="article">
+<meta property="og:title" content="ch8-高可用与负载均衡集群部署-Ubuntu">
+<meta property="og:url" content="https://wnhby.github.io/se-notes/Flask-Web工程手册/ch8-高可用与负载均衡集群部署-Ubuntu/index.html">
+<meta property="og:site_name" content="Just another blog">
+<meta property="og:description" content="EHPC负载均衡及高可用集群部署说明 一.物理架构及技术简介 HAProxy Keepalived NFS   二.部署准备 三.数据库节点配置 NFS 服务配置 MySQL 服务配置   四.Web服务节点配置 五.HAProxy代理节点配置 如何进行项目文件更新 架构中将来可能遇到的问题 部署问题汇总 ubuntu系统设置DNS失败 启动 80 端口的 web 节点的服务时提示端口被占用">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://ir-cn.amazon-adsystem.com/e/ir?t=momoda-23&l=ur2&o=28">
+<meta property="og:image" content="https://wnhby.github.io/se-notes/Flask-Web工程手册/more/ads/amazon.gif">
+<meta property="og:updated_time" content="2019-02-19T05:18:07.564Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="ch8-高可用与负载均衡集群部署-Ubuntu">
+<meta name="twitter:description" content="EHPC负载均衡及高可用集群部署说明 一.物理架构及技术简介 HAProxy Keepalived NFS   二.部署准备 三.数据库节点配置 NFS 服务配置 MySQL 服务配置   四.Web服务节点配置 五.HAProxy代理节点配置 如何进行项目文件更新 架构中将来可能遇到的问题 部署问题汇总 ubuntu系统设置DNS失败 启动 80 端口的 web 节点的服务时提示端口被占用">
+<meta name="twitter:image" content="https://ir-cn.amazon-adsystem.com/e/ir?t=momoda-23&l=ur2&o=28">
+  
+    <link rel="alternative" href="/atom.xml" title="Just another blog" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/css/images/favicon.ico">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  
+
+  
+  <!-- baidu webmaster push -->
+  <script src="//push.zhanzhang.baidu.com/push.js"></script>
+</head></html>
+<body class="home blog custom-background custom-font-enabled single-author">
+  <div id="page" class="hfeed site">
+      <header id="masthead" class="site-header" role="banner">
+    <hgroup>
+      <h1 class="site-title">
+        <a href="/" title="Just another blog" rel="home">Just another blog</a>
+      </h1>
+      
+        <h2 class="site-description">
+          <a href="/" id="subtitle">momoda blog</a>
+        </h2>
+      
+    </hgroup>
+
+    <nav id="site-navigation" class="main-navigation" role="navigation">
+            <button class="menu-toggle">菜单</button>
+            <a class="assistive-text" href="/#content" title="跳至内容">跳至内容</a><!--TODO-->
+            <div class="menu-main-container">
+                <ul id="menu-main" class="nav-menu">
+                
+                    <li class="menu-item menu-item-type-post_type menu-item-object-page"><a href="/">Home</a></li>
+                
+                    <li class="menu-item menu-item-type-post_type menu-item-object-page"><a href="/atom.xml">RSS</a></li>
+                
+                    <li class="menu-item menu-item-type-post_type menu-item-object-page"><a href="/sitemap.xml">Site map</a></li>
+                
+                    <li class="menu-item menu-item-type-post_type menu-item-object-page"><a href="/more/share.html">Share</a></li>
+                
+                </ul>
+            </div>
+    </nav>
+</header>
+
+      <div id="main" class="wrapper">
+        <div id="primary" class="site-content"><div id="content" role="main"><article id="post-se-notes/Flask-Web工程手册/ch8-高可用与负载均衡集群部署-Ubuntu" class="post-se-notes/Flask-Web工程手册/ch8-高可用与负载均衡集群部署-Ubuntu post type-post status-publish format-standard hentry">
+    <!---->
+
+      <header class="entry-header">
+        
+        
+  
+    <h1 class="entry-title article-title">
+      ch8-高可用与负载均衡集群部署-Ubuntu
+    </h1>
+  
+
+        
+        <div class="comments-link">
+            
+            <a href="javascript:void(0);" data-url="https://wnhby.github.io/se-notes/Flask-Web工程手册/ch8-高可用与负载均衡集群部署-Ubuntu/" data-id="cjsbbbeuk000ae9s6e1mwou93" class="leave-reply bdsharebuttonbox" data-cmd="more">分享</a>
+        </div><!-- .comments-link -->
+      </header><!-- .entry-header -->
+
+    <div class="entry-content">
+      
+        <!-- TOC -->
+<ul>
+<li><a href="#ehpc负载均衡及高可用集群部署说明">EHPC负载均衡及高可用集群部署说明</a><ul>
+<li><a href="#一物理架构及技术简介">一.物理架构及技术简介</a><ul>
+<li><a href="#haproxy">HAProxy</a></li>
+<li><a href="#keepalived">Keepalived</a></li>
+<li><a href="#nfs">NFS</a></li>
+</ul>
+</li>
+<li><a href="#二部署准备">二.部署准备</a></li>
+<li><a href="#三数据库节点配置">三.数据库节点配置</a><ul>
+<li><a href="#nfs-服务配置">NFS 服务配置</a></li>
+<li><a href="#mysql-服务配置">MySQL 服务配置</a></li>
+</ul>
+</li>
+<li><a href="#四web服务节点配置">四.Web服务节点配置</a></li>
+<li><a href="#五haproxy代理节点配置">五.HAProxy代理节点配置</a></li>
+<li><a href="#如何进行项目文件更新">如何进行项目文件更新</a></li>
+<li><a href="#架构中将来可能遇到的问题">架构中将来可能遇到的问题</a></li>
+<li><a href="#部署问题汇总">部署问题汇总</a><ul>
+<li><a href="#ubuntu系统设置dns失败">ubuntu系统设置DNS失败</a></li>
+<li><a href="#启动-80-端口的-web-节点的服务时提示端口被占用">启动 80 端口的 web 节点的服务时提示端口被占用</a></li>
+<li><a href="#virtualenv-虚拟环境迁移后无法正常引用库">virtualenv 虚拟环境迁移后无法正常引用库</a></li>
+<li><a href="#复制-bashrc-文件后虚拟环境导向出错">复制 .bashrc 文件后虚拟环境导向出错</a></li>
+<li><a href="#设置语言的环境变量时警告-warning-setlocale-lc_all-cannot-change-locale-zh_cnutf-8">设置语言的环境变量时警告 warning: setlocale: LC_ALL： cannot change locale (zh_CN.UTF-8)</a></li>
+<li><a href="#安装-gevent-失败">安装 gevent 失败</a></li>
+<li><a href="#supervisor启动后-web-服务启动失败">supervisor启动后 web 服务启动失败</a></li>
+<li><a href="#ads">Ads</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<!-- /TOC -->
+<h1 id="EHPC负载均衡及高可用集群部署说明"><a href="#EHPC负载均衡及高可用集群部署说明" class="headerlink" title="EHPC负载均衡及高可用集群部署说明"></a>EHPC负载均衡及高可用集群部署说明</h1><h2 id="一-物理架构及技术简介"><a href="#一-物理架构及技术简介" class="headerlink" title="一.物理架构及技术简介"></a>一.物理架构及技术简介</h2><p>使用 Haproxy + Keepalived + nfs 作为集群部署方式。其中一台或多台 Hapoxy 代理服务器作为集群负载均衡的调度前端，多个 web 服务节点、单个数据库节点（同时提供 nfs 文件共享存储）作为对外隐藏的集群后端。</p>
+<h3 id="HAProxy"><a href="#HAProxy" class="headerlink" title="HAProxy"></a>HAProxy</h3><p>HAProxy（High Available Proxy）是一款提供高可用性、负载均衡以及基于 TCP（第四层）和 HTTP（第七层）应用的代理软件。 HAProxy 配置简单、支持多达上万并发连接。其运行模型可使得它非常容易和无风险地集成到现有的架构中，并且同时可以保护 web 服务器不被暴露到网络上。</p>
+<h3 id="Keepalived"><a href="#Keepalived" class="headerlink" title="Keepalived"></a>Keepalived</h3><p>Keepalived 是一款高可用软件，它的功能是基于 VRRP 协议、通过 IP 漂移实现服务的高可用：服务器集群共享一个虚拟 IP，同一时间只有一个服务器占有虚拟 IP 并对外提供服务。若该服务器不可用，则虚拟 IP 漂移至另一台服务器并对外提供服务。</p>
+<h3 id="NFS"><a href="#NFS" class="headerlink" title="NFS"></a>NFS</h3><p>在 Web 服务中往往需要涉及到一些不储存在数据库中的文件资源（比如用户上传的图片、文件等），而在集群中，若每个节点都有独立的文件存储的话，会造成存储不一致的后果。因此解决方案是构建一个 NFS（Network File System）服务器专门提供服务器节点间的共享文件存储，这样服务器节点间的存储就可以保持一致性。</p>
+<h2 id="二-部署准备"><a href="#二-部署准备" class="headerlink" title="二.部署准备"></a>二.部署准备</h2><p>准备四台虚机（Linux Ubuntu），分别作为前端代理（ ha1[10.182.15.46]）、服务节点（web1[10.182.15.51<br>]、web2[10.182.15.52]）、数据库节点（nfs1[10.182.15.50]）。所有节点均可访问外网，其中只有 ha1 拥有公网 IP。</p>
+<blockquote>
+<p>此外还拥有一台备份节点，用于对数据库节点 nfs1 的数据库以及文件目录进行实时主从备份。</p>
+</blockquote>
+<p>所有节点须设置好 hosts 互相解析：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">#vi /etc/hosts</span><br><span class="line">10.182.15.46    ha1</span><br><span class="line">10.182.15.50    nfs1</span><br><span class="line">10.182.15.51    web1</span><br><span class="line">10.182.15.52    web2</span><br></pre></td></tr></table></figure></p>
+<p>以及更新好 apt-get 库：<code>apt-get update</code></p>
+<h2 id="三-数据库节点配置"><a href="#三-数据库节点配置" class="headerlink" title="三.数据库节点配置"></a>三.数据库节点配置</h2><p>数据库节点为 nfs1，主要提供 NFS 与 MySQL 服务。</p>
+<h3 id="NFS-服务配置"><a href="#NFS-服务配置" class="headerlink" title="NFS 服务配置"></a>NFS 服务配置</h3><p>安装 NFS 服务<code>sudo apt-get install nfs-kernel-server</code>，并编辑配置文件（路径为<code>/etc/exports</code>），配置文件中的每一行表示设置一个共享目录以及有其访问权限的主机地址。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"># 共享目录路径为“/home/share”，对 web1 与 web2 两台主机开放读写权限</span><br><span class="line">/home/share   web1(rw,sync,no_root_squash) web2(rw,sync,no_root_squash)</span><br></pre></td></tr></table></figure>
+<p>启动 NFS 服务：<code>service nfs-kernel-server start</code>后， NFS 客户端才可对共享目录进行挂载。</p>
+<p>共享目录中放置 ehpc 的服务端项目文件，所有 web 服务节点将一起使用共享目录中的项目文件。</p>
+<p>更多配置参数请参考 <a href="https://github.com/Zouzhp3/Learn/blob/master/Cloud/%E9%85%8D%E7%BD%AE%E9%9B%86%E7%BE%A4%E5%85%B1%E4%BA%AB%E6%96%87%E4%BB%B6%20NFS%20%E6%9C%8D%E5%8A%A1%E5%99%A8.md" target="_blank" rel="noopener">NFS服务器配置文档</a>。</p>
+<h3 id="MySQL-服务配置"><a href="#MySQL-服务配置" class="headerlink" title="MySQL 服务配置"></a>MySQL 服务配置</h3><p>ubuntu 系统一般会自带 MySQL 5.5，因此无需再安装一遍。首先使用默认的 mysql root 账户进入 mysql 命令行，修改 root 默认密码，并创建一个拥有访问权限的普通用户。</p>
+<p>按照以下步骤设置开放 MySQL 的远程访问权限：</p>
+<ul>
+<li>保证远程访问的 mysql 用户的 host 为’%’而不是’localhost’</li>
+<li><code>sudo vi /etc/mysql/my.cnf</code>，注释掉<code>bind-address = 127.0.0.1</code></li>
+<li>重启 mysql 服务</li>
+</ul>
+<p>之后导入原数据库的 sql 脚本即可。</p>
+<p>至此便完成了节点 nfs1 的配置。</p>
+<h2 id="四-Web服务节点配置"><a href="#四-Web服务节点配置" class="headerlink" title="四.Web服务节点配置"></a>四.Web服务节点配置</h2><p>本集群拥有两个 web 服务节点 web1、web2，两个节点的部署操作完全一致。</p>
+<p>先使用 pip 安装 virtualenv、gunicorn、gevent、supervisor 等软件并使用<code>apt-get install nfs-common​</code>安装 NFS 客户端。再把 nfs1 节点开放的共享目录<code>/home/share</code>挂载到本地目录<code>/home/haproxy/share</code>，并设置为永久挂载（挂载操作参考 <a href="https://github.com/Zouzhp3/Learn/blob/master/Cloud/%E9%85%8D%E7%BD%AE%E9%9B%86%E7%BE%A4%E5%85%B1%E4%BA%AB%E6%96%87%E4%BB%B6%20NFS%20%E6%9C%8D%E5%8A%A1%E5%99%A8.md" target="_blank" rel="noopener">NFS服务器配置文档</a>）。</p>
+<p>迁移原 python 虚拟环境（迁移方法参考本文文末）后，还需要配置环境变量：把原脚本<code>.bashrc</code> copy 到用户根目录中，并对其中数据库配置等环境参数进行修改以满足当前实际要求，之后<code>source ~/.bashrc</code>刷新环境变量即可。</p>
+<p>之后配置 supervisor（路径<code>/etc/supervisor/conf.d/ehpc.conf</code>）：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">[program:ehpc]</span><br><span class="line">command=/home/haproxy/env/bin/gunicorn manage:app -b 0.0.0.0:80 -w 4 --worker-class gevent</span><br><span class="line">autostart = true</span><br><span class="line">autorestart = true</span><br><span class="line">user=root</span><br></pre></td></tr></table></figure></p>
+<blockquote>
+<p>注意 manage.py 路径，需当前工作目录为项目主目录才可启动成功。最好在启动 supervisor 前手工启动跑一下以便及早发现可能的问题。</p>
+</blockquote>
+<h2 id="五-HAProxy代理节点配置"><a href="#五-HAProxy代理节点配置" class="headerlink" title="五.HAProxy代理节点配置"></a>五.HAProxy代理节点配置</h2><p>前端节点为 ha1，作为集群中唯一直接对外通信的代理服务器。</p>
+<p>安装 HAProxy：<code>yum install haproxy</code>，然后配置 HAProxy（路径<code>/etc/haproxy/haproxy.cfg</code>）。</p>
+<p>HAProxy 的配置文件分为五个部分：</p>
+<ul>
+<li>global：全局配置的进程级参数，用来控制 Haproxy 启动前的一些进程及系统设置</li>
+<li>defaults：配置默认参数，可以被 frontend，backend，listen 段继承使用</li>
+<li>frontend：定义接收请求的前端虚拟节点，可根据用户所请求的不同域名、URL 等做不同的请求处理</li>
+<li>backend：定义处理业务的后端服务器集群，以及设置后端的权重、队列、连接数等选项</li>
+<li>listen：frontend 和 backend 的组合体</li>
+</ul>
+<blockquote>
+<p>配置参数详细说明请查阅 <a href="http://www.ttlsa.com/linux/haproxy-study-tutorial/" target="_blank" rel="noopener">HAProxy用法详解</a>。</p>
+</blockquote>
+<p>以下是 ha1 的配置实例：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line">global</span><br><span class="line">        log /dev/log    local0</span><br><span class="line">        log /dev/log    local1 notice</span><br><span class="line">        chroot /var/lib/haproxy</span><br><span class="line">        maxconn 20000</span><br><span class="line">        daemon</span><br><span class="line"></span><br><span class="line">defaults</span><br><span class="line">        log     global</span><br><span class="line">        mode    http</span><br><span class="line">        option  httplog</span><br><span class="line">        option  dontlognull</span><br><span class="line">        option http-server-close</span><br><span class="line">        option forwardfor except 127.0.0.0/8</span><br><span class="line">        option redispatch</span><br><span class="line">        retries 3             # 3次连接失败就认为服务器不可用</span><br><span class="line">        timeout http-keep-alive 10s           # 默认持久连接超时时间</span><br><span class="line">        timeout check           10s           # 心跳检查超时时间</span><br><span class="line">        contimeout 5000</span><br><span class="line">        clitimeout 50000</span><br><span class="line">        srvtimeout 50000</span><br><span class="line">        errorfile 400 /etc/haproxy/errors/400.http</span><br><span class="line">        errorfile 403 /etc/haproxy/errors/403.http</span><br><span class="line">        errorfile 408 /etc/haproxy/errors/408.http</span><br><span class="line">        errorfile 500 /etc/haproxy/errors/500.http</span><br><span class="line">        errorfile 502 /etc/haproxy/errors/502.http</span><br><span class="line">        errorfile 503 /etc/haproxy/errors/503.http</span><br><span class="line">        errorfile 504 /etc/haproxy/errors/504.http</span><br><span class="line"></span><br><span class="line">frontend  proxy *:80    #前端代理</span><br><span class="line">        default_backend  dynamic</span><br><span class="line"></span><br><span class="line">backend dynamic    #后端Web服务器</span><br><span class="line">        balance roundrobin</span><br><span class="line">        cookie  SESSION_ID insert indirect nocache    #设置cookie保持</span><br><span class="line">        server  web1  10.182.15.51:80 inter 3000 rise 2 fall 3 check maxconn 10000 cookie A</span><br><span class="line">        server  web2  10.182.15.52:80 inter 3000 rise 2 fall 3 check maxconn 10000 cookie B</span><br></pre></td></tr></table></figure></p>
+<p>启动 HAProxy 服务：<code>service haproxy start</code>即可。</p>
+<h2 id="如何进行项目文件更新"><a href="#如何进行项目文件更新" class="headerlink" title="如何进行项目文件更新"></a>如何进行项目文件更新</h2><p>更新之前先停掉 web1 与 web2 的服务：<code>supervisorctl stop ehpc</code></p>
+<ul>
+<li>更新数据库：登录 nfs1，进入 mysql 命令行进行新的数据库 sql 文件导入即可</li>
+<li>更新项目文件：登录 nfs1，新的项目文件代替<code>/home/share</code>中对应的文件即可。</li>
+</ul>
+<blockquote>
+<p>提示：由于通过跳板机登录 nfs1 不能使用 sftp 功能，因此目前也把跳板机下的目录挂载了 nfs1 上的共享目录，这样直接通过在跳板机上上传文件就可以修改项目文件了。</p>
+</blockquote>
+<p>最后记得要重启 web1 与 web2 的服务：<code>supervisorctl start ehpc</code></p>
+<h2 id="架构中将来可能遇到的问题"><a href="#架构中将来可能遇到的问题" class="headerlink" title="架构中将来可能遇到的问题"></a>架构中将来可能遇到的问题</h2><p>由于 nfs1 既作为集群中唯一的数据库服务节点以及唯一的文件共享目录挂载节点，同时还负责对外实时备份，因此很有可能成为集群中效率的瓶颈。今后的架构重构中，应当考虑把数据库服务从文件共享目录挂载节点分离开，减小 nfs1 的压力。</p>
+<h2 id="部署问题汇总"><a href="#部署问题汇总" class="headerlink" title="部署问题汇总"></a>部署问题汇总</h2><h3 id="ubuntu系统设置DNS失败"><a href="#ubuntu系统设置DNS失败" class="headerlink" title="ubuntu系统设置DNS失败"></a>ubuntu系统设置DNS失败</h3><p>在<code>/etc/resolvconf/resolv.conf.d/base</code>里添加 DNS 失败，则应当在<code>/etc/resolvconf/resolv.conf.d/head</code>中进行添加，之后使用<code>resolvconf -u</code>刷新即可。</p>
+<h3 id="启动-80-端口的-web-节点的服务时提示端口被占用"><a href="#启动-80-端口的-web-节点的服务时提示端口被占用" class="headerlink" title="启动 80 端口的 web 节点的服务时提示端口被占用"></a>启动 80 端口的 web 节点的服务时提示端口被占用</h3><p>ubuntu 系统自带 Apache2 服务占用了 80 端口且开机自动启动，用<code>sudo lsof -i:80</code>命令找出 80 端口的占用程序 kill 掉即可，此外还可使用<code>sudo update-rc.d apache2 disable</code>命令关闭 apache2 的自启动。</p>
+<h3 id="virtualenv-虚拟环境迁移后无法正常引用库"><a href="#virtualenv-虚拟环境迁移后无法正常引用库" class="headerlink" title="virtualenv 虚拟环境迁移后无法正常引用库"></a>virtualenv 虚拟环境迁移后无法正常引用库</h3><p>直接 copy 虚拟环境到另一台主机上就会出现新虚拟环境下的 python 无法引用库的问题。解决方法是在新主机上重新新建一个虚拟环境，然后把要原虚拟环境中的<code>lib/python2.7/site-packages/</code>目录下的库都 copy 到新虚拟环境中的该目录下即可。</p>
+<h3 id="复制-bashrc-文件后虚拟环境导向出错"><a href="#复制-bashrc-文件后虚拟环境导向出错" class="headerlink" title="复制 .bashrc 文件后虚拟环境导向出错"></a>复制 .bashrc 文件后虚拟环境导向出错</h3><p>.bashrc 复制到新的主机的用户根目录下时出现，删除以下两行即可：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">export WORKON_HOME=~/.Envs</span><br><span class="line">source /usr/local/bin/virtualenvwrapper.sh</span><br></pre></td></tr></table></figure></p>
+<h3 id="设置语言的环境变量时警告-warning-setlocale-LC-ALL：-cannot-change-locale-zh-CN-UTF-8"><a href="#设置语言的环境变量时警告-warning-setlocale-LC-ALL：-cannot-change-locale-zh-CN-UTF-8" class="headerlink" title="设置语言的环境变量时警告 warning: setlocale: LC_ALL： cannot change locale (zh_CN.UTF-8)"></a>设置语言的环境变量时警告 warning: setlocale: LC_ALL： cannot change locale (zh_CN.UTF-8)</h3><p>如果不处理的话会导致程序中编码问题而报错。这是因为系统里没有安装对应的语言包，使用<code>sudo apt-get install language-pack-zh-hans</code>安装对应的语言包后重启并<code>source ~/.bashrc</code>即可。</p>
+<h3 id="安装-gevent-失败"><a href="#安装-gevent-失败" class="headerlink" title="安装 gevent 失败"></a>安装 gevent 失败</h3><p>使用<code>pip install gevent</code>安装 gevent 时失败时，需要安装依赖包 python-dev ：<code>sudo apt-get install python-dev</code></p>
+<h3 id="supervisor启动后-web-服务启动失败"><a href="#supervisor启动后-web-服务启动失败" class="headerlink" title="supervisor启动后 web 服务启动失败"></a>supervisor启动后 web 服务启动失败</h3><p>在使用 supervisor 启动服务前先使用<code>gunicorn manage:app -b 0.0.0.0:80 -w 4 --worker-class gevent</code>命令进行测试，观察服务能否正常启动。若测试成功，则还要保证以下三点：</p>
+<ul>
+<li>工作目录是 ehpc 项目的主目录</li>
+<li>supervisor 服务处于开启状态：<code>sudo service supervisor status</code></li>
+<li>使用<code>supervisord -c /etc/supervisor/supervisor.conf</code>启动 supervisor 进程</li>
+</ul>
+<hr>
+<ul>
+<li><p><a href="/more/donate/index.html"><strong><em><font color="red">我觉得帮助到我了, 支持你一下.</font></em></strong></a><br>   </p>
+</li>
+<li><p><a href="https://www.paypal.me/momodainfo" target="_blank" rel="noopener"><strong><em><font color="red">If you think the article is helpful to you, you can reward me through paypal.</font></em></strong></a></p>
+</li>
+</ul>
+<h3 id="Ads"><a href="#Ads" class="headerlink" title="Ads"></a>Ads</h3><p><em>这是小广告! 如果有需要, 不妨支持一下吧~</em></p>
+<blockquote>
+<p> <a target="_blank" href="https://amazon.cn/gp/search?ie=UTF8&tag=momoda-23&linkCode=ur2&linkId=4a0e4fbec0cfa8dfe540ca999d0bf999&camp=536&creative=3200&index=books&keywords=编程">这些好书您看了吗?</a><img src="//ir-cn.amazon-adsystem.com/e/ir?t=momoda-23&l=ur2&o=28" width="1" height="1" border="0" alt="" style="border:none !important; margin:0px !important;"></p>
+</blockquote>
+<blockquote>
+<p>体育&amp;户外用品推荐</p>
+</blockquote>
+<div align="center"> <a href="https://www.amazon.cn/B07HWB88Z5/dp/B07HWB88Z5/ref=as_sl_pc_tf_til?tag=momoda-23&linkCode=w00&linkId=14df5124f2165d9eb3d65252e60ed2cf&creativeASIN=B07HWB88Z5" target="_blank" rel="noopener"><img src="/se-notes/Flask-Web工程手册/ch8-高可用与负载均衡集群部署-Ubuntu/../more/ads/amazon.gif" width="100%"></a> </div>
+      
+    </div><!-- .entry-content -->
+
+    <footer class="entry-meta">
+    <a href="/se-notes/Flask-Web工程手册/ch8-高可用与负载均衡集群部署-Ubuntu/">
+    <time datetime="2019-01-03T13:49:30.000Z" class="entry-date">
+        1月 3 2019
+    </time>
+</a>
+    
+  <span class="article-delim">&#8226;</span>
+  <div class="article-category">
+  <a class="article-category-link" href="/categories/框架/">框架</a>, <a class="article-category-link" href="/categories/框架/python-web应用框架/">python-web应用框架</a>
+  </div>
+
+    
+  <span class="article-delim">&#8226;</span>
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/flask/">flask</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/web开发/">web开发</a></li></ul>
+
+    </footer>
+</article>
+
+
+    
+<nav class="nav-single">
+    <h3 class="assistive-text">文章导航</h3>
+    
+        <span class="nav-previous"><a href="/se-notes/Flask-Web工程手册/ch5-使用lsyncd进行文件实时备份/" rel="prev"><span class="meta-nav">←</span> ch5-使用lsyncd进行文件实时备份</a></span>
+    
+    
+        <span class="nav-next"><a href="/se-notes/Flask-Web工程手册/ch6-配置集群共享文件NFS服务器/" rel="next">ch6-配置集群共享文件NFS服务器 <span class="meta-nav">→</span></a></span>
+    
+</nav><!-- .nav-single -->
+
+
+
+
+
+
+
+</div></div>
+        <div id="secondary" class="widget-area" role="complementary">
+  
+    <aside id="search" class="widget widget_search"><form role="search" method="get" accept-charset="utf-8" id="searchform" class="searchform" action="//google.com/search">
+    <div>
+        <input type="text" value="" name="q">
+        <input type="submit" id="searchsubmit" value="google搜索">
+    </div>
+</form></aside>
+
+  
+    
+  <aside class="widget">
+    <h3 class="widget-title">Recents</h3>
+    <div class="widget-content">
+      <ul>
+        
+          <li>
+            <a href="/系统剩余空间查看/">系统剩余空间查看</a>
+          </li>
+        
+          <li>
+            <a href="/数据库分类/">数据库分类</a>
+          </li>
+        
+          <li>
+            <a href="/se-notes/Linux基础/README/">Linux基础-README</a>
+          </li>
+        
+          <li>
+            <a href="/se-notes/云计算实践/区块链相关/区块链简介/">区块链简介</a>
+          </li>
+        
+          <li>
+            <a href="/se-notes/云计算实践/集群高可用方案/Heartbeat双机热备方案/">Heartbeat双机热备方案</a>
+          </li>
+        
+      </ul>
+    </div>
+  </aside>
+
+  
+    
+  <aside class="widget">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget-content">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/">一月 2019</a><span class="archive-list-count">56</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">十一月 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">二月 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/09/">九月 2017</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/01/">一月 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/11/">十一月 2015</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/01/">一月 2014</a><span class="archive-list-count">1</span></li></ul>
+    </div>
+  </aside>
+
+  
+    
+  <aside class="widget">
+    <h3 class="widget-title">Categories</h3>
+    <div class="widget-content">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Graphics/">Graphics</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Linux/">Linux</a><span class="category-list-count">7</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Linux/Shell/">Shell</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Linux/linux基础/">linux基础</a><span class="category-list-count">6</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/协议证书/">协议证书</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/协议证书/openssl/">openssl</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/数据库/">数据库</a><span class="category-list-count">4</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/数据库/数据库基础/">数据库基础</a><span class="category-list-count">3</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/框架/">框架</a><span class="category-list-count">9</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/框架/python-web应用框架/">python-web应用框架</a><span class="category-list-count">9</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/版本控制/">版本控制</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/版本控制/Git/">Git</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/编程语言/">编程语言</a><span class="category-list-count">13</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/编程语言/java/">java</a><span class="category-list-count">13</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/网络通讯/">网络通讯</a><span class="category-list-count">11</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/网络通讯/大小端/">大小端</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/网络通讯/计算机网络基础/">计算机网络基础</a><span class="category-list-count">10</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/路由器/">路由器</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/路由器/openwrt/">openwrt</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/通用技术/">通用技术</a><span class="category-list-count">13</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/通用技术/Docker/">Docker</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/通用技术/云计算实践/">云计算实践</a><span class="category-list-count">11</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/通用技术/云计算实践/kubernetes部署/">kubernetes部署</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/通用技术/云计算实践/区块链/">区块链</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/通用技术/云计算实践/集群高可用方案/">集群高可用方案</a><span class="category-list-count">4</span></li></ul></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/默认/">默认</a><span class="category-list-count">1</span></li></ul>
+    </div>
+  </aside>
+
+  
+    
+  <aside class="widget">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget-content">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/CS-Notes/">CS-Notes</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/PEM证书/">PEM证书</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Shell/">Shell</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/cron/">cron</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/database/">database</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/diagrams/">diagrams</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/docker/">docker</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/docker-qq/">docker-qq</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/flask/">flask</a><span class="tag-list-count">9</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/git/">git</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/graphics/">graphics</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/http/">http</a><span class="tag-list-count">10</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/informationisbeautiful/">informationisbeautiful</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/java基础/">java基础</a><span class="tag-list-count">13</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/java语法/">java语法</a><span class="tag-list-count">13</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/kubernetes/">kubernetes</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/linux/">linux</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mysql/">mysql</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/network/">network</a><span class="tag-list-count">10</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/openssl/">openssl</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/openwrt/">openwrt</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/p12/">p12</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/pfx/">pfx</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/tcp-ip/">tcp/ip</a><span class="tag-list-count">10</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/web开发/">web开发</a><span class="tag-list-count">9</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/云计算/">云计算</a><span class="tag-list-count">11</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/区块链/">区块链</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/大小端/">大小端</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/数据库/">数据库</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/系统管理/">系统管理</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/计算机网络/">计算机网络</a><span class="tag-list-count">10</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/集群/">集群</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/默认/">默认</a><span class="tag-list-count">1</span></li></ul>
+    </div>
+  </aside>
+
+  
+    
+  <aside class="widget">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget-content tagcloud">
+      <a href="/tags/CS-Notes/" style="font-size: 10px;">CS-Notes</a> <a href="/tags/PEM证书/" style="font-size: 10px;">PEM证书</a> <a href="/tags/Shell/" style="font-size: 10px;">Shell</a> <a href="/tags/cron/" style="font-size: 10px;">cron</a> <a href="/tags/database/" style="font-size: 10px;">database</a> <a href="/tags/diagrams/" style="font-size: 10px;">diagrams</a> <a href="/tags/docker/" style="font-size: 15px;">docker</a> <a href="/tags/docker-qq/" style="font-size: 10px;">docker-qq</a> <a href="/tags/flask/" style="font-size: 16.25px;">flask</a> <a href="/tags/git/" style="font-size: 10px;">git</a> <a href="/tags/graphics/" style="font-size: 10px;">graphics</a> <a href="/tags/http/" style="font-size: 17.5px;">http</a> <a href="/tags/informationisbeautiful/" style="font-size: 10px;">informationisbeautiful</a> <a href="/tags/java基础/" style="font-size: 20px;">java基础</a> <a href="/tags/java语法/" style="font-size: 20px;">java语法</a> <a href="/tags/kubernetes/" style="font-size: 13.75px;">kubernetes</a> <a href="/tags/linux/" style="font-size: 15px;">linux</a> <a href="/tags/mysql/" style="font-size: 11.25px;">mysql</a> <a href="/tags/network/" style="font-size: 17.5px;">network</a> <a href="/tags/openssl/" style="font-size: 10px;">openssl</a> <a href="/tags/openwrt/" style="font-size: 10px;">openwrt</a> <a href="/tags/p12/" style="font-size: 10px;">p12</a> <a href="/tags/pfx/" style="font-size: 10px;">pfx</a> <a href="/tags/tcp-ip/" style="font-size: 17.5px;">tcp/ip</a> <a href="/tags/web开发/" style="font-size: 16.25px;">web开发</a> <a href="/tags/云计算/" style="font-size: 18.75px;">云计算</a> <a href="/tags/区块链/" style="font-size: 10px;">区块链</a> <a href="/tags/大小端/" style="font-size: 10px;">大小端</a> <a href="/tags/数据库/" style="font-size: 12.5px;">数据库</a> <a href="/tags/系统管理/" style="font-size: 15px;">系统管理</a> <a href="/tags/计算机网络/" style="font-size: 17.5px;">计算机网络</a> <a href="/tags/集群/" style="font-size: 13.75px;">集群</a> <a href="/tags/默认/" style="font-size: 10px;">默认</a>
+    </div>
+  </aside>
+
+  
+    <aside class="widget">
+    <h3 class="widget-title">Links</h3>
+    <div class="widget-content">
+		<ul id="link-list">
+		<!-- link begin -->
+
+		<li><a href="https://www.google.com/">google</a></li>
+		<li><a href="https://www.baidu.com/">baidu</a></li>
+		
+		<!-- link end -->
+		</ul>
+    </div>
+</aside>
+
+  
+    <aside class="widget">
+    <h3 class="widget-title">Ads</h3>
+    <div class="widget-content">
+	 
+			* <a target="_blank" href="https://amazon.cn/gp/search?ie=UTF8&tag=momoda-23&linkCode=ur2&linkId=4a0e4fbec0cfa8dfe540ca999d0bf999&camp=536&creative=3200&index=books&keywords=编程">这些好书您看了吗?</a><img src="//ir-cn.amazon-adsystem.com/e/ir?t=momoda-23&l=ur2&o=28" width="1" height="1" border="0" alt="" style="border:none !important; margin:0px !important;">
+			<br><br>
+			* 体育&户外用品推荐>
+			<div align="center"> <a href="https://www.amazon.cn/B07HWB88Z5/dp/B07HWB88Z5/ref=as_sl_pc_tf_til?tag=momoda-23&linkCode=w00&linkId=14df5124f2165d9eb3d65252e60ed2cf&creativeASIN=B07HWB88Z5"><img src="/more/ads/amazon.gif" width="100%"></a> </div>
+
+    </div>
+</aside>
+
+  
+</div>
+      </div>
+      <footer id="colophon" role="contentinfo">
+    <p>&copy; 2019 momoda
+    All rights reserved.</p>
+    <p>Powered by <a href="https://hexo.io/" target="_blank">Hexo</a></p>
+    <a href="javascript:scrollTo(0,0);">返回顶部</a>
+</footer>
+
+    <script>window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"1","bdMiniList":false,"bdPic":"","bdStyle":"2","bdSize":"16"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];</script>
+
+<script src="/js/jquery-2.0.3.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+<script src="/js/navigation.js"></script>
+
+
+<script type="text/javascript" src="https://js.users.51.la/19862371.js"></script>
+<div id="bg"></div>
+
+  </div>
+</body>
+</html>

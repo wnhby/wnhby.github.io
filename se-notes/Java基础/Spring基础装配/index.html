@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="utf-8">
+  
+  
+  <meta name="description" content="momoda">
+  
+
+  
+  <meta name="keywords" content="momoda">
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  <title>Spring基础装配 | Just another blog</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="自动化装配 使用 Java 代码装配 bean- [1. 创建配置类](#1-创建配置类) - [2. 声明简单的 bean](#2-声明简单的-bean) - [3. 借助 JavaConfig 实现注入](#3-借助-javaconfig-实现注入)  通过 XML 装配 bean 1. 创建XML装配规范 2. 声明一个简单的 bean 3. 借助构造器注入初始化 bean 使用&amp;lt;">
+<meta name="keywords" content="java语法,java基础">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Spring基础装配">
+<meta property="og:url" content="https://wnhby.github.io/se-notes/Java基础/Spring基础装配/index.html">
+<meta property="og:site_name" content="Just another blog">
+<meta property="og:description" content="自动化装配 使用 Java 代码装配 bean- [1. 创建配置类](#1-创建配置类) - [2. 声明简单的 bean](#2-声明简单的-bean) - [3. 借助 JavaConfig 实现注入](#3-借助-javaconfig-实现注入)  通过 XML 装配 bean 1. 创建XML装配规范 2. 声明一个简单的 bean 3. 借助构造器注入初始化 bean 使用&amp;lt;">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://ir-cn.amazon-adsystem.com/e/ir?t=momoda-23&l=ur2&o=28">
+<meta property="og:image" content="https://wnhby.github.io/se-notes/Java基础/more/ads/amazon.gif">
+<meta property="og:updated_time" content="2019-02-19T05:18:58.697Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Spring基础装配">
+<meta name="twitter:description" content="自动化装配 使用 Java 代码装配 bean- [1. 创建配置类](#1-创建配置类) - [2. 声明简单的 bean](#2-声明简单的-bean) - [3. 借助 JavaConfig 实现注入](#3-借助-javaconfig-实现注入)  通过 XML 装配 bean 1. 创建XML装配规范 2. 声明一个简单的 bean 3. 借助构造器注入初始化 bean 使用&amp;lt;">
+<meta name="twitter:image" content="https://ir-cn.amazon-adsystem.com/e/ir?t=momoda-23&l=ur2&o=28">
+  
+    <link rel="alternative" href="/atom.xml" title="Just another blog" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/css/images/favicon.ico">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  
+
+  
+  <!-- baidu webmaster push -->
+  <script src="//push.zhanzhang.baidu.com/push.js"></script>
+</head></html>
+<body class="home blog custom-background custom-font-enabled single-author">
+  <div id="page" class="hfeed site">
+      <header id="masthead" class="site-header" role="banner">
+    <hgroup>
+      <h1 class="site-title">
+        <a href="/" title="Just another blog" rel="home">Just another blog</a>
+      </h1>
+      
+        <h2 class="site-description">
+          <a href="/" id="subtitle">momoda blog</a>
+        </h2>
+      
+    </hgroup>
+
+    <nav id="site-navigation" class="main-navigation" role="navigation">
+            <button class="menu-toggle">菜单</button>
+            <a class="assistive-text" href="/#content" title="跳至内容">跳至内容</a><!--TODO-->
+            <div class="menu-main-container">
+                <ul id="menu-main" class="nav-menu">
+                
+                    <li class="menu-item menu-item-type-post_type menu-item-object-page"><a href="/">Home</a></li>
+                
+                    <li class="menu-item menu-item-type-post_type menu-item-object-page"><a href="/atom.xml">RSS</a></li>
+                
+                    <li class="menu-item menu-item-type-post_type menu-item-object-page"><a href="/sitemap.xml">Site map</a></li>
+                
+                    <li class="menu-item menu-item-type-post_type menu-item-object-page"><a href="/more/share.html">Share</a></li>
+                
+                </ul>
+            </div>
+    </nav>
+</header>
+
+      <div id="main" class="wrapper">
+        <div id="primary" class="site-content"><div id="content" role="main"><article id="post-se-notes/Java基础/Spring基础装配" class="post-se-notes/Java基础/Spring基础装配 post type-post status-publish format-standard hentry">
+    <!---->
+
+      <header class="entry-header">
+        
+        
+  
+    <h1 class="entry-title article-title">
+      Spring基础装配
+    </h1>
+  
+
+        
+        <div class="comments-link">
+            
+            <a href="javascript:void(0);" data-url="https://wnhby.github.io/se-notes/Java基础/Spring基础装配/" data-id="cjsbbbewj001ye9s6cv180760" class="leave-reply bdsharebuttonbox" data-cmd="more">分享</a>
+        </div><!-- .comments-link -->
+      </header><!-- .entry-header -->
+
+    <div class="entry-content">
+      
+        <!-- TOC -->
+<ul>
+<li><a href="#自动化装配">自动化装配</a></li>
+<li><a href="#使用-java-代码装配-bean">使用 Java 代码装配 bean</a><pre><code>- [1. 创建配置类](#1-创建配置类)
+- [2. 声明简单的 bean](#2-声明简单的-bean)
+- [3. 借助 JavaConfig 实现注入](#3-借助-javaconfig-实现注入)
+</code></pre></li>
+<li><a href="#通过-xml-装配-bean">通过 XML 装配 bean</a><ul>
+<li><a href="#1-创建xml装配规范">1. 创建XML装配规范</a></li>
+<li><a href="#2-声明一个简单的-bean">2. 声明一个简单的 bean</a></li>
+<li><a href="#3-借助构造器注入初始化-bean">3. 借助构造器注入初始化 bean</a><ul>
+<li><a href="#使用constructor-arg声明">使用<code>&lt;constructor-arg&gt;</code>声明</a></li>
+<li><a href="#使用c-命名空间">使用c-命名空间</a></li>
+</ul>
+</li>
+<li><a href="#4-属性注入">4. 属性注入</a><ul>
+<li><a href="#p-命名空间">p-命名空间</a></li>
+<li><a href="#ads">Ads</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<!-- /TOC -->
+<p>Spring 提供了三种主要的装配机制来描述对 bean 的装配：</p>
+<ul>
+<li>在 XML 中进行显式配置</li>
+<li>在 Java 中进行显式配置</li>
+<li>隐式的 bean 发现机制和自动装配</li>
+</ul>
+<h1 id="自动化装配"><a href="#自动化装配" class="headerlink" title="自动化装配"></a>自动化装配</h1><p>Spring 从两个角度实现自动化装配：</p>
+<ul>
+<li>组件扫描：Spring 会自动发现应用上下文中所创建的 bean</li>
+<li>自动装配：Spring 自动满足 bean 之间的依赖</li>
+</ul>
+<p>以下以 CD 播放器为例阐述如何进行自动化装配：首先创建 CD 类，让 Spring 将其自动创建为 bean，然后创建一个 CDPlayer 类，让 Spring 把 CD bean 注入进来。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">/* 创建CD类并声明为bean */</span><br><span class="line">package main;</span><br><span class="line">import org.springframework.stereotype.Component;</span><br><span class="line"></span><br><span class="line">@Component // 该注解把该类声明为bean,也可以用Component(&quot;name&quot;)形式进行命名</span><br><span class="line">public class CD &#123;</span><br><span class="line">    private String message = &quot;this is my cd&quot;;</span><br><span class="line">    public void play()&#123;</span><br><span class="line">        System.out.println(message);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>但组件扫描是默认不启用的，因此还需要显式配置 Spring 从而让其寻找带有 @Component 注解的类并为其创建 bean。类 CDPlayerConfig 通过 Java 代码而非配置文件来定义了装配规则（虽然为空），并使用了 @ComponentScan 注解启用了组件扫描。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">package main;</span><br><span class="line">import org.springframework.context.annotation.ComponentScan;</span><br><span class="line">import org.springframework.context.annotation.Configuration;</span><br><span class="line"></span><br><span class="line">@Configuration</span><br><span class="line">@ComponentScan</span><br><span class="line">public class CDPlayerConfig &#123;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>@ComponentScan 默认会以配置类所在的包作为基础包来扫描组件。若想扫描多个基础包，则可以设置注解的属性如<code>@ComponentScan(basePackages={&quot;soundsystem&quot;,&quot;video&quot;})</code></p>
+</blockquote>
+<p>创建了这两个类后，现在我们可以对功能进行测试，观察 bean 是否注入成功。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">package main;</span><br><span class="line"></span><br><span class="line">import org.junit.Test;</span><br><span class="line">import org.junit.runner.RunWith;</span><br><span class="line">import org.springframework.beans.factory.annotation.Autowired;</span><br><span class="line">import org.springframework.test.context.ContextConfiguration;</span><br><span class="line">import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;</span><br><span class="line">import static org.junit.Assert.*;</span><br><span class="line"></span><br><span class="line">@RunWith(SpringJUnit4ClassRunner.class)</span><br><span class="line">@ContextConfiguration(classes = CDPlayerConfig.class) // 该注解指定从哪个配置类加载配置</span><br><span class="line">public class CDPlayerTest &#123;</span><br><span class="line">	// 使用 Autowird 自动装配；该注解可适用于类的任何方法上</span><br><span class="line">	// 若有且只有一个bean匹配依赖需求的话，则spring会加载这个bean；否则会抛出异常</span><br><span class="line">    @Autowired </span><br><span class="line">    private CD cd;</span><br><span class="line"></span><br><span class="line">    @Test</span><br><span class="line">    public void myTest()&#123;</span><br><span class="line">        assertNotNull(cd);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h1 id="使用-Java-代码装配-bean"><a href="#使用-Java-代码装配-bean" class="headerlink" title="使用 Java 代码装配 bean"></a>使用 Java 代码装配 bean</h1><p>虽然很多场景下通过组件扫描和自动装配实现 Spring 的自动化配置是更为推荐的方式，但有时自动化配置的方案行不通，因此需要显式地配置 Spring。显式配置有两种方案：Java 和 XML，其中 JavaConfig 由于更为强大、类型安全以及对重构友好，因此是较好的方案。</p>
+<h3 id="1-创建配置类"><a href="#1-创建配置类" class="headerlink" title="1. 创建配置类"></a>1. 创建配置类</h3><p>创建 JavaConfig 类的关键在于为其添加 @Configuration 注解，表明该类是一个配置类，该类应该包含<strong>在 Spring 应用上下文中如何创建 bean</strong> 的细节。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">import org.springframework.context.annotation.Configuration;</span><br><span class="line"></span><br><span class="line">@Configuration</span><br><span class="line">public class CDPlayerConfig&#123;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="2-声明简单的-bean"><a href="#2-声明简单的-bean" class="headerlink" title="2. 声明简单的 bean"></a>2. 声明简单的 bean</h3><p>在 JavaConfig 中声明 bean，需要编写一个方法，该方法会创建所需类型的实例，然后为这个方法添加 @Bean 注解。@Bean 注解会告诉 Spring 这个方法会返回一个对象，该对象注册为 Spring 应用上下文中的 bean。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">// 声明一个返回CD类型的实例的bean</span><br><span class="line">@Bean</span><br><span class="line">public CD sgtPeppers()&#123;</span><br><span class="line">	return new SgtPeppers(); //此处SgtPeppers是CD的子类</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>默认情况下 bean 的 ID 与带有 @Bean 注解的方法名是一样的，也可以通过 @Bean(name=”name”) 的形式为其命名。</p>
+<h3 id="3-借助-JavaConfig-实现注入"><a href="#3-借助-JavaConfig-实现注入" class="headerlink" title="3. 借助 JavaConfig 实现注入"></a>3. 借助 JavaConfig 实现注入</h3><p>在配置中，我们往往需要声明一个依赖于其他 bean 的 bean，因此在声明一个复杂的 bean 时往往也需要同时注入其他的 bean。</p>
+<p>装配 bean 的最简单方式是引用创建 bean 的方法：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">@Bean // 带有@Bean注解的方法可以采用任何必要的Java功能来产生bean实例</span><br><span class="line">public CDPlayer cdPlayer()&#123;</span><br><span class="line">	return new CDPlayer(sgtPeppers());// sgtPeppers()是已经声明的、被@Bean所注解的方法</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>看起来 CD 是通过 sgtPeppers() 得到的，但实际上，由于 sgtPeppers() 方法上添加了 @Bean 注解，Spring 会拦截所有对它的调用，确保直接返回该方法的 bean，而不是每次都进行实际的调用。<strong>默认情况下，Spirng 中的 bean 都是单例</strong>。</p>
+</blockquote>
+<p>但也可用以下更容易理解的方式来装配 bean：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">@Bean</span><br><span class="line">public CDPlayer cdPlayer(CD cd)&#123;</span><br><span class="line">	CDPlayer cdPlayer = new CDPlayer(cd);</span><br><span class="line">	cdPlayer.setCD(cd);</span><br><span class="line">	return cdPlayer;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>此处 cdPlayer() 方法请求一个 CD 实例作为参数，当 Spring 调用 cdPlayer() 创建  CDPlayer bean 时，它会自动装配一个 CD bean 到配置方法中，而无需明确引用 CD 的 @Bean 方法。通过该方式引用其它的 bean 是最佳选择（因为它不会要求将 CD bean 声明到同一个配置类中，这样可以实现分散配置文件）。  </p>
+<h1 id="通过-XML-装配-bean"><a href="#通过-XML-装配-bean" class="headerlink" title="通过 XML 装配 bean"></a>通过 XML 装配 bean</h1><p>Spring 目前有了强大的自动化配置和基于 Java 的配置，XML不再是第一选择了。但是鉴于已经存在那么多基于 XML 的 Spring 配置，因此理解如何在 Spring 中使用 XML 还是很重要的。</p>
+<h2 id="1-创建XML装配规范"><a href="#1-创建XML装配规范" class="headerlink" title="1. 创建XML装配规范"></a>1. 创建XML装配规范</h2><p>最简单的 XML 配置如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot; ?&gt;</span><br><span class="line">&lt;beans xmlns=&quot;http://www.springframework.org/schema/beans&quot;</span><br><span class="line">	xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</span><br><span class="line">	xsi:schemaLocation=&quot;http://www.springframework.org/schema/beans </span><br><span class="line">       http://www.springframework.org/schema/beans/spring-beans-4.0.xsd</span><br><span class="line">       http://www.springframework.org/schema/context&quot;&gt;</span><br><span class="line">       </span><br><span class="line">	&lt;!-- configuration details go here --&gt;</span><br><span class="line"></span><br><span class="line">&lt;/beans&gt;</span><br></pre></td></tr></table></figure>
+<p>用于装配 bean 的最基本的 XML 元素包含在 spring-beans 模式中，它被定义为根命名空间。<code>&lt;beans&gt;</code> 是该模式中的一个元素，是所有 Spring 配置文件的根元素。</p>
+<h2 id="2-声明一个简单的-bean"><a href="#2-声明一个简单的-bean" class="headerlink" title="2. 声明一个简单的 bean"></a>2. 声明一个简单的 bean</h2><p>使用<code>&lt;bean&gt;</code>元素声明一个 bean，并设置 id 进行命名：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;bean id=&quot;cd1&quot; class=&quot;soundSystem.SgtPeppers&quot; /&gt;</span><br></pre></td></tr></table></figure></p>
+<h2 id="3-借助构造器注入初始化-bean"><a href="#3-借助构造器注入初始化-bean" class="headerlink" title="3. 借助构造器注入初始化 bean"></a>3. 借助构造器注入初始化 bean</h2><p>使用构造器注入 bean 引用时，有两种基本配置方案可选择：</p>
+<ul>
+<li><code>&lt;constructor-arg&gt;</code> 元素，特点是配置比较冗长</li>
+<li>使用 Spring 3 所引入的 c-命名空间，特点是配置比较简练，但无法装配<code>集合</code></li>
+</ul>
+<h3 id="使用-lt-constructor-arg-gt-声明"><a href="#使用-lt-constructor-arg-gt-声明" class="headerlink" title="使用&lt;constructor-arg&gt;声明"></a>使用<code>&lt;constructor-arg&gt;</code>声明</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">/* 声明CDPlayer并通过id引用已有的SgtPerpers bean*/</span><br><span class="line">&lt;bean id=“cdPlayer” class=&quot;soundSystem.CDPlayer&quot;&gt;</span><br><span class="line">	&lt;constructor-arg ref=&quot;sgtPerpers&quot; /&gt;</span><br><span class="line">&lt;/bean&gt;</span><br></pre></td></tr></table></figure>
+<p>当 Spring 遇到<code>&lt;bean&gt;</code>元素时，会创建一个 CDPlayer 实例，<code>&lt;constructor-arg&gt;</code> 元素表明要将一个 id 为 sgtPerpers 的 bean 引用传递到 CDPlayer 的构造器中。</p>
+<p>当把字面量注入构造器而不是引用时：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;bean id=“cdPlayer” class=&quot;soundSystem.CDPlayer&quot;&gt;</span><br><span class="line">	&lt;constructor-arg value=&quot;The Love&quot; /&gt;</span><br><span class="line">&lt;/bean&gt;</span><br></pre></td></tr></table></figure>
+<h3 id="使用c-命名空间"><a href="#使用c-命名空间" class="headerlink" title="使用c-命名空间"></a>使用c-命名空间</h3><p>在 XML 顶部声明其模式：<code>xmlns:c=&quot;http://www.springframework.org/schema/c&quot;</code>，就可用其来声明构造器参数了。</p>
+<p>一个典型的示例是 <code>c:cd-ref=&quot;compactDisc&quot;</code>，属性名以 <code>c:</code> 开头，即命名空间前缀，接下来是要装配的构造器参数名，之后是<code>-ref</code>，表示装配的是一个 bean 的引用，这个 bean 的 ID 为 <code>compactDisc</code>。</p>
+<p>也可使用参数索引替代直接使用参数名的方案，如：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&lt;!-- 由于xml不允许数字作为属性的首字符，因此添加一个下划线作后缀 --&gt;</span><br><span class="line">&lt;bean id=“cdPlayer” class=&quot;soundSystem.CDPlayer&quot; c:_0-ref=&quot;compactDisc&quot; /&gt;</span><br></pre></td></tr></table></figure>
+<p>也可以根本不标示参数（前提是只有一个构造器参数），如：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;bean id=“cdPlayer” class=&quot;soundSystem.CDPlayer&quot; c:_-ref=&quot;compactDisc&quot; /&gt;</span><br></pre></td></tr></table></figure>
+<p>当需要注入字面量而不是 bean 引用时：</p>
+<ul>
+<li><p>方案一：引用构造器参数的名字</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;bean id=“cdPlayer” class=&quot;soundSystem.CDPlayer&quot;</span><br><span class="line">	c:_title=&quot;My Love&quot;</span><br><span class="line">	c:_artist=&quot;ZZP&quot;&gt;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>方案二：使用参数索引</p>
+</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;bean id=“cdPlayer” class=&quot;soundSystem.CDPlayer&quot;</span><br><span class="line">	c:_0=&quot;My Love&quot;</span><br><span class="line">	c:_1=&quot;ZZP&quot;&gt;</span><br></pre></td></tr></table></figure>
+<h2 id="4-属性注入"><a href="#4-属性注入" class="headerlink" title="4. 属性注入"></a>4. 属性注入</h2><p>假设需要属性注入的 CDPlayer 如下所示：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">public class CDPlayer &#123;</span><br><span class="line">	private CD cd;</span><br><span class="line">	</span><br><span class="line">	@Autowired</span><br><span class="line">	pulic setCd(CD cd)&#123;</span><br><span class="line">		this.cd = cd;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>声明为一个 bean：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;bean id=“cdPlayer” class=&quot;soundSystem.CDPlayer&quot;&gt;</span><br><span class="line">	&lt;property name=&quot;cd&quot; ref=&quot;cd&quot;&gt;</span><br><span class="line">&lt;/bean&gt;</span><br></pre></td></tr></table></figure></p>
+<p><code>&lt;property&gt;</code>元素为属性的 Setter 方法所提供的功能与 <code>&lt;constructor-arg&gt;</code> 提供的功能是一样的。本例中它引用了 ID 为 <code>CD</code> 的 bean（通过 ref 属性），并将其注入到 <code>cd</code> 属性中（通过 setCD() 方法）。</p>
+<h3 id="p-命名空间"><a href="#p-命名空间" class="headerlink" title="p-命名空间"></a>p-命名空间</h3><p> p-命名空间是作为<code>&lt;property&gt;</code>元素的替代方案，使用时需在 XML 顶部声明其模式：<code>xmlns:p=&quot;http://www.springframework.org/schema/p&quot;</code>。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&lt;bean id=“cdPlayer” </span><br><span class="line">	class=&quot;soundSystem.CDPlayer&quot; </span><br><span class="line">	p:cd-ref=&quot;cd&quot;/&gt;</span><br><span class="line">&lt;!--</span><br><span class="line">	首先属性的名字使用了&quot;p:&quot;前缀，表面设置的是一个属性；接下来是要注入的属性名，最后属性名称以&quot;-ref&quot;结尾，表明装配的是一个引用而非字面量。</span><br><span class="line">--&gt;</span><br></pre></td></tr></table></figure>
+<p>当需要注入字面量时，区别在于是否带有”-ref”后缀：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&lt;bean id=“cdPlayer” </span><br><span class="line">	class=&quot;soundSystem.CDPlayer&quot; </span><br><span class="line">	p:title=&quot;My Love&quot;</span><br><span class="line">	p:artist=&quot;ZZP&quot;/&gt;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>注意：p-命名空间同样无法装配集合，但可以通过 util-命名空间（用于创建集合类型的bean）辅助实现装配集合的功能。</p>
+</blockquote>
+<hr>
+<ul>
+<li><p><a href="/more/donate/index.html"><strong><em><font color="red">我觉得帮助到我了, 支持你一下.</font></em></strong></a><br>   </p>
+</li>
+<li><p><a href="https://www.paypal.me/momodainfo" target="_blank" rel="noopener"><strong><em><font color="red">If you think the article is helpful to you, you can reward me through paypal.</font></em></strong></a></p>
+</li>
+</ul>
+<h3 id="Ads"><a href="#Ads" class="headerlink" title="Ads"></a>Ads</h3><p><em>这是小广告! 如果有需要, 不妨支持一下吧~</em></p>
+<blockquote>
+<p> <a target="_blank" href="https://amazon.cn/gp/search?ie=UTF8&tag=momoda-23&linkCode=ur2&linkId=4a0e4fbec0cfa8dfe540ca999d0bf999&camp=536&creative=3200&index=books&keywords=编程">这些好书您看了吗?</a><img src="//ir-cn.amazon-adsystem.com/e/ir?t=momoda-23&l=ur2&o=28" width="1" height="1" border="0" alt="" style="border:none !important; margin:0px !important;"></p>
+</blockquote>
+<blockquote>
+<p>体育&amp;户外用品推荐</p>
+</blockquote>
+<div align="center"> <a href="https://www.amazon.cn/B07HWB88Z5/dp/B07HWB88Z5/ref=as_sl_pc_tf_til?tag=momoda-23&linkCode=w00&linkId=14df5124f2165d9eb3d65252e60ed2cf&creativeASIN=B07HWB88Z5" target="_blank" rel="noopener"><img src="/se-notes/Java基础/Spring基础装配/../more/ads/amazon.gif" width="100%"></a> </div>
+      
+    </div><!-- .entry-content -->
+
+    <footer class="entry-meta">
+    <a href="/se-notes/Java基础/Spring基础装配/">
+    <time datetime="2019-01-03T13:49:30.000Z" class="entry-date">
+        1月 3 2019
+    </time>
+</a>
+    
+  <span class="article-delim">&#8226;</span>
+  <div class="article-category">
+  <a class="article-category-link" href="/categories/编程语言/">编程语言</a>, <a class="article-category-link" href="/categories/编程语言/java/">java</a>
+  </div>
+
+    
+  <span class="article-delim">&#8226;</span>
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/java基础/">java基础</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/java语法/">java语法</a></li></ul>
+
+    </footer>
+</article>
+
+
+    
+<nav class="nav-single">
+    <h3 class="assistive-text">文章导航</h3>
+    
+        <span class="nav-previous"><a href="/se-notes/Java基础/README/" rel="prev"><span class="meta-nav">←</span> Java基础-README</a></span>
+    
+    
+        <span class="nav-next"><a href="/se-notes/Java基础/Spring概述/" rel="next">Spring概述 <span class="meta-nav">→</span></a></span>
+    
+</nav><!-- .nav-single -->
+
+
+
+
+
+
+
+</div></div>
+        <div id="secondary" class="widget-area" role="complementary">
+  
+    <aside id="search" class="widget widget_search"><form role="search" method="get" accept-charset="utf-8" id="searchform" class="searchform" action="//google.com/search">
+    <div>
+        <input type="text" value="" name="q">
+        <input type="submit" id="searchsubmit" value="google搜索">
+    </div>
+</form></aside>
+
+  
+    
+  <aside class="widget">
+    <h3 class="widget-title">Recents</h3>
+    <div class="widget-content">
+      <ul>
+        
+          <li>
+            <a href="/系统剩余空间查看/">系统剩余空间查看</a>
+          </li>
+        
+          <li>
+            <a href="/数据库分类/">数据库分类</a>
+          </li>
+        
+          <li>
+            <a href="/se-notes/Linux基础/README/">Linux基础-README</a>
+          </li>
+        
+          <li>
+            <a href="/se-notes/云计算实践/区块链相关/区块链简介/">区块链简介</a>
+          </li>
+        
+          <li>
+            <a href="/se-notes/云计算实践/集群高可用方案/Heartbeat双机热备方案/">Heartbeat双机热备方案</a>
+          </li>
+        
+      </ul>
+    </div>
+  </aside>
+
+  
+    
+  <aside class="widget">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget-content">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/">一月 2019</a><span class="archive-list-count">56</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">十一月 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">二月 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/09/">九月 2017</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/01/">一月 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/11/">十一月 2015</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/01/">一月 2014</a><span class="archive-list-count">1</span></li></ul>
+    </div>
+  </aside>
+
+  
+    
+  <aside class="widget">
+    <h3 class="widget-title">Categories</h3>
+    <div class="widget-content">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Graphics/">Graphics</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Linux/">Linux</a><span class="category-list-count">7</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Linux/Shell/">Shell</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Linux/linux基础/">linux基础</a><span class="category-list-count">6</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/协议证书/">协议证书</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/协议证书/openssl/">openssl</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/数据库/">数据库</a><span class="category-list-count">4</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/数据库/数据库基础/">数据库基础</a><span class="category-list-count">3</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/框架/">框架</a><span class="category-list-count">9</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/框架/python-web应用框架/">python-web应用框架</a><span class="category-list-count">9</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/版本控制/">版本控制</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/版本控制/Git/">Git</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/编程语言/">编程语言</a><span class="category-list-count">13</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/编程语言/java/">java</a><span class="category-list-count">13</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/网络通讯/">网络通讯</a><span class="category-list-count">11</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/网络通讯/大小端/">大小端</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/网络通讯/计算机网络基础/">计算机网络基础</a><span class="category-list-count">10</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/路由器/">路由器</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/路由器/openwrt/">openwrt</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/通用技术/">通用技术</a><span class="category-list-count">13</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/通用技术/Docker/">Docker</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/通用技术/云计算实践/">云计算实践</a><span class="category-list-count">11</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/通用技术/云计算实践/kubernetes部署/">kubernetes部署</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/通用技术/云计算实践/区块链/">区块链</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/通用技术/云计算实践/集群高可用方案/">集群高可用方案</a><span class="category-list-count">4</span></li></ul></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/默认/">默认</a><span class="category-list-count">1</span></li></ul>
+    </div>
+  </aside>
+
+  
+    
+  <aside class="widget">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget-content">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/CS-Notes/">CS-Notes</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/PEM证书/">PEM证书</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Shell/">Shell</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/cron/">cron</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/database/">database</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/diagrams/">diagrams</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/docker/">docker</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/docker-qq/">docker-qq</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/flask/">flask</a><span class="tag-list-count">9</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/git/">git</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/graphics/">graphics</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/http/">http</a><span class="tag-list-count">10</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/informationisbeautiful/">informationisbeautiful</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/java基础/">java基础</a><span class="tag-list-count">13</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/java语法/">java语法</a><span class="tag-list-count">13</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/kubernetes/">kubernetes</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/linux/">linux</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mysql/">mysql</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/network/">network</a><span class="tag-list-count">10</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/openssl/">openssl</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/openwrt/">openwrt</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/p12/">p12</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/pfx/">pfx</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/tcp-ip/">tcp/ip</a><span class="tag-list-count">10</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/web开发/">web开发</a><span class="tag-list-count">9</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/云计算/">云计算</a><span class="tag-list-count">11</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/区块链/">区块链</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/大小端/">大小端</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/数据库/">数据库</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/系统管理/">系统管理</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/计算机网络/">计算机网络</a><span class="tag-list-count">10</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/集群/">集群</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/默认/">默认</a><span class="tag-list-count">1</span></li></ul>
+    </div>
+  </aside>
+
+  
+    
+  <aside class="widget">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget-content tagcloud">
+      <a href="/tags/CS-Notes/" style="font-size: 10px;">CS-Notes</a> <a href="/tags/PEM证书/" style="font-size: 10px;">PEM证书</a> <a href="/tags/Shell/" style="font-size: 10px;">Shell</a> <a href="/tags/cron/" style="font-size: 10px;">cron</a> <a href="/tags/database/" style="font-size: 10px;">database</a> <a href="/tags/diagrams/" style="font-size: 10px;">diagrams</a> <a href="/tags/docker/" style="font-size: 15px;">docker</a> <a href="/tags/docker-qq/" style="font-size: 10px;">docker-qq</a> <a href="/tags/flask/" style="font-size: 16.25px;">flask</a> <a href="/tags/git/" style="font-size: 10px;">git</a> <a href="/tags/graphics/" style="font-size: 10px;">graphics</a> <a href="/tags/http/" style="font-size: 17.5px;">http</a> <a href="/tags/informationisbeautiful/" style="font-size: 10px;">informationisbeautiful</a> <a href="/tags/java基础/" style="font-size: 20px;">java基础</a> <a href="/tags/java语法/" style="font-size: 20px;">java语法</a> <a href="/tags/kubernetes/" style="font-size: 13.75px;">kubernetes</a> <a href="/tags/linux/" style="font-size: 15px;">linux</a> <a href="/tags/mysql/" style="font-size: 11.25px;">mysql</a> <a href="/tags/network/" style="font-size: 17.5px;">network</a> <a href="/tags/openssl/" style="font-size: 10px;">openssl</a> <a href="/tags/openwrt/" style="font-size: 10px;">openwrt</a> <a href="/tags/p12/" style="font-size: 10px;">p12</a> <a href="/tags/pfx/" style="font-size: 10px;">pfx</a> <a href="/tags/tcp-ip/" style="font-size: 17.5px;">tcp/ip</a> <a href="/tags/web开发/" style="font-size: 16.25px;">web开发</a> <a href="/tags/云计算/" style="font-size: 18.75px;">云计算</a> <a href="/tags/区块链/" style="font-size: 10px;">区块链</a> <a href="/tags/大小端/" style="font-size: 10px;">大小端</a> <a href="/tags/数据库/" style="font-size: 12.5px;">数据库</a> <a href="/tags/系统管理/" style="font-size: 15px;">系统管理</a> <a href="/tags/计算机网络/" style="font-size: 17.5px;">计算机网络</a> <a href="/tags/集群/" style="font-size: 13.75px;">集群</a> <a href="/tags/默认/" style="font-size: 10px;">默认</a>
+    </div>
+  </aside>
+
+  
+    <aside class="widget">
+    <h3 class="widget-title">Links</h3>
+    <div class="widget-content">
+		<ul id="link-list">
+		<!-- link begin -->
+
+		<li><a href="https://www.google.com/">google</a></li>
+		<li><a href="https://www.baidu.com/">baidu</a></li>
+		
+		<!-- link end -->
+		</ul>
+    </div>
+</aside>
+
+  
+    <aside class="widget">
+    <h3 class="widget-title">Ads</h3>
+    <div class="widget-content">
+	 
+			* <a target="_blank" href="https://amazon.cn/gp/search?ie=UTF8&tag=momoda-23&linkCode=ur2&linkId=4a0e4fbec0cfa8dfe540ca999d0bf999&camp=536&creative=3200&index=books&keywords=编程">这些好书您看了吗?</a><img src="//ir-cn.amazon-adsystem.com/e/ir?t=momoda-23&l=ur2&o=28" width="1" height="1" border="0" alt="" style="border:none !important; margin:0px !important;">
+			<br><br>
+			* 体育&户外用品推荐>
+			<div align="center"> <a href="https://www.amazon.cn/B07HWB88Z5/dp/B07HWB88Z5/ref=as_sl_pc_tf_til?tag=momoda-23&linkCode=w00&linkId=14df5124f2165d9eb3d65252e60ed2cf&creativeASIN=B07HWB88Z5"><img src="/more/ads/amazon.gif" width="100%"></a> </div>
+
+    </div>
+</aside>
+
+  
+</div>
+      </div>
+      <footer id="colophon" role="contentinfo">
+    <p>&copy; 2019 momoda
+    All rights reserved.</p>
+    <p>Powered by <a href="https://hexo.io/" target="_blank">Hexo</a></p>
+    <a href="javascript:scrollTo(0,0);">返回顶部</a>
+</footer>
+
+    <script>window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"1","bdMiniList":false,"bdPic":"","bdStyle":"2","bdSize":"16"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];</script>
+
+<script src="/js/jquery-2.0.3.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+<script src="/js/navigation.js"></script>
+
+
+<script type="text/javascript" src="https://js.users.51.la/19862371.js"></script>
+<div id="bg"></div>
+
+  </div>
+</body>
+</html>

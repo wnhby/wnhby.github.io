@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="utf-8">
+  
+  
+  <meta name="description" content="momoda">
+  
+
+  
+  <meta name="keywords" content="momoda">
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  <title>Linux基础-README | Just another blog</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="简介 操作系统的特征 操作系统目标 操作系统的运行机制 系统调用 标准库函数   中断和异常 用户态、内核态 * 操作系统发展- [手工操作阶段（此阶段无操作系统）](#手工操作阶段此阶段无操作系统) - [批处理阶段](#批处理阶段) - [分时操作系统](#分时操作系统) - [实时操作系统](#实时操作系统) - [分布式计算机系统](#分布式计算机系统) - [Ads](#ads)">
+<meta name="keywords" content="linux,系统管理">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Linux基础-README">
+<meta property="og:url" content="https://wnhby.github.io/se-notes/Linux基础/README/index.html">
+<meta property="og:site_name" content="Just another blog">
+<meta property="og:description" content="简介 操作系统的特征 操作系统目标 操作系统的运行机制 系统调用 标准库函数   中断和异常 用户态、内核态 * 操作系统发展- [手工操作阶段（此阶段无操作系统）](#手工操作阶段此阶段无操作系统) - [批处理阶段](#批处理阶段) - [分时操作系统](#分时操作系统) - [实时操作系统](#实时操作系统) - [分布式计算机系统](#分布式计算机系统) - [Ads](#ads)">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://camo.githubusercontent.com/382fca944c80316687d2a8d2dfd54fadc17e8525/687474703a2f2f3778726c75392e636f6d312e7a302e676c622e636c6f7564646e2e636f6d2f4c696e75785f4f535f322e706e67">
+<meta property="og:image" content="https://ir-cn.amazon-adsystem.com/e/ir?t=momoda-23&l=ur2&o=28">
+<meta property="og:image" content="https://wnhby.github.io/se-notes/Linux基础/more/ads/amazon.gif">
+<meta property="og:updated_time" content="2019-02-19T05:20:41.536Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Linux基础-README">
+<meta name="twitter:description" content="简介 操作系统的特征 操作系统目标 操作系统的运行机制 系统调用 标准库函数   中断和异常 用户态、内核态 * 操作系统发展- [手工操作阶段（此阶段无操作系统）](#手工操作阶段此阶段无操作系统) - [批处理阶段](#批处理阶段) - [分时操作系统](#分时操作系统) - [实时操作系统](#实时操作系统) - [分布式计算机系统](#分布式计算机系统) - [Ads](#ads)">
+<meta name="twitter:image" content="https://camo.githubusercontent.com/382fca944c80316687d2a8d2dfd54fadc17e8525/687474703a2f2f3778726c75392e636f6d312e7a302e676c622e636c6f7564646e2e636f6d2f4c696e75785f4f535f322e706e67">
+  
+    <link rel="alternative" href="/atom.xml" title="Just another blog" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/css/images/favicon.ico">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  
+
+  
+  <!-- baidu webmaster push -->
+  <script src="//push.zhanzhang.baidu.com/push.js"></script>
+</head></html>
+<body class="home blog custom-background custom-font-enabled single-author">
+  <div id="page" class="hfeed site">
+      <header id="masthead" class="site-header" role="banner">
+    <hgroup>
+      <h1 class="site-title">
+        <a href="/" title="Just another blog" rel="home">Just another blog</a>
+      </h1>
+      
+        <h2 class="site-description">
+          <a href="/" id="subtitle">momoda blog</a>
+        </h2>
+      
+    </hgroup>
+
+    <nav id="site-navigation" class="main-navigation" role="navigation">
+            <button class="menu-toggle">菜单</button>
+            <a class="assistive-text" href="/#content" title="跳至内容">跳至内容</a><!--TODO-->
+            <div class="menu-main-container">
+                <ul id="menu-main" class="nav-menu">
+                
+                    <li class="menu-item menu-item-type-post_type menu-item-object-page"><a href="/">Home</a></li>
+                
+                    <li class="menu-item menu-item-type-post_type menu-item-object-page"><a href="/atom.xml">RSS</a></li>
+                
+                    <li class="menu-item menu-item-type-post_type menu-item-object-page"><a href="/sitemap.xml">Site map</a></li>
+                
+                    <li class="menu-item menu-item-type-post_type menu-item-object-page"><a href="/more/share.html">Share</a></li>
+                
+                </ul>
+            </div>
+    </nav>
+</header>
+
+      <div id="main" class="wrapper">
+        <div id="primary" class="site-content"><div id="content" role="main"><article id="post-se-notes/Linux基础/README" class="post-se-notes/Linux基础/README post type-post status-publish format-standard hentry">
+    <!---->
+
+      <header class="entry-header">
+        
+        
+  
+    <h1 class="entry-title article-title">
+      Linux基础-README
+    </h1>
+  
+
+        
+        <div class="comments-link">
+            
+            <a href="javascript:void(0);" data-url="https://wnhby.github.io/se-notes/Linux基础/README/" data-id="cjsbbbexj002le9s6ijaf02cm" class="leave-reply bdsharebuttonbox" data-cmd="more">分享</a>
+        </div><!-- .comments-link -->
+      </header><!-- .entry-header -->
+
+    <div class="entry-content">
+      
+        <!-- TOC -->
+<ul>
+<li><a href="#简介">简介</a></li>
+<li><a href="#操作系统的特征">操作系统的特征</a></li>
+<li><a href="#操作系统目标">操作系统目标</a></li>
+<li><a href="#操作系统的运行机制">操作系统的运行机制</a></li>
+<li><a href="#系统调用">系统调用</a><ul>
+<li><a href="#标准库函数">标准库函数</a></li>
+</ul>
+</li>
+<li><a href="#中断和异常">中断和异常</a></li>
+<li><a href="#用户态内核态">用户态、内核态</a></li>
+<li><a href="#-操作系统发展">* 操作系统发展</a><pre><code>- [手工操作阶段（此阶段无操作系统）](#手工操作阶段此阶段无操作系统)
+- [批处理阶段](#批处理阶段)
+- [分时操作系统](#分时操作系统)
+- [实时操作系统](#实时操作系统)
+- [分布式计算机系统](#分布式计算机系统)
+- [Ads](#ads)
+</code></pre></li>
+</ul>
+<!-- /TOC -->
+<h1 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h1><p>操作系统（Operating System, OS）是指控制和管理整个计算机系统的硬件和软件资源，并合理地组织调度计算机的工作和资源的分配，以提供给用户和其他软件方便的接口和环境的程序集合。计算机操作系统是随着计算机研究和应用的发展逐步形成并发展起来的，它是计算机系统中最基本的系统软件。</p>
+<blockquote>
+<p>操作系统三大功能：资源管理与分配、调度工作流程、封装接口与提供环境</p>
+</blockquote>
+<h1 id="操作系统的特征"><a href="#操作系统的特征" class="headerlink" title="操作系统的特征"></a>操作系统的特征</h1><p>操作系统是一种系统软件，但与其他的系统软件和应用软件有很大的不同，它有自己的基本特征。操作系统的基本特征包括<strong>并发</strong>、<strong>共享</strong>、<strong>虚拟</strong>和<strong>异步</strong>。</p>
+<ul>
+<li>并发（Concurrence）：并发是指多个事件在同一时间间隔内发生。操作系统的并发性是指计算机系统中同时存在多个运行着的程序，因此它具有处理和调度多个程序同时执行的能力。在操作系统中，引入进程的目的是使程序能并发执行。</li>
+<li>共享（Sharing）：资源共享是指系统中的资源可供内存中多个并发执行的进程共同使用。共享可分为以下两种资源共享方式：<ul>
+<li>互斥共享方式：系统中的某些资源，如打印机、磁带机，虽然它们可以提供给多个进程使用，但为使所打印或记录的结果不致造成混淆，应规定在一段时间内只允许一个进程访问该资源。</li>
+<li>同时访问方式：系统中还有另一类资源，允许在一段时间内由多个进程同时对它们进行访问。这里所谓的“同时”往往是宏观上的，而在微观上，这些进程可能是交替地对该资源进行访问即 “分时共享”。典型的可供多个进程“同时”访问的资源是磁盘设备，一些文件也可以被“同时”共享，即若干个用户同时访问该文件。</li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<p>PS：并发和共享是操作系统两个最基本的特征，这两者之间又是互为存在条件的：资源共享是以程序的并发为条件的，若系统不允许程序并发执行，则自然不存在资源共享问题；若系统不能对资源共享实施有效的管理，也必将影响到程序的并发执行，甚至根本无法并发执行。</p>
+</blockquote>
+<ul>
+<li><p>虛拟（Virtual）：虚拟是指把一个物理上的实体变为若干个逻辑上的对应物。用于实现虚拟的技术，称为虚拟技术。在操作系统中利用了多种虚拟技术，分别用来实现虚拟处理器、虚拟内存和虚拟外部设备等。</p>
+<ul>
+<li>如在虚拟处理器技术中，利用多道程序设计技术（即同时把多个程序放入内存，并允许它们交替在CPU中运行），把一个物理上的 CPU 虚拟为多个逻辑上的 CPU 。</li>
+</ul>
+</li>
+<li><p>异步（Asynchronism）：在多道程序环境下，允许多个程序并发执行，但由于资源有限，进程的执行不是一贯到底，而是走走停停，以不可预知的速度向前推进，这就是进程的异步性。</p>
+</li>
+</ul>
+<h1 id="操作系统目标"><a href="#操作系统目标" class="headerlink" title="操作系统目标"></a>操作系统目标</h1><p>为了给多道程序提供良好的运行环境，操作系统作为计算机系统资源的管理者具有以下几方面的功能：</p>
+<ul>
+<li>处理机管理（进程线程管理）：在多道程序环境下，处理机的分配和运行都以进程（或线程）为基本单位，因而对处理机的管理可归结为对进程（或线程）的管理。并发时在计算机内同时运行多个进程，进程何时创建、何时撤销、如何管理、如何避免冲突、合理共享是进程管理的主要任务。</li>
+<li>存储器管理：存储器管理是为了给多道程序的运行提供良好的环境，方便用户使用以及提高内存的利用率。</li>
+<li>文件管理：计算机中的信息都是以文件的形式存在的，操作系统中负责文件管理的部分称为文件系统。</li>
+<li>设备管理：设备管理的主要任务是完成用户的I/O请求，方便用户使用各种设备。</li>
+</ul>
+<p>为方便用户使用计算机，操作系统还提供了用户接口。操作系统提供的接口主要分为两类，一类是命令接口，用户利用这些操作命令来组织和控制作业的执行；另一类是程序接口，编程人员可以使用它们来请求操作系统服务。</p>
+<h1 id="操作系统的运行机制"><a href="#操作系统的运行机制" class="headerlink" title="操作系统的运行机制"></a>操作系统的运行机制</h1><p>计算机系统中，通常 CPU 执行两种不同性质的程序：一种是操作系统内核程序；另一种是用户自编程序或系统外层的应用程序。对操作系统而言，这两种程序的作用不同，前者是后者的管理者，因此“管理程序”要执行一些特权指令，而“被管理程序”出于安全考虑不能执行这些指令。所谓特权指令，是指计算机中不允许用户直接使用的指令，如 I/O 指令、 置中断指令，存取用于内存保护的寄存器、送程序状态字到程序状态字寄存器等指令。操作系统在具体实现上划分了用户态和核心态，以严格区分两类程序。</p>
+<p>内核是计算机上配置的底层软件，是计算机功能的延伸。不同系统对内核的定义稍有区别，大多数<strong>操作系统内核</strong>包括以下四个方面：</p>
+<ul>
+<li><p>时钟管理：在计算机的各种部件中，时钟是最关键的设备。操作系统需要通过时钟管理，向用户提供标准的系统时间。另外通过时钟中断的管理，可以实现进程的切换。诸如，在分时操作系统中，釆用时间片轮转调度的实现；在实时系统中，按截止时间控制运行的实现；在批处理系统中，通过时钟管理来衡量一个作业的运行程度等。</p>
+</li>
+<li><p>中断机制：引入中断技术的初衷是提高多道程序运行环境中 CPU 的利用率，而且主要是针对外部设备的。后来逐步得到发展，形成了多种类型，成为操作系统各项操作的基础。例如，键盘或鼠标信息的输入、进程的管理和调度、系统功能的调用、设备驱动、文件访问等，无不依赖于中断机制。可以说，现代操作系统是靠中断驱动的软件。</p>
+</li>
+<li><p>原语：按层次结构设计的操作系统，底层是一些可被调用的公用小程序，它们各自完成一个规定的操作。其特点是：它们处于操作系统的最底层，是最接近硬件的部分。这些程序的运行具有原子性，运行时间较短，而且调用频繁。通常把具有这些特点的程序称为原语（Atomic Operation）。定义原语的直接方法是关闭中断，让它的所有动作不可分割地进行完再打开中断。系统中的设备驱动、CPU 切换、进程通信等功能中的部分操作都可以定义为原语，使它们成为内核的组成部分。</p>
+</li>
+<li><p>系统控制的数据结构及处理：系统中用来登记状态信息的数据结构很多，比如作业控制块、进程控制块(PCB)、设备控制块、各类链表、消息队列、缓冲区、空闲区登记表、内存分配表等。为了实现有效的管理，系统需要一些基本的操作，常见的操作有以下三种：</p>
+<ul>
+<li>进程管理：进程状态管理、进程调度和分派、创建与撤销进程控制块等。</li>
+<li>存储器管理：存储器的空间分配和回收、内存信息保护程序、代码对换程序等。</li>
+<li>设备管理：缓冲区管理、设备分配和回收等。</li>
+</ul>
+</li>
+</ul>
+<h1 id="系统调用"><a href="#系统调用" class="headerlink" title="系统调用"></a>系统调用</h1><p>所有的操作系统都提供多种服务的入口点，由此程序向内核请求服务。各种版本的 UNIX 实现都提供良好定义、数量有限、直接进入内核的入口点，这些入口点被称为系统调用。简单来说，系统调用就是操作系统提供的用于实现系统各种核心功能的许多子程序，如 read()、write()、open() 等。</p>
+<p>这些系统调用按功能大致可分为如下几类：</p>
+<ul>
+<li>设备管理。完成设备的请求或释放，以及设备启动等功能。</li>
+<li>文件管理。完成文件的读、写、创建及删除等功能。</li>
+<li>进程控制。完成进程的创建、撤销、阻塞及唤醒等功能。</li>
+<li>进程通信。完成进程之间的消息传递或信号传递等功能。</li>
+<li>内存管理。完成内存的分配、回收以及获取作业占用内存区大小及始址等功能。</li>
+</ul>
+<p>显然，系统调用运行在系统的核心态。通过系统调用的方式来使用系统功能，可以保证系统的稳定性和安全性，防止用户随意更改或访问系统的数据或命令。系统调用命令是由操作系统提供的一个或多个子程序模块实现的。</p>
+<p>这样，操作系统的运行环境可以理解为：用户通过操作系统运行上层程序（如系统提供的命令解释程序或用户自编程序），而这个上层程序的运行依赖于操作系统的底层管理程序提供服务支持，当需要管理程序服务时，系统则通过<code>硬件中断</code>机制进入核心态，运行底层管理程序；也可能是程序运行<code>出现异常</code>情况，被动地需要底层管理程序的服务，这时就通过异常处理来进入核心态。当底层管理程序运行结束时，用户程序需要继续运行，则通过相应的保存的程序现场退出中断处理程序或异常处理程序，返回断点处继续执行。</p>
+<p>下面列举一些由用户态转向核心态的例子：</p>
+<ul>
+<li>用户程序要求操作系统的服务，即系统调用。</li>
+<li>发生一次中断。</li>
+<li>用户程序中产生了一个错误状态。</li>
+<li>用户程序中企图执行一条特权指令。</li>
+<li>从核心态转向用户态由一条指令实现，这条指令也是特权命令。一般是中断返回指令。</li>
+</ul>
+<p>注意：由用户态进入核心态，不仅仅是状态需要切换。而且，所使用的堆栈也可能需要由用户堆栈切换为系统堆栈，但这个系统堆栈也是属于该进程的。</p>
+<h2 id="标准库函数"><a href="#标准库函数" class="headerlink" title="标准库函数"></a>标准库函数</h2><p>库函数顾名思义是把函数放到库里，是把一些常用到的函数编完放到一个文件里，供别人用。libc 就是一个 C 标准库，里面存放一些基本函数，这些基本函数都是被标准化了的，而且这些函数通常都是用汇编直接实现的，如 printf、scanf 等。</p>
+<p>标准库函数构建在系统调用接口之上，应用程序既可以使用标准库函数，也可以使用系统调用。如下图：</p>
+<p><img src="https://camo.githubusercontent.com/382fca944c80316687d2a8d2dfd54fadc17e8525/687474703a2f2f3778726c75392e636f6d312e7a302e676c622e636c6f7564646e2e636f6d2f4c696e75785f4f535f322e706e67" alt="enter image description here"></p>
+<p>系统调用和标准库函数的区别如下：</p>
+<ul>
+<li>从程序完成的功能来看，函数库提供的函数通常不需要操作系统的服务。系统调用是要求操作系统为用户提供某种服务，通常是涉及系统的硬件资源和一些敏感的软件资源等。</li>
+<li>从程序执行的空间来说，标准库函数是在用户空间内执行的，除非函数涉及到 I/O 操作等，一般是不会切到内核态的。系统调用则运行于内核空间。</li>
+<li>从程序的可移植性的角度来看，相对于系统调用，C 语言的标准备函数库具备较高的可移植性。因为在所有的 ANSI C 编译器版本中，标准库函数是相同的；系统调用与系统有关，各个操作系统的系统调用是不同的。</li>
+</ul>
+<p>［<a href="http://www.nowcoder.com/questionTerminal/06be659534644b8eb3f164f9f1085a9d" target="_blank" rel="noopener">系统调用函数</a>］  </p>
+<h1 id="中断和异常"><a href="#中断和异常" class="headerlink" title="中断和异常"></a>中断和异常</h1><ul>
+<li>中断(Interruption)，也称外中断，指来自 CPU 执行指令以外的事件的发生，如设备发出的 I/O 结束中断，表示设备输入/输出处理已经完成，希望处理机能够向设备发下一个输入 / 输出请求，同时让完成输入/输出后的程序继续运行。时钟中断，表示一个固定的时间片已到，让处理机处理计时、启动定时运行的任务等。这一类中断通常是与当前程序运行无关的事件，即它们与当前处理机运行的程序无关。</li>
+<li>异常(Exception)，也称内中断、例外或陷入(Trap)，指源自 CPU 执行指令内部的事件，如程序的非法操作码、地址越界、算术溢出、虚存系统的缺页以及专门的陷入指令等引起的事件。对异常的处理一般要依赖于当前程序的运行现场，而且异常不能被屏蔽，一旦出现应立即处理。</li>
+</ul>
+<h1 id="用户态、内核态"><a href="#用户态、内核态" class="headerlink" title="用户态、内核态"></a>用户态、内核态</h1><p>操作系统的很多操作会消耗系统的物理资源，例如创建一个新进程时，要做很多底层的工作，如分配物理内存，从父进程拷贝相关信息，拷贝设置页目录、页表等，这些操作显然不能让任何程序都可以做。</p>
+<p>我们知道，Intel 的 X86 架构的 CPU 提供了 0 到 3 四个特权级（在CPU的设计中，用户态指非特权状态。在此状态下，执行的代码被硬件限定，不能进行某些操作，比如写入其他进程的存储空间，以防止给操作系统带来安全隐患）。</p>
+<p>在 Linux 操作系统操作系统的设计中主要采用了0和3两个特权级，也就是我们通常所说的内核态和用户态。运行于用户态的进程可以执行的操作和访问的资源都受到极大的限制，而运行于内核态的进程则可以执行任何操作并且在资源的使用上也没有限制。</p>
+<p>当一个任务（进程）陷入内核代码中执行时，我们就称进程处于内核运行态（或简称为内核态）。此时处理器处于特权级最高的（0 级）内核代码中执行。每个进程都有自己的内核栈和用户栈，当进程处于内核态时，执行的内核代码会使用当前进程的内核栈。当进程在执行用户自己的代码时，则称其处于用户运行态（用户态），此时处理器在特权级最低的（3 级）用户代码中运行。简单来说在内核态下， CPU 可执行任何指令，在用户态下 CPU 只能执行非特权指令。</p>
+<p>Linux 进程的 4GB 地址空间，3G-4G 是内核态的地址空间，存放整个内核的代码和所有的内核模块，以及内核所维护的数据。用户运行一个程序，该程序所创建的进程运行在用户态，如果要执行文件操作，网络数据发送等操作，必须通过 write，send 等系统调用，这些系统调用会调用内核中的代码来完成操作。这时必须切换到 Ring 0，然后进入 3GB-4GB 中的内核地址空间去执行这些代码完成操作，完成后切换回Ring 3，回到用户态。当程序处于内核态时可以随意进入用户态。</p>
+<p>很多程序开始时运行于用户态，但在执行的过程中，一些操作需要在内核权限下才能执行，这就涉及到一个从用户态切换到内核态的过程。用户态切换到内核态的 3 种方式：</p>
+<ul>
+<li>系统调用：这是处于用户态的进程主动请求切换到内核态的一种方式。用户态的进程通过系统调用申请使用操作系统提供的系统调用服务例程来处理任务</li>
+<li>产生异常：CPU 执行运行在用户态下的程序时，发生了某些事先不可知的异常，这时会切换到内核态，如缺页异常</li>
+<li>外围设备的中断：当外围设备完成用户请求的操作后，会向 CPU 发出相应的中断信号，这时 CPU 会暂停执行下一条即将要执行的指令转而去执行与中断信号对应的处理程序，如果先前执行的指令是用户态下的程序，那么这个转换的过程自然也就发生了由用户态到内核态的切换    </li>
+</ul>
+<h1 id="操作系统发展"><a href="#操作系统发展" class="headerlink" title="* 操作系统发展"></a>* 操作系统发展</h1><h3 id="手工操作阶段（此阶段无操作系统）"><a href="#手工操作阶段（此阶段无操作系统）" class="headerlink" title="手工操作阶段（此阶段无操作系统）"></a>手工操作阶段（此阶段无操作系统）</h3><p>用户在计算机上算题的所有工作都要人工干预，如程序的装入、运行、结果的输出等。随着计算机硬件的发展，人机矛盾（速度和资源利用）越来越大，必须寻求新的解决办法。</p>
+<h3 id="批处理阶段"><a href="#批处理阶段" class="headerlink" title="批处理阶段"></a>批处理阶段</h3><p>为了解决人机矛盾及CPU和I/O设备之间速度不匹配的矛盾，出现了批处理系统。它按发展历程又分为单道批处理系统、多道批处理系统（多道程序设计技术出现以后）。</p>
+<ul>
+<li>单道批处理系统：系统对作业的处理是成批进行的，但内存中始终只保持一道作业。当该程序完成或发生异常情况时，才换入其后继程序进入内存运行。</li>
+<li>多道批处理系统：多道程序设计技术允许多个程序同时进入内存并运行。即同时把多个程序放入内存，并允许它们交替在CPU中运行，它们共享系统中的各种硬、软件资源。当一道程序因I/O请求而暂停运行时，CPU便立即转去运行另一道程序。它没有用某些机制提高某一技术方面的瓶颈问题，而是让系统的各个组成部分都尽量去“忙”，花费很少时间去切换任务，达到了系统各部件之间的并行工作，使其整体在单位时间内的效率翻倍。</li>
+</ul>
+<h3 id="分时操作系统"><a href="#分时操作系统" class="headerlink" title="分时操作系统"></a>分时操作系统</h3><p>把处理器的运行时间分成很短的时间片，按时间片轮流把处理器分配给各联机作业使用。若某个作业在分配给它的时间片内不能完成其计算，则该作业暂时停止运行，把处理器让给其他作业使用，等待下一轮再继续运行。由于计算机速度很快，作业运行轮转得很快，给每个用户的感觉好像是自己独占一台计算机。多道批处理是实现作业自动控制而无需人工干预的系统，而分时系统是实现人机交互的系统。</p>
+<p>分时系统具有与批处理系统不同的特征，其主要特征如下：</p>
+<ul>
+<li>同时性。同时性也称多路性，指允许多个终端用户同时使用一台计算机。</li>
+<li>交互性。用户能够方便地与系统进行人-机对话。</li>
+<li>独立性。系统中多个用户可以彼此独立地进行操作，互不干扰。</li>
+<li>及时性。用户请求能在很短时间内获得响应。</li>
+</ul>
+<h3 id="实时操作系统"><a href="#实时操作系统" class="headerlink" title="实时操作系统"></a>实时操作系统</h3><p>为了能在某个时间限制内完成某些紧急任务而不需时间片排队，诞生了实时操作系统。这里的时间限制可以分为两种情况：如果某个动作必须绝对地在规定的时刻（或规定的时间范围）发生，则称为硬实时系统。例如，飞行器的飞行自动控制系统，这类系统必须提供绝对保证，让某个特定的动作在规定的时间内完成。如果能够接受偶尔违反时间规定，并且不会引起任何永久性的损害，则称为软实时系统，如飞机订票系统、银行管理系统。</p>
+<p>在实时操作系统的控制下，计算机系统接收到外部信号后及时进行处理，并且要在严格的时限内处理完接收的事件。实时橾作系统的主要特点是及时性和可靠性。</p>
+<h3 id="分布式计算机系统"><a href="#分布式计算机系统" class="headerlink" title="分布式计算机系统"></a>分布式计算机系统</h3><p>分布式计算机系统是由多台计算机组成并满足下列条件的系统：系统中任意两台计算机通过通信方式交换信息；系统中的每一台计算机都具有同等的地位，即没有主机也没有从机；每台计算机上的资源为所有用户共享；系统中的任意若千台计算机都可以构成一个子系统，并且还能重构；任何工作都可以分布在几台计算机上，由它们并行工作、协同完成。</p>
+<p>用于管理分布式计算机系统的操作系统称为分布式计算机系统。该系统的主要特点是：分布性和并行性。分布式操作系统与网络操作系统本质上的不同之处在于分布式操作系统中，若干台计算机相互协同完成同一任务。</p>
+<p>分布式领域 CAP 理论：</p>
+<ul>
+<li>Consistency(一致性)，数据一致更新，所有数据变动都是同步的</li>
+<li>Availability(可用性)，好的响应性能</li>
+<li>Partition tolerance(分区容错性)：可靠性</li>
+</ul>
+<p>定理：任何分布式系统只可同时满足二点，没法三者兼顾。<br>忠告：架构师不要将精力浪费在如何设计能满足三者的完美分布式系统，而是应该进行取舍。</p>
+<p>［<a href="http://www.nowcoder.com/questionTerminal/3666684e8eb142369092da0a559925bb" target="_blank" rel="noopener">分布式系统三个指标</a>］</p>
+<hr>
+<ul>
+<li><p><a href="/more/donate/index.html"><strong><em><font color="red">我觉得帮助到我了, 支持你一下.</font></em></strong></a><br>   </p>
+</li>
+<li><p><a href="https://www.paypal.me/momodainfo" target="_blank" rel="noopener"><strong><em><font color="red">If you think the article is helpful to you, you can reward me through paypal.</font></em></strong></a></p>
+</li>
+</ul>
+<h3 id="Ads"><a href="#Ads" class="headerlink" title="Ads"></a>Ads</h3><p><em>这是小广告! 如果有需要, 不妨支持一下吧~</em></p>
+<blockquote>
+<p> <a target="_blank" href="https://amazon.cn/gp/search?ie=UTF8&tag=momoda-23&linkCode=ur2&linkId=4a0e4fbec0cfa8dfe540ca999d0bf999&camp=536&creative=3200&index=books&keywords=编程">这些好书您看了吗?</a><img src="//ir-cn.amazon-adsystem.com/e/ir?t=momoda-23&l=ur2&o=28" width="1" height="1" border="0" alt="" style="border:none !important; margin:0px !important;"></p>
+</blockquote>
+<blockquote>
+<p>体育&amp;户外用品推荐</p>
+</blockquote>
+<div align="center"> <a href="https://www.amazon.cn/B07HWB88Z5/dp/B07HWB88Z5/ref=as_sl_pc_tf_til?tag=momoda-23&linkCode=w00&linkId=14df5124f2165d9eb3d65252e60ed2cf&creativeASIN=B07HWB88Z5" target="_blank" rel="noopener"><img src="/se-notes/Linux基础/README/../more/ads/amazon.gif" width="100%"></a> </div>
+      
+    </div><!-- .entry-content -->
+
+    <footer class="entry-meta">
+    <a href="/se-notes/Linux基础/README/">
+    <time datetime="2019-01-03T13:49:30.000Z" class="entry-date">
+        1月 3 2019
+    </time>
+</a>
+    
+  <span class="article-delim">&#8226;</span>
+  <div class="article-category">
+  <a class="article-category-link" href="/categories/Linux/">Linux</a>, <a class="article-category-link" href="/categories/Linux/linux基础/">linux基础</a>
+  </div>
+
+    
+  <span class="article-delim">&#8226;</span>
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/linux/">linux</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/系统管理/">系统管理</a></li></ul>
+
+    </footer>
+</article>
+
+
+    
+<nav class="nav-single">
+    <h3 class="assistive-text">文章导航</h3>
+    
+        <span class="nav-previous"><a href="/数据库分类/" rel="prev"><span class="meta-nav">←</span> 数据库分类</a></span>
+    
+    
+        <span class="nav-next"><a href="/se-notes/云计算实践/区块链相关/区块链简介/" rel="next">区块链简介 <span class="meta-nav">→</span></a></span>
+    
+</nav><!-- .nav-single -->
+
+
+
+
+
+
+
+</div></div>
+        <div id="secondary" class="widget-area" role="complementary">
+  
+    <aside id="search" class="widget widget_search"><form role="search" method="get" accept-charset="utf-8" id="searchform" class="searchform" action="//google.com/search">
+    <div>
+        <input type="text" value="" name="q">
+        <input type="submit" id="searchsubmit" value="google搜索">
+    </div>
+</form></aside>
+
+  
+    
+  <aside class="widget">
+    <h3 class="widget-title">Recents</h3>
+    <div class="widget-content">
+      <ul>
+        
+          <li>
+            <a href="/系统剩余空间查看/">系统剩余空间查看</a>
+          </li>
+        
+          <li>
+            <a href="/数据库分类/">数据库分类</a>
+          </li>
+        
+          <li>
+            <a href="/se-notes/Linux基础/README/">Linux基础-README</a>
+          </li>
+        
+          <li>
+            <a href="/se-notes/云计算实践/区块链相关/区块链简介/">区块链简介</a>
+          </li>
+        
+          <li>
+            <a href="/se-notes/云计算实践/集群高可用方案/Heartbeat双机热备方案/">Heartbeat双机热备方案</a>
+          </li>
+        
+      </ul>
+    </div>
+  </aside>
+
+  
+    
+  <aside class="widget">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget-content">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/">一月 2019</a><span class="archive-list-count">56</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">十一月 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">二月 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/09/">九月 2017</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/01/">一月 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/11/">十一月 2015</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/01/">一月 2014</a><span class="archive-list-count">1</span></li></ul>
+    </div>
+  </aside>
+
+  
+    
+  <aside class="widget">
+    <h3 class="widget-title">Categories</h3>
+    <div class="widget-content">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Graphics/">Graphics</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Linux/">Linux</a><span class="category-list-count">7</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Linux/Shell/">Shell</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Linux/linux基础/">linux基础</a><span class="category-list-count">6</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/协议证书/">协议证书</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/协议证书/openssl/">openssl</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/数据库/">数据库</a><span class="category-list-count">4</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/数据库/数据库基础/">数据库基础</a><span class="category-list-count">3</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/框架/">框架</a><span class="category-list-count">9</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/框架/python-web应用框架/">python-web应用框架</a><span class="category-list-count">9</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/版本控制/">版本控制</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/版本控制/Git/">Git</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/编程语言/">编程语言</a><span class="category-list-count">13</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/编程语言/java/">java</a><span class="category-list-count">13</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/网络通讯/">网络通讯</a><span class="category-list-count">11</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/网络通讯/大小端/">大小端</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/网络通讯/计算机网络基础/">计算机网络基础</a><span class="category-list-count">10</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/路由器/">路由器</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/路由器/openwrt/">openwrt</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/通用技术/">通用技术</a><span class="category-list-count">13</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/通用技术/Docker/">Docker</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/通用技术/云计算实践/">云计算实践</a><span class="category-list-count">11</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/通用技术/云计算实践/kubernetes部署/">kubernetes部署</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/通用技术/云计算实践/区块链/">区块链</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/通用技术/云计算实践/集群高可用方案/">集群高可用方案</a><span class="category-list-count">4</span></li></ul></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/默认/">默认</a><span class="category-list-count">1</span></li></ul>
+    </div>
+  </aside>
+
+  
+    
+  <aside class="widget">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget-content">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/CS-Notes/">CS-Notes</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/PEM证书/">PEM证书</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Shell/">Shell</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/cron/">cron</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/database/">database</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/diagrams/">diagrams</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/docker/">docker</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/docker-qq/">docker-qq</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/flask/">flask</a><span class="tag-list-count">9</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/git/">git</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/graphics/">graphics</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/http/">http</a><span class="tag-list-count">10</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/informationisbeautiful/">informationisbeautiful</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/java基础/">java基础</a><span class="tag-list-count">13</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/java语法/">java语法</a><span class="tag-list-count">13</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/kubernetes/">kubernetes</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/linux/">linux</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mysql/">mysql</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/network/">network</a><span class="tag-list-count">10</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/openssl/">openssl</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/openwrt/">openwrt</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/p12/">p12</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/pfx/">pfx</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/tcp-ip/">tcp/ip</a><span class="tag-list-count">10</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/web开发/">web开发</a><span class="tag-list-count">9</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/云计算/">云计算</a><span class="tag-list-count">11</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/区块链/">区块链</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/大小端/">大小端</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/数据库/">数据库</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/系统管理/">系统管理</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/计算机网络/">计算机网络</a><span class="tag-list-count">10</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/集群/">集群</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/默认/">默认</a><span class="tag-list-count">1</span></li></ul>
+    </div>
+  </aside>
+
+  
+    
+  <aside class="widget">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget-content tagcloud">
+      <a href="/tags/CS-Notes/" style="font-size: 10px;">CS-Notes</a> <a href="/tags/PEM证书/" style="font-size: 10px;">PEM证书</a> <a href="/tags/Shell/" style="font-size: 10px;">Shell</a> <a href="/tags/cron/" style="font-size: 10px;">cron</a> <a href="/tags/database/" style="font-size: 10px;">database</a> <a href="/tags/diagrams/" style="font-size: 10px;">diagrams</a> <a href="/tags/docker/" style="font-size: 15px;">docker</a> <a href="/tags/docker-qq/" style="font-size: 10px;">docker-qq</a> <a href="/tags/flask/" style="font-size: 16.25px;">flask</a> <a href="/tags/git/" style="font-size: 10px;">git</a> <a href="/tags/graphics/" style="font-size: 10px;">graphics</a> <a href="/tags/http/" style="font-size: 17.5px;">http</a> <a href="/tags/informationisbeautiful/" style="font-size: 10px;">informationisbeautiful</a> <a href="/tags/java基础/" style="font-size: 20px;">java基础</a> <a href="/tags/java语法/" style="font-size: 20px;">java语法</a> <a href="/tags/kubernetes/" style="font-size: 13.75px;">kubernetes</a> <a href="/tags/linux/" style="font-size: 15px;">linux</a> <a href="/tags/mysql/" style="font-size: 11.25px;">mysql</a> <a href="/tags/network/" style="font-size: 17.5px;">network</a> <a href="/tags/openssl/" style="font-size: 10px;">openssl</a> <a href="/tags/openwrt/" style="font-size: 10px;">openwrt</a> <a href="/tags/p12/" style="font-size: 10px;">p12</a> <a href="/tags/pfx/" style="font-size: 10px;">pfx</a> <a href="/tags/tcp-ip/" style="font-size: 17.5px;">tcp/ip</a> <a href="/tags/web开发/" style="font-size: 16.25px;">web开发</a> <a href="/tags/云计算/" style="font-size: 18.75px;">云计算</a> <a href="/tags/区块链/" style="font-size: 10px;">区块链</a> <a href="/tags/大小端/" style="font-size: 10px;">大小端</a> <a href="/tags/数据库/" style="font-size: 12.5px;">数据库</a> <a href="/tags/系统管理/" style="font-size: 15px;">系统管理</a> <a href="/tags/计算机网络/" style="font-size: 17.5px;">计算机网络</a> <a href="/tags/集群/" style="font-size: 13.75px;">集群</a> <a href="/tags/默认/" style="font-size: 10px;">默认</a>
+    </div>
+  </aside>
+
+  
+    <aside class="widget">
+    <h3 class="widget-title">Links</h3>
+    <div class="widget-content">
+		<ul id="link-list">
+		<!-- link begin -->
+
+		<li><a href="https://www.google.com/">google</a></li>
+		<li><a href="https://www.baidu.com/">baidu</a></li>
+		
+		<!-- link end -->
+		</ul>
+    </div>
+</aside>
+
+  
+    <aside class="widget">
+    <h3 class="widget-title">Ads</h3>
+    <div class="widget-content">
+	 
+			* <a target="_blank" href="https://amazon.cn/gp/search?ie=UTF8&tag=momoda-23&linkCode=ur2&linkId=4a0e4fbec0cfa8dfe540ca999d0bf999&camp=536&creative=3200&index=books&keywords=编程">这些好书您看了吗?</a><img src="//ir-cn.amazon-adsystem.com/e/ir?t=momoda-23&l=ur2&o=28" width="1" height="1" border="0" alt="" style="border:none !important; margin:0px !important;">
+			<br><br>
+			* 体育&户外用品推荐>
+			<div align="center"> <a href="https://www.amazon.cn/B07HWB88Z5/dp/B07HWB88Z5/ref=as_sl_pc_tf_til?tag=momoda-23&linkCode=w00&linkId=14df5124f2165d9eb3d65252e60ed2cf&creativeASIN=B07HWB88Z5"><img src="/more/ads/amazon.gif" width="100%"></a> </div>
+
+    </div>
+</aside>
+
+  
+</div>
+      </div>
+      <footer id="colophon" role="contentinfo">
+    <p>&copy; 2019 momoda
+    All rights reserved.</p>
+    <p>Powered by <a href="https://hexo.io/" target="_blank">Hexo</a></p>
+    <a href="javascript:scrollTo(0,0);">返回顶部</a>
+</footer>
+
+    <script>window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"1","bdMiniList":false,"bdPic":"","bdStyle":"2","bdSize":"16"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];</script>
+
+<script src="/js/jquery-2.0.3.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+<script src="/js/navigation.js"></script>
+
+
+<script type="text/javascript" src="https://js.users.51.la/19862371.js"></script>
+<div id="bg"></div>
+
+  </div>
+</body>
+</html>

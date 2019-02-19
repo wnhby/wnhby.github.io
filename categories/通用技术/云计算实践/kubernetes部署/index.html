@@ -1,0 +1,886 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="utf-8">
+  
+  
+  <meta name="description" content="momoda">
+  
+
+  
+  <meta name="keywords" content="momoda">
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  <title>Category: kubernetes部署 | Just another blog</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="momoda">
+<meta name="keywords" content="momoda">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Just another blog">
+<meta property="og:url" content="https://wnhby.github.io/categories/通用技术/云计算实践/kubernetes部署/index.html">
+<meta property="og:site_name" content="Just another blog">
+<meta property="og:description" content="momoda">
+<meta property="og:locale" content="zh-CN">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Just another blog">
+<meta name="twitter:description" content="momoda">
+  
+    <link rel="alternative" href="/atom.xml" title="Just another blog" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/css/images/favicon.ico">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  
+
+  
+  <!-- baidu webmaster push -->
+  <script src="//push.zhanzhang.baidu.com/push.js"></script>
+</head></html>
+<body class="home blog custom-background custom-font-enabled single-author">
+  <div id="page" class="hfeed site">
+      <header id="masthead" class="site-header" role="banner">
+    <hgroup>
+      <h1 class="site-title">
+        <a href="/" title="Just another blog" rel="home">Just another blog</a>
+      </h1>
+      
+        <h2 class="site-description">
+          <a href="/" id="subtitle">momoda blog</a>
+        </h2>
+      
+    </hgroup>
+
+    <nav id="site-navigation" class="main-navigation" role="navigation">
+            <button class="menu-toggle">菜单</button>
+            <a class="assistive-text" href="/#content" title="跳至内容">跳至内容</a><!--TODO-->
+            <div class="menu-main-container">
+                <ul id="menu-main" class="nav-menu">
+                
+                    <li class="menu-item menu-item-type-post_type menu-item-object-page"><a href="/">Home</a></li>
+                
+                    <li class="menu-item menu-item-type-post_type menu-item-object-page"><a href="/atom.xml">RSS</a></li>
+                
+                    <li class="menu-item menu-item-type-post_type menu-item-object-page"><a href="/sitemap.xml">Site map</a></li>
+                
+                    <li class="menu-item menu-item-type-post_type menu-item-object-page"><a href="/more/share.html">Share</a></li>
+                
+                </ul>
+            </div>
+    </nav>
+</header>
+
+      <div id="main" class="wrapper">
+        <div id="primary" class="site-content"><div id="content" role="main">
+  
+    <article id="post-se-notes/云计算实践/Kubernetes部署/Docker配置网络代理" class="post-se-notes/云计算实践/Kubernetes部署/Docker配置网络代理 post type-post status-publish format-standard hentry">
+    <!---->
+
+      <header class="entry-header">
+        
+        
+  
+    <h1 class="entry-title">
+      <a class="article-title" href="/se-notes/云计算实践/Kubernetes部署/Docker配置网络代理/">Docker配置网络代理</a>
+    </h1>
+  
+
+        
+        <div class="comments-link">
+            
+            <a href="javascript:void(0);" data-url="https://wnhby.github.io/se-notes/云计算实践/Kubernetes部署/Docker配置网络代理/" data-id="cjsbbbf0y009he9s6w9igl26c" class="leave-reply bdsharebuttonbox" data-cmd="more">分享</a>
+        </div><!-- .comments-link -->
+      </header><!-- .entry-header -->
+
+    <div class="entry-content">
+      
+        <!-- TOC -->
+<ul>
+<li><a href="#%E4%B8%BA-docker-%E9%85%8D%E7%BD%AE%E7%BD%91%E7%BB%9C%E4%BB%A3%E7%90%86">为 Docker 配置网络代理</a><ul>
+<li><a href="#%E8%83%8C%E6%99%AF">背景</a></li>
+<li><a href="#%E6%AD%A5%E9%AA%A4">步骤</a></li>
+<li><a href="#%E5%8F%82%E8%80%83%E8%B5%84%E6%96%99">参考资料</a><ul>
+<li><a href="#ads">Ads</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<!-- /TOC -->
+<h1 id="为-Docker-配置网络代理"><a href="#为-Docker-配置网络代理" class="headerlink" title="为 Docker 配置网络代理"></a>为 Docker 配置网络代理</h1><h2 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h2><p>在一些实验环境中服务器没有直接连接外网的权限，需要通过网络代理。我们通常会将网络代理直接配置在<code>/etc/environment</code>、<code>/etc/profile</code>之类的配置文件中，这对于大部分操作都是可行的。然而，docker 命令却使用不了这些代理。比如 <code>docker pull</code> 时需要从外网下载镜像，就会出现错误。</p>
+<h2 id="步骤"><a href="#步骤" class="headerlink" title="步骤"></a>步骤</h2><p>首先为 docker 服务创建一个内嵌的 systemd 目录：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ mkdir -p /etc/systemd/system/docker.service.d</span><br></pre></td></tr></table></figure></p>
+<p>创建<code>/etc/systemd/system/docker.service.d/http-proxy.conf</code>文件，并添加 HTTP_PROXY 环境变量（其中<code>[proxy-addr]</code>和<code>[proxy-port]</code>分别改成实际情况的代理地址和端口）：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[Service]</span><br><span class="line">Environment=&quot;HTTP_PROXY=http://[proxy-addr]:[proxy-port]/&quot; &quot;HTTPS_PROXY=https://[proxy-addr]:[proxy-port]/&quot;</span><br></pre></td></tr></table></figure></p>
+<p>如果还有内部的不需要使用代理来访问的 Docker registries，那么还需要制定 NO_PROXY 环境变量：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[Service]</span><br><span class="line">Environment=&quot;HTTP_PROXY=http://[proxy-addr]:[proxy-port]/&quot; &quot;HTTPS_PROXY=https://[proxy-addr]:[proxy-port]/&quot; &quot;NO_PROXY=localhost,127.0.0.1,docker-registry.somecorporation.com&quot;</span><br></pre></td></tr></table></figure></p>
+<p>更新配置与重启 Docker 服务：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ systemctl daemon-reload</span><br><span class="line">$ systemctl restart docker</span><br></pre></td></tr></table></figure></p>
+<p>验证配置是否已经加载：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ systemctl show --property=Environment docker</span><br><span class="line">Environment=HTTP_PROXY=http://proxy.example.com:80/</span><br></pre></td></tr></table></figure></p>
+<h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><p><a href="http://blog.csdn.net/styshoo/article/details/55657714" target="_blank" rel="noopener">Docker 网络代理设置</a></p>
+<p><a href="https://docs.docker.com/config/daemon/systemd/" target="_blank" rel="noopener">Docker 官网教程</a><br><!--stackedit_data:
+eyJoaXN0b3J5IjpbMjcyNTAzOTQ4XX0=
+--></p>
+<hr>
+<ul>
+<li><p><a href="/more/donate/index.html"><strong><em><font color="red">我觉得帮助到我了, 支持你一下.</font></em></strong></a><br>   </p>
+</li>
+<li><p><a href="https://www.paypal.me/momodainfo" target="_blank" rel="noopener"><strong><em><font color="red">If you think the article is helpful to you, you can reward me through paypal.</font></em></strong></a></p>
+</li>
+</ul>
+<h3 id="Ads"><a href="#Ads" class="headerlink" title="Ads"></a>Ads</h3><p><em>这是小广告! 如果有需要, 不妨支持一下吧~</em></p>
+<blockquote>
+<p> <a target="_blank" href="https://amazon.cn/gp/search?ie=UTF8&tag=momoda-23&linkCode=ur2&linkId=4a0e4fbec0cfa8dfe540ca999d0bf999&camp=536&creative=3200&index=books&keywords=编程">这些好书您看了吗?</a><img src="//ir-cn.amazon-adsystem.com/e/ir?t=momoda-23&l=ur2&o=28" width="1" height="1" border="0" alt="" style="border:none !important; margin:0px !important;"></p>
+</blockquote>
+<blockquote>
+<p>体育&amp;户外用品推荐</p>
+</blockquote>
+<div align="center"> <a href="https://www.amazon.cn/B07HWB88Z5/dp/B07HWB88Z5/ref=as_sl_pc_tf_til?tag=momoda-23&linkCode=w00&linkId=14df5124f2165d9eb3d65252e60ed2cf&creativeASIN=B07HWB88Z5" target="_blank" rel="noopener"><img src="/se-notes/云计算实践/Kubernetes部署/Docker配置网络代理/../more/ads/amazon.gif" width="100%"></a> </div>
+      
+    </div><!-- .entry-content -->
+
+    <footer class="entry-meta">
+    <a href="/se-notes/云计算实践/Kubernetes部署/Docker配置网络代理/">
+    <time datetime="2019-01-03T13:49:30.000Z" class="entry-date">
+        1月 3 2019
+    </time>
+</a>
+    
+  <span class="article-delim">&#8226;</span>
+  <div class="article-category">
+  <a class="article-category-link" href="/categories/通用技术/">通用技术</a>, <a class="article-category-link" href="/categories/通用技术/云计算实践/">云计算实践</a>, <a class="article-category-link" href="/categories/通用技术/云计算实践/kubernetes部署/">kubernetes部署</a>
+  </div>
+
+    
+  <span class="article-delim">&#8226;</span>
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/docker/">docker</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/kubernetes/">kubernetes</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/云计算/">云计算</a></li></ul>
+
+    </footer>
+</article>
+
+
+
+
+
+
+  
+    <article id="post-se-notes/云计算实践/Kubernetes部署/Docker-CE安装" class="post-se-notes/云计算实践/Kubernetes部署/Docker-CE安装 post type-post status-publish format-standard hentry">
+    <!---->
+
+      <header class="entry-header">
+        
+        
+  
+    <h1 class="entry-title">
+      <a class="article-title" href="/se-notes/云计算实践/Kubernetes部署/Docker-CE安装/">Docker-CE安装</a>
+    </h1>
+  
+
+        
+        <div class="comments-link">
+            
+            <a href="javascript:void(0);" data-url="https://wnhby.github.io/se-notes/云计算实践/Kubernetes部署/Docker-CE安装/" data-id="cjsbbbf11009ie9s6vua1l6yr" class="leave-reply bdsharebuttonbox" data-cmd="more">分享</a>
+        </div><!-- .comments-link -->
+      </header><!-- .entry-header -->
+
+    <div class="entry-content">
+      
+        <!-- TOC -->
+<ul>
+<li><a href="#docker-ce-%E5%AE%89%E8%A3%85">Docker CE 安装</a><ul>
+<li><a href="#%E5%8F%82%E8%80%83%E8%B5%84%E6%96%99">参考资料</a><ul>
+<li><a href="#ads">Ads</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<!-- /TOC -->
+<h1 id="Docker-CE-安装"><a href="#Docker-CE-安装" class="headerlink" title="Docker CE 安装"></a>Docker CE 安装</h1><p>首先安装 Docker 的依赖包如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ yum install yum-utils device-mapper-persistent-data lvm2</span><br></pre></td></tr></table></figure></p>
+<p>添加 Docker 的软件源（这里使用的是国内源，也可以挂代理来使用官方的源）：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ sudo yum-config-manager \</span><br><span class="line">    --add-repo \</span><br><span class="line">    https://mirrors.ustc.edu.cn/docker-ce/linux/centos/docker-ce.repo</span><br></pre></td></tr></table></figure></p>
+<p>更新 yum 软件源缓存，并安装 docker-ce ：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ sudo yum makecache fast</span><br><span class="line">$ sudo yum install docker-ce</span><br></pre></td></tr></table></figure></p>
+<p>启动 Docker CE：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ sudo systemctl enable docker</span><br><span class="line">$ sudo systemctl start docker</span><br></pre></td></tr></table></figure></p>
+<blockquote>
+<p>PS：默认情况下，docker 命令会使用 Unix socket 与 Docker 引擎通讯。而只有 root 用户和 docker 组的用户才可以访问 Docker 引擎的 Unix socket。出于安全考虑，一般 Linux 系统上不会直接使用 root 用户。因此，更好的做法是将需要使用 docker 的用户加入 docker 用户组。</p>
+</blockquote>
+<p>国内从 Docker Hub 拉取镜像有时会遇到困难，此时可以配置镜像加速器。对于使用 CentOS 系统，请在 /etc/docker/daemon.json 中写入如下内容（如果文件不存在请新建该文件）<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  &quot;registry-mirrors&quot;: [</span><br><span class="line">    &quot;https://registry.docker-cn.com&quot;</span><br><span class="line">  ]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>之后重新启动服务：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ sudo systemctl daemon-reload</span><br><span class="line">$ sudo systemctl restart docker</span><br></pre></td></tr></table></figure></p>
+<p>测试 Docker 是否安装正确：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ docker run hello-world</span><br></pre></td></tr></table></figure></p>
+<p>若输出如下则说明安装成功：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">Hello from Docker!</span><br><span class="line">This message shows that your installation appears to be working correctly.</span><br><span class="line"></span><br><span class="line">To generate this message, Docker took the following steps:</span><br><span class="line"> 1. The Docker client contacted the Docker daemon.</span><br><span class="line"> 2. The Docker daemon pulled the &quot;hello-world&quot; image from the Docker Hub.</span><br><span class="line">    (amd64)</span><br><span class="line"> 3. The Docker daemon created a new container from that image which runs the</span><br><span class="line">    executable that produces the output you are currently reading.</span><br><span class="line"> 4. The Docker daemon streamed that output to the Docker client, which sent it</span><br><span class="line">    to your terminal.</span><br><span class="line"></span><br><span class="line">To try something more ambitious, you can run an Ubuntu container with:</span><br><span class="line"> $ docker run -it ubuntu bash</span><br><span class="line"></span><br><span class="line">Share images, automate workflows, and more with a free Docker ID:</span><br><span class="line"> https://cloud.docker.com/</span><br><span class="line"></span><br><span class="line">For more examples and ideas, visit:</span><br><span class="line"> https://docs.docker.com/engine/userguide/</span><br></pre></td></tr></table></figure></p>
+<p>若出现以下报错：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker: Error response from daemon: OCI runtime create failed: unable to retrieve OCI runtime error (open /run/docker/containerd/daemon/io.containerd.runtime.v1.linux/moby/225edd3d808116d3cc5992849e60bf5369ace67c291a066ebae4ca5784bcce7a/log.json: no such file or directory): docker-runc did not terminate sucessfully: unknown.</span><br></pre></td></tr></table></figure></p>
+<p>则是因为 libseccomp 没有更新到最新版本，安装最新版本即可：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yum install http://mirror.centos.org/centos/7/os/x86_64/Packages/libseccomp-2.3.1-3.el7.x86_64.rpm</span><br></pre></td></tr></table></figure></p>
+<p>默认配置下，如果在 CentOS 使用 Docker CE 看到下面的这些警告信息：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">WARNING: bridge-nf-call-iptables is disabled</span><br><span class="line">WARNING: bridge-nf-call-ip6tables is disabled</span><br></pre></td></tr></table></figure></p>
+<p>请添加内核配置参数以启用这些功能：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$ sudo tee -a /etc/sysctl.conf &lt;&lt;-EOF</span><br><span class="line">net.bridge.bridge-nf-call-ip6tables = 1</span><br><span class="line">net.bridge.bridge-nf-call-iptables = 1</span><br><span class="line">EOF</span><br></pre></td></tr></table></figure></p>
+<p>然后重新加载 sysctl.conf 即可：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo sysctl -p</span><br></pre></td></tr></table></figure></p>
+<h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><ul>
+<li><a href="https://yeasy.gitbooks.io/docker_practice/content/install/centos.html" target="_blank" rel="noopener">CentOS 安装 Docker CE</a></li>
+<li><a href="https://docs.docker.com/install/linux/docker-ce/centos/#set-up-the-repository" target="_blank" rel="noopener">Docker 官方 CentOS 安装文档</a></li>
+<li><a href="https://github.com/moby/moby/issues/35906" target="_blank" rel="noopener">docker-runc did not terminate sucessfully: unknown</a><!--stackedit_data:
+eyJoaXN0b3J5IjpbLTQ5MzE3MDg5M119
+-->
+</li>
+</ul>
+<hr>
+<ul>
+<li><p><a href="/more/donate/index.html"><strong><em><font color="red">我觉得帮助到我了, 支持你一下.</font></em></strong></a><br>   </p>
+</li>
+<li><p><a href="https://www.paypal.me/momodainfo" target="_blank" rel="noopener"><strong><em><font color="red">If you think the article is helpful to you, you can reward me through paypal.</font></em></strong></a></p>
+</li>
+</ul>
+<h3 id="Ads"><a href="#Ads" class="headerlink" title="Ads"></a>Ads</h3><p><em>这是小广告! 如果有需要, 不妨支持一下吧~</em></p>
+<blockquote>
+<p> <a target="_blank" href="https://amazon.cn/gp/search?ie=UTF8&tag=momoda-23&linkCode=ur2&linkId=4a0e4fbec0cfa8dfe540ca999d0bf999&camp=536&creative=3200&index=books&keywords=编程">这些好书您看了吗?</a><img src="//ir-cn.amazon-adsystem.com/e/ir?t=momoda-23&l=ur2&o=28" width="1" height="1" border="0" alt="" style="border:none !important; margin:0px !important;"></p>
+</blockquote>
+<blockquote>
+<p>体育&amp;户外用品推荐</p>
+</blockquote>
+<div align="center"> <a href="https://www.amazon.cn/B07HWB88Z5/dp/B07HWB88Z5/ref=as_sl_pc_tf_til?tag=momoda-23&linkCode=w00&linkId=14df5124f2165d9eb3d65252e60ed2cf&creativeASIN=B07HWB88Z5" target="_blank" rel="noopener"><img src="/se-notes/云计算实践/Kubernetes部署/Docker-CE安装/../more/ads/amazon.gif" width="100%"></a> </div>
+      
+    </div><!-- .entry-content -->
+
+    <footer class="entry-meta">
+    <a href="/se-notes/云计算实践/Kubernetes部署/Docker-CE安装/">
+    <time datetime="2019-01-03T13:49:30.000Z" class="entry-date">
+        1月 3 2019
+    </time>
+</a>
+    
+  <span class="article-delim">&#8226;</span>
+  <div class="article-category">
+  <a class="article-category-link" href="/categories/通用技术/">通用技术</a>, <a class="article-category-link" href="/categories/通用技术/云计算实践/">云计算实践</a>, <a class="article-category-link" href="/categories/通用技术/云计算实践/kubernetes部署/">kubernetes部署</a>
+  </div>
+
+    
+  <span class="article-delim">&#8226;</span>
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/docker/">docker</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/kubernetes/">kubernetes</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/云计算/">云计算</a></li></ul>
+
+    </footer>
+</article>
+
+
+
+
+
+
+  
+    <article id="post-se-notes/云计算实践/Kubernetes部署/README" class="post-se-notes/云计算实践/Kubernetes部署/README post type-post status-publish format-standard hentry">
+    <!---->
+
+      <header class="entry-header">
+        
+        
+  
+    <h1 class="entry-title">
+      <a class="article-title" href="/se-notes/云计算实践/Kubernetes部署/README/">云计算实践-Kubernetes部署-README</a>
+    </h1>
+  
+
+        
+        <div class="comments-link">
+            
+            <a href="javascript:void(0);" data-url="https://wnhby.github.io/se-notes/云计算实践/Kubernetes部署/README/" data-id="cjsbbbf13009ke9s62gt59gtn" class="leave-reply bdsharebuttonbox" data-cmd="more">分享</a>
+        </div><!-- .comments-link -->
+      </header><!-- .entry-header -->
+
+    <div class="entry-content">
+      
+        <!-- TOC -->
+<ul>
+<li><a href="#kubernetes-%E7%AE%80%E4%BB%8B">Kubernetes 简介</a><ul>
+<li><a href="#%E4%BB%80%E4%B9%88%E6%98%AF-kubernetes">什么是 Kubernetes</a></li>
+<li><a href="#%E6%93%8D%E4%BD%9C%E5%AF%B9%E8%B1%A1">操作对象</a><ul>
+<li><a href="#pod">Pod</a></li>
+<li><a href="#service">Service</a></li>
+<li><a href="#replication-controller">Replication Controller</a></li>
+<li><a href="#%E5%85%B3%E4%BA%8E-label">关于 Label</a></li>
+</ul>
+</li>
+<li><a href="#%E5%8A%9F%E8%83%BD%E7%BB%84%E4%BB%B6">功能组件</a></li>
+<li><a href="#%E5%B7%A5%E4%BD%9C%E6%B5%81">工作流</a><ul>
+<li><a href="#%E5%88%9B%E5%BB%BA-pod">创建 pod</a></li>
+<li><a href="#%E5%88%9B%E5%BB%BA-service">创建 service</a></li>
+<li><a href="#%E5%88%9B%E5%BB%BA-controller">创建 controller</a></li>
+<li><a href="#ads">Ads</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<!-- /TOC -->
+<h1 id="Kubernetes-简介"><a href="#Kubernetes-简介" class="headerlink" title="Kubernetes 简介"></a>Kubernetes 简介</h1><h2 id="什么是-Kubernetes"><a href="#什么是-Kubernetes" class="headerlink" title="什么是 Kubernetes"></a>什么是 Kubernetes</h2><p>Kubernetes 是 Google 开源的容器集群管理系统，它构建在 Docker 技术之上，为容器化的应用提供资源调度、部署运行、服务发现、扩容缩容等功能。利用 Kubernetes 可以方便管理跨机器运行的容器化应用，它的主要功能如下：</p>
+<ul>
+<li>使用 Docker 对应用程序包装(package)、实例化(instantiate)、运行(run)</li>
+<li>以集群的方式运行、管理跨机器的容器</li>
+<li>解决 Docker 跨机器容器之间的通讯问题</li>
+<li>Kubernetes 的自我修复机制使得容器集群总是运行在用户期望的状态</li>
+</ul>
+<blockquote>
+<p>当前 Kubernetes 支持 GCE、vShpere、CoreOS、OpenShift、Azure 等平台，除此之外也可以直接运行在物理机上。</p>
+</blockquote>
+<h2 id="操作对象"><a href="#操作对象" class="headerlink" title="操作对象"></a>操作对象</h2><h3 id="Pod"><a href="#Pod" class="headerlink" title="Pod"></a>Pod</h3><p>Pod 是 Kubernetes 最基本的部署调度单元，可以包含 container，逻辑上表示某种应用的一个实例。比如一个 web 站点应用由前端、后端及数据库构建而成，这三个组件将运行在各自的容器中，那么我们可以创建包含三个 container 的 pod。</p>
+<h3 id="Service"><a href="#Service" class="headerlink" title="Service"></a>Service</h3><p>Service 是 pod 的路由代理抽象，用于解决 pod 之间的服务发现问题。因为 pod 的运行状态可动态变化(比如切换机器了、缩容过程中被终止了等)，所以访问端不能以写死 IP 的方式去访问该 pod 提供的服务。Service 的引入旨在保证 pod 的动态变化对访问端透明，访问端只需要知道 service 的地址，由 service 来提供代理。</p>
+<h3 id="Replication-Controller"><a href="#Replication-Controller" class="headerlink" title="Replication Controller"></a>Replication Controller</h3><p>Replication Controller 是 pod 的复制抽象，用于解决 pod 的扩容缩容问题。通常情况下，分布式应用为了性能或高可用性的考虑，需要复制多份资源，并且根据负载情况动态伸缩。通过 Replication Controller，我们可以指定一个应用需要几份复制，Kubernetes 将为每份复制创建一个 pod，并且保证实际运行 pod 数量总是与该复制数量相等（例如，当前某个 pod 宕机时，自动创建新的 pod 来替换）。</p>
+<h3 id="关于-Label"><a href="#关于-Label" class="headerlink" title="关于 Label"></a>关于 Label</h3><p>Label 是用于区分 Pod、Service、Replication Controller 的 key/value 键值对，Pod、Service、 Replication Controller 可以有多个 label，但是每个 label 的 key 只能对应一个 value。Label 是 Service 和 Replication Controller 运行的基础，为了将访问 Service 的请求转发给后端提供服务的多个容器，正是通过标识容器的 label 来选择正确的容器。同样，Replication Controller 也使用 label 来管理通过 pod 模板创建的一组容器，这样无论有多少容器， Replication Controller 都可以更加容易、方便地管理它们。</p>
+<h2 id="功能组件"><a href="#功能组件" class="headerlink" title="功能组件"></a>功能组件</h2><p>Kubernetes 的集群架构是一个典型的 master/slave 模型。</p>
+<p><img src="http://img.blog.csdn.net/20141030000449252?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvemhhbmdqdW4yOTE1/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center" alt="enter image description here"></p>
+<p>master 运行三个组件：</p>
+<ul>
+<li>apiserver：作为 kubernetes 系统的入口，封装了核心对象的增删改查操作，以 RESTFul 接口方式提供给外部客户和内部组件调用。它维护的 REST 对象将持久化到 etcd（一个分布式强一致性的 key/value 存储）。</li>
+<li>scheduler：负责集群的资源调度，为新建的 pod 分配机器。这部分工作分出来变成一个组件，意味着可以很方便地替换成其他的调度器。</li>
+<li>controller-manager：负责执行各种控制器，目前有两类：<ul>
+<li>endpoint-controller：定期关联 service 和 pod (关联信息由 endpoint 对象维护)，保证 service 到 pod 的映射总是最新的。</li>
+<li>replication-controller：定期关联 replicationController 和 pod，保证 replicationController 定义的复制数量与实际运行 pod 的数量总是一致的。</li>
+</ul>
+</li>
+</ul>
+<p>slave（也称作minion）运行两个组件：</p>
+<ul>
+<li>kubelet：负责管控 Docker 容器，如启动/停止、监控运行状态等。它会定期从 etcd 获取分配到本机的 pod，并根据 pod 信息启动或停止相应的容器。同时，它也会接收 apiserver 的 HTTP 请求，汇报 pod 的运行状态。</li>
+<li>proxy：负责为 pod 提供代理。它会定期从 etcd 获取所有的 service，并根据 service 信息创建代理。当某个客户 pod 要访问其他 pod 时，访问请求会经过本机 proxy 做转发。</li>
+</ul>
+<h2 id="工作流"><a href="#工作流" class="headerlink" title="工作流"></a>工作流</h2><p>上文已经提到了 Kubernetes 中最基本的三个操作对象：pod，replicationController 及 service。下面分别从它们的对象创建出发，通过时序图来描述 Kubernetes 各个组件之间的交互及其工作流。</p>
+<h3 id="创建-pod"><a href="#创建-pod" class="headerlink" title="创建 pod"></a>创建 pod</h3><p><img src="http://img.blog.csdn.net/20141030000701946?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvemhhbmdqdW4yOTE1/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center" alt="enter image description here"></p>
+<h3 id="创建-service"><a href="#创建-service" class="headerlink" title="创建 service"></a>创建 service</h3><p><img src="http://img.blog.csdn.net/20141030000741960?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvemhhbmdqdW4yOTE1/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center" alt="enter image description here"></p>
+<h3 id="创建-controller"><a href="#创建-controller" class="headerlink" title="创建 controller"></a>创建 controller</h3><p><img src="http://img.blog.csdn.net/20141030000812671?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvemhhbmdqdW4yOTE1/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center" alt="enter image description here"><br><!--stackedit_data:
+eyJoaXN0b3J5IjpbMTEzOTkyMzk4NV19
+--></p>
+<hr>
+<ul>
+<li><p><a href="/more/donate/index.html"><strong><em><font color="red">我觉得帮助到我了, 支持你一下.</font></em></strong></a><br>   </p>
+</li>
+<li><p><a href="https://www.paypal.me/momodainfo" target="_blank" rel="noopener"><strong><em><font color="red">If you think the article is helpful to you, you can reward me through paypal.</font></em></strong></a></p>
+</li>
+</ul>
+<h3 id="Ads"><a href="#Ads" class="headerlink" title="Ads"></a>Ads</h3><p><em>这是小广告! 如果有需要, 不妨支持一下吧~</em></p>
+<blockquote>
+<p> <a target="_blank" href="https://amazon.cn/gp/search?ie=UTF8&tag=momoda-23&linkCode=ur2&linkId=4a0e4fbec0cfa8dfe540ca999d0bf999&camp=536&creative=3200&index=books&keywords=编程">这些好书您看了吗?</a><img src="//ir-cn.amazon-adsystem.com/e/ir?t=momoda-23&l=ur2&o=28" width="1" height="1" border="0" alt="" style="border:none !important; margin:0px !important;"></p>
+</blockquote>
+<blockquote>
+<p>体育&amp;户外用品推荐</p>
+</blockquote>
+<div align="center"> <a href="https://www.amazon.cn/B07HWB88Z5/dp/B07HWB88Z5/ref=as_sl_pc_tf_til?tag=momoda-23&linkCode=w00&linkId=14df5124f2165d9eb3d65252e60ed2cf&creativeASIN=B07HWB88Z5" target="_blank" rel="noopener"><img src="/se-notes/云计算实践/Kubernetes部署/README/../more/ads/amazon.gif" width="100%"></a> </div>
+      
+    </div><!-- .entry-content -->
+
+    <footer class="entry-meta">
+    <a href="/se-notes/云计算实践/Kubernetes部署/README/">
+    <time datetime="2019-01-03T13:49:30.000Z" class="entry-date">
+        1月 3 2019
+    </time>
+</a>
+    
+  <span class="article-delim">&#8226;</span>
+  <div class="article-category">
+  <a class="article-category-link" href="/categories/通用技术/">通用技术</a>, <a class="article-category-link" href="/categories/通用技术/云计算实践/">云计算实践</a>, <a class="article-category-link" href="/categories/通用技术/云计算实践/kubernetes部署/">kubernetes部署</a>
+  </div>
+
+    
+  <span class="article-delim">&#8226;</span>
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/docker/">docker</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/kubernetes/">kubernetes</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/云计算/">云计算</a></li></ul>
+
+    </footer>
+</article>
+
+
+
+
+
+
+  
+    <article id="post-se-notes/云计算实践/Kubernetes部署/kubeadm部署多节点集群" class="post-se-notes/云计算实践/Kubernetes部署/kubeadm部署多节点集群 post type-post status-publish format-standard hentry">
+    <!---->
+
+      <header class="entry-header">
+        
+        
+  
+    <h1 class="entry-title">
+      <a class="article-title" href="/se-notes/云计算实践/Kubernetes部署/kubeadm部署多节点集群/">kubeadm部署多节点集群</a>
+    </h1>
+  
+
+        
+        <div class="comments-link">
+            
+            <a href="javascript:void(0);" data-url="https://wnhby.github.io/se-notes/云计算实践/Kubernetes部署/kubeadm部署多节点集群/" data-id="cjsbbbf17009me9s6xiogcueo" class="leave-reply bdsharebuttonbox" data-cmd="more">分享</a>
+        </div><!-- .comments-link -->
+      </header><!-- .entry-header -->
+
+    <div class="entry-content">
+      
+        <!-- TOC -->
+<ul>
+<li><a href="#kubeadm-%E9%83%A8%E7%BD%B2%E5%A4%9A%E8%8A%82%E7%82%B9-k8s-%E9%9B%86%E7%BE%A4%E6%95%99%E7%A8%8B191">kubeadm 部署多节点 k8s 集群教程（1.9.1）</a><ul>
+<li><a href="#%E4%B8%80-%E5%89%8D%E6%8F%90%E6%9D%A1%E4%BB%B6">一. 前提条件</a></li>
+<li><a href="#%E4%BA%8C-%E5%AE%89%E8%A3%85%E4%BE%9D%E8%B5%96%E7%8E%AF%E5%A2%83">二. 安装依赖环境</a><ul>
+<li><a href="#%E5%AE%89%E8%A3%85-docker">安装 Docker</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#k8sconf%E6%98%AFk8s%E7%9A%84%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6">k8s.conf是k8s的配置文件</a></li>
+<li><a href="#dashboard-service">——————- Dashboard Service ——————-</a><ul>
+<li><a href="#kubectl-delete--f-kubernetes-dashboardyaml">$ kubectl delete -f kubernetes-dashboard.yaml</a></li>
+</ul>
+</li>
+</ul>
+<!-- /TOC -->
+<h1 id="kubeadm-部署多节点-k8s-集群教程（1-9-1）"><a href="#kubeadm-部署多节点-k8s-集群教程（1-9-1）" class="headerlink" title="kubeadm 部署多节点 k8s 集群教程（1.9.1）"></a>kubeadm 部署多节点 k8s 集群教程（1.9.1）</h1><p>kubeadm 是一个用于快速创建与扩展 k8s 集群的工具包。本教程主要讲述如何使用 kubeadm 构建一个双节点的 k8s 集群（版本为 1.9.1），构建集群中的 pod 通信网络，最后安装可视化的管理控制台。</p>
+<p>本教程的集群节点均是由同一台 PC 所虚拟出来的两台虚机。</p>
+<h2 id="一-前提条件"><a href="#一-前提条件" class="headerlink" title="一. 前提条件"></a>一. 前提条件</h2><p>配置要求如下：</p>
+<ul>
+<li>两台安装有 CentOS 7 操作系统的机器（命名为 kube-1 与 kube-2）</li>
+<li>每台机器拥有 2G 以上内存以及 2核 以上处理器</li>
+<li>每台机器关闭防火墙与 SELinux</li>
+<li>每台机器彼此之间都可以通过网络联通</li>
+<li>拥有一个可以“科学上网”的 ShadowSocksS 服务器</li>
+</ul>
+<p>禁用 swap，以保证 kubelet 正确运行：每台机器执行<code>swapoff -a</code>。（注意：机器重启后可能需要再次禁用 swap）</p>
+<p>确认每台机器的 MAC 地址与 product_uuid 都是独有的。查询 MAC 地址：<code>ifconfig -a</code>，查询 product_uuid：<code>cat /sys/class/dmi/id/product_uuid</code>。</p>
+<p>拥有一个可以科学上网的 VPS 服务器：<a href="https://github.com/Zouzhp3/Learn/blob/master/kubernetes/%E9%85%8D%E7%BD%AE%20VPS%20%E8%BF%9B%E8%A1%8C%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91.md" target="_blank" rel="noopener">VPS 配置 Shadowsocks 教程</a>。</p>
+<p>每台机器都可以科学上网：<a href="https://github.com/Zouzhp3/Learn/blob/master/kubernetes/%28%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%29Linux%20%E9%85%8D%E7%BD%AE%20Shadowsocks%20%E5%AE%A2%E6%88%B7%E7%AB%AF.md" target="_blank" rel="noopener">Linux 配置 Shadowsocks 客户端</a>，以及 <a href="https://github.com/Zouzhp3/Learn/blob/master/kubernetes/%E4%B8%BA%20Docker%20%E9%85%8D%E7%BD%AE%E7%BD%91%E7%BB%9C%E4%BB%A3%E7%90%86.md" target="_blank" rel="noopener">为 Docker 配置网络代理</a>。如果不能科学上网的话，就会导致很多镜像无法正常下载。</p>
+<h2 id="二-安装依赖环境"><a href="#二-安装依赖环境" class="headerlink" title="二. 安装依赖环境"></a>二. 安装依赖环境</h2><h3 id="安装-Docker"><a href="#安装-Docker" class="headerlink" title="安装 Docker"></a>安装 Docker</h3><p>为所有节点（逻辑上的机器）安装 Docker，官方推荐安装 v1.12 版本（过高版本将不兼容 k8s）。可参考 <a href="https://github.com/Zouzhp3/Learn/blob/master/kubernetes/Docker%20CE%20%E5%AE%89%E8%A3%85.md" target="_blank" rel="noopener">Docker CE 安装</a>。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">$ yum-config-manager \</span><br><span class="line">    --add-repo \</span><br><span class="line">    https://mirrors.ustc.edu.cn/docker-ce/linux/centos/docker-ce.repo</span><br><span class="line">$ yum makecache fast</span><br><span class="line">$ yum install -y docker-ce</span><br><span class="line">$ systemctl enable docker &amp;&amp; systemctl start docker</span><br><span class="line">``` ocker stmeablekertesocker</span><br></pre></td></tr></table></figure></p>
+<p> ucgr    r<br>    /tc/docker/eoso<br>  ec atuiersystemdocker  et r ocker<code></code></p>
+<h3 id="安装-kubeadm-kubelet-与-kubectl"><a href="#安装-kubeadm-kubelet-与-kubectl" class="headerlink" title="安装 kubeadm, kubelet 与 kubectl"></a>安装 kubeadm, kubelet 与 kubectl</h3><p>需要在所有节点上安装：</p>
+<ul>
+<li>kubeadm：引导集群的命令工具</li>
+<li>kubelet：运行在集群中所有节点上的组件，负责处理 Pods 与容器。</li>
+<li>kubectl：与集群交互的命令工具</li>
+</ul>
+<p>若可以“科学上网”（否则需要手动下载 rpm 包），则安装命令如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">$ cat &lt;&lt;EOF &gt; /etc/yum.repos.d/kubernetes.repo</span><br><span class="line">[kubernetes]</span><br><span class="line">name=Kubernetes</span><br><span class="line">baseurl=https://packages.cloud.google.com/yum/repos/kubernetes-el7-x86_64</span><br><span class="line">enabled=1</span><br><span class="line">gpgcheck=1</span><br><span class="line">repo_gpgcheck=1</span><br><span class="line">gpgkey=https://packages.cloud.google.com/yum/doc/yum-key.gpg https://packages.cloud.google.com/yum/doc/rpm-package-key.gpg</span><br><span class="line">EOF</span><br><span class="line"></span><br><span class="line">$ yum install -y kubelet-1.9.1 kubeadm-1.9.1 kubectl-1.9.1</span><br><span class="line">$ systemctl enable kubelet &amp;&amp; systemctl start kubelet</span><br></pre></td></tr></table></figure></p>
+<blockquote>
+<p>选择 1.9.1 版本进行下载，但请注意必须确保 kubeadm， kubelet 的版本都一致，且与 kubectl 不低于 kubeadm 的版本。</p>
+</blockquote>
+<p>为防止“科学上网”，则可直接进行下一步。否则就需要手动 kubeadm 初始化 k8s 时 RHEL/CentOS 7 的用户可能会报错配置失败：<code>You should ensure net.bridge.bridge-nf-call-iptables is set to 1 in your sysctl config</code>。需要执行如下命令：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"># k8s.conf是k8s的配置文件</span><br><span class="line">$ cat &lt;&lt;EOF &gt;  /etc/sysctl.d/k8s.conf</span><br><span class="line">net.bridge.bridge-nf-call-ip6tables = 1</span><br><span class="line">net.bridge.bridge-nf-call-iptables = 1</span><br><span class="line">EOF</span><br><span class="line">$ sysctl --system</span><br></pre></td></tr></table></figure></p>
+<p>若 Docker 也配置了代理“科学上网”，则可直接进行下一步，否则就需要手动下载如下镜像到本地：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">REPOSITORY                                               TAG                 IMAGE ID            CREATED             SIZE</span><br><span class="line">gcr.io/google_containers/kube-apiserver-amd64            v1.9.1              e313a3e9d78d        7 weeks ago         210.4 MB</span><br><span class="line">gcr.io/google_containers/kube-scheduler-amd64            v1.9.1              677911f7ae8f        7 weeks ago         62.7 MB</span><br><span class="line">gcr.io/google_containers/kube-proxy-amd64                v1.9.1              e470f20528f9        7 weeks ago         109.1 MB</span><br><span class="line">gcr.io/google_containers/kube-controller-manager-amd64   v1.9.1              4978f9a64966        7 weeks ago         137.8 MB</span><br><span class="line">quay.io/coreos/flannel                                   v0.9.1-amd64        2b736d06ca4c        3 months ago        51.31 MB</span><br><span class="line">gcr.io/google_containers/k8s-dns-sidecar-amd64           1.14.7              db76ee297b85        4 months ago        42.03 MB</span><br><span class="line">gcr.io/google_containers/k8s-dns-kube-dns-amd64          1.14.7              5d049a8c4eec        4 months ago        50.27 MB</span><br><span class="line">gcr.io/google_containers/k8s-dns-dnsmasq-nanny-amd64     1.14.7              5feec37454f4        4 months ago        40.95 MB</span><br><span class="line">gcr.io/google_containers/etcd-amd64                      3.1.10              1406502a6459        5 months ago        192.7 MB</span><br><span class="line">gcr.io/google_containers/pause-amd64                     3.0                 99e59f495ffa        22 months ago       746.9 kB</span><br></pre></td></tr></table></figure></p>
+<p>可通过 <a href="https://kubernetes.io/docs/reference/setup-tools/kubeadm/kubeadm-init/" target="_blank" rel="noopener">官网</a> 来查看所需手动下载的依赖镜像的版本。</p>
+<h2 id="三-使用-kubeadm-初始化集群"><a href="#三-使用-kubeadm-初始化集群" class="headerlink" title="三. 使用 kubeadm 初始化集群"></a>三. 使用 kubeadm 初始化集群</h2><p>在一个节点（该节点将会成为集群的 master ）上使用<code>kubeadm init --kubernetes-version 1.9.1 --pod-network-cidr=10.244.0.0/16</code>来初始化一个集群（<code>--pod-network-cidr</code> 在下一节介绍）。</p>
+<blockquote>
+<p>注意：若主机开启了“科学上网”的网络访问代理的话，需要先关掉主机的代理，否则初始化集群时访问内部 IP 也会经过代理，从而导致报错。</p>
+</blockquote>
+<p>若运行成功，则输出将如下所示：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br></pre></td><td class="code"><pre><span class="line">[kubeadm] WARNING: kubeadm is in beta, please do not use it for production clusters.</span><br><span class="line">[init] Using Kubernetes version: v1.8.0</span><br><span class="line">[init] Using Authorization modes: [Node RBAC]</span><br><span class="line">[preflight] Running pre-flight checks</span><br><span class="line">[kubeadm] WARNING: starting in 1.8, tokens expire after 24 hours by default (if you require a non-expiring token use --token-ttl 0)</span><br><span class="line">[certificates] Generated ca certificate and key.</span><br><span class="line">[certificates] Generated apiserver certificate and key.</span><br><span class="line">[certificates] apiserver serving cert is signed for DNS names [kubeadm-master kubernetes kubernetes.default kubernetes.default.svc kubernetes.default.svc.cluster.local] and IPs [10.96.0.1 10.138.0.4]</span><br><span class="line">[certificates] Generated apiserver-kubelet-client certificate and key.</span><br><span class="line">[certificates] Generated sa key and public key.</span><br><span class="line">[certificates] Generated front-proxy-ca certificate and key.</span><br><span class="line">[certificates] Generated front-proxy-client certificate and key.</span><br><span class="line">[certificates] Valid certificates and keys now exist in &quot;/etc/kubernetes/pki&quot;</span><br><span class="line">[kubeconfig] Wrote KubeConfig file to disk: &quot;admin.conf&quot;</span><br><span class="line">[kubeconfig] Wrote KubeConfig file to disk: &quot;kubelet.conf&quot;</span><br><span class="line">[kubeconfig] Wrote KubeConfig file to disk: &quot;controller-manager.conf&quot;</span><br><span class="line">[kubeconfig] Wrote KubeConfig file to disk: &quot;scheduler.conf&quot;</span><br><span class="line">[controlplane] Wrote Static Pod manifest for component kube-apiserver to &quot;/etc/kubernetes/manifests/kube-apiserver.yaml&quot;</span><br><span class="line">[controlplane] Wrote Static Pod manifest for component kube-controller-manager to &quot;/etc/kubernetes/manifests/kube-controller-manager.yaml&quot;</span><br><span class="line">[controlplane] Wrote Static Pod manifest for component kube-scheduler to &quot;/etc/kubernetes/manifests/kube-scheduler.yaml&quot;</span><br><span class="line">[etcd] Wrote Static Pod manifest for a local etcd instance to &quot;/etc/kubernetes/manifests/etcd.yaml&quot;</span><br><span class="line">[init] Waiting for the kubelet to boot up the control plane as Static Pods from directory &quot;/etc/kubernetes/manifests&quot;</span><br><span class="line">[init] This often takes around a minute; or longer if the control plane images have to be pulled.</span><br><span class="line">[apiclient] All control plane components are healthy after 39.511972 seconds</span><br><span class="line">[uploadconfig] Storing the configuration used in ConfigMap &quot;kubeadm-config&quot; in the &quot;kube-system&quot; Namespace</span><br><span class="line">[markmaster] Will mark node master as master by adding a label and a taint</span><br><span class="line">[markmaster] Master master tainted and labelled with key/value: node-role.kubernetes.io/master=&quot;&quot;</span><br><span class="line">[bootstraptoken] Using token: &lt;token&gt;</span><br><span class="line">[bootstraptoken] Configured RBAC rules to allow Node Bootstrap tokens to post CSRs in order for nodes to get long term certificate credentials</span><br><span class="line">[bootstraptoken] Configured RBAC rules to allow the csrapprover controller automatically approve CSRs from a Node Bootstrap Token</span><br><span class="line">[bootstraptoken] Creating the &quot;cluster-info&quot; ConfigMap in the &quot;kube-public&quot; namespace</span><br><span class="line">[addons] Applied essential addon: kube-dns</span><br><span class="line">[addons] Applied essential addon: kube-proxy</span><br><span class="line"></span><br><span class="line">Your Kubernetes master has initialized successfully!</span><br><span class="line"></span><br><span class="line">To start using your cluster, you need to run (as a regular user):</span><br><span class="line"></span><br><span class="line">  mkdir -p $HOME/.kube</span><br><span class="line">  sudo cp -i /etc/kubernetes/admin.conf $HOME/.kube/config</span><br><span class="line">  sudo chown $(id -u):$(id -g) $HOME/.kube/config</span><br><span class="line"></span><br><span class="line">You should now deploy a pod network to the cluster.</span><br><span class="line">Run &quot;kubectl apply -f [podnetwork].yaml&quot; with one of the options listed at:</span><br><span class="line">  http://kubernetes.io/docs/admin/addons/</span><br><span class="line"></span><br><span class="line">You can now join any number of machines by running the following on each node</span><br><span class="line">as root:</span><br><span class="line"></span><br><span class="line">  kubeadm join --token &lt;token&gt; &lt;master-ip&gt;:&lt;master-port&gt; --discovery-token-ca-cert-hash sha256:&lt;hash&gt;</span><br></pre></td></tr></table></figure></p>
+<p>初始化完毕后，运行以下命令给予用户权限来使用集群：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ mkdir -p $HOME/.kube</span><br><span class="line">$ sudo cp -i /etc/kubernetes/admin.conf $HOME/.kube/config</span><br><span class="line">$ sudo chown $(id -u):$(id -g) $HOME/.kube/config</span><br></pre></td></tr></table></figure></p>
+<p>执行 <code>kubectl get nodes</code>，发现得到了一个状态为<code>NotReady</code>的 Node。</p>
+<p>查看一下集群状态<code>kubectl get cs</code>，确认各个组件都处于 healthy 状态。：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">NAME                 STATUS    MESSAGE              ERROR</span><br><span class="line">scheduler            Healthy   ok</span><br><span class="line">controller-manager   Healthy   ok</span><br><span class="line">etcd-0               Healthy   &#123;&quot;health&quot;: &quot;true&quot;&#125;</span><br></pre></td></tr></table></figure></p>
+<p>查看集群组件 pod 运行情况：<code>kubectl get pods --all-namespaces</code>，正常情况下的输出如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">NAMESPACE     NAME                             READY     STATUS    RESTARTS   AGE</span><br><span class="line">kube-system   etcd-kube-1                      1/1       Running   0          1h</span><br><span class="line">kube-system   kube-apiserver-kube-1            1/1       Running   0          1h</span><br><span class="line">kube-system   kube-controller-manager-kube-1   1/1       Running   0          1h</span><br><span class="line">kube-system   kube-dns-6f4fd4bdf-jthnq         0/3       Pending   0          1h</span><br><span class="line">kube-system   kube-proxy-2r2m4                 1/1       Running   0          1h</span><br><span class="line">kube-system   kube-scheduler-kube-1            1/1       Running   0          1h</span><br></pre></td></tr></table></figure></p>
+<blockquote>
+<p>上面输出的 kube-dns 的状态是正常的，因为集群还没有配置网络。</p>
+</blockquote>
+<p>此外，集群初始化如果遇到问题，可以使用下面的命令进行清理：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">$ kubeadm reset</span><br><span class="line">$ ifconfig cni0 down</span><br><span class="line">$ ip link delete cni0</span><br><span class="line">$ ifconfig flannel.1 down</span><br><span class="line">$ ip link delete flannel.1</span><br><span class="line">$ rm -rf /var/lib/cni/</span><br></pre></td></tr></table></figure></p>
+<h2 id="四-配置集群网络（Flannel）"><a href="#四-配置集群网络（Flannel）" class="headerlink" title="四. 配置集群网络（Flannel）"></a>四. 配置集群网络（Flannel）</h2><p>集群必须安装一个 pod 网络插件以便于 pods 能够互相通信，本教程中使用 Flannel 作为集群配置网络。</p>
+<blockquote>
+<p>为使 flannel 运行成功，<code>kubeadm init</code> 运行时必须加上参数<code>--pod-network-cidr=10.244.0.0/16</code>。</p>
+</blockquote>
+<p>运行：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">kubectl apply -f https://raw.githubusercontent.com/coreos/flannel/v0.9.1/Documentation/kube-flannel.yml</span><br></pre></td></tr></table></figure></p>
+<p>正常输出如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">clusterrole &quot;flannel&quot; created</span><br><span class="line">clusterrolebinding &quot;flannel&quot; created</span><br><span class="line">serviceaccount &quot;flannel&quot; created</span><br><span class="line">configmap &quot;kube-flannel-cfg&quot; created</span><br><span class="line">daemonset &quot;kube-flannel-ds&quot; created</span><br></pre></td></tr></table></figure></p>
+<p>等待一段时间后，查看组件 pod 的运行情况：<code>kubectl get pods --all-namespaces</code>，若所有pods 都处于运行成功的状态，则说明网络部署成功。然后执行 <code>kubectl get nodes</code> 也可以发现 Node 已经处于 Ready 状态了。</p>
+<blockquote>
+<p>注意：若主机有多个网卡，则可能会遭遇错误如右：<a href="https://github.com/kubernetes/kubernetes/issues/39701" target="_blank" rel="noopener">flannel issues 3970</a>。<br>解决该问题（尚未测试）：目前需要在 kube-flannel.yml 中使用<code>--iface</code>参数指定集群主机内网网卡的名称，否则可能会导致 dns 无法解析。因此需要将 kube-flannel.yml 下载到本地，flanneld 启动参数加上 <code>--iface=&lt;iface-name&gt;</code>。</p>
+</blockquote>
+<h3 id="配置-master-节点是否调度-pod（可选）"><a href="#配置-master-节点是否调度-pod（可选）" class="headerlink" title="配置 master 节点是否调度 pod（可选）"></a>配置 master 节点是否调度 pod（可选）</h3><p>出于安全性考虑，在默认情况下 pod 不会被调度到 master 节点上，也就是说它不参与工作负载。但如果需要 master 也能调度 pod，以便于构造一个单节点集群用于开发用，则可以执行以下命令：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ kubectl taint nodes --all node-role.kubernetes.io/master-</span><br></pre></td></tr></table></figure></p>
+<p>输出如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">node &quot;test-01&quot; untainted</span><br><span class="line">taint key=&quot;dedicated&quot; and effect=&quot;&quot; not found.</span><br><span class="line">taint key=&quot;dedicated&quot; and effect=&quot;&quot; not found.</span><br></pre></td></tr></table></figure></p>
+<h2 id="五-向集群中添加节点"><a href="#五-向集群中添加节点" class="headerlink" title="五. 向集群中添加节点"></a>五. 向集群中添加节点</h2><p>Node 是集群中负责运行容器与 Pod 的节点，当需要添加一个主机到集群中成为一个新 Node 时，ssh 连接到该主机，切换到 root 用户权限，运行 master 节点 <code>kubeadm init</code> 时的输出中的参考命令，如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ kubeadm join --token &lt;token&gt; &lt;master-ip&gt;:&lt;master-port&gt; --discovery-token-ca-cert-hash sha256:&lt;hash&gt;</span><br></pre></td></tr></table></figure></p>
+<p>若运行成功则输出如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">[preflight] Running pre-flight checks.</span><br><span class="line">	[WARNING FileExisting-crictl]: crictl not found in system path</span><br><span class="line">[discovery] Trying to connect to API Server &quot;192.168.80.128:6443&quot;</span><br><span class="line">[discovery] Created cluster-info discovery client, requesting info from &quot;https://192.168.80.128:6443&quot;</span><br><span class="line">[discovery] Requesting info from &quot;https://192.168.80.128:6443&quot; again to validate TLS against the pinned public key</span><br><span class="line">[discovery] Cluster info signature and contents are valid and TLS certificate validates against pinned roots, will use API Server &quot;192.168.80.128:6443&quot;</span><br><span class="line">[discovery] Successfully established connection with API Server &quot;192.168.80.128:6443&quot;</span><br><span class="line"></span><br><span class="line">This node has joined the cluster:</span><br><span class="line">* Certificate signing request was sent to master and a response</span><br><span class="line">  was received.</span><br><span class="line">* The Kubelet was informed of the new secure connection details.</span><br><span class="line"></span><br><span class="line">Run &apos;kubectl get nodes&apos; on the master to see this node join the cluster.</span><br></pre></td></tr></table></figure></p>
+<p>过一段时间后查询 <code>kubectl get nodes</code> 即可得到处于 Ready 状态的新 Node。</p>
+<h3 id="尝试运行一个应用（可选-amp-重要）"><a href="#尝试运行一个应用（可选-amp-重要）" class="headerlink" title="尝试运行一个应用（可选&amp;重要）"></a>尝试运行一个应用（可选&amp;重要）</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ kubectl run curl --image=radial/busyboxplus:curl -i --tty</span><br><span class="line">If you don&apos;t see a command prompt, try pressing enter.</span><br><span class="line">[ root@curl-2716574283-xr8zd:/ ]$</span><br></pre></td></tr></table></figure>
+<p>进入后执行 <code>nslookup kubernetes.default</code> 确认是否解析正常:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">$ nslookup kubernetes.default</span><br><span class="line">Server:    10.96.0.10</span><br><span class="line">Address 1: 10.96.0.10 kube-dns.kube-system.svc.cluster.local</span><br><span class="line"></span><br><span class="line">Name:      kubernetes.default</span><br><span class="line">Address 1: 10.96.0.1 kubernetes.default.svc.cluster.local</span><br></pre></td></tr></table></figure></p>
+<h3 id="从-master-以外的节点来控制集群（可选-amp-重要）"><a href="#从-master-以外的节点来控制集群（可选-amp-重要）" class="headerlink" title="从 master 以外的节点来控制集群（可选&amp;重要）"></a>从 master 以外的节点来控制集群（可选&amp;重要）</h3><p>为了让其他节点（或者集群外部的节点）上的 kubectl 可以与集群通信，你需要从 master 节点复制管理员集群配置文件 <code>admin.conf</code> 到目标节点，命令如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ scp root@&lt;master ip&gt;:/etc/kubernetes/admin.conf .</span><br><span class="line">$ kubectl --kubeconfig ./admin.conf get nodes</span><br></pre></td></tr></table></figure></p>
+<blockquote>
+<p><code>admin.conf</code> 给予用户控制集群的超级权限，必须谨慎使用。<br>对于普通用户而言，建议生成一个独一凭证，使得放置该用户于白名单中：<code>$ kubeadm alpha phase kubeconfig user --client-name &lt;CN&gt;</code>，该命令将会输出一个 KubeConfig 文件，你可以保存该文件并发给该普通用户。然后使用<code>$ kubectl create (cluster)rolebinding</code> 启动白名单。</p>
+</blockquote>
+<h3 id="配置-API-Server-的代理到本地-localhost（可选-amp-重要）"><a href="#配置-API-Server-的代理到本地-localhost（可选-amp-重要）" class="headerlink" title="配置 API Server 的代理到本地 localhost（可选&amp;重要）"></a>配置 API Server 的代理到本地 localhost（可选&amp;重要）</h3><p>若需要从<strong>集群外部</strong>连接到集群的 API Server，则可以使用<code>kubectl proxy</code>：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ scp root@&lt;master ip&gt;:/etc/kubernetes/admin.conf .</span><br><span class="line">$ kubectl --kubeconfig ./admin.conf proxy</span><br></pre></td></tr></table></figure></p>
+<p>这样就可以在本地通过 <code>http://localhost:8001/api/v1</code> 来访问集群的 API Server 了。</p>
+<h2 id="六-从集群中删除节点"><a href="#六-从集群中删除节点" class="headerlink" title="六. 从集群中删除节点"></a>六. 从集群中删除节点</h2><p>当需要从一个集群中删除节点时，首先需要停止该节点以确保该节点在关闭前是空的。</p>
+<p>在 master 上运行以下命令：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ kubectl drain &lt;node name&gt; --delete-local-data --force --ignore-daemonsets</span><br><span class="line">$ kubectl delete node &lt;node name&gt;</span><br></pre></td></tr></table></figure></p>
+<p>然后在被删除的节点上重置 kubeadm 的状态即可：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ kubeadm reset</span><br></pre></td></tr></table></figure></p>
+<h2 id="七-安装-Dashboard"><a href="#七-安装-Dashboard" class="headerlink" title="七. 安装 Dashboard"></a>七. 安装 Dashboard</h2><p><a href="https://github.com/kubernetes/dashboard" target="_blank" rel="noopener">Kubernetes Dashboard</a> 是一个基于 web 的 k8s 集群控制台，它允许用户管理和调试已经运行在集群上的应用，甚至可以管理集群本身。</p>
+<p>下载 Dashboard 的 yaml 配置文件：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ wget https://raw.githubusercontent.com/kubernetes/dashboard/master/src/deploy/recommended/kubernetes-dashboard.yaml</span><br></pre></td></tr></table></figure></p>
+<p>由于Dashboard 的 service 配置模式是 ClusterIP 而不能被集群外访问，因此我们需要配置成 NodePort 模式。编辑 <code>kubernetes-dashboard.yaml</code> 文件，在 <code>Dashboard Service</code> 中添加<code>type: NodePort</code>，暴露 Dashboard 服务：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"># ------------------- Dashboard Service ------------------- #</span><br><span class="line"></span><br><span class="line">kind: Service</span><br><span class="line">apiVersion: v1</span><br><span class="line">metadata:</span><br><span class="line">  labels:</span><br><span class="line">    k8s-app: kubernetes-dashboard</span><br><span class="line">  name: kubernetes-dashboard</span><br><span class="line">  namespace: kube-system</span><br><span class="line">spec:</span><br><span class="line">  type: NodePort</span><br><span class="line">  ports:</span><br><span class="line">    - port: 443</span><br><span class="line">      targetPort: 8443</span><br><span class="line">  selector:</span><br><span class="line">    k8s-app: kubernetes-dashboard</span><br></pre></td></tr></table></figure></p>
+<p>根据配置文件安装 Dashboard（若不能“科学上网”则可能下载镜像失败）：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ kubectl create -f kubernetes-dashboard.yaml</span><br></pre></td></tr></table></figure></p>
+<p>执行 <code>kubectl proxy</code> 启动代理后，可以在<strong>代理机本地</strong>通过以下 URL 访问 Dashboard 网站：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http://localhost:8001/api/v1/namespaces/kube-system/services/https:kubernetes-dashboard:/proxy/</span><br></pre></td></tr></table></figure></p>
+<p>也可以在外部通过<code>https://[NodeIP]:[NodePort]</code>来访问。</p>
+<p>查看网站页面的登录 token：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ kubectl -n kube-system get secret | grep kubernetes-dashboard</span><br><span class="line">kubernetes-dashboard-token-jxq7l kubernetes.io/service-account-token 3  22h</span><br><span class="line">$ kubectl describe -n kube-system secret/kubernetes-dashboard-token-jxq7l</span><br></pre></td></tr></table></figure></p>
+<p>当需要卸载 Dashboard ：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ kubectl delete -f kubernetes-dashboard.yaml</span><br></pre></td></tr></table></figure></p>
+<h3 id="如何使用管理员权限？"><a href="#如何使用管理员权限？" class="headerlink" title="如何使用管理员权限？"></a>如何使用管理员权限？</h3><p>如果我们直接使用上面获取的 token 登录 Dashboard 的网站后，发现几乎大部分的权限都不可以使用。 这是因为默认的 <code>kubernetes-dashboard.yaml</code> 文件中的 ServiceAccount <code>kubernetes-dashboard</code> 只有相对较小的权限。</p>
+<p>因此我们需要创建一个 <code>kubernetes-dashboard-admin</code> 的 ServiceAccount 并授予其集群 admin 的权限。创建 <code>kubernetes-dashboard-admin.rbac.yaml</code>：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">---</span><br><span class="line">apiVersion: v1</span><br><span class="line">kind: ServiceAccount</span><br><span class="line">metadata:</span><br><span class="line">  labels:</span><br><span class="line">    k8s-app: kubernetes-dashboard</span><br><span class="line">  name: kubernetes-dashboard-admin</span><br><span class="line">  namespace: kube-system</span><br><span class="line">  </span><br><span class="line">---</span><br><span class="line">apiVersion: rbac.authorization.k8s.io/v1beta1</span><br><span class="line">kind: ClusterRoleBinding</span><br><span class="line">metadata:</span><br><span class="line">  name: kubernetes-dashboard-admin</span><br><span class="line">  labels:</span><br><span class="line">    k8s-app: kubernetes-dashboard</span><br><span class="line">roleRef:</span><br><span class="line">  apiGroup: rbac.authorization.k8s.io</span><br><span class="line">  kind: ClusterRole</span><br><span class="line">  name: cluster-admin</span><br><span class="line">subjects:</span><br><span class="line">- kind: ServiceAccount</span><br><span class="line">  name: kubernetes-dashboard-admin</span><br><span class="line">  namespace: kube-system</span><br></pre></td></tr></table></figure></p>
+<p>执行该文件：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ kubectl create -f kubernetes-dashboard-admin.rbac.yaml</span><br></pre></td></tr></table></figure></p>
+<p>再按照同样的方法查询到 <code>kubernetes-dashboard-admin</code> 的 token ，登录 Dashborad 网站后便可以使用所有功能了。</p>
+<h2 id="八-Heapster-插件部署"><a href="#八-Heapster-插件部署" class="headerlink" title="八. Heapster 插件部署"></a>八. Heapster 插件部署</h2><p>安装 <a href="https://github.com/kubernetes/heapster/" target="_blank" rel="noopener">Heapster</a> 可以为集群添加使用统计和监控功能，为 Dashboard 添加仪表盘。使用 InfluxDB 做为 Heapster 的后端存储，开始部署：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">mkdir -p ~/k8s/heapster</span><br><span class="line">cd ~/k8s/heapster</span><br><span class="line">wget https://raw.githubusercontent.com/kubernetes/heapster/master/deploy/kube-config/influxdb/grafana.yaml</span><br><span class="line">wget https://raw.githubusercontent.com/kubernetes/heapster/master/deploy/kube-config/rbac/heapster-rbac.yaml</span><br><span class="line">wget https://raw.githubusercontent.com/kubernetes/heapster/master/deploy/kube-config/influxdb/heapster.yaml</span><br><span class="line">wget https://raw.githubusercontent.com/kubernetes/heapster/master/deploy/kube-config/influxdb/influxdb.yaml</span><br><span class="line"></span><br><span class="line">kubectl create -f ./</span><br></pre></td></tr></table></figure>
+<p>最后确认所有的 pod 都处于 running 状态，打开 Dashboard，集群的使用统计会以仪表盘的形式显示出来。</p>
+<h2 id="注意事项"><a href="#注意事项" class="headerlink" title="注意事项"></a>注意事项</h2><h3 id="1-为何配置了科学上网也无法-pull-gcr-io-的镜像？"><a href="#1-为何配置了科学上网也无法-pull-gcr-io-的镜像？" class="headerlink" title="1. 为何配置了科学上网也无法 pull gcr.io 的镜像？"></a>1. 为何配置了科学上网也无法 pull gcr.io 的镜像？</h3><p>主机网络代理与 docker 的网络代理设置是不同的，你还需要设置 docker 的网络代理：<a href="https://github.com/Zouzhp3/Learn/blob/master/kubernetes/%E4%B8%BA%20Docker%20%E9%85%8D%E7%BD%AE%E7%BD%91%E7%BB%9C%E4%BB%A3%E7%90%86.md" target="_blank" rel="noopener">为 Docker 配置网络代理</a></p>
+<h3 id="2-kubelet-服务不正常运行"><a href="#2-kubelet-服务不正常运行" class="headerlink" title="2. kubelet 服务不正常运行"></a>2. kubelet 服务不正常运行</h3><p>启动启动报错 </p>
+<p>单独使用 <code>kubelet</code> 服务后命令时 ，发现没有正常运行，日志报错如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">error: failed to run Kubelet: failed to create kubelet: misconfiguration: kubelet cgroup driver: &quot;cgroupfs&quot; is different from docker cgroup driver: &quot;systemd&quot;</span><br><span class="line">``` </span><br><span class="line">kubelet 的配置文件是`/etc/systemd/system/kubelet.service.d/10-kubeadm.conf`，请确保里面`KUBELET_CGROUP_ARGS=--cgroup-driver=systemd`的 `--cgroup-driver`驱动与 `docker info` 里的 `--cgroup-driver` 驱动相同。但即使确保了相同，独自执行`kubelet`命令时也会继续报同样的错。</span><br><span class="line"></span><br><span class="line">后来发现，该配置文件是在集群初始化时才会成功读取，而单独执行`kubelet`时不会读取配置文件。</span><br><span class="line"></span><br><span class="line">因此无视此问题即可，不影响集群初始化。在集群初始化成功后，可以发现`kubelet`服务是正常运行的。后来发现不影响集群初始化，且成功初始化</span><br><span class="line"></span><br><span class="line">可参考：[1.6.0 kubelet fails with error &quot;misconfiguration: kubelet cgroup driver: &quot;cgroupfs&quot; is different from docker cgroup driver: &quot;systemd&quot;](https://github.com/kubernetes/kubernetes/issues/43805)</span><br><span class="line"></span><br><span class="line">### 3. 运行 kubeadm init 时弹出警告</span><br><span class="line"></span><br><span class="line">警告如下：</span><br></pre></td></tr></table></figure></p>
+<p>[preflight] Running pre-flight checks.<br>    [WARNING FileExisting-crictl]: crictl not found in system path<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">经过 github 上的开发者确认，这个 warning 可以无视。</span><br><span class="line"></span><br><span class="line">### 4. 运行 kubeadm init 时报错</span><br><span class="line"></span><br><span class="line">报错如下所示：</span><br></pre></td></tr></table></figure></p>
+<p>[kubelet-check] It seems like the kubelet isn’t running or healthy.<br>[kubelet-check] The HTTP call equal to ‘curl -sSL <a href="http://localhost:10255/healthz" target="_blank" rel="noopener">http://localhost:10255/healthz</a>‘ failed with error: Get <a href="http://localhost:10255/healthz" target="_blank" rel="noopener">http://localhost:10255/healthz</a>: dial tcp [::1]:10255: getsockopt: connection refused.<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">经查资料发现是因为没有禁用 swap（每次机器重启会重置 swap），但是经过重置虚拟机网络以及恢复快照后得到的系统仍然会出现此错误。后来经过重新安装 kubeadm 与 kubelet 成功解决。</span><br><span class="line"></span><br><span class="line">### 5. 忘记了集群初始化成功时输出的参考命令</span><br><span class="line"></span><br><span class="line">如果不小心忘记了集群初始化成功时输出的参考命令，可使用以下命令来查询。</span><br><span class="line"></span><br><span class="line">查看 master 的 token：</span><br></pre></td></tr></table></figure></p>
+<p>$ kubeadm token list | grep authentication,signing | awk ‘{print $1}’<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">查看 master 的 discovery-token-ca-cert-hash：</span><br></pre></td></tr></table></figure></p>
+<p>$ openssl x509 -pubkey -in  /etc/kubernetes/pki/ca.crt | openssl rsa -pubin -outform der 2&gt;/dev/null  | openssl dgst -sha256 -hex | sed ‘s/^.* //‘<br><code>`</code></p>
+<h3 id="6-为何设置了-NodePort-模式也无法从外部访问-Dashboard-网站？"><a href="#6-为何设置了-NodePort-模式也无法从外部访问-Dashboard-网站？" class="headerlink" title="6. 为何设置了 NodePort 模式也无法从外部访问 Dashboard 网站？"></a>6. 为何设置了 NodePort 模式也无法从外部访问 Dashboard 网站？</h3><p>这是因为 Dashboard 配置文件默认采取了 HTTPS 协议，因此需要以 <code>https://[NodeIP]:[NodePort]</code> 的方式来访问。同时又因为 Chrome 浏览器不能支持访问未认证的 https 网站，所以建议使用其他浏览器（如 Firefox）。</p>
+<h2 id="部署总结"><a href="#部署总结" class="headerlink" title="部署总结"></a>部署总结</h2><p>从零开始学习使用 kubeadm 部署一个 k8s 集群总计花了我五天多时间，一开始大部分时间花在了如何下载合适版本的 kubeadm 和 kubelet，以及通过各种手段下载国内获取不到的镜像，但效果仍然不好。之后通过搭建 ShadowSocks 客户端使得可以成功下载合适版本的 kubeadm 和 kubelet，但发现还是 pull 不了镜像，最后发现是因为 Docker 的代理配置与主机的代理配置是不共用的。配置了 Docker 代理后便可以在初始化集群的过程中自动 pull 需要的镜像。通过使用翻墙代理，确实可以少花很多不必要的时间。</p>
+<p>部署期间也遇到一些问题，有的是因为过于钻牛角尖，陷入到单独启动 <code>kubelet</code> 失败的问题中了，误以为该问题必须在集群初始化之前解决；有的是因为理论知识不扎实，对 Docker 的不了解；还有的是就是虚拟机网络配置突然变化导致的玄学和 Chrome 不支持不安全证书的 HTTPS 网站而导致的误判。</p>
+<p>总而言之，以官方文档作为主线，配以他人博客上的成功部署经验，再加上使用翻墙代理，才能够又快又好地部署成功。此外，学会使用虚拟机的快照功能也是很重要的，方便进行重要操作前的备份。</p>
+<h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><p><a href="https://kubernetes.io/docs/setup/independent/install-kubeadm/" target="_blank" rel="noopener">Installing kubeadm</a> （官网）</p>
+<p><a href="https://kubernetes.io/docs/setup/independent/create-cluster-kubeadm/" target="_blank" rel="noopener">Using kubeadm to Create a Cluster</a>（官网）</p>
+<p><a href="https://github.com/kubernetes/dashboard/wiki/Creating-sample-user" target="_blank" rel="noopener">Dashboard: Creating sample user</a> （Dashboard 的 github）</p>
+<p><a href="http://blog.csdn.net/zhuchuangang/article/details/76572157#2-%E9%85%8D%E7%BD%AEkubelet" target="_blank" rel="noopener">使用kubeadm安装kubernetes1.7/1.8/1.9</a></p>
+<p><a href="https://blog.frognew.com/2017/12/kubeadm-install-kubernetes-1.9.html#1%E5%87%86%E5%A4%87" target="_blank" rel="noopener">使用kubeadm安装Kubernetes 1.9</a>（Dashboard）</p>
+<p><a href="https://www.kubernetes.org.cn/2906.html" target="_blank" rel="noopener">使用kubeadm安装Kubernetes 1.8版本</a></p>
+<p><a href="https://www.kubernetes.org.cn/3357.html" target="_blank" rel="noopener">使用 kubeadm 创建 kubernetes 1.9 集群</a></p>
+<p><a href="https://www.zybuluo.com/ncepuwanghui/note/953929" target="_blank" rel="noopener">使用kubeadm在CentOS 7上安装Kubernetes 1.8</a>（Dashboard） 参考资料</p>
+<p><a href="https://kubernetes.io/docs/setup/independent/install-kubeadm/" target="_blank" rel="noopener">Installing kubeadm</a> （来自官网）</p>
+<p><a href="http://blog.csdn.net/zhuchuangang/article/details/76572157#2-%E9%85%8D%E7%BD%AEkubelet" target="_blank" rel="noopener">使用kubeadm安装kubernetes1.7/1.8/1.9</a></p>
+<!--stackedit_data:
+eyJoaXN0b3J5IjpbNDk4MTAzMDE2LDc3Nzg2ODE4OF19
+-->
+<hr>
+<ul>
+<li><p><a href="/more/donate/index.html"><strong><em><font color="red">我觉得帮助到我了, 支持你一下.</font></em></strong></a><br>   </p>
+</li>
+<li><p><a href="https://www.paypal.me/momodainfo" target="_blank" rel="noopener"><strong><em><font color="red">If you think the article is helpful to you, you can reward me through paypal.</font></em></strong></a></p>
+</li>
+</ul>
+<h3 id="Ads"><a href="#Ads" class="headerlink" title="Ads"></a>Ads</h3><p><em>这是小广告! 如果有需要, 不妨支持一下吧~</em></p>
+<blockquote>
+<p> <a target="_blank" href="https://amazon.cn/gp/search?ie=UTF8&tag=momoda-23&linkCode=ur2&linkId=4a0e4fbec0cfa8dfe540ca999d0bf999&camp=536&creative=3200&index=books&keywords=编程">这些好书您看了吗?</a><img src="//ir-cn.amazon-adsystem.com/e/ir?t=momoda-23&l=ur2&o=28" width="1" height="1" border="0" alt="" style="border:none !important; margin:0px !important;"></p>
+</blockquote>
+<blockquote>
+<p>体育&amp;户外用品推荐</p>
+</blockquote>
+<div align="center"> <a href="https://www.amazon.cn/B07HWB88Z5/dp/B07HWB88Z5/ref=as_sl_pc_tf_til?tag=momoda-23&linkCode=w00&linkId=14df5124f2165d9eb3d65252e60ed2cf&creativeASIN=B07HWB88Z5" target="_blank" rel="noopener"><img src="/se-notes/云计算实践/Kubernetes部署/kubeadm部署多节点集群/../more/ads/amazon.gif" width="100%"></a> </div>
+      
+    </div><!-- .entry-content -->
+
+    <footer class="entry-meta">
+    <a href="/se-notes/云计算实践/Kubernetes部署/kubeadm部署多节点集群/">
+    <time datetime="2019-01-03T13:49:30.000Z" class="entry-date">
+        1月 3 2019
+    </time>
+</a>
+    
+  <span class="article-delim">&#8226;</span>
+  <div class="article-category">
+  <a class="article-category-link" href="/categories/通用技术/">通用技术</a>, <a class="article-category-link" href="/categories/通用技术/云计算实践/">云计算实践</a>, <a class="article-category-link" href="/categories/通用技术/云计算实践/kubernetes部署/">kubernetes部署</a>
+  </div>
+
+    
+  <span class="article-delim">&#8226;</span>
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/docker/">docker</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/kubernetes/">kubernetes</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/云计算/">云计算</a></li></ul>
+
+    </footer>
+</article>
+
+
+
+
+
+
+  
+    <article id="post-se-notes/云计算实践/Kubernetes部署/k8s基础教程" class="post-se-notes/云计算实践/Kubernetes部署/k8s基础教程 post type-post status-publish format-standard hentry">
+    <!---->
+
+      <header class="entry-header">
+        
+        
+  
+    <h1 class="entry-title">
+      <a class="article-title" href="/se-notes/云计算实践/Kubernetes部署/k8s基础教程/">k8s基础教程</a>
+    </h1>
+  
+
+        
+        <div class="comments-link">
+            
+            <a href="javascript:void(0);" data-url="https://wnhby.github.io/se-notes/云计算实践/Kubernetes部署/k8s基础教程/" data-id="cjsbbbf19009ne9s68f8s8wpl" class="leave-reply bdsharebuttonbox" data-cmd="more">分享</a>
+        </div><!-- .comments-link -->
+      </header><!-- .entry-header -->
+
+    <div class="entry-content">
+      
+        <!-- TOC -->
+<ul>
+<li><a href="#k8s-集群的介绍安装与配置实践版">K8S 集群的介绍、安装与配置（实践版）</a><pre><code>- [术语简介](#术语简介)
+</code></pre><ul>
+<li><a href="#1--事前准备">1.  事前准备</a></li>
+<li><a href="#2-配置-kubectl-与-minikube">2. 配置 kubectl 与 Minikube</a></li>
+<li><a href="#3-安装-virtualbox">3. 安装 VirtualBox</a></li>
+<li><a href="#4-使用-minikube-运行集群">4. 使用 Minikube 运行集群</a></li>
+<li><a href="#5-在集群上部署应用">5. 在集群上部署应用</a></li>
+<li><a href="#6-查看-pod-与-node">6. 查看 Pod 与 Node</a></li>
+<li><a href="#7-部署-service">7. 部署 Service</a></li>
+<li><a href="#8-调整应用规模">8. 调整应用规模</a></li>
+<li><a href="#9-执行滚动更新">9. 执行滚动更新</a></li>
+<li><a href="#注意事项">注意事项</a></li>
+<li><a href="#参考资料">参考资料</a><ul>
+<li><a href="#ads">Ads</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<!-- /TOC -->
+<h1 id="K8S-集群的介绍、安装与配置（实践版）"><a href="#K8S-集群的介绍、安装与配置（实践版）" class="headerlink" title="K8S 集群的介绍、安装与配置（实践版）"></a>K8S 集群的介绍、安装与配置（实践版）</h1><p>k8s 集群由一个 master 节点与多个 node 节点组成，所有节点均是在逻辑上独立的一个机器 。master 节点是管理整个集群的节点，而 node 节点是具体执行业务的节点，每个 node 都有一个 kubelet 作为其代理用于与 master 通信。</p>
+<p><img src="https://d33wubrfki0l68.cloudfront.net/99d9808dcbf2880a996ed50d308a186b5900cec9/40b94/docs/tutorials/kubernetes-basics/public/images/module_01_cluster.svg" alt="enter image description here"></p>
+<p>而在本教程中，我们介绍 k8s 集群的基本操作：将会在本地机器上部署一个<strong>单 Node 的 k8s 集群</strong>，并尝试在该集群上<strong>部署一个应用</strong>、<strong>配置暴露应用的服务</strong>、以及<strong>对应用进行规模调整与版本更新</strong>。</p>
+<h3 id="术语简介"><a href="#术语简介" class="headerlink" title="术语简介"></a>术语简介</h3><p><a href="https://kubernetes.io/docs/reference/generated/kubectl/kubectl/" target="_blank" rel="noopener">kubectl</a> 是 k8s 的命令行管理工具，管理 k8s 集群需要通过该系列命令进行。</p>
+<p> <a href="https://kubernetes.io/docs/getting-started-guides/minikube/" target="_blank" rel="noopener">Minikube</a> 是一个用于在本地上运行 kubernates 的工具插件。Minikube 可在本地机器上创建一个虚拟机（需要安装对应的虚拟机驱动，如 VirtualBox、KVM 等），从而运行一个单节点的 k8s 集群。原理图如下：</p>
+<p><img src="https://yqfile.alicdn.com/c03a43e0731ca579d1844fb44269fd2fd257bfb3.jpeg" alt="minikube 原理说明图"></p>
+<p><a href="https://www.virtualbox.org/" target="_blank" rel="noopener">VirtualBox</a> 是一款支持 x86 和 AMD64/Intel64 的开源虚拟机软件，支持 Window、Linux 等系统。在本教程中，我们把它作为 Minikube 的虚拟机驱动。</p>
+<h2 id="1-事前准备"><a href="#1-事前准备" class="headerlink" title="1.  事前准备"></a>1.  事前准备</h2><ul>
+<li>准备好一台操作系统为 Linux CentOS 7 系统、内存为 <strong>4G 以上</strong>的虚机（或物理机），完成换源与关闭防火墙和 SELinux</li>
+<li>需要在虚机上安装 VirtualBox 或 KVM 作为虚拟化软件（本教程介绍 VirtualBox 的安装）</li>
+<li>设置 CPU 支持虚拟化 VT-X（若是物理机则在BIOS上设置，若是虚机则在VMware里设置 ）</li>
+</ul>
+<h2 id="2-配置-kubectl-与-Minikube"><a href="#2-配置-kubectl-与-Minikube" class="headerlink" title="2. 配置 kubectl 与 Minikube"></a>2. 配置 kubectl 与 Minikube</h2><p>下载 kubectl 并配置到系统路径：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ curl -LO https://storage.googleapis.com/kubernetes-release/release/v1.9.1/bin/linux/amd64/kubectl</span><br><span class="line">$ chmod +x ./kubectl</span><br><span class="line">$ sudo mv ./kubectl /usr/local/bin/</span><br></pre></td></tr></table></figure></p>
+<blockquote>
+<p>注意 kubectl 的版本必须新于 k8s 服务器的版本，否则会出现校验错误。可通过 <code>curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt</code> 命令查询当前的最新稳定版本。</p>
+</blockquote>
+<p>下载 Minikube 并配置到系统路径：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ curl -Lo minikube https://storage.googleapis.com/minikube/releases/latest/minikube-linux-amd64 </span><br><span class="line">$ chmod +x ./minikube</span><br><span class="line">$ sudo mv ./minikube /usr/local/bin/</span><br></pre></td></tr></table></figure></p>
+<blockquote>
+<p>注意：由于本节所述的下载网址有时会无法通过 curl 命令访问，因此建议直接下载 kubectl 或 minikube 到本地再上传到虚机中。也可以通过其他途径如 <a href="https://github.com/kubernetes/minikube/releases" target="_blank" rel="noopener">minikube 的 github 下载地址</a> 进行下载。</p>
+</blockquote>
+<h2 id="3-安装-VirtualBox"><a href="#3-安装-VirtualBox" class="headerlink" title="3. 安装 VirtualBox"></a>3. 安装 VirtualBox</h2><p>本教程中 minikube 的虚拟机采用 VirtualBox ，安装步骤如下：</p>
+<ol>
+<li>在官网下载对应系统的 VirtualBox rpm 包</li>
+<li>安装 VirtualBox 的依赖包：<code>yum install qt qt-x11 gcc gcc-c++ kernel-devel perl SDL</code></li>
+<li>安装 VirtualBox：<code>rpm -i VirtualBox-5.2-5.2.6_120293_el7-1.x86_64.rpm</code></li>
+<li>添加当前用户到 VirtualBox 创建的用户组 “vboxusers”：<code>usermod -a -G vboxusers </code></li>
+</ol>
+<blockquote>
+<p>在 Linux 下，Minikube 也支持 –vm-driver=none 选项来在本机运行 Kubernetes 组件（此种方式尚未实验）。</p>
+</blockquote>
+<h2 id="4-使用-Minikube-运行集群"><a href="#4-使用-Minikube-运行集群" class="headerlink" title="4. 使用 Minikube 运行集群"></a>4. 使用 Minikube 运行集群</h2><p>执行 <code>minikube start</code> 启动本地 k8s 集群。当正常启动成功时，出现以下输出：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">Starting local Kubernetes v1.8.0 cluster...</span><br><span class="line">Starting VM...</span><br><span class="line">Downloading Minikube ISO</span><br><span class="line"> 140.01 MB / 140.01 MB [============================================] 100.00% 0s</span><br><span class="line">Getting VM IP address...</span><br><span class="line">Moving files into cluster...</span><br><span class="line">Downloading localkube binary</span><br><span class="line"> 148.25 MB / 148.25 MB [============================================] 100.00% 0s</span><br><span class="line">Connecting to cluster...</span><br><span class="line">Setting up kubeconfig...</span><br><span class="line">Starting cluster components...</span><br><span class="line">Kubectl is now configured to use the cluster.</span><br><span class="line">Loading cached images from config file.</span><br></pre></td></tr></table></figure></p>
+<p>执行 <code>minikube status</code> 可查看当前集群状态，输出类似如下所示：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">minikube: Running</span><br><span class="line">cluster: Running</span><br><span class="line">kubectl: Correctly Configured: pointing to minikube-vm at 192.168.99.100</span><br></pre></td></tr></table></figure></p>
+<p>使用 <code>kubectl version</code> 可查看当前的 k8s 集群的客户端与服务端的版本；使用 <code>kubectl cluster-info</code> 可查看集群的详细部署情况；使用 <code>kubectl get nodes</code> 查看集群节点情况。</p>
+<h2 id="5-在集群上部署应用"><a href="#5-在集群上部署应用" class="headerlink" title="5. 在集群上部署应用"></a>5. 在集群上部署应用</h2><p>部署文件（Deployment）是用于指导 k8s 集群如何创建与维护应用实例的。</p>
+<p><img src="https://d33wubrfki0l68.cloudfront.net/152c845f25df8e69dd24dd7b0836a289747e258a/4a1d2/docs/tutorials/kubernetes-basics/public/images/module_02_first_app.svg" alt="enter image description here"></p>
+<p><code>kubectl run</code> 命令用于创建一个新的 Deployment，此命令需要提供 Deployment 的命名以及 app 镜像的地址。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"># 若需要在特定端口运行app，则用 --port 指明运行端口</span><br><span class="line">$ kubectl run kubernetes-bootcamp --image=docker.io/jocatalin/kubernetes-bootcamp:v1 --port=8080</span><br><span class="line"># 创建完成后可以查询 Deployment</span><br><span class="line">$ kubectl get deployments</span><br></pre></td></tr></table></figure></p>
+<p>Pod 是 k8s 集群管理的基本单位。当一个 Deployment 创建后，集群将会创建一个 Pod 来管理应用实例。一个 Pod 是一个 k8s 抽象，代表了一组（一个或多个）应用容器，且这些容器之间共享存储、网络等资源。</p>
+<p>默认情况下，集群中的 Pods 对外部网络是不可见的，但 kubectl 可以创建一个能够转发请求到集群端私有网络的代理：<code>kubectl proxy</code>，执行后的输出类似如下（注意当前终端会阻塞）：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ kubectl proxy</span><br><span class="line">Starting to serve on 127.0.0.1:8001</span><br></pre></td></tr></table></figure></p>
+<p>通过使用 <code>kubectl proxy</code> 所展示的地址，我们就可以直接访问 k8s API，例如 <code>curl http://127.0.0.1:8001/version</code> 就可获取当前 API Server 的版本。</p>
+<p>API Server 会自动根据 pod 的名字来为每个 pod 创建一个访问点（endpoint），该访问点也可以通过 proxy 来直接访问：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ export POD_NAME=$(kubectl get pods -o go-template --template &apos;&#123;&#123;range .items&#125;&#125;&#123;&#123;.metadata.name&#125;&#125;&#123;&#123;&quot;\n&quot;&#125;&#125;&#123;&#123;end&#125;&#125;&apos;)</span><br><span class="line">$ echo Name of the Pod: $POD_NAME</span><br><span class="line">$ curl http://localhost:8001/api/v1/proxy/namespaces/default/pods/$POD_NAME/</span><br></pre></td></tr></table></figure></p>
+<h2 id="6-查看-Pod-与-Node"><a href="#6-查看-Pod-与-Node" class="headerlink" title="6. 查看 Pod 与 Node"></a>6. 查看 Pod 与 Node</h2><p>一个 Pod 运行于一个 Node 上，Node 则是 k8s 集群中的执行业务的逻辑主机（虚拟机或者物理机），由 master 进行管理。一个 Node 可以拥有多个 Pod，且 master 可以在集群中的多个 node 之间自动调度 Pod。示意图如下：</p>
+<p><img src="https://d33wubrfki0l68.cloudfront.net/5cb72d407cbe2755e581b6de757e0d81760d5b86/a9df9/docs/tutorials/kubernetes-basics/public/images/module_03_nodes.svg" alt="enter image description here"></p>
+<p>常用的查询应用的命令包括：</p>
+<ul>
+<li><strong>kubectl get</strong> ： 列出资源</li>
+<li><strong>kubectl describe</strong> : 展示资源详情</li>
+<li><strong>kubectl logs</strong> : 打印某个 Pod 中的一个容器的日志</li>
+<li><strong>kubectl exec</strong> : 在一个 Pod 中的一个容器中执行命令</li>
+</ul>
+<h2 id="7-部署-Service"><a href="#7-部署-Service" class="headerlink" title="7. 部署 Service"></a>7. 部署 Service</h2><p>一个 Service 是集群中的一个抽象，它定义了一组逻辑相关的 Pods 以及如何访问它们的策略。Services 允许独立的 Pods 间的松耦合。</p>
+<p><img src="https://d33wubrfki0l68.cloudfront.net/cc38b0f3c0fd94e66495e3a4198f2096cdecd3d5/ace10/docs/tutorials/kubernetes-basics/public/images/module_04_services.svg" alt="enter image description here"></p>
+<p>Service 使用标签（Label）和选择器（Selector）来匹配一组 Pods。</p>
+<p><img src="https://d33wubrfki0l68.cloudfront.net/b964c59cdc1979dd4e1904c25f43745564ef6bee/f3351/docs/tutorials/kubernetes-basics/public/images/module_04_labels.svg" alt="enter image description here"></p>
+<p>尽管每个 Pod 都有自己独立的 IP，但是这些 IP 要是没有 Service 就无法被外部网络访问。Service 有以下配置模式：</p>
+<ul>
+<li>ClusterIP（默认）： 赋予 Service 一个集群内部 IP 。这种模式使得服务只能在集群内可被访问。</li>
+<li>NodePort：通过 NAT 允许 Service 使用集群内一个 Node 的 IP。从而就可以使用 \&lt;NodeIP>:\&lt;NodePort> 的方式让该 Service 可被集群外部访问。</li>
+<li>LoadBalancer：创建一个外部负载均衡器，并赋予 Service 一个固定的外部 IP。</li>
+<li>ExternalName：不使用代理，赋予 Service 一个任意的名字（由配置文件中的 <code>externalName</code> 参数决定）</li>
+</ul>
+<p>以下命令可创建一个名为 “kubernetes-bootcamp” 的 NodePort 模式的 Service（其对外部网络可见）。再使用 <code>describe service</code> 命令可查看某个 Service 的详情：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ kubectl expose deployment/kubernetes-bootcamp --type=&quot;NodePort&quot; --port 8080</span><br><span class="line">$ kubectl describe services/kubernetes-bootcamp</span><br></pre></td></tr></table></figure></p>
+<p>可设置环境变量 NODE_PORT，通过 \&lt;NodeIP>:\&lt;NodePort> 从外网访问该 Service：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ export NODE_PORT=$(kubectl get services/kubernetes-bootcamp -o go-template=&apos;&#123;&#123;(index .spec.ports 0).nodePort&#125;&#125;&apos;)</span><br><span class="line">$ echo NODE_PORT=$NODE_PORT</span><br><span class="line">$ curl host01:$NODE_PORT</span><br></pre></td></tr></table></figure></p>
+<p>接下来介绍 Label（标签）的使用。Deployment 会自动为 Pod 创建一个 Label，使用<code>kubectl describe</code>可以查看 Label 名字。使用带参的 <code>kubectl get</code> 命令可以查询特定 Label 的 Pod 或 Service。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ kubectl get pods -l run=kubernetes-bootcamp</span><br><span class="line">$ kubectl get services -l run=kubernetes-bootcamp</span><br></pre></td></tr></table></figure></p>
+<p>使用 <code>kubectl label</code> 命令为 Pod 增加一个新 Label 后，可用<code>kubectl describe</code>查询该 Pod 是否已有新 Label：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$ export POD_NAME=$(kubectl get pods -o go-template --template &apos;&#123;&#123;range .items&#125;&#125;&#123;&#123;.metadata.name&#125;&#125;&#123;&#123;&quot;\n&quot;&#125;&#125;&#123;&#123;end&#125;&#125;&apos;)</span><br><span class="line">$ echo Name of the Pod: $POD_NAME</span><br><span class="line">$ kubectl label pod $POD_NAME app=v1</span><br><span class="line">$ kubectl describe pods $POD_NAME</span><br></pre></td></tr></table></figure></p>
+<p>删除一个指定标签的 Service，之后便可测试到外部无法再通过 NodeIP 的方式访问到 app 了，但 app 仍在 Pod 中运行：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ kubectl delete service -l run=kubernetes-bootcamp</span><br><span class="line">$ curl host01:$NODE_PORT</span><br><span class="line">$ kubectl exec -ti $POD_NAME curl localhost:8080</span><br></pre></td></tr></table></figure></p>
+<h2 id="8-调整应用规模"><a href="#8-调整应用规模" class="headerlink" title="8. 调整应用规模"></a>8. 调整应用规模</h2><p>在之前的章节中，Deployment 只创建了一个 Pod 来运行应用，但当通信量增加时，就需要扩展应用数量来满足需求。实现的主要方式则是改变 Deployment 配置中的副本数量。应用规模变化的示意图如下：</p>
+<p><img src="https://d33wubrfki0l68.cloudfront.net/043eb67914e9474e30a303553d5a4c6c7301f378/0d8f6/docs/tutorials/kubernetes-basics/public/images/module_05_scaling1.svg" alt="enter image description here"></p>
+<p><img src="https://d33wubrfki0l68.cloudfront.net/30f75140a581110443397192d70a4cdb37df7bfc/b5f56/docs/tutorials/kubernetes-basics/public/images/module_05_scaling2.svg" alt="enter image description here"></p>
+<p>若当前集群已有一个 Deployment（假设名为”kubernetes-bootcamp”），则可使用<code>kubectl scale</code>命令来扩展副本数量到 4 个，之后便可以检查到 pods 数量发生了变化。同时该变化也被 Deployment 记录到日志，可在详情中查看。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$ kubectl scale deployments/kubernetes-bootcamp --replicas=4</span><br><span class="line">$ kubectl get deployments</span><br><span class="line">$ kubectl get pods -o wide</span><br><span class="line">$ kubectl describe deployments/kubernetes-bootcamp</span><br></pre></td></tr></table></figure></p>
+<h2 id="9-执行滚动更新"><a href="#9-执行滚动更新" class="headerlink" title="9. 执行滚动更新"></a>9. 执行滚动更新</h2><p>通常用户希望应用可一直被访问，而开发者希望应用可短时间内更新多次。而<strong>滚动更新</strong>能满足该要求，允许应用以零停机时间进行部署更新（通过新增的 Pods 来更新 Pods 实例）。默认情况下，更新过程中不可用 Pods 的最大数量与新创建 Pods 的最大数量相等。k8s 集群也可以回滚该更新。</p>
+<p><img src="https://d33wubrfki0l68.cloudfront.net/678bcc3281bfcc588e87c73ffdc73c7a8380aca9/703a2/docs/tutorials/kubernetes-basics/public/images/module_06_rollingupdates2.svg" alt="enter image description here"></p>
+<p><img src="https://d33wubrfki0l68.cloudfront.net/9b57c000ea41aca21842da9e1d596cf22f1b9561/91786/docs/tutorials/kubernetes-basics/public/images/module_06_rollingupdates3.svg" alt="enter image description here"></p>
+<p><img src="https://d33wubrfki0l68.cloudfront.net/6d8bc1ebb4dc67051242bc828d3ae849dbeedb93/fbfa8/docs/tutorials/kubernetes-basics/public/images/module_06_rollingupdates4.svg" alt="enter image description here"></p>
+<p>使用<code>set image</code>命令可进行镜像更新，<code>rollout status</code>命令可进行更新确认提交，<code>rollout undo</code>可进行更新回滚。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ kubectl set image deployments/kubernetes-bootcamp kubernetes-bootcamp=jocatalin/kubernetes-bootcamp:v2</span><br><span class="line">$ kubectl rollout status deployments/kubernetes-bootcamp</span><br><span class="line">$ kubectl rollout undo deployments/kubernetes-bootcamp</span><br></pre></td></tr></table></figure></p>
+<h2 id="注意事项"><a href="#注意事项" class="headerlink" title="注意事项"></a>注意事项</h2><ol>
+<li>机器的内存必须在4G以上，否则启动 VirtualBox 时会失败</li>
+<li>使用 curl 下载时，偶尔会因为网速问题无法下载成功。此时应当通过其他方式下载文件然后手动上传到系统中</li>
+<li>启动 minikube 时可能会存在 localkube 找不到对应文件的情况，这是因为 localkube 的镜像下载不成功。</li>
+</ol>
+<h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><p><a href="https://kubernetes.io/docs/getting-started-guides/minikube/#minikube-features" target="_blank" rel="noopener">Running Kubernetes Locally via Minikube</a>（来自官网）</p>
+<p><a href="https://linux.cn/article-8847-1.html" target="_blank" rel="noopener">Minikube：使用 Kubernetes 进行本地开发</a><br><!--stackedit_data:
+eyJoaXN0b3J5IjpbOTQ2MjI4MjY5XX0=
+--></p>
+<hr>
+<ul>
+<li><p><a href="/more/donate/index.html"><strong><em><font color="red">我觉得帮助到我了, 支持你一下.</font></em></strong></a><br>   </p>
+</li>
+<li><p><a href="https://www.paypal.me/momodainfo" target="_blank" rel="noopener"><strong><em><font color="red">If you think the article is helpful to you, you can reward me through paypal.</font></em></strong></a></p>
+</li>
+</ul>
+<h3 id="Ads"><a href="#Ads" class="headerlink" title="Ads"></a>Ads</h3><p><em>这是小广告! 如果有需要, 不妨支持一下吧~</em></p>
+<blockquote>
+<p> <a target="_blank" href="https://amazon.cn/gp/search?ie=UTF8&tag=momoda-23&linkCode=ur2&linkId=4a0e4fbec0cfa8dfe540ca999d0bf999&camp=536&creative=3200&index=books&keywords=编程">这些好书您看了吗?</a><img src="//ir-cn.amazon-adsystem.com/e/ir?t=momoda-23&l=ur2&o=28" width="1" height="1" border="0" alt="" style="border:none !important; margin:0px !important;"></p>
+</blockquote>
+<blockquote>
+<p>体育&amp;户外用品推荐</p>
+</blockquote>
+<div align="center"> <a href="https://www.amazon.cn/B07HWB88Z5/dp/B07HWB88Z5/ref=as_sl_pc_tf_til?tag=momoda-23&linkCode=w00&linkId=14df5124f2165d9eb3d65252e60ed2cf&creativeASIN=B07HWB88Z5" target="_blank" rel="noopener"><img src="/se-notes/云计算实践/Kubernetes部署/k8s基础教程/../more/ads/amazon.gif" width="100%"></a> </div>
+      
+    </div><!-- .entry-content -->
+
+    <footer class="entry-meta">
+    <a href="/se-notes/云计算实践/Kubernetes部署/k8s基础教程/">
+    <time datetime="2019-01-03T13:49:30.000Z" class="entry-date">
+        1月 3 2019
+    </time>
+</a>
+    
+  <span class="article-delim">&#8226;</span>
+  <div class="article-category">
+  <a class="article-category-link" href="/categories/通用技术/">通用技术</a>, <a class="article-category-link" href="/categories/通用技术/云计算实践/">云计算实践</a>, <a class="article-category-link" href="/categories/通用技术/云计算实践/kubernetes部署/">kubernetes部署</a>
+  </div>
+
+    
+  <span class="article-delim">&#8226;</span>
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/docker/">docker</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/kubernetes/">kubernetes</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/云计算/">云计算</a></li></ul>
+
+    </footer>
+</article>
+
+
+
+
+
+
+  
+  
+
+</div></div>
+        <div id="secondary" class="widget-area" role="complementary">
+  
+    <aside id="search" class="widget widget_search"><form role="search" method="get" accept-charset="utf-8" id="searchform" class="searchform" action="//google.com/search">
+    <div>
+        <input type="text" value="" name="q">
+        <input type="submit" id="searchsubmit" value="google搜索">
+    </div>
+</form></aside>
+
+  
+    
+  <aside class="widget">
+    <h3 class="widget-title">Recents</h3>
+    <div class="widget-content">
+      <ul>
+        
+          <li>
+            <a href="/系统剩余空间查看/">系统剩余空间查看</a>
+          </li>
+        
+          <li>
+            <a href="/数据库分类/">数据库分类</a>
+          </li>
+        
+          <li>
+            <a href="/se-notes/Linux基础/README/">Linux基础-README</a>
+          </li>
+        
+          <li>
+            <a href="/se-notes/云计算实践/区块链相关/区块链简介/">区块链简介</a>
+          </li>
+        
+          <li>
+            <a href="/se-notes/云计算实践/集群高可用方案/Heartbeat双机热备方案/">Heartbeat双机热备方案</a>
+          </li>
+        
+      </ul>
+    </div>
+  </aside>
+
+  
+    
+  <aside class="widget">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget-content">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/">一月 2019</a><span class="archive-list-count">56</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">十一月 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">二月 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/09/">九月 2017</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/01/">一月 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/11/">十一月 2015</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/01/">一月 2014</a><span class="archive-list-count">1</span></li></ul>
+    </div>
+  </aside>
+
+  
+    
+  <aside class="widget">
+    <h3 class="widget-title">Categories</h3>
+    <div class="widget-content">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Graphics/">Graphics</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Linux/">Linux</a><span class="category-list-count">7</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Linux/Shell/">Shell</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Linux/linux基础/">linux基础</a><span class="category-list-count">6</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/协议证书/">协议证书</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/协议证书/openssl/">openssl</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/数据库/">数据库</a><span class="category-list-count">4</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/数据库/数据库基础/">数据库基础</a><span class="category-list-count">3</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/框架/">框架</a><span class="category-list-count">9</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/框架/python-web应用框架/">python-web应用框架</a><span class="category-list-count">9</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/版本控制/">版本控制</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/版本控制/Git/">Git</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/编程语言/">编程语言</a><span class="category-list-count">13</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/编程语言/java/">java</a><span class="category-list-count">13</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/网络通讯/">网络通讯</a><span class="category-list-count">11</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/网络通讯/大小端/">大小端</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/网络通讯/计算机网络基础/">计算机网络基础</a><span class="category-list-count">10</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/路由器/">路由器</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/路由器/openwrt/">openwrt</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/通用技术/">通用技术</a><span class="category-list-count">13</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/通用技术/Docker/">Docker</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/通用技术/云计算实践/">云计算实践</a><span class="category-list-count">11</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/通用技术/云计算实践/kubernetes部署/">kubernetes部署</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/通用技术/云计算实践/区块链/">区块链</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/通用技术/云计算实践/集群高可用方案/">集群高可用方案</a><span class="category-list-count">4</span></li></ul></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/默认/">默认</a><span class="category-list-count">1</span></li></ul>
+    </div>
+  </aside>
+
+  
+    
+  <aside class="widget">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget-content">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/CS-Notes/">CS-Notes</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/PEM证书/">PEM证书</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Shell/">Shell</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/cron/">cron</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/database/">database</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/diagrams/">diagrams</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/docker/">docker</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/docker-qq/">docker-qq</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/flask/">flask</a><span class="tag-list-count">9</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/git/">git</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/graphics/">graphics</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/http/">http</a><span class="tag-list-count">10</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/informationisbeautiful/">informationisbeautiful</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/java基础/">java基础</a><span class="tag-list-count">13</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/java语法/">java语法</a><span class="tag-list-count">13</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/kubernetes/">kubernetes</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/linux/">linux</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mysql/">mysql</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/network/">network</a><span class="tag-list-count">10</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/openssl/">openssl</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/openwrt/">openwrt</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/p12/">p12</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/pfx/">pfx</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/tcp-ip/">tcp/ip</a><span class="tag-list-count">10</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/web开发/">web开发</a><span class="tag-list-count">9</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/云计算/">云计算</a><span class="tag-list-count">11</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/区块链/">区块链</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/大小端/">大小端</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/数据库/">数据库</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/系统管理/">系统管理</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/计算机网络/">计算机网络</a><span class="tag-list-count">10</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/集群/">集群</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/默认/">默认</a><span class="tag-list-count">1</span></li></ul>
+    </div>
+  </aside>
+
+  
+    
+  <aside class="widget">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget-content tagcloud">
+      <a href="/tags/CS-Notes/" style="font-size: 10px;">CS-Notes</a> <a href="/tags/PEM证书/" style="font-size: 10px;">PEM证书</a> <a href="/tags/Shell/" style="font-size: 10px;">Shell</a> <a href="/tags/cron/" style="font-size: 10px;">cron</a> <a href="/tags/database/" style="font-size: 10px;">database</a> <a href="/tags/diagrams/" style="font-size: 10px;">diagrams</a> <a href="/tags/docker/" style="font-size: 15px;">docker</a> <a href="/tags/docker-qq/" style="font-size: 10px;">docker-qq</a> <a href="/tags/flask/" style="font-size: 16.25px;">flask</a> <a href="/tags/git/" style="font-size: 10px;">git</a> <a href="/tags/graphics/" style="font-size: 10px;">graphics</a> <a href="/tags/http/" style="font-size: 17.5px;">http</a> <a href="/tags/informationisbeautiful/" style="font-size: 10px;">informationisbeautiful</a> <a href="/tags/java基础/" style="font-size: 20px;">java基础</a> <a href="/tags/java语法/" style="font-size: 20px;">java语法</a> <a href="/tags/kubernetes/" style="font-size: 13.75px;">kubernetes</a> <a href="/tags/linux/" style="font-size: 15px;">linux</a> <a href="/tags/mysql/" style="font-size: 11.25px;">mysql</a> <a href="/tags/network/" style="font-size: 17.5px;">network</a> <a href="/tags/openssl/" style="font-size: 10px;">openssl</a> <a href="/tags/openwrt/" style="font-size: 10px;">openwrt</a> <a href="/tags/p12/" style="font-size: 10px;">p12</a> <a href="/tags/pfx/" style="font-size: 10px;">pfx</a> <a href="/tags/tcp-ip/" style="font-size: 17.5px;">tcp/ip</a> <a href="/tags/web开发/" style="font-size: 16.25px;">web开发</a> <a href="/tags/云计算/" style="font-size: 18.75px;">云计算</a> <a href="/tags/区块链/" style="font-size: 10px;">区块链</a> <a href="/tags/大小端/" style="font-size: 10px;">大小端</a> <a href="/tags/数据库/" style="font-size: 12.5px;">数据库</a> <a href="/tags/系统管理/" style="font-size: 15px;">系统管理</a> <a href="/tags/计算机网络/" style="font-size: 17.5px;">计算机网络</a> <a href="/tags/集群/" style="font-size: 13.75px;">集群</a> <a href="/tags/默认/" style="font-size: 10px;">默认</a>
+    </div>
+  </aside>
+
+  
+    <aside class="widget">
+    <h3 class="widget-title">Links</h3>
+    <div class="widget-content">
+		<ul id="link-list">
+		<!-- link begin -->
+
+		<li><a href="https://www.google.com/">google</a></li>
+		<li><a href="https://www.baidu.com/">baidu</a></li>
+		
+		<!-- link end -->
+		</ul>
+    </div>
+</aside>
+
+  
+    <aside class="widget">
+    <h3 class="widget-title">Ads</h3>
+    <div class="widget-content">
+	 
+			* <a target="_blank" href="https://amazon.cn/gp/search?ie=UTF8&tag=momoda-23&linkCode=ur2&linkId=4a0e4fbec0cfa8dfe540ca999d0bf999&camp=536&creative=3200&index=books&keywords=编程">这些好书您看了吗?</a><img src="//ir-cn.amazon-adsystem.com/e/ir?t=momoda-23&l=ur2&o=28" width="1" height="1" border="0" alt="" style="border:none !important; margin:0px !important;">
+			<br><br>
+			* 体育&户外用品推荐>
+			<div align="center"> <a href="https://www.amazon.cn/B07HWB88Z5/dp/B07HWB88Z5/ref=as_sl_pc_tf_til?tag=momoda-23&linkCode=w00&linkId=14df5124f2165d9eb3d65252e60ed2cf&creativeASIN=B07HWB88Z5"><img src="/more/ads/amazon.gif" width="100%"></a> </div>
+
+    </div>
+</aside>
+
+  
+</div>
+      </div>
+      <footer id="colophon" role="contentinfo">
+    <p>&copy; 2019 momoda
+    All rights reserved.</p>
+    <p>Powered by <a href="https://hexo.io/" target="_blank">Hexo</a></p>
+    <a href="javascript:scrollTo(0,0);">返回顶部</a>
+</footer>
+
+    <script>window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"1","bdMiniList":false,"bdPic":"","bdStyle":"2","bdSize":"16"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];</script>
+
+<script src="/js/jquery-2.0.3.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+<script src="/js/navigation.js"></script>
+
+
+<script type="text/javascript" src="https://js.users.51.la/19862371.js"></script>
+<div id="bg"></div>
+
+  </div>
+</body>
+</html>

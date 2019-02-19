@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="utf-8">
+  
+  
+  <meta name="description" content="momoda">
+  
+
+  
+  <meta name="keywords" content="momoda">
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  <title>Spring概述 | Just another blog</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="概述 依赖注入（DI） 面向切面编程（AOP） Spring 容器 应用上下文 bean 的生命周期   Spring 其他模块- [Spring 容器](#spring-容器-1) - [AOP 模块](#aop-模块) - [数据访问和集成](#数据访问和集成) - [Web 与远程调用](#web-与远程调用) - [测试](#测试) - [Ads](#ads)    概述Spring">
+<meta name="keywords" content="java语法,java基础">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Spring概述">
+<meta property="og:url" content="https://wnhby.github.io/se-notes/Java基础/Spring概述/index.html">
+<meta property="og:site_name" content="Just another blog">
+<meta property="og:description" content="概述 依赖注入（DI） 面向切面编程（AOP） Spring 容器 应用上下文 bean 的生命周期   Spring 其他模块- [Spring 容器](#spring-容器-1) - [AOP 模块](#aop-模块) - [数据访问和集成](#数据访问和集成) - [Web 与远程调用](#web-与远程调用) - [测试](#测试) - [Ads](#ads)    概述Spring">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/3131012-0fdb736b21c8cc31.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://ir-cn.amazon-adsystem.com/e/ir?t=momoda-23&l=ur2&o=28">
+<meta property="og:image" content="https://wnhby.github.io/se-notes/Java基础/more/ads/amazon.gif">
+<meta property="og:updated_time" content="2019-02-19T05:19:06.422Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Spring概述">
+<meta name="twitter:description" content="概述 依赖注入（DI） 面向切面编程（AOP） Spring 容器 应用上下文 bean 的生命周期   Spring 其他模块- [Spring 容器](#spring-容器-1) - [AOP 模块](#aop-模块) - [数据访问和集成](#数据访问和集成) - [Web 与远程调用](#web-与远程调用) - [测试](#测试) - [Ads](#ads)    概述Spring">
+<meta name="twitter:image" content="http://upload-images.jianshu.io/upload_images/3131012-0fdb736b21c8cc31.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+  
+    <link rel="alternative" href="/atom.xml" title="Just another blog" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/css/images/favicon.ico">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  
+
+  
+  <!-- baidu webmaster push -->
+  <script src="//push.zhanzhang.baidu.com/push.js"></script>
+</head></html>
+<body class="home blog custom-background custom-font-enabled single-author">
+  <div id="page" class="hfeed site">
+      <header id="masthead" class="site-header" role="banner">
+    <hgroup>
+      <h1 class="site-title">
+        <a href="/" title="Just another blog" rel="home">Just another blog</a>
+      </h1>
+      
+        <h2 class="site-description">
+          <a href="/" id="subtitle">momoda blog</a>
+        </h2>
+      
+    </hgroup>
+
+    <nav id="site-navigation" class="main-navigation" role="navigation">
+            <button class="menu-toggle">菜单</button>
+            <a class="assistive-text" href="/#content" title="跳至内容">跳至内容</a><!--TODO-->
+            <div class="menu-main-container">
+                <ul id="menu-main" class="nav-menu">
+                
+                    <li class="menu-item menu-item-type-post_type menu-item-object-page"><a href="/">Home</a></li>
+                
+                    <li class="menu-item menu-item-type-post_type menu-item-object-page"><a href="/atom.xml">RSS</a></li>
+                
+                    <li class="menu-item menu-item-type-post_type menu-item-object-page"><a href="/sitemap.xml">Site map</a></li>
+                
+                    <li class="menu-item menu-item-type-post_type menu-item-object-page"><a href="/more/share.html">Share</a></li>
+                
+                </ul>
+            </div>
+    </nav>
+</header>
+
+      <div id="main" class="wrapper">
+        <div id="primary" class="site-content"><div id="content" role="main"><article id="post-se-notes/Java基础/Spring概述" class="post-se-notes/Java基础/Spring概述 post type-post status-publish format-standard hentry">
+    <!---->
+
+      <header class="entry-header">
+        
+        
+  
+    <h1 class="entry-title article-title">
+      Spring概述
+    </h1>
+  
+
+        
+        <div class="comments-link">
+            
+            <a href="javascript:void(0);" data-url="https://wnhby.github.io/se-notes/Java基础/Spring概述/" data-id="cjsbbbewl001ze9s6jug726in" class="leave-reply bdsharebuttonbox" data-cmd="more">分享</a>
+        </div><!-- .comments-link -->
+      </header><!-- .entry-header -->
+
+    <div class="entry-content">
+      
+        <!-- TOC -->
+<ul>
+<li><a href="#概述">概述</a></li>
+<li><a href="#依赖注入di">依赖注入（DI）</a></li>
+<li><a href="#面向切面编程aop">面向切面编程（AOP）</a></li>
+<li><a href="#spring-容器">Spring 容器</a><ul>
+<li><a href="#应用上下文">应用上下文</a></li>
+<li><a href="#bean-的生命周期">bean 的生命周期</a></li>
+</ul>
+</li>
+<li><a href="#spring-其他模块">Spring 其他模块</a><pre><code>- [Spring 容器](#spring-容器-1)
+- [AOP 模块](#aop-模块)
+- [数据访问和集成](#数据访问和集成)
+- [Web 与远程调用](#web-与远程调用)
+- [测试](#测试)
+- [Ads](#ads)
+</code></pre></li>
+</ul>
+<!-- /TOC -->
+<h1 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h1><p>Spring 是一个为了解决企业级应用开发的复杂性而创建的开源框架。Spring 不仅仅局限于服务器端开发，任何 Java 应用都能在简单性、可测试性和松耦合等方面从 Spring 中获益。<strong>简化 Java 开发是 Spring 最根本的使命</strong>。</p>
+<p>为了降低 Java 开发的复杂性，Spring 采取了以下策略：</p>
+<ul>
+<li>基于 POJO 的轻量级和最小侵入性编程（侵入性：强迫应用继承框架的类或接口从而和框架绑死）</li>
+<li>通过依赖注入和面向接口实现松耦合</li>
+<li>基于切面和惯例进行声明式编程</li>
+<li>通过切面和模板减少样板式代码</li>
+</ul>
+<h1 id="依赖注入（DI）"><a href="#依赖注入（DI）" class="headerlink" title="依赖注入（DI）"></a>依赖注入（DI）</h1><p>任何一个有实际意义的应用都由两个以上的类组成，这些类互相协作来完成特定的业务逻辑。但如果按照传统的做法，让每个对象负责管理与自己相互协作的对象（即所依赖的对象）的引用，将会导致高度耦合和难以测试的代码。</p>
+<blockquote>
+<p>耦合具有两面性：一方面紧密耦合的代码难以测试与复用，另一方面一定程度的耦合是必须的——完全没有耦合的代码什么也做不了。因此耦合是必须的，但应当谨慎管理。</p>
+</blockquote>
+<p>通过依赖注入（DI），对象的依赖关系将由系统中负责协调各对象的第三方组件在创建对象的时候进行设定，对象无需自行创建或管理它们的依赖关系，从而实现<strong>松耦合</strong>。而且如果一个对象只通过接口（而非具体实现）来表明依赖关系，则这种依赖就能在对象本身无感知的情况下，用不同的具体实现进行替换。</p>
+<p>创建应用组件之间协作的行为称为<strong>装配</strong>。Spring 有多种装配 bean 的方式，其中使用 XML 配置文件是一种常见的装配方式。</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!-- knignt.xml  --&gt;</span></span><br><span class="line">&lt;?xml version="1.0" encoding="UTF-8" ?&gt;</span><br><span class="line"><span class="tag">&lt;<span class="name">beans</span> <span class="attr">xmlns</span>=<span class="string">"http://www.springframework.org/schema/beans"</span></span></span><br><span class="line"><span class="tag">	<span class="attr">xmlns:xsi</span>=<span class="string">"http://www.w3.org/2001/XMLSchema-instance"</span> </span></span><br><span class="line"><span class="tag">	<span class="attr">xsi:schemaLocation</span>=<span class="string">"http://www.springframework.org/schema/beans </span></span></span><br><span class="line"><span class="tag"><span class="string">       http://www.springframework.org/schema/beans/spring-beans-4.0.xsd"</span>&gt;</span></span><br><span class="line"><span class="comment">&lt;!-- 注入Quest bean --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">"knight"</span> <span class="attr">class</span>=<span class="string">"com.war.knights.BravaKnight"</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">constructor-arg</span> <span class="attr">ref</span>=<span class="string">"quest"</span> /&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">bean</span>&gt;</span></span><br><span class="line"><span class="comment">&lt;!-- 创建SavaGirlQuest bean --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">"quest"</span> <span class="attr">class</span>=<span class="string">"com.war.knights.SavaGirlQuest"</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">constructor-arg</span> <span class="attr">value</span>=<span class="string">"Mary"</span> /&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">bean</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;/<span class="name">beans</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>Spring 也支持使用 <strong>Java 注解</strong> 来描述配置。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">import org.springframework.context.annotation.Bean;</span><br><span class="line">import org.springframework.context.annotation.Configuration;</span><br><span class="line"></span><br><span class="line">import com.war.knights.Knight;</span><br><span class="line">import com.war.knights.BraveKnight;</span><br><span class="line">import com.war.knights.Quest;</span><br><span class="line">import com.war.knights.SaveGirlQuest;</span><br><span class="line"></span><br><span class="line">@Configuration</span><br><span class="line">public class KnightConfig&#123;</span><br><span class="line">	@Bean</span><br><span class="line">	public Knight knight()&#123;</span><br><span class="line">		return new BraveKnignt(quest());</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	@Bean</span><br><span class="line">	public Quest quest()&#123;</span><br><span class="line">		return new SaveGirlQuest(&quot;Mary&quot;);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>Spring 通过应用上下文（Application Context）装载 bean 的定义并把它们组装起来。Spring 有多种应用上下文的实现，主要区别在于用何种方式加载配置。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">// 使用上下文加载配置文件并读取bean</span><br><span class="line">import org.springframework.context.support.ClassPathXmlApplicationContext;</span><br><span class="line"></span><br><span class="line">public class KnightMain&#123;</span><br><span class="line">	public static void main(String[] args) throws Exception&#123;</span><br><span class="line">		// 加载上下文</span><br><span class="line">		ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext(&quot;META-INF/spring/knight.xml&quot;);</span><br><span class="line">		// 获取 knight bean</span><br><span class="line">		Knight knight = context.getBean(Knight.class);</span><br><span class="line">		// 使用 knight</span><br><span class="line">		knight.embarkOnQuest();</span><br><span class="line">		context.close();</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>main() 方法基于 knight.xml 文件创建了 Spring 应用上下文，并调用上下文获取了 ID 为 knight 的 bean。注意：该类完全不知道骑士接受何种探险任务，而且完全没有意识到是由 BraveKnight 来执行的，只有 knight.xml 知道哪个骑士执行哪种探险任务。</p>
+<h1 id="面向切面编程（AOP）"><a href="#面向切面编程（AOP）" class="headerlink" title="面向切面编程（AOP）"></a>面向切面编程（AOP）</h1><p>DI 能够让相互协作的软件实体保持松耦合，而 AOP 则允许把遍布应用组件各处的系统职责从组件中分离出来。</p>
+<p>系统由不同组件组成，每个组件负责一块特定功能。除了实现自身核心的功能外，这些组件还经常承担着额外职责（诸如日志、事务管理、安全等，这些额外的职责经常融入到自身具有核心业务逻辑的组件中去）。<br>这些需额外承担的系统服务被称为<strong>横切关注点</strong>，因为它们会跨越系统的多个组件。</p>
+<p>如果按照传统方式把这些关注点分散到多个组件中去，则代码会有双重的复杂性：</p>
+<ul>
+<li>实现系统关注点功能的代码重复出现在多个组件中（即使把关注点抽象为了一个独立模块，其他模块只是调用其方法，但方法的调用还是会重复出现在各个模块中）。</li>
+<li>组件会因为那些与自身核心业务逻辑无关的代码而变得混乱。</li>
+</ul>
+<p>AOP 能够使这些服务模块化，并以声明的方式把它们应用到它们需要影响的组件中去。这样做的好处在于：这些组件会具有更高的内聚性与简单性（组件甚至不知道系统服务的存在）。</p>
+<p>下列 xml 文件使用了 Spring 的 aop 配置把 minstrel bean 声明为一个切面，以及声明 minstrel bean 的 embarkOnQuest 方法作为切点，并声明了切点执行时的前置方法与后置方法。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot; ?&gt;</span><br><span class="line">&lt;beans xmlns=&quot;http://www.springframework.org/schema/beans&quot;</span><br><span class="line">	xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot; </span><br><span class="line">	xmlns:aop=&quot;http://www.springframework.org/schema/aop&quot; </span><br><span class="line">	xsi:schemaLocation=&quot;http://www.springframework.org/schema/beans </span><br><span class="line">       http://www.springframework.org/schema/beans/spring-beans-4.0.xsd</span><br><span class="line">       http://www.springframework.org/schema/aop</span><br><span class="line">       http://www.springframework.org/schema/aop/spring-aop-4.0.xsd&quot;&gt;</span><br><span class="line">&lt;!-- 声明 minstrel --&gt;</span><br><span class="line">&lt;bean id=&quot;minstrel&quot; class=&quot;com.war.knights.Minstrel&quot;&gt;</span><br><span class="line">	&lt;constructor-arg ref=&quot;a common minstrel&quot; /&gt;</span><br><span class="line">&lt;/bean&gt;</span><br><span class="line"></span><br><span class="line">&lt;aop:config&gt;</span><br><span class="line">	&lt;aop:aspect ref=&quot;minstrel&quot;&gt;</span><br><span class="line">		&lt;!-- 定义切点 --&gt;</span><br><span class="line">		&lt;aop:pointcut id=&quot;embark&quot; expression=&quot;execution(* *.embarkOnQuest(..))&quot;/&gt;</span><br><span class="line">		&lt;!-- 声明前置通知 --&gt;</span><br><span class="line">		&lt;aop:before pointcut-ref=&quot;embark&quot; method=&quot;singBeforeQuest&quot;/&gt;</span><br><span class="line">		&lt;!-- 声明后置通知 --&gt;</span><br><span class="line">		&lt;aop:after pointcut-ref=&quot;embark&quot; method=&quot;singAfterQuest&quot;/&gt;</span><br><span class="line">	&lt;/aop:aspect&gt;</span><br><span class="line">&lt;/aop:config&gt;</span><br><span class="line"></span><br><span class="line">&lt;/beans&gt;</span><br></pre></td></tr></table></figure></p>
+<h1 id="Spring-容器"><a href="#Spring-容器" class="headerlink" title="Spring 容器"></a>Spring 容器</h1><p>在基于 Spring 的应用中，应用对象生存于 Spring 容器中。Spring 容器负责创建、装配和配置对象，并管理它们的整个生命周期。Spring 容器使用 DI 管理构成应用的组件，它会创建相互协作的组件之间的关联。</p>
+<p>Spring 自带了两种类型的容器实现：</p>
+<ul>
+<li>BeanFactory（bean 工厂）：最简单的容器，提供基本的 DI 支持。</li>
+<li>Application Context（应用上下文）：基于 BeanFactory 构建，并提供应用框架级别的服务。开发者一般使用应用上下文而非底层的 bean 工厂。</li>
+</ul>
+<h2 id="应用上下文"><a href="#应用上下文" class="headerlink" title="应用上下文"></a>应用上下文</h2><p>Spring 自带了多种类型的应用上下文：</p>
+<ul>
+<li>AnnotationConfigApplicationContext：从一个或多个基于 Java 的配置类中加载 Spring 应用上下文</li>
+<li>AnnotationConfigWebApplicationContext：从一个或多个基于 Java 的配置类中加载 Spring Web 应用上下文</li>
+<li>ClassPathXmlApplicationContext：从类路径下的一个或多个 XML 配置文件中加载上下文定义</li>
+<li>FileSystemXmlapplicationcontext：从文件系统下一个或多个 XML 配置文件加载上下文定义</li>
+<li>XmlWebApplicationContext：从 Web 应用下的一个或多个 XML 配置文件加载上下文定义</li>
+</ul>
+<p>上下文加载完毕后，就可以调用上下文的 getBean() 方法从 Spring 容器中获取 bean。</p>
+<h2 id="bean-的生命周期"><a href="#bean-的生命周期" class="headerlink" title="bean 的生命周期"></a>bean 的生命周期</h2><p><img src="http://upload-images.jianshu.io/upload_images/3131012-0fdb736b21c8cc31.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="bean 的生命周期"></p>
+<p><strong>ApplicationContext 容器中</strong>，Bean 的生命周期流程如上图所示，流程大致如下：</p>
+<ol>
+<li>容器启动，对 scope 为 singleton 且非懒加载的 bean 进行实例化</li>
+<li>按照 Bean 定义信息配置信息，注入所有的属性</li>
+<li>如果 Bean 实现了 BeanNameAware 接口，会回调该接口的 setBeanName() 方法，传入该 Bean 的 id ，此时该 Bean 就获得了自己在配置文件中的 id</li>
+<li>如果 Bean 实现了 BeanFactoryAware 接口,会回调该接口的 setBeanFactory() 方法，传入该 Bean 的 BeanFactory ，这样该 Bean 就获得了自己所在的 BeanFactory</li>
+<li>如果 Bean 实现了 ApplicationContextAware 接口,会回调该接口的 setApplicationContext() 方法，传入该 Bean 的 ApplicationContext，这样该 Bean 就获得了自己所在的 ApplicationContext</li>
+<li>如果 Bean 实现了 BeanPostProcessor 接口，则会回调该接口的 postProcessBeforeInitialzation() 方法</li>
+<li>如果 Bean 实现了 InitializingBean 接口，则会回调该接口的 afterPropertiesSet() 方法</li>
+<li>如果 Bean 配置了 init-method 方法，则会执行 init-method 配置的方法</li>
+<li>如果 Bean 实现了 BeanPostProcessor 接口，则会回调该接口的 postProcessAfterInitialization() 方法</li>
+<li>经过流程9之后，就可以正式使用该 Bean 了。对于 scope 为 singleton 的 Bean，Spring 的 IOC 容器中会缓存一份该 bean 的实例，而对于 scope 为 prototype 的 Bean，每次被调用都会 new 一个新的对象，其生命周期就交给调用方管理了，不再由 Spring 容器进行管理了</li>
+<li>容器关闭后，如果 Bean 实现了 DisposableBean 接口，则会回调该接口的 destroy() 方法</li>
+<li>如果 Bean 配置了 destroy-method 方法，则会执行 destroy-method 配置的方法。至此，整个Bean的生命周期结束</li>
+</ol>
+<h1 id="Spring-其他模块"><a href="#Spring-其他模块" class="headerlink" title="Spring 其他模块"></a>Spring 其他模块</h1><p>Spring 框架除了 DI 与 AOP 以外还有着其他大量模块，所有模块共同组成了一个构建在 Spring 核心框架之上的庞大生态圈。这些模块依据其所属功能可划分为六类。</p>
+<h3 id="Spring-容器-1"><a href="#Spring-容器-1" class="headerlink" title="Spring 容器"></a>Spring 容器</h3><p>容器是 Spring 框架最核心的部分，用于执行 bean 的创建、配置与管理。该模块包括了 bean 工厂，它为 Spring 提供了 DI 的功能。基于 bean 工厂，还有多种 Spring 应用上下文的实现，每一种都提供了配置 Spring 的不同方式。</p>
+<h3 id="AOP-模块"><a href="#AOP-模块" class="headerlink" title="AOP 模块"></a>AOP 模块</h3><p>AOP 可以把遍布系统的关注点（如事务和安全）从它们所应用的对象中解耦出来。</p>
+<h3 id="数据访问和集成"><a href="#数据访问和集成" class="headerlink" title="数据访问和集成"></a>数据访问和集成</h3><p>提供了模板化的 JDBC，并在多种数据库服务的错误信息上构建了语义丰富的异常层。以及允许使用 ORM 框架。</p>
+<h3 id="Web-与远程调用"><a href="#Web-与远程调用" class="headerlink" title="Web 与远程调用"></a>Web 与远程调用</h3><p>Web 与远程调用模块提供了自带的 MVC 框架，此外还提供了多种构建与其他应用交互的远程调用方案，以及对 REST API 的良好支持。</p>
+<h3 id="测试"><a href="#测试" class="headerlink" title="测试"></a>测试</h3><p>提供了自带的测试模块（如一系列的 mock 对象实现）</p>
+<hr>
+<ul>
+<li><p><a href="/more/donate/index.html"><strong><em><font color="red">我觉得帮助到我了, 支持你一下.</font></em></strong></a><br>   </p>
+</li>
+<li><p><a href="https://www.paypal.me/momodainfo" target="_blank" rel="noopener"><strong><em><font color="red">If you think the article is helpful to you, you can reward me through paypal.</font></em></strong></a></p>
+</li>
+</ul>
+<h3 id="Ads"><a href="#Ads" class="headerlink" title="Ads"></a>Ads</h3><p><em>这是小广告! 如果有需要, 不妨支持一下吧~</em></p>
+<blockquote>
+<p> <a target="_blank" href="https://amazon.cn/gp/search?ie=UTF8&tag=momoda-23&linkCode=ur2&linkId=4a0e4fbec0cfa8dfe540ca999d0bf999&camp=536&creative=3200&index=books&keywords=编程">这些好书您看了吗?</a><img src="//ir-cn.amazon-adsystem.com/e/ir?t=momoda-23&l=ur2&o=28" width="1" height="1" border="0" alt="" style="border:none !important; margin:0px !important;"></p>
+</blockquote>
+<blockquote>
+<p>体育&amp;户外用品推荐</p>
+</blockquote>
+<div align="center"> <a href="https://www.amazon.cn/B07HWB88Z5/dp/B07HWB88Z5/ref=as_sl_pc_tf_til?tag=momoda-23&linkCode=w00&linkId=14df5124f2165d9eb3d65252e60ed2cf&creativeASIN=B07HWB88Z5" target="_blank" rel="noopener"><img src="/se-notes/Java基础/Spring概述/../more/ads/amazon.gif" width="100%"></a> </div>
+      
+    </div><!-- .entry-content -->
+
+    <footer class="entry-meta">
+    <a href="/se-notes/Java基础/Spring概述/">
+    <time datetime="2019-01-03T13:49:30.000Z" class="entry-date">
+        1月 3 2019
+    </time>
+</a>
+    
+  <span class="article-delim">&#8226;</span>
+  <div class="article-category">
+  <a class="article-category-link" href="/categories/编程语言/">编程语言</a>, <a class="article-category-link" href="/categories/编程语言/java/">java</a>
+  </div>
+
+    
+  <span class="article-delim">&#8226;</span>
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/java基础/">java基础</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/java语法/">java语法</a></li></ul>
+
+    </footer>
+</article>
+
+
+    
+<nav class="nav-single">
+    <h3 class="assistive-text">文章导航</h3>
+    
+        <span class="nav-previous"><a href="/se-notes/Java基础/Spring基础装配/" rel="prev"><span class="meta-nav">←</span> Spring基础装配</a></span>
+    
+    
+        <span class="nav-next"><a href="/se-notes/Java基础/多线程/" rel="next">多线程 <span class="meta-nav">→</span></a></span>
+    
+</nav><!-- .nav-single -->
+
+
+
+
+
+
+
+</div></div>
+        <div id="secondary" class="widget-area" role="complementary">
+  
+    <aside id="search" class="widget widget_search"><form role="search" method="get" accept-charset="utf-8" id="searchform" class="searchform" action="//google.com/search">
+    <div>
+        <input type="text" value="" name="q">
+        <input type="submit" id="searchsubmit" value="google搜索">
+    </div>
+</form></aside>
+
+  
+    
+  <aside class="widget">
+    <h3 class="widget-title">Recents</h3>
+    <div class="widget-content">
+      <ul>
+        
+          <li>
+            <a href="/系统剩余空间查看/">系统剩余空间查看</a>
+          </li>
+        
+          <li>
+            <a href="/数据库分类/">数据库分类</a>
+          </li>
+        
+          <li>
+            <a href="/se-notes/Linux基础/README/">Linux基础-README</a>
+          </li>
+        
+          <li>
+            <a href="/se-notes/云计算实践/区块链相关/区块链简介/">区块链简介</a>
+          </li>
+        
+          <li>
+            <a href="/se-notes/云计算实践/集群高可用方案/Heartbeat双机热备方案/">Heartbeat双机热备方案</a>
+          </li>
+        
+      </ul>
+    </div>
+  </aside>
+
+  
+    
+  <aside class="widget">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget-content">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/">一月 2019</a><span class="archive-list-count">56</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">十一月 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">二月 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/09/">九月 2017</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/01/">一月 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/11/">十一月 2015</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/01/">一月 2014</a><span class="archive-list-count">1</span></li></ul>
+    </div>
+  </aside>
+
+  
+    
+  <aside class="widget">
+    <h3 class="widget-title">Categories</h3>
+    <div class="widget-content">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Graphics/">Graphics</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Linux/">Linux</a><span class="category-list-count">7</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Linux/Shell/">Shell</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Linux/linux基础/">linux基础</a><span class="category-list-count">6</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/协议证书/">协议证书</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/协议证书/openssl/">openssl</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/数据库/">数据库</a><span class="category-list-count">4</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/数据库/数据库基础/">数据库基础</a><span class="category-list-count">3</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/框架/">框架</a><span class="category-list-count">9</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/框架/python-web应用框架/">python-web应用框架</a><span class="category-list-count">9</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/版本控制/">版本控制</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/版本控制/Git/">Git</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/编程语言/">编程语言</a><span class="category-list-count">13</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/编程语言/java/">java</a><span class="category-list-count">13</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/网络通讯/">网络通讯</a><span class="category-list-count">11</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/网络通讯/大小端/">大小端</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/网络通讯/计算机网络基础/">计算机网络基础</a><span class="category-list-count">10</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/路由器/">路由器</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/路由器/openwrt/">openwrt</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/通用技术/">通用技术</a><span class="category-list-count">13</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/通用技术/Docker/">Docker</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/通用技术/云计算实践/">云计算实践</a><span class="category-list-count">11</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/通用技术/云计算实践/kubernetes部署/">kubernetes部署</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/通用技术/云计算实践/区块链/">区块链</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/通用技术/云计算实践/集群高可用方案/">集群高可用方案</a><span class="category-list-count">4</span></li></ul></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/默认/">默认</a><span class="category-list-count">1</span></li></ul>
+    </div>
+  </aside>
+
+  
+    
+  <aside class="widget">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget-content">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/CS-Notes/">CS-Notes</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/PEM证书/">PEM证书</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Shell/">Shell</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/cron/">cron</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/database/">database</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/diagrams/">diagrams</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/docker/">docker</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/docker-qq/">docker-qq</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/flask/">flask</a><span class="tag-list-count">9</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/git/">git</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/graphics/">graphics</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/http/">http</a><span class="tag-list-count">10</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/informationisbeautiful/">informationisbeautiful</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/java基础/">java基础</a><span class="tag-list-count">13</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/java语法/">java语法</a><span class="tag-list-count">13</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/kubernetes/">kubernetes</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/linux/">linux</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mysql/">mysql</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/network/">network</a><span class="tag-list-count">10</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/openssl/">openssl</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/openwrt/">openwrt</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/p12/">p12</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/pfx/">pfx</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/tcp-ip/">tcp/ip</a><span class="tag-list-count">10</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/web开发/">web开发</a><span class="tag-list-count">9</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/云计算/">云计算</a><span class="tag-list-count">11</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/区块链/">区块链</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/大小端/">大小端</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/数据库/">数据库</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/系统管理/">系统管理</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/计算机网络/">计算机网络</a><span class="tag-list-count">10</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/集群/">集群</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/默认/">默认</a><span class="tag-list-count">1</span></li></ul>
+    </div>
+  </aside>
+
+  
+    
+  <aside class="widget">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget-content tagcloud">
+      <a href="/tags/CS-Notes/" style="font-size: 10px;">CS-Notes</a> <a href="/tags/PEM证书/" style="font-size: 10px;">PEM证书</a> <a href="/tags/Shell/" style="font-size: 10px;">Shell</a> <a href="/tags/cron/" style="font-size: 10px;">cron</a> <a href="/tags/database/" style="font-size: 10px;">database</a> <a href="/tags/diagrams/" style="font-size: 10px;">diagrams</a> <a href="/tags/docker/" style="font-size: 15px;">docker</a> <a href="/tags/docker-qq/" style="font-size: 10px;">docker-qq</a> <a href="/tags/flask/" style="font-size: 16.25px;">flask</a> <a href="/tags/git/" style="font-size: 10px;">git</a> <a href="/tags/graphics/" style="font-size: 10px;">graphics</a> <a href="/tags/http/" style="font-size: 17.5px;">http</a> <a href="/tags/informationisbeautiful/" style="font-size: 10px;">informationisbeautiful</a> <a href="/tags/java基础/" style="font-size: 20px;">java基础</a> <a href="/tags/java语法/" style="font-size: 20px;">java语法</a> <a href="/tags/kubernetes/" style="font-size: 13.75px;">kubernetes</a> <a href="/tags/linux/" style="font-size: 15px;">linux</a> <a href="/tags/mysql/" style="font-size: 11.25px;">mysql</a> <a href="/tags/network/" style="font-size: 17.5px;">network</a> <a href="/tags/openssl/" style="font-size: 10px;">openssl</a> <a href="/tags/openwrt/" style="font-size: 10px;">openwrt</a> <a href="/tags/p12/" style="font-size: 10px;">p12</a> <a href="/tags/pfx/" style="font-size: 10px;">pfx</a> <a href="/tags/tcp-ip/" style="font-size: 17.5px;">tcp/ip</a> <a href="/tags/web开发/" style="font-size: 16.25px;">web开发</a> <a href="/tags/云计算/" style="font-size: 18.75px;">云计算</a> <a href="/tags/区块链/" style="font-size: 10px;">区块链</a> <a href="/tags/大小端/" style="font-size: 10px;">大小端</a> <a href="/tags/数据库/" style="font-size: 12.5px;">数据库</a> <a href="/tags/系统管理/" style="font-size: 15px;">系统管理</a> <a href="/tags/计算机网络/" style="font-size: 17.5px;">计算机网络</a> <a href="/tags/集群/" style="font-size: 13.75px;">集群</a> <a href="/tags/默认/" style="font-size: 10px;">默认</a>
+    </div>
+  </aside>
+
+  
+    <aside class="widget">
+    <h3 class="widget-title">Links</h3>
+    <div class="widget-content">
+		<ul id="link-list">
+		<!-- link begin -->
+
+		<li><a href="https://www.google.com/">google</a></li>
+		<li><a href="https://www.baidu.com/">baidu</a></li>
+		
+		<!-- link end -->
+		</ul>
+    </div>
+</aside>
+
+  
+    <aside class="widget">
+    <h3 class="widget-title">Ads</h3>
+    <div class="widget-content">
+	 
+			* <a target="_blank" href="https://amazon.cn/gp/search?ie=UTF8&tag=momoda-23&linkCode=ur2&linkId=4a0e4fbec0cfa8dfe540ca999d0bf999&camp=536&creative=3200&index=books&keywords=编程">这些好书您看了吗?</a><img src="//ir-cn.amazon-adsystem.com/e/ir?t=momoda-23&l=ur2&o=28" width="1" height="1" border="0" alt="" style="border:none !important; margin:0px !important;">
+			<br><br>
+			* 体育&户外用品推荐>
+			<div align="center"> <a href="https://www.amazon.cn/B07HWB88Z5/dp/B07HWB88Z5/ref=as_sl_pc_tf_til?tag=momoda-23&linkCode=w00&linkId=14df5124f2165d9eb3d65252e60ed2cf&creativeASIN=B07HWB88Z5"><img src="/more/ads/amazon.gif" width="100%"></a> </div>
+
+    </div>
+</aside>
+
+  
+</div>
+      </div>
+      <footer id="colophon" role="contentinfo">
+    <p>&copy; 2019 momoda
+    All rights reserved.</p>
+    <p>Powered by <a href="https://hexo.io/" target="_blank">Hexo</a></p>
+    <a href="javascript:scrollTo(0,0);">返回顶部</a>
+</footer>
+
+    <script>window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"1","bdMiniList":false,"bdPic":"","bdStyle":"2","bdSize":"16"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];</script>
+
+<script src="/js/jquery-2.0.3.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+<script src="/js/navigation.js"></script>
+
+
+<script type="text/javascript" src="https://js.users.51.la/19862371.js"></script>
+<div id="bg"></div>
+
+  </div>
+</body>
+</html>

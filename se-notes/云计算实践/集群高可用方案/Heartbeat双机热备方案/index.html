@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="utf-8">
+  
+  
+  <meta name="description" content="momoda">
+  
+
+  
+  <meta name="keywords" content="momoda">
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  <title>Heartbeat双机热备方案 | Just another blog</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="Heartbeat 部署方案（CentOS） 安装 配置 认证文件（/etc/ha.d/authkeys） 主配置文件（/etc/ha.d/ha.cf） 资源文件（/etc/ha.d/haresources） 参考文档 Ads       Heartbeat 部署方案（CentOS） 注意：Heartbeat 方案本人还未有实践过  安装两种安装方式：  主从节点都使用yum install">
+<meta name="keywords" content="云计算,集群">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Heartbeat双机热备方案">
+<meta property="og:url" content="https://wnhby.github.io/se-notes/云计算实践/集群高可用方案/Heartbeat双机热备方案/index.html">
+<meta property="og:site_name" content="Just another blog">
+<meta property="og:description" content="Heartbeat 部署方案（CentOS） 安装 配置 认证文件（/etc/ha.d/authkeys） 主配置文件（/etc/ha.d/ha.cf） 资源文件（/etc/ha.d/haresources） 参考文档 Ads       Heartbeat 部署方案（CentOS） 注意：Heartbeat 方案本人还未有实践过  安装两种安装方式：  主从节点都使用yum install">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://ir-cn.amazon-adsystem.com/e/ir?t=momoda-23&l=ur2&o=28">
+<meta property="og:image" content="https://wnhby.github.io/se-notes/云计算实践/集群高可用方案/more/ads/amazon.gif">
+<meta property="og:updated_time" content="2019-02-19T05:21:48.557Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Heartbeat双机热备方案">
+<meta name="twitter:description" content="Heartbeat 部署方案（CentOS） 安装 配置 认证文件（/etc/ha.d/authkeys） 主配置文件（/etc/ha.d/ha.cf） 资源文件（/etc/ha.d/haresources） 参考文档 Ads       Heartbeat 部署方案（CentOS） 注意：Heartbeat 方案本人还未有实践过  安装两种安装方式：  主从节点都使用yum install">
+<meta name="twitter:image" content="https://ir-cn.amazon-adsystem.com/e/ir?t=momoda-23&l=ur2&o=28">
+  
+    <link rel="alternative" href="/atom.xml" title="Just another blog" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/css/images/favicon.ico">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  
+
+  
+  <!-- baidu webmaster push -->
+  <script src="//push.zhanzhang.baidu.com/push.js"></script>
+</head></html>
+<body class="home blog custom-background custom-font-enabled single-author">
+  <div id="page" class="hfeed site">
+      <header id="masthead" class="site-header" role="banner">
+    <hgroup>
+      <h1 class="site-title">
+        <a href="/" title="Just another blog" rel="home">Just another blog</a>
+      </h1>
+      
+        <h2 class="site-description">
+          <a href="/" id="subtitle">momoda blog</a>
+        </h2>
+      
+    </hgroup>
+
+    <nav id="site-navigation" class="main-navigation" role="navigation">
+            <button class="menu-toggle">菜单</button>
+            <a class="assistive-text" href="/#content" title="跳至内容">跳至内容</a><!--TODO-->
+            <div class="menu-main-container">
+                <ul id="menu-main" class="nav-menu">
+                
+                    <li class="menu-item menu-item-type-post_type menu-item-object-page"><a href="/">Home</a></li>
+                
+                    <li class="menu-item menu-item-type-post_type menu-item-object-page"><a href="/atom.xml">RSS</a></li>
+                
+                    <li class="menu-item menu-item-type-post_type menu-item-object-page"><a href="/sitemap.xml">Site map</a></li>
+                
+                    <li class="menu-item menu-item-type-post_type menu-item-object-page"><a href="/more/share.html">Share</a></li>
+                
+                </ul>
+            </div>
+    </nav>
+</header>
+
+      <div id="main" class="wrapper">
+        <div id="primary" class="site-content"><div id="content" role="main"><article id="post-se-notes/云计算实践/集群高可用方案/Heartbeat双机热备方案" class="post-se-notes/云计算实践/集群高可用方案/Heartbeat双机热备方案 post type-post status-publish format-standard hentry">
+    <!---->
+
+      <header class="entry-header">
+        
+        
+  
+    <h1 class="entry-title article-title">
+      Heartbeat双机热备方案
+    </h1>
+  
+
+        
+        <div class="comments-link">
+            
+            <a href="javascript:void(0);" data-url="https://wnhby.github.io/se-notes/云计算实践/集群高可用方案/Heartbeat双机热备方案/" data-id="cjsbbbf1t00ane9s6qxd3prvi" class="leave-reply bdsharebuttonbox" data-cmd="more">分享</a>
+        </div><!-- .comments-link -->
+      </header><!-- .entry-header -->
+
+    <div class="entry-content">
+      
+        <!-- TOC -->
+<ul>
+<li><a href="#heartbeat-%E9%83%A8%E7%BD%B2%E6%96%B9%E6%A1%88centos">Heartbeat 部署方案（CentOS）</a><ul>
+<li><a href="#%E5%AE%89%E8%A3%85">安装</a></li>
+<li><a href="#%E9%85%8D%E7%BD%AE">配置</a><ul>
+<li><a href="#%E8%AE%A4%E8%AF%81%E6%96%87%E4%BB%B6etchadauthkeys">认证文件（/etc/ha.d/authkeys）</a></li>
+<li><a href="#%E4%B8%BB%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6etchadhacf">主配置文件（/etc/ha.d/ha.cf）</a></li>
+<li><a href="#%E8%B5%84%E6%BA%90%E6%96%87%E4%BB%B6etchadharesources">资源文件（/etc/ha.d/haresources）</a></li>
+<li><a href="#%E5%8F%82%E8%80%83%E6%96%87%E6%A1%A3">参考文档</a></li>
+<li><a href="#ads">Ads</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<!-- /TOC -->
+<h1 id="Heartbeat-部署方案（CentOS）"><a href="#Heartbeat-部署方案（CentOS）" class="headerlink" title="Heartbeat 部署方案（CentOS）"></a>Heartbeat 部署方案（CentOS）</h1><blockquote>
+<p>注意：Heartbeat 方案本人还未有实践过</p>
+</blockquote>
+<h2 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h2><p>两种安装方式：</p>
+<ul>
+<li>主从节点都使用<code>yum install heartbeat*</code>命令安装 Heartbeat（须确保已安装 epel 扩展软件包源）。</li>
+<li>在 Linux-HA 官网下载 <a href="http://www.linux-ha.org/wiki/Downloads" target="_blank" rel="noopener">Heartbeat</a>。</li>
+</ul>
+<h2 id="配置"><a href="#配置" class="headerlink" title="配置"></a>配置</h2><p>Heartbeat 主要的配置文件有 3 个，分别是 <strong>authkeys</strong>，<strong>ha.cf</strong> 和 <strong>haresources</strong>。其中 ha.cf 是主配置文件，haresource 用来配置要让 Heartbeat 托管的服务，authkey 是用来指定 Heartbeat 的认证方式。</p>
+<blockquote>
+<p>在 Heartbeat 安装后，默认并没有这三个文件，可以直接从解压的源码目录中找到。</p>
+</blockquote>
+<p>这里以 master/slave 两节点为例，示例的配置文件为 master 节点的。</p>
+<h3 id="认证文件（-etc-ha-d-authkeys）"><a href="#认证文件（-etc-ha-d-authkeys）" class="headerlink" title="认证文件（/etc/ha.d/authkeys）"></a>认证文件（/etc/ha.d/authkeys）</h3><p>该文件为 Heartbeat 的认证文件，该文件主要是用于集群中两个节点的认证，采用的算法和密钥（如果有的话）在集群中节点上必须相同。目前提供了 3 种算法：crc/md5/sha1。其中 crc 不能够提供认证，它只能够用于校验数据包是否损坏，而 sha1/md5 需要一个密钥来进行认证。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">auth 2</span><br><span class="line">#1 crc</span><br><span class="line">2 sha1 somewords</span><br><span class="line">#3 md5 somewords</span><br></pre></td></tr></table></figure>
+<p>以上示例中使用的是 sha1 算法，如果要换用其他算法只需要修改 auth 指令后面的数字，然后取消相应行的注释即可。</p>
+<blockquote>
+<p>注意：该文件的属性必须为600，否则 Heartbeat 启动将失败。且两个节点的 authkeys 文件内容及权限相同。</p>
+</blockquote>
+<h3 id="主配置文件（-etc-ha-d-ha-cf）"><a href="#主配置文件（-etc-ha-d-ha-cf）" class="headerlink" title="主配置文件（/etc/ha.d/ha.cf）"></a>主配置文件（/etc/ha.d/ha.cf）</h3><p>该文件是 Heartbeat 的主配置文件。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">keepalive 2</span><br><span class="line">warntime 5</span><br><span class="line">deadtime 30</span><br><span class="line">initdead 120</span><br><span class="line">udpport 6942</span><br><span class="line">bcast eth0</span><br><span class="line"># mcast eth0 225.0.0.1 694 1 0</span><br><span class="line">ucast eth1 &#123;&#123; slave的IP地址 &#125;&#125;</span><br><span class="line">auto_failback off</span><br><span class="line">watchdog /dev/watchdog</span><br><span class="line">node host41 host42</span><br><span class="line"># ping 172.16.12.1 ping_group group1 172.16.12.1</span><br><span class="line">respawn hacluster /usr/lib64/heartbeat/ipfail</span><br><span class="line">respawn hacluster /usr/lib64/heartbeat/dopd</span><br><span class="line">apiauth dopd gid=haclient uid=hacluster</span><br><span class="line">use_logd yes</span><br></pre></td></tr></table></figure>
+<ul>
+<li>keepalive：发送心跳报文的间隔。默认单位为秒，也可以使用 500ms 来指代 500 毫秒，等同于 0.5。</li>
+<li>warntime：认为对方可能宕掉的间隔时间。</li>
+<li>deadtime：认为对方宕掉的间隔时间，超过这个时间，则认为对方已经宕掉。</li>
+<li>initdead：等待对方启动的最大时间。</li>
+<li>udpport：heartbeat 广播/单播通讯使用的 udp 端口。</li>
+<li>bcast：心跳所使用的网络接口。</li>
+<li>ucast：单播通讯，对方网络接口及IP地址。</li>
+<li>mcast：组播通讯，参数如右：通讯所用的接口 绑定的组播IP（224.0.0.0-239.255.255.255）通讯端口 ttl 是否允许环回。</li>
+<li>auto_failback：表示当主节点（即提供资源/服务的节点）正常之后是否将资源/服务切换回来。</li>
+<li>watchdog：看门狗定时器，如果节点一分钟内没有心跳，则重启节点。</li>
+<li>node：heartbeat 集群中的节点信息（节点的主机名: uname -n）。</li>
+<li>ping/ping_group：用于建立伪集群成员，作用是监测物理链路，如果该节点与伪集群成员不相通，那么该节点无权接管资源/服务。</li>
+</ul>
+<p>另一从节点（slave）需要将 ha.cf 文件中 ucast 的 IP 地址改为主节点（master）的 IP 地址。</p>
+<h3 id="资源文件（-etc-ha-d-haresources）"><a href="#资源文件（-etc-ha-d-haresources）" class="headerlink" title="资源文件（/etc/ha.d/haresources）"></a>资源文件（/etc/ha.d/haresources）</h3><p>haresources 文件用于指定双机系统的主节点、集群IP、子网掩码、广播地址以及启动的服务等集群资源。文件每一行可以包含一个或多个资源脚本名，资源之间使用空格隔开，参数之间使用两个冒号隔开。在两个节点上该文件必须完全一致，此文件的一般格式为：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">node-name network &lt;resource-group&gt;</span><br></pre></td></tr></table></figure></p>
+<p>node-name 表示主节点的主机名，必须和 ha.cf 文件中指定的节点名一致；network 用于设定集群的 IP 地址、子网掩码、网络设备标识等（这里指定的IP地址就是集群对外服务的IP地址），resource-group 用来指定需要 Heartbeat 托管的服务，也就是这些服务可以由 Heartbeat 来启动和关闭，如果要托管这些服务，必须将服务写成可以通过 start/stop 来启动和关闭的脚本，然后放到 /etc/init.d/ 或者 /etc/ha.d/resource.d/ 目录下，heartbeat 会根据脚本的名称自动去 /etc/init.d 或者 /etc/ha.d/resource.d/ 目录下找到相应脚本进行启动或关闭操作。</p>
+<p>以下是一个具体实例：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">node1 IPaddr::192.168.60.200/24/eth0/  Filesystem::/dev/sdb5::/webdata::ext3  httpd tomcat</span><br></pre></td></tr></table></figure></p>
+<p>其中，node1 是 HA 集群的主节点，IPaddr 为 HeartbeatH自带的一个执行脚本，Heartbeat 首先将执行<code>/etc/ha.d/resource.d/IPaddr 192.168.60.200/24 start</code>的操作，也就是虚拟出一个子网掩码为 255.255.255.0，IP为 192.168.60.200 的地址，此IP为 Heartbeat 对外提供服务的网络地址，同时指定此 IP 使用的网络接口为 eth0，接着，Heartbeat 将执行共享磁盘分区的挂载操作，<code>Filesystem::/dev/sdb5::/webdata::ext3</code>相当于在命令行下执行 mount 操作，即“mount –t ext3 /dev/sdb5 /webdata”，最后依次启动 httpd 和 tomcat 服务。</p>
+<blockquote>
+<p>注意：主节点和从节点中资源文件 haresources 一般要完全一致。</p>
+</blockquote>
+<h3 id="参考文档"><a href="#参考文档" class="headerlink" title="参考文档"></a>参考文档</h3><p><a href="http://ixdba.blog.51cto.com/2895551/548625" target="_blank" rel="noopener">Linux-HA开源软件Heartbeat（配置篇）</a><br><a href="https://github.com/chenzhiwei/linux/tree/master/heartbeat" target="_blank" rel="noopener">heartbeat配置相关</a></p>
+<hr>
+<ul>
+<li><p><a href="/more/donate/index.html"><strong><em><font color="red">我觉得帮助到我了, 支持你一下.</font></em></strong></a><br>   </p>
+</li>
+<li><p><a href="https://www.paypal.me/momodainfo" target="_blank" rel="noopener"><strong><em><font color="red">If you think the article is helpful to you, you can reward me through paypal.</font></em></strong></a></p>
+</li>
+</ul>
+<h3 id="Ads"><a href="#Ads" class="headerlink" title="Ads"></a>Ads</h3><p><em>这是小广告! 如果有需要, 不妨支持一下吧~</em></p>
+<blockquote>
+<p> <a target="_blank" href="https://amazon.cn/gp/search?ie=UTF8&tag=momoda-23&linkCode=ur2&linkId=4a0e4fbec0cfa8dfe540ca999d0bf999&camp=536&creative=3200&index=books&keywords=编程">这些好书您看了吗?</a><img src="//ir-cn.amazon-adsystem.com/e/ir?t=momoda-23&l=ur2&o=28" width="1" height="1" border="0" alt="" style="border:none !important; margin:0px !important;"></p>
+</blockquote>
+<blockquote>
+<p>体育&amp;户外用品推荐</p>
+</blockquote>
+<div align="center"> <a href="https://www.amazon.cn/B07HWB88Z5/dp/B07HWB88Z5/ref=as_sl_pc_tf_til?tag=momoda-23&linkCode=w00&linkId=14df5124f2165d9eb3d65252e60ed2cf&creativeASIN=B07HWB88Z5" target="_blank" rel="noopener"><img src="/se-notes/云计算实践/集群高可用方案/Heartbeat双机热备方案/../more/ads/amazon.gif" width="100%"></a> </div>
+      
+    </div><!-- .entry-content -->
+
+    <footer class="entry-meta">
+    <a href="/se-notes/云计算实践/集群高可用方案/Heartbeat双机热备方案/">
+    <time datetime="2019-01-03T13:49:30.000Z" class="entry-date">
+        1月 3 2019
+    </time>
+</a>
+    
+  <span class="article-delim">&#8226;</span>
+  <div class="article-category">
+  <a class="article-category-link" href="/categories/通用技术/">通用技术</a>, <a class="article-category-link" href="/categories/通用技术/云计算实践/">云计算实践</a>, <a class="article-category-link" href="/categories/通用技术/云计算实践/集群高可用方案/">集群高可用方案</a>
+  </div>
+
+    
+  <span class="article-delim">&#8226;</span>
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/云计算/">云计算</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/集群/">集群</a></li></ul>
+
+    </footer>
+</article>
+
+
+    
+<nav class="nav-single">
+    <h3 class="assistive-text">文章导航</h3>
+    
+        <span class="nav-previous"><a href="/se-notes/云计算实践/区块链相关/区块链简介/" rel="prev"><span class="meta-nav">←</span> 区块链简介</a></span>
+    
+    
+        <span class="nav-next"><a href="/se-notes/云计算实践/集群高可用方案/HAProxy+Keepalived高可用方案/" rel="next">HAProxy+Keepalived高可用方案 <span class="meta-nav">→</span></a></span>
+    
+</nav><!-- .nav-single -->
+
+
+
+
+
+
+
+</div></div>
+        <div id="secondary" class="widget-area" role="complementary">
+  
+    <aside id="search" class="widget widget_search"><form role="search" method="get" accept-charset="utf-8" id="searchform" class="searchform" action="//google.com/search">
+    <div>
+        <input type="text" value="" name="q">
+        <input type="submit" id="searchsubmit" value="google搜索">
+    </div>
+</form></aside>
+
+  
+    
+  <aside class="widget">
+    <h3 class="widget-title">Recents</h3>
+    <div class="widget-content">
+      <ul>
+        
+          <li>
+            <a href="/系统剩余空间查看/">系统剩余空间查看</a>
+          </li>
+        
+          <li>
+            <a href="/数据库分类/">数据库分类</a>
+          </li>
+        
+          <li>
+            <a href="/se-notes/Linux基础/README/">Linux基础-README</a>
+          </li>
+        
+          <li>
+            <a href="/se-notes/云计算实践/区块链相关/区块链简介/">区块链简介</a>
+          </li>
+        
+          <li>
+            <a href="/se-notes/云计算实践/集群高可用方案/Heartbeat双机热备方案/">Heartbeat双机热备方案</a>
+          </li>
+        
+      </ul>
+    </div>
+  </aside>
+
+  
+    
+  <aside class="widget">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget-content">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/">一月 2019</a><span class="archive-list-count">56</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">十一月 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">二月 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/09/">九月 2017</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/01/">一月 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/11/">十一月 2015</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/01/">一月 2014</a><span class="archive-list-count">1</span></li></ul>
+    </div>
+  </aside>
+
+  
+    
+  <aside class="widget">
+    <h3 class="widget-title">Categories</h3>
+    <div class="widget-content">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Graphics/">Graphics</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Linux/">Linux</a><span class="category-list-count">7</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Linux/Shell/">Shell</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Linux/linux基础/">linux基础</a><span class="category-list-count">6</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/协议证书/">协议证书</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/协议证书/openssl/">openssl</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/数据库/">数据库</a><span class="category-list-count">4</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/数据库/数据库基础/">数据库基础</a><span class="category-list-count">3</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/框架/">框架</a><span class="category-list-count">9</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/框架/python-web应用框架/">python-web应用框架</a><span class="category-list-count">9</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/版本控制/">版本控制</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/版本控制/Git/">Git</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/编程语言/">编程语言</a><span class="category-list-count">13</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/编程语言/java/">java</a><span class="category-list-count">13</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/网络通讯/">网络通讯</a><span class="category-list-count">11</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/网络通讯/大小端/">大小端</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/网络通讯/计算机网络基础/">计算机网络基础</a><span class="category-list-count">10</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/路由器/">路由器</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/路由器/openwrt/">openwrt</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/通用技术/">通用技术</a><span class="category-list-count">13</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/通用技术/Docker/">Docker</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/通用技术/云计算实践/">云计算实践</a><span class="category-list-count">11</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/通用技术/云计算实践/kubernetes部署/">kubernetes部署</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/通用技术/云计算实践/区块链/">区块链</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/通用技术/云计算实践/集群高可用方案/">集群高可用方案</a><span class="category-list-count">4</span></li></ul></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/默认/">默认</a><span class="category-list-count">1</span></li></ul>
+    </div>
+  </aside>
+
+  
+    
+  <aside class="widget">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget-content">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/CS-Notes/">CS-Notes</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/PEM证书/">PEM证书</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Shell/">Shell</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/cron/">cron</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/database/">database</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/diagrams/">diagrams</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/docker/">docker</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/docker-qq/">docker-qq</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/flask/">flask</a><span class="tag-list-count">9</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/git/">git</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/graphics/">graphics</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/http/">http</a><span class="tag-list-count">10</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/informationisbeautiful/">informationisbeautiful</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/java基础/">java基础</a><span class="tag-list-count">13</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/java语法/">java语法</a><span class="tag-list-count">13</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/kubernetes/">kubernetes</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/linux/">linux</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mysql/">mysql</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/network/">network</a><span class="tag-list-count">10</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/openssl/">openssl</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/openwrt/">openwrt</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/p12/">p12</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/pfx/">pfx</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/tcp-ip/">tcp/ip</a><span class="tag-list-count">10</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/web开发/">web开发</a><span class="tag-list-count">9</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/云计算/">云计算</a><span class="tag-list-count">11</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/区块链/">区块链</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/大小端/">大小端</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/数据库/">数据库</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/系统管理/">系统管理</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/计算机网络/">计算机网络</a><span class="tag-list-count">10</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/集群/">集群</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/默认/">默认</a><span class="tag-list-count">1</span></li></ul>
+    </div>
+  </aside>
+
+  
+    
+  <aside class="widget">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget-content tagcloud">
+      <a href="/tags/CS-Notes/" style="font-size: 10px;">CS-Notes</a> <a href="/tags/PEM证书/" style="font-size: 10px;">PEM证书</a> <a href="/tags/Shell/" style="font-size: 10px;">Shell</a> <a href="/tags/cron/" style="font-size: 10px;">cron</a> <a href="/tags/database/" style="font-size: 10px;">database</a> <a href="/tags/diagrams/" style="font-size: 10px;">diagrams</a> <a href="/tags/docker/" style="font-size: 15px;">docker</a> <a href="/tags/docker-qq/" style="font-size: 10px;">docker-qq</a> <a href="/tags/flask/" style="font-size: 16.25px;">flask</a> <a href="/tags/git/" style="font-size: 10px;">git</a> <a href="/tags/graphics/" style="font-size: 10px;">graphics</a> <a href="/tags/http/" style="font-size: 17.5px;">http</a> <a href="/tags/informationisbeautiful/" style="font-size: 10px;">informationisbeautiful</a> <a href="/tags/java基础/" style="font-size: 20px;">java基础</a> <a href="/tags/java语法/" style="font-size: 20px;">java语法</a> <a href="/tags/kubernetes/" style="font-size: 13.75px;">kubernetes</a> <a href="/tags/linux/" style="font-size: 15px;">linux</a> <a href="/tags/mysql/" style="font-size: 11.25px;">mysql</a> <a href="/tags/network/" style="font-size: 17.5px;">network</a> <a href="/tags/openssl/" style="font-size: 10px;">openssl</a> <a href="/tags/openwrt/" style="font-size: 10px;">openwrt</a> <a href="/tags/p12/" style="font-size: 10px;">p12</a> <a href="/tags/pfx/" style="font-size: 10px;">pfx</a> <a href="/tags/tcp-ip/" style="font-size: 17.5px;">tcp/ip</a> <a href="/tags/web开发/" style="font-size: 16.25px;">web开发</a> <a href="/tags/云计算/" style="font-size: 18.75px;">云计算</a> <a href="/tags/区块链/" style="font-size: 10px;">区块链</a> <a href="/tags/大小端/" style="font-size: 10px;">大小端</a> <a href="/tags/数据库/" style="font-size: 12.5px;">数据库</a> <a href="/tags/系统管理/" style="font-size: 15px;">系统管理</a> <a href="/tags/计算机网络/" style="font-size: 17.5px;">计算机网络</a> <a href="/tags/集群/" style="font-size: 13.75px;">集群</a> <a href="/tags/默认/" style="font-size: 10px;">默认</a>
+    </div>
+  </aside>
+
+  
+    <aside class="widget">
+    <h3 class="widget-title">Links</h3>
+    <div class="widget-content">
+		<ul id="link-list">
+		<!-- link begin -->
+
+		<li><a href="https://www.google.com/">google</a></li>
+		<li><a href="https://www.baidu.com/">baidu</a></li>
+		
+		<!-- link end -->
+		</ul>
+    </div>
+</aside>
+
+  
+    <aside class="widget">
+    <h3 class="widget-title">Ads</h3>
+    <div class="widget-content">
+	 
+			* <a target="_blank" href="https://amazon.cn/gp/search?ie=UTF8&tag=momoda-23&linkCode=ur2&linkId=4a0e4fbec0cfa8dfe540ca999d0bf999&camp=536&creative=3200&index=books&keywords=编程">这些好书您看了吗?</a><img src="//ir-cn.amazon-adsystem.com/e/ir?t=momoda-23&l=ur2&o=28" width="1" height="1" border="0" alt="" style="border:none !important; margin:0px !important;">
+			<br><br>
+			* 体育&户外用品推荐>
+			<div align="center"> <a href="https://www.amazon.cn/B07HWB88Z5/dp/B07HWB88Z5/ref=as_sl_pc_tf_til?tag=momoda-23&linkCode=w00&linkId=14df5124f2165d9eb3d65252e60ed2cf&creativeASIN=B07HWB88Z5"><img src="/more/ads/amazon.gif" width="100%"></a> </div>
+
+    </div>
+</aside>
+
+  
+</div>
+      </div>
+      <footer id="colophon" role="contentinfo">
+    <p>&copy; 2019 momoda
+    All rights reserved.</p>
+    <p>Powered by <a href="https://hexo.io/" target="_blank">Hexo</a></p>
+    <a href="javascript:scrollTo(0,0);">返回顶部</a>
+</footer>
+
+    <script>window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"1","bdMiniList":false,"bdPic":"","bdStyle":"2","bdSize":"16"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];</script>
+
+<script src="/js/jquery-2.0.3.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+<script src="/js/navigation.js"></script>
+
+
+<script type="text/javascript" src="https://js.users.51.la/19862371.js"></script>
+<div id="bg"></div>
+
+  </div>
+</body>
+</html>

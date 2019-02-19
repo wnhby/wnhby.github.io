@@ -1,0 +1,469 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="utf-8">
+  
+  
+  <meta name="description" content="momoda">
+  
+
+  
+  <meta name="keywords" content="momoda">
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  <title>ch6-Socket | Just another blog</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="Socket 属性 Socket 接口函数 服务器端函数 客户端函数 通用函数   TCP 通信 UDP Socket函数 更多阅读- [Ads](#ads)    Socket 起源于 Unix，而Unix基本哲学之一就是一切皆文件，都可以用“打开open –&amp;gt; 读写write/read –&amp;gt; 关闭close”模式来操作。Socket就是该模式的一个实现，网络的Socket数据传">
+<meta name="keywords" content="计算机网络,network,tcp&#x2F;ip,http">
+<meta property="og:type" content="article">
+<meta property="og:title" content="ch6-Socket">
+<meta property="og:url" content="https://wnhby.github.io/se-notes/计算机网络基础/ch6-Socket/index.html">
+<meta property="og:site_name" content="Just another blog">
+<meta property="og:description" content="Socket 属性 Socket 接口函数 服务器端函数 客户端函数 通用函数   TCP 通信 UDP Socket函数 更多阅读- [Ads](#ads)    Socket 起源于 Unix，而Unix基本哲学之一就是一切皆文件，都可以用“打开open –&amp;gt; 读写write/read –&amp;gt; 关闭close”模式来操作。Socket就是该模式的一个实现，网络的Socket数据传">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="http://7xrlu9.com1.z0.glb.clouddn.com/Network_Socket_1.png">
+<meta property="og:image" content="http://7xrlu9.com1.z0.glb.clouddn.com/Network_Socket_2.png">
+<meta property="og:image" content="https://ir-cn.amazon-adsystem.com/e/ir?t=momoda-23&l=ur2&o=28">
+<meta property="og:image" content="https://wnhby.github.io/se-notes/计算机网络基础/more/ads/amazon.gif">
+<meta property="og:updated_time" content="2019-02-19T05:23:22.892Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="ch6-Socket">
+<meta name="twitter:description" content="Socket 属性 Socket 接口函数 服务器端函数 客户端函数 通用函数   TCP 通信 UDP Socket函数 更多阅读- [Ads](#ads)    Socket 起源于 Unix，而Unix基本哲学之一就是一切皆文件，都可以用“打开open –&amp;gt; 读写write/read –&amp;gt; 关闭close”模式来操作。Socket就是该模式的一个实现，网络的Socket数据传">
+<meta name="twitter:image" content="http://7xrlu9.com1.z0.glb.clouddn.com/Network_Socket_1.png">
+  
+    <link rel="alternative" href="/atom.xml" title="Just another blog" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/css/images/favicon.ico">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  
+
+  
+  <!-- baidu webmaster push -->
+  <script src="//push.zhanzhang.baidu.com/push.js"></script>
+</head></html>
+<body class="home blog custom-background custom-font-enabled single-author">
+  <div id="page" class="hfeed site">
+      <header id="masthead" class="site-header" role="banner">
+    <hgroup>
+      <h1 class="site-title">
+        <a href="/" title="Just another blog" rel="home">Just another blog</a>
+      </h1>
+      
+        <h2 class="site-description">
+          <a href="/" id="subtitle">momoda blog</a>
+        </h2>
+      
+    </hgroup>
+
+    <nav id="site-navigation" class="main-navigation" role="navigation">
+            <button class="menu-toggle">菜单</button>
+            <a class="assistive-text" href="/#content" title="跳至内容">跳至内容</a><!--TODO-->
+            <div class="menu-main-container">
+                <ul id="menu-main" class="nav-menu">
+                
+                    <li class="menu-item menu-item-type-post_type menu-item-object-page"><a href="/">Home</a></li>
+                
+                    <li class="menu-item menu-item-type-post_type menu-item-object-page"><a href="/atom.xml">RSS</a></li>
+                
+                    <li class="menu-item menu-item-type-post_type menu-item-object-page"><a href="/sitemap.xml">Site map</a></li>
+                
+                    <li class="menu-item menu-item-type-post_type menu-item-object-page"><a href="/more/share.html">Share</a></li>
+                
+                </ul>
+            </div>
+    </nav>
+</header>
+
+      <div id="main" class="wrapper">
+        <div id="primary" class="site-content"><div id="content" role="main"><article id="post-se-notes/计算机网络基础/ch6-Socket" class="post-se-notes/计算机网络基础/ch6-Socket post type-post status-publish format-standard hentry">
+    <!---->
+
+      <header class="entry-header">
+        
+        
+  
+    <h1 class="entry-title article-title">
+      ch6-Socket
+    </h1>
+  
+
+        
+        <div class="comments-link">
+            
+            <a href="javascript:void(0);" data-url="https://wnhby.github.io/se-notes/计算机网络基础/ch6-Socket/" data-id="cjsbbbeys004ce9s6oj7utds5" class="leave-reply bdsharebuttonbox" data-cmd="more">分享</a>
+        </div><!-- .comments-link -->
+      </header><!-- .entry-header -->
+
+    <div class="entry-content">
+      
+        <!-- TOC -->
+<ul>
+<li><a href="#socket-属性">Socket 属性</a></li>
+<li><a href="#socket-接口函数">Socket 接口函数</a><ul>
+<li><a href="#服务器端函数">服务器端函数</a></li>
+<li><a href="#客户端函数">客户端函数</a></li>
+<li><a href="#通用函数">通用函数</a></li>
+</ul>
+</li>
+<li><a href="#tcp-通信">TCP 通信</a></li>
+<li><a href="#udp-socket函数">UDP Socket函数</a></li>
+<li><a href="#更多阅读">更多阅读</a><pre><code>- [Ads](#ads)
+</code></pre></li>
+</ul>
+<!-- /TOC -->
+<p>Socket 起源于 Unix，而Unix基本哲学之一就是<code>一切皆文件</code>，都可以用“<code>打开open –&gt; 读写write/read –&gt; 关闭close</code>”模式来操作。Socket就是该模式的一个实现，网络的Socket数据传输是一种特殊的I/O，Socket也是一种文件描述符。</p>
+<p>Socket也具有一个类似于打开文件的函数调用：Socket()，该函数返回一个整型的Socket描述符，随后的连接建立、数据传输等操作都是通过该Socket实现的。使用TCP/IP协议的应用程序通常采用应用编程接口：UNIX BSD的套接字（socket）和UNIX System V的TLI（已经被淘汰），来实现网络进程之间的通信。</p>
+<h1 id="Socket-属性"><a href="#Socket-属性" class="headerlink" title="Socket 属性"></a>Socket 属性</h1><p>套接字的特性由3个属性确定，它们分别是：域、类型和协议。</p>
+<ol>
+<li><p>套接字的域：它指定<strong>套接字通信中使用的网络介质</strong>，最常见的套接字域是AF_INET，它指的是Internet网络。当客户使用套接字进行跨网络的连接时，它就需要用到服务器计算机的IP地址和端口来指定一台联网机器上的某个特定服务，所以在使用socket作为通信的终点，服务器应用程序必须在开始通信之前绑定一个端口，服务器在指定的端口等待客户的连接。另一个域AF_UNIX表示UNIX文件系统，它就是文件输入/输出，而它的地址就是文件名。</p>
+</li>
+<li><p>套接字类型：因特网提供了两种通信机制：流（stream）和数据报（datagram），因而套接字的类型也就分为流套接字和数据报套接字。这里主要讲流套接字。</p>
+<p> 流套接字由类型SOCK_STREAM指定，它们是在AF_INET域中通过TCP/IP连接实现，同时也是AF_UNIX中常用的套接字类型。流套接字提供的是一个<strong>有序、可靠、双向字节流</strong>的连接，因此发送的数据可以确保不会丢失、重复或乱序到达，而且它还有一定的出错后重新发送的机制。</p>
+<p> 与流套接字相对的是由类型SOCK_DGRAM指定的数据报套接字，它不需要建立连接和维持一个连接，它们在AF_INET中通常是通过UDP/IP协议实现的。它对可以发送的数据的长度有限制，数据报作为一个单独的网络消息被传输,它可能会丢失、复制或错乱到达，UDP不是一个可靠的协议，但是它的速度比较高，因为它并一需要总是要建立和维持一个连接。</p>
+</li>
+<li><p>套接字协议：只要底层的传输机制允许不止一个协议来提供要求的套接字类型，我们就可以为套接字选择一个特定的协议。通常只需要使用默认值。</p>
+</li>
+</ol>
+<h1 id="Socket-接口函数"><a href="#Socket-接口函数" class="headerlink" title="Socket 接口函数"></a>Socket 接口函数</h1><p>既然socket是“open—write/read—close”模式的一种实现，那么socket就提供了这些操作对应的函数接口。下面以TCP为例，介绍几个基本的socket接口函数。</p>
+<p><code>socket函数</code>：<strong>使用给定的协议族、套接字类型、协议编号（默认为0）来创建套接字</strong>。</p>
+<p>socket函数对应于普通文件的打开操作。普通文件的打开操作返回一个文件描述字，而socket()用于创建一个socket描述符（socket descriptor），它唯一标识一个socket。这个socket描述字跟文件描述字一样，后续的操作都有用到它，把它作为参数，通过它来进行一些读写操作。</p>
+<pre><code>int socket(int domain, int type, int protocol);
+</code></pre><p>socket函数的三个参数分别为：</p>
+<ul>
+<li>domain：<code>协议域</code>。常用的协议族有AF_INET、AF_INET6等。协议族决定了socket的地址类型，在通信中必须采用对应的地址，如AF_INET决定了要用ipv4地址（32位的）与端口号（16位的）的组合。</li>
+<li>type：<code>socket类型</code>。常用的socket类型有，SOCK_STREAM、SOCK_DGRAM、SOCK_RAW、SOCK_PACKET、SOCK_SEQPACKET等等。</li>
+<li>protocol：<code>指定协议</code>。常用的协议有，IPPROTO_TCP、IPPTOTO_UDP等，它们分别对应TCP传输协议、UDP传输协议。</li>
+</ul>
+<p>注意：type和protocol不可以随意组合的，如SOCK_STREAM不可以跟IPPROTO_UDP组合。当protocol为0时，会自动选择type类型对应的默认协议。</p>
+<p>我们调用socket创建一个socket后，返回的socket描述符存在于协议族空间中，但没有一个具体的地址。如果想要给它赋值一个地址，就必须调用bind()函数，否则就当调用connect()、listen()时系统会自动随机分配一个端口。</p>
+<h2 id="服务器端函数"><a href="#服务器端函数" class="headerlink" title="服务器端函数"></a>服务器端函数</h2><p><code>bind函数</code>：<strong>将套接字绑定到地址。</strong></p>
+<pre><code>int bind(int sockfd, struct sockaddr * my_addr, int addrlen);
+</code></pre><p>三个参数分别为：</p>
+<ul>
+<li>sockfd : 即socket描述字，通过socket()函数创建，唯一标识一个socket。</li>
+<li>my_addr : 结构体指针变量，指向要绑定给sockfd的协议地址。这个地址结构根据地址创建socket时的地址协议族的不同而不同。</li>
+<li>addrlen : 对应的是地址的长度。</li>
+</ul>
+<p>通常服务器在启动的时候都会绑定一个地址（如ip地址+端口号），用于提供服务，客户就可以通过它来接连服务器；而客户端就不用指定，系统自动分配一个端口号和自身的ip地址组合。这就是为什么通常服务器端在listen之前会调用bind()，而客户端就不会调用，而是在connect()时由系统随机生成一个。</p>
+<p><code>listen函数</code>：使服务器的这个端口和IP处于监听状态，等待网络中某一客户机的连接请求。如果客户端有连接请求，端口就会接受这个连接。</p>
+<pre><code>int listen(int sockfd, int backlog);
+</code></pre><p>两个参数分别为：</p>
+<ul>
+<li>sockfd: socket描述字。</li>
+<li>backlog: 指定同时能处理的最大连接要求，通常为10或者5。最大值可设至128。</li>
+</ul>
+<p><code>accept函数</code>：接受远程计算机的连接请求，建立起与客户机之间的通信连接。服务器处于监听状态时，如果某时刻获得客户机的连接请求，此时并不是立即处理这个请求，而是将这个请求放在等待队列中，当系统空闲时再处理客户机的连接请求。</p>
+<pre><code>int accept(int sockfd, struct sockaddr * addr,int * addrlen);
+</code></pre><p>三个参数分别为：</p>
+<ul>
+<li>sockfd : socket描述字。</li>
+<li>addr: 为结构体指针变量，和bind的结构体是同种类型的，系统会把远程主机的信息（远程主机的地址和端口号信息）保存到这个指针所指的结构体中。</li>
+<li>addrlen : 表示结构体的长度</li>
+</ul>
+<p>accept的第一个参数为服务器的socket描述字，是服务器开始调用socket()函数生成的，称为<code>监听socket描述字</code>；而accept函数返回的是<code>已连接的socket描述字</code>。一个服务器通常通常仅仅只创建一个监听socket描述字，它在该服务器的生命周期内一直存在。内核为每个由服务器进程接受的客户连接创建了一个已连接socket描述字，当服务器完成了对某个客户的服务，相应的已连接socket描述字就被关闭。</p>
+<h2 id="客户端函数"><a href="#客户端函数" class="headerlink" title="客户端函数"></a>客户端函数</h2><p><code>connect函数</code>用来请求连接远程服务器.</p>
+<pre><code>int connect (int sockfd,struct sockaddr * serv_addr,int addrlen);
+</code></pre><p>三个参数分别为：</p>
+<ul>
+<li>sockfd : socket描述字，前面socket的返回值；</li>
+<li>serv_addr : 存储着远程服务器的IP与端口号信息；</li>
+<li>addrlen : 表示结构体变量的长度。</li>
+</ul>
+<h2 id="通用函数"><a href="#通用函数" class="headerlink" title="通用函数"></a>通用函数</h2><p><code>recv函数</code>：负责从缓冲区中读取内容。当读成功时，read返回实际所读的字节数，如果返回的值是0表示已经读到文件的结束了，小于0表示出现了错误。</p>
+<pre><code>int recv(int sockfd,void *buf,int len,unsigned int flags);
+</code></pre><p>四个参数分别为：</p>
+<ul>
+<li>sockfd : 为前面accept的返回值.也就是新的套接字。</li>
+<li>buf : 表示缓冲区</li>
+<li>len : 表示缓冲区的长度</li>
+<li>flags : 通常为0</li>
+</ul>
+<p><code>send函数</code>：将buf中的n bytes字节内容写入socket描述字。成功时返回写的字节数。失败时返回-1，并设置errno变量。</p>
+<pre><code>int send(int sockfd,const void * msg,int len,unsigned int flags);
+</code></pre><ul>
+<li>sockfd : 为前面socket的返回值.</li>
+<li>msg : 一般为常量字符串</li>
+<li>len : 表示长度</li>
+<li>flags : 通常为0</li>
+</ul>
+<p><code>close函数</code>：关闭套接字。若顺利关闭则返回0，发生错误时返回-1。</p>
+<pre><code>int close(int sockfd);
+</code></pre><h1 id="TCP-通信"><a href="#TCP-通信" class="headerlink" title="TCP 通信"></a>TCP 通信</h1><p>TCP中 Socket 通信的基本步骤如下：</p>
+<p><img src="http://7xrlu9.com1.z0.glb.clouddn.com/Network_Socket_1.png" alt=""></p>
+<p>一个简单的 C/S 程序如下（客户端发出的数据, 服务器会回显到客户端的终端上。只是一个简单的模型, 没考虑错误处理等问题。）</p>
+<p>服务器端如下：</p>
+<pre><code>import socket   # socket模块
+
+BUF_SIZE = 1024  # 设置缓冲区大小
+server_addr = (&apos;127.0.0.1&apos;, 8888)  # IP和端口构成表示地址
+
+server = socket.socket(socket.AF_INET,
+                       socket.SOCK_STREAM)   # 生成一个新的socket对象
+server.setsockopt(socket.SOL_SOCKET,
+                  socket.SO_REUSEADDR, 1)    # 设置地址复用
+server.bind(server_addr)  # 绑定地址
+server.listen(5)          # 监听, 最大监听数为5
+while True:
+    client, client_addr = server.accept()  # 接收TCP连接, 并返回新的套接字和地址
+    print &apos;Connected by&apos;, client_addr
+    while True:
+        data = client.recv(BUF_SIZE)       # 从客户端接收数据
+        print data
+        client.sendall(data)               # 发送数据到客户端
+server.close()
+</code></pre><p>客户端如下：</p>
+<pre><code>import socket
+
+BUF_SIZE = 1024
+server_addr = (&apos;127.0.0.1&apos;, 8888)
+client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+client.connect(server_addr)
+while True:
+    data = raw_input(&quot;Please input some string &gt; &quot;)
+    client.sendall(data)
+    data = client.recv(BUF_SIZE)
+    print data
+client.close()
+</code></pre><p>不过真实的网络编程环境中，一定要使用大量的错误处理，可以尽量的发现错误，也能够使代码显得更加严谨。</p>
+<p>三次握手<br>SYN_SENT    connect() 阻塞 — accept() 阻塞 SYS_RCV<br>ESTABLISHED connect() 返回 — accept() 返回 ESTABLISHED</p>
+<p>四次挥手<br>FIN_WAIT1 close() 阻塞 — read() 读 0 字节 LAST_ACK<br>FIN_WAIT2 close()</p>
+<h1 id="UDP-Socket函数"><a href="#UDP-Socket函数" class="headerlink" title="UDP Socket函数"></a>UDP Socket函数</h1><p><code>sendto()</code>函数：发送UDP数据，将数据发送到套接字。返回实际发送的数据字节长度或在出现发送错误时返回-1。</p>
+<pre><code>int sendto(int sockfd, const void *msg,int len,unsigned int flags,const struct sockaddr *to, int tolen);
+</code></pre><p><code>recvfrom()</code>函数：接受UDP套接字的数据, 与recv()类似。返回接收到的字节数或当出现错误时返回-1，并置相应的errno。</p>
+<pre><code>int recvfrom(int sockfd,void *buf,int len,unsigned int flags,struct sockaddr *from,int *fromlen);
+</code></pre><p>UDP通信流程图如下：</p>
+<p><img src="http://7xrlu9.com1.z0.glb.clouddn.com/Network_Socket_2.png" alt=""></p>
+<p>简单的客户端服务器UDP连接，服务器端：</p>
+<pre><code>#!/usr/bin/env python
+# -*- coding:utf-8 -*-
+
+import socket
+
+BUF_SIZE = 1024                     # 设置缓冲区大小
+server_addr = (&apos;127.0.0.1&apos;, 8888)   # IP和端口构成表示地址
+
+# 生成新的套接字对象
+server = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+server.bind(server_addr)        # 套接字绑定IP和端口
+
+while True:
+  print &quot;waitting for data&quot;
+  # 从客户端接收数据
+  data, client_addr = server.recvfrom(BUF_SIZE)
+  print &apos;Connected by&apos;, client_addr, &apos; Receive Data : &apos;, data
+  # 发送数据给客户端
+  server.sendto(data, client_addr)
+server.close()
+</code></pre><p>客户端如下：</p>
+<pre><code>import socket
+
+BUF_SIZE = 1024                     # 设置缓冲区
+    server_addr = (&apos;127.0.0.1&apos;, 8888)   # IP和端口构成表示地址
+
+client = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+while True:
+  data = raw_input(&apos;Please Input data &gt; &apos;)
+  client.sendto(data, server_addr)  # 向服务器发送数据
+  data, addr = client.recvfrom(BUF_SIZE)  # 从服务器接收数据
+  print &quot;Data : &quot;, data
+client.close()
+</code></pre><h1 id="更多阅读"><a href="#更多阅读" class="headerlink" title="更多阅读"></a>更多阅读</h1><p><a href="http://www.jianshu.com/p/90348ef3f41e" target="_blank" rel="noopener">Socket通信原理简介</a><br><a href="http://www.cnblogs.com/dolphinX/p/3460545.html" target="_blank" rel="noopener">简单理解Socket</a><br><a href="http://www.jianshu.com/p/e062b3dd110c" target="_blank" rel="noopener">Python爬虫(三)-Socket网络编程</a><br><a href="http://www.cnblogs.com/skynet/archive/2010/12/12/1903949.html" target="_blank" rel="noopener">Linux Socket编程（不限Linux）</a>  </p>
+<hr>
+<ul>
+<li><p><a href="/more/donate/index.html"><strong><em><font color="red">我觉得帮助到我了, 支持你一下.</font></em></strong></a><br>   </p>
+</li>
+<li><p><a href="https://www.paypal.me/momodainfo" target="_blank" rel="noopener"><strong><em><font color="red">If you think the article is helpful to you, you can reward me through paypal.</font></em></strong></a></p>
+</li>
+</ul>
+<h3 id="Ads"><a href="#Ads" class="headerlink" title="Ads"></a>Ads</h3><p><em>这是小广告! 如果有需要, 不妨支持一下吧~</em></p>
+<blockquote>
+<p> <a target="_blank" href="https://amazon.cn/gp/search?ie=UTF8&tag=momoda-23&linkCode=ur2&linkId=4a0e4fbec0cfa8dfe540ca999d0bf999&camp=536&creative=3200&index=books&keywords=编程">这些好书您看了吗?</a><img src="//ir-cn.amazon-adsystem.com/e/ir?t=momoda-23&l=ur2&o=28" width="1" height="1" border="0" alt="" style="border:none !important; margin:0px !important;"></p>
+</blockquote>
+<blockquote>
+<p>体育&amp;户外用品推荐</p>
+</blockquote>
+<div align="center"> <a href="https://www.amazon.cn/B07HWB88Z5/dp/B07HWB88Z5/ref=as_sl_pc_tf_til?tag=momoda-23&linkCode=w00&linkId=14df5124f2165d9eb3d65252e60ed2cf&creativeASIN=B07HWB88Z5" target="_blank" rel="noopener"><img src="/se-notes/计算机网络基础/ch6-Socket/../more/ads/amazon.gif" width="100%"></a> </div>
+      
+    </div><!-- .entry-content -->
+
+    <footer class="entry-meta">
+    <a href="/se-notes/计算机网络基础/ch6-Socket/">
+    <time datetime="2019-01-03T13:49:30.000Z" class="entry-date">
+        1月 3 2019
+    </time>
+</a>
+    
+  <span class="article-delim">&#8226;</span>
+  <div class="article-category">
+  <a class="article-category-link" href="/categories/网络通讯/">网络通讯</a>, <a class="article-category-link" href="/categories/网络通讯/计算机网络基础/">计算机网络基础</a>
+  </div>
+
+    
+  <span class="article-delim">&#8226;</span>
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/http/">http</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/network/">network</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/tcp-ip/">tcp/ip</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/计算机网络/">计算机网络</a></li></ul>
+
+    </footer>
+</article>
+
+
+    
+<nav class="nav-single">
+    <h3 class="assistive-text">文章导航</h3>
+    
+        <span class="nav-previous"><a href="/se-notes/计算机网络基础/ch5-Web/" rel="prev"><span class="meta-nav">←</span> ch5-Web</a></span>
+    
+    
+        <span class="nav-next"><a href="/se-notes/计算机网络基础/ch7-More/" rel="next">ch7-More <span class="meta-nav">→</span></a></span>
+    
+</nav><!-- .nav-single -->
+
+
+
+
+
+
+
+</div></div>
+        <div id="secondary" class="widget-area" role="complementary">
+  
+    <aside id="search" class="widget widget_search"><form role="search" method="get" accept-charset="utf-8" id="searchform" class="searchform" action="//google.com/search">
+    <div>
+        <input type="text" value="" name="q">
+        <input type="submit" id="searchsubmit" value="google搜索">
+    </div>
+</form></aside>
+
+  
+    
+  <aside class="widget">
+    <h3 class="widget-title">Recents</h3>
+    <div class="widget-content">
+      <ul>
+        
+          <li>
+            <a href="/系统剩余空间查看/">系统剩余空间查看</a>
+          </li>
+        
+          <li>
+            <a href="/数据库分类/">数据库分类</a>
+          </li>
+        
+          <li>
+            <a href="/se-notes/Linux基础/README/">Linux基础-README</a>
+          </li>
+        
+          <li>
+            <a href="/se-notes/云计算实践/区块链相关/区块链简介/">区块链简介</a>
+          </li>
+        
+          <li>
+            <a href="/se-notes/云计算实践/集群高可用方案/Heartbeat双机热备方案/">Heartbeat双机热备方案</a>
+          </li>
+        
+      </ul>
+    </div>
+  </aside>
+
+  
+    
+  <aside class="widget">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget-content">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/">一月 2019</a><span class="archive-list-count">56</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">十一月 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">二月 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/09/">九月 2017</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/01/">一月 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/11/">十一月 2015</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/01/">一月 2014</a><span class="archive-list-count">1</span></li></ul>
+    </div>
+  </aside>
+
+  
+    
+  <aside class="widget">
+    <h3 class="widget-title">Categories</h3>
+    <div class="widget-content">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Graphics/">Graphics</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Linux/">Linux</a><span class="category-list-count">7</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Linux/Shell/">Shell</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Linux/linux基础/">linux基础</a><span class="category-list-count">6</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/协议证书/">协议证书</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/协议证书/openssl/">openssl</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/数据库/">数据库</a><span class="category-list-count">4</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/数据库/数据库基础/">数据库基础</a><span class="category-list-count">3</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/框架/">框架</a><span class="category-list-count">9</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/框架/python-web应用框架/">python-web应用框架</a><span class="category-list-count">9</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/版本控制/">版本控制</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/版本控制/Git/">Git</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/编程语言/">编程语言</a><span class="category-list-count">13</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/编程语言/java/">java</a><span class="category-list-count">13</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/网络通讯/">网络通讯</a><span class="category-list-count">11</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/网络通讯/大小端/">大小端</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/网络通讯/计算机网络基础/">计算机网络基础</a><span class="category-list-count">10</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/路由器/">路由器</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/路由器/openwrt/">openwrt</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/通用技术/">通用技术</a><span class="category-list-count">13</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/通用技术/Docker/">Docker</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/通用技术/云计算实践/">云计算实践</a><span class="category-list-count">11</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/通用技术/云计算实践/kubernetes部署/">kubernetes部署</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/通用技术/云计算实践/区块链/">区块链</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/通用技术/云计算实践/集群高可用方案/">集群高可用方案</a><span class="category-list-count">4</span></li></ul></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/默认/">默认</a><span class="category-list-count">1</span></li></ul>
+    </div>
+  </aside>
+
+  
+    
+  <aside class="widget">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget-content">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/CS-Notes/">CS-Notes</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/PEM证书/">PEM证书</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Shell/">Shell</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/cron/">cron</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/database/">database</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/diagrams/">diagrams</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/docker/">docker</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/docker-qq/">docker-qq</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/flask/">flask</a><span class="tag-list-count">9</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/git/">git</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/graphics/">graphics</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/http/">http</a><span class="tag-list-count">10</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/informationisbeautiful/">informationisbeautiful</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/java基础/">java基础</a><span class="tag-list-count">13</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/java语法/">java语法</a><span class="tag-list-count">13</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/kubernetes/">kubernetes</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/linux/">linux</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mysql/">mysql</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/network/">network</a><span class="tag-list-count">10</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/openssl/">openssl</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/openwrt/">openwrt</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/p12/">p12</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/pfx/">pfx</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/tcp-ip/">tcp/ip</a><span class="tag-list-count">10</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/web开发/">web开发</a><span class="tag-list-count">9</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/云计算/">云计算</a><span class="tag-list-count">11</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/区块链/">区块链</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/大小端/">大小端</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/数据库/">数据库</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/系统管理/">系统管理</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/计算机网络/">计算机网络</a><span class="tag-list-count">10</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/集群/">集群</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/默认/">默认</a><span class="tag-list-count">1</span></li></ul>
+    </div>
+  </aside>
+
+  
+    
+  <aside class="widget">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget-content tagcloud">
+      <a href="/tags/CS-Notes/" style="font-size: 10px;">CS-Notes</a> <a href="/tags/PEM证书/" style="font-size: 10px;">PEM证书</a> <a href="/tags/Shell/" style="font-size: 10px;">Shell</a> <a href="/tags/cron/" style="font-size: 10px;">cron</a> <a href="/tags/database/" style="font-size: 10px;">database</a> <a href="/tags/diagrams/" style="font-size: 10px;">diagrams</a> <a href="/tags/docker/" style="font-size: 15px;">docker</a> <a href="/tags/docker-qq/" style="font-size: 10px;">docker-qq</a> <a href="/tags/flask/" style="font-size: 16.25px;">flask</a> <a href="/tags/git/" style="font-size: 10px;">git</a> <a href="/tags/graphics/" style="font-size: 10px;">graphics</a> <a href="/tags/http/" style="font-size: 17.5px;">http</a> <a href="/tags/informationisbeautiful/" style="font-size: 10px;">informationisbeautiful</a> <a href="/tags/java基础/" style="font-size: 20px;">java基础</a> <a href="/tags/java语法/" style="font-size: 20px;">java语法</a> <a href="/tags/kubernetes/" style="font-size: 13.75px;">kubernetes</a> <a href="/tags/linux/" style="font-size: 15px;">linux</a> <a href="/tags/mysql/" style="font-size: 11.25px;">mysql</a> <a href="/tags/network/" style="font-size: 17.5px;">network</a> <a href="/tags/openssl/" style="font-size: 10px;">openssl</a> <a href="/tags/openwrt/" style="font-size: 10px;">openwrt</a> <a href="/tags/p12/" style="font-size: 10px;">p12</a> <a href="/tags/pfx/" style="font-size: 10px;">pfx</a> <a href="/tags/tcp-ip/" style="font-size: 17.5px;">tcp/ip</a> <a href="/tags/web开发/" style="font-size: 16.25px;">web开发</a> <a href="/tags/云计算/" style="font-size: 18.75px;">云计算</a> <a href="/tags/区块链/" style="font-size: 10px;">区块链</a> <a href="/tags/大小端/" style="font-size: 10px;">大小端</a> <a href="/tags/数据库/" style="font-size: 12.5px;">数据库</a> <a href="/tags/系统管理/" style="font-size: 15px;">系统管理</a> <a href="/tags/计算机网络/" style="font-size: 17.5px;">计算机网络</a> <a href="/tags/集群/" style="font-size: 13.75px;">集群</a> <a href="/tags/默认/" style="font-size: 10px;">默认</a>
+    </div>
+  </aside>
+
+  
+    <aside class="widget">
+    <h3 class="widget-title">Links</h3>
+    <div class="widget-content">
+		<ul id="link-list">
+		<!-- link begin -->
+
+		<li><a href="https://www.google.com/">google</a></li>
+		<li><a href="https://www.baidu.com/">baidu</a></li>
+		
+		<!-- link end -->
+		</ul>
+    </div>
+</aside>
+
+  
+    <aside class="widget">
+    <h3 class="widget-title">Ads</h3>
+    <div class="widget-content">
+	 
+			* <a target="_blank" href="https://amazon.cn/gp/search?ie=UTF8&tag=momoda-23&linkCode=ur2&linkId=4a0e4fbec0cfa8dfe540ca999d0bf999&camp=536&creative=3200&index=books&keywords=编程">这些好书您看了吗?</a><img src="//ir-cn.amazon-adsystem.com/e/ir?t=momoda-23&l=ur2&o=28" width="1" height="1" border="0" alt="" style="border:none !important; margin:0px !important;">
+			<br><br>
+			* 体育&户外用品推荐>
+			<div align="center"> <a href="https://www.amazon.cn/B07HWB88Z5/dp/B07HWB88Z5/ref=as_sl_pc_tf_til?tag=momoda-23&linkCode=w00&linkId=14df5124f2165d9eb3d65252e60ed2cf&creativeASIN=B07HWB88Z5"><img src="/more/ads/amazon.gif" width="100%"></a> </div>
+
+    </div>
+</aside>
+
+  
+</div>
+      </div>
+      <footer id="colophon" role="contentinfo">
+    <p>&copy; 2019 momoda
+    All rights reserved.</p>
+    <p>Powered by <a href="https://hexo.io/" target="_blank">Hexo</a></p>
+    <a href="javascript:scrollTo(0,0);">返回顶部</a>
+</footer>
+
+    <script>window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"1","bdMiniList":false,"bdPic":"","bdStyle":"2","bdSize":"16"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];</script>
+
+<script src="/js/jquery-2.0.3.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+<script src="/js/navigation.js"></script>
+
+
+<script type="text/javascript" src="https://js.users.51.la/19862371.js"></script>
+<div id="bg"></div>
+
+  </div>
+</body>
+</html>
