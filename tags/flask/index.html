@@ -95,7 +95,7 @@
         
         <div class="comments-link">
             
-            <a href="javascript:void(0);" data-url="https://wnhby.github.io/se-notes/Flask-Web工程手册/README/" data-id="cjsbbbett0000e9s6ucjghcoh" class="leave-reply bdsharebuttonbox" data-cmd="more">分享</a>
+            <a href="javascript:void(0);" data-url="https://wnhby.github.io/se-notes/Flask-Web工程手册/README/" data-id="cjsbez08m002aczs671f1tpl7" class="leave-reply bdsharebuttonbox" data-cmd="more">分享</a>
         </div><!-- .comments-link -->
       </header><!-- .entry-header -->
 
@@ -134,7 +134,7 @@
 <blockquote>
 <p>体育&amp;户外用品推荐</p>
 </blockquote>
-<div align="center"> <a href="https://www.amazon.cn/B07HWB88Z5/dp/B07HWB88Z5/ref=as_sl_pc_tf_til?tag=momoda-23&linkCode=w00&linkId=14df5124f2165d9eb3d65252e60ed2cf&creativeASIN=B07HWB88Z5" target="_blank" rel="noopener"><img src="/se-notes/Flask-Web工程手册/README/../more/ads/amazon.gif" width="100%"></a> </div>
+<div align="center"> <a href="https://www.amazon.cn/B07HWB88Z5/dp/B07HWB88Z5/ref=as_sl_pc_tf_til?tag=momoda-23&linkCode=w00&linkId=14df5124f2165d9eb3d65252e60ed2cf&creativeASIN=B07HWB88Z5" target="_blank" rel="noopener"><img src="/se-notes/Flask-Web工程手册/README/../../../more/ads/amazon.gif" width="100%"></a> </div>
       
     </div><!-- .entry-content -->
 
@@ -147,7 +147,106 @@
     
   <span class="article-delim">&#8226;</span>
   <div class="article-category">
-  <a class="article-category-link" href="/categories/框架/">框架</a>, <a class="article-category-link" href="/categories/框架/python-web应用框架/">python-web应用框架</a>
+  <a class="article-category-link" href="/categories/框架/">框架</a>, <a class="article-category-link" href="/categories/框架/python-web应用框架/">python-web应用框架</a>, <a class="article-category-link" href="/categories/框架/python-web应用框架/flask/">flask</a>
+  </div>
+
+    
+  <span class="article-delim">&#8226;</span>
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/flask/">flask</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/web开发/">web开发</a></li></ul>
+
+    </footer>
+</article>
+
+
+
+
+
+
+  
+    <article id="post-se-notes/Flask-Web工程手册/ch1-创建Python虚拟环境" class="post-se-notes/Flask-Web工程手册/ch1-创建Python虚拟环境 post type-post status-publish format-standard hentry">
+    <!---->
+
+      <header class="entry-header">
+        
+        
+  
+    <h1 class="entry-title">
+      <a class="article-title" href="/se-notes/Flask-Web工程手册/ch1-创建Python虚拟环境/">ch1-创建Python虚拟环境</a>
+    </h1>
+  
+
+        
+        <div class="comments-link">
+            
+            <a href="javascript:void(0);" data-url="https://wnhby.github.io/se-notes/Flask-Web工程手册/ch1-创建Python虚拟环境/" data-id="cjsbez08o002bczs6ts43lesc" class="leave-reply bdsharebuttonbox" data-cmd="more">分享</a>
+        </div><!-- .comments-link -->
+      </header><!-- .entry-header -->
+
+    <div class="entry-content">
+      
+        <!-- TOC -->
+<ul>
+<li><a href="#%E4%BD%BF%E7%94%A8-virtualenv-%E8%99%9A%E6%8B%9F%E7%8E%AF%E5%A2%83">使用 virtualenv 虚拟环境</a><ul>
+<li><a href="#%E9%9C%80%E6%B1%82%E6%96%87%E4%BB%B6%E7%9A%84%E5%88%9B%E5%BB%BA%E5%8F%8A%E4%BD%BF%E7%94%A8">需求文件的创建及使用</a><ul>
+<li><a href="#ads">Ads</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<!-- /TOC -->
+<h1 id="使用-virtualenv-虚拟环境"><a href="#使用-virtualenv-虚拟环境" class="headerlink" title="使用 virtualenv 虚拟环境"></a>使用 virtualenv 虚拟环境</h1><p>virtualenv 是 Python 的虚拟环境，可以在同一台 PC 上隔离不同的开发环境。主要用于为不同的项目构建独立与隔离的三方库依赖。</p>
+<ol>
+<li>在系统中安装 virtualenv：<code>pip install virtualenv</code></li>
+<li>在项目目录中建立 virtualenv 虚拟环境：<code>virtualenv [环境名]</code> </li>
+<li>启动虚拟环境：<ul>
+<li><code>env_dir\Scripts\activate</code>(Windows)</li>
+<li><code># source env_dir/bin/activate</code>(Linux)</li>
+</ul>
+</li>
+<li>退出虚拟环境： <code>deactivate</code></li>
+</ol>
+<blockquote>
+<p>Note：python3 中有内置的虚拟环境，使用<code>python -m venv [环境名]</code>命令即可创建</p>
+</blockquote>
+<h2 id="需求文件的创建及使用"><a href="#需求文件的创建及使用" class="headerlink" title="需求文件的创建及使用"></a>需求文件的创建及使用</h2><p>Python项目中往往必须包含一个 requirements.txt 文件，用于记录所有依赖包及其精确的版本号，以便在新环境中部署。</p>
+<p>在虚拟环境中使用 pip 生成需求文件：</p>
+<blockquote>
+<p><code>(venv) $ pip freeze &gt; requirements.txt</code></p>
+</blockquote>
+<p>安装或升级包后，最好更新该文件。</p>
+<p>按照需求文件上的所列项，安装依赖包：</p>
+<blockquote>
+<p><code>(venv) $ pip install -r requirements.txt</code></p>
+</blockquote>
+<hr>
+<ul>
+<li><p><a href="/more/donate/index.html"><strong><em><font color="red">我觉得帮助到我了, 支持你一下.</font></em></strong></a><br>   </p>
+</li>
+<li><p><a href="https://www.paypal.me/momodainfo" target="_blank" rel="noopener"><strong><em><font color="red">If you think the article is helpful to you, you can reward me through paypal.</font></em></strong></a></p>
+</li>
+</ul>
+<h3 id="Ads"><a href="#Ads" class="headerlink" title="Ads"></a>Ads</h3><p><em>这是小广告! 如果有需要, 不妨支持一下吧~</em></p>
+<blockquote>
+<p> <a target="_blank" href="https://amazon.cn/gp/search?ie=UTF8&tag=momoda-23&linkCode=ur2&linkId=4a0e4fbec0cfa8dfe540ca999d0bf999&camp=536&creative=3200&index=books&keywords=编程">这些好书您看了吗?</a><img src="//ir-cn.amazon-adsystem.com/e/ir?t=momoda-23&l=ur2&o=28" width="1" height="1" border="0" alt="" style="border:none !important; margin:0px !important;"></p>
+</blockquote>
+<blockquote>
+<p>体育&amp;户外用品推荐</p>
+</blockquote>
+<div align="center"> <a href="https://www.amazon.cn/B07HWB88Z5/dp/B07HWB88Z5/ref=as_sl_pc_tf_til?tag=momoda-23&linkCode=w00&linkId=14df5124f2165d9eb3d65252e60ed2cf&creativeASIN=B07HWB88Z5" target="_blank" rel="noopener"><img src="/se-notes/Flask-Web工程手册/ch1-创建Python虚拟环境/../../../more/ads/amazon.gif" width="100%"></a> </div>
+      
+    </div><!-- .entry-content -->
+
+    <footer class="entry-meta">
+    <a href="/se-notes/Flask-Web工程手册/ch1-创建Python虚拟环境/">
+    <time datetime="2019-01-03T13:49:30.000Z" class="entry-date">
+        1月 3 2019
+    </time>
+</a>
+    
+  <span class="article-delim">&#8226;</span>
+  <div class="article-category">
+  <a class="article-category-link" href="/categories/框架/">框架</a>, <a class="article-category-link" href="/categories/框架/python-web应用框架/">python-web应用框架</a>, <a class="article-category-link" href="/categories/框架/python-web应用框架/flask/">flask</a>
   </div>
 
     
@@ -178,7 +277,7 @@
         
         <div class="comments-link">
             
-            <a href="javascript:void(0);" data-url="https://wnhby.github.io/se-notes/Flask-Web工程手册/ch2-Flask项目基本部署/" data-id="cjsbbbetx0001e9s6ofshnk48" class="leave-reply bdsharebuttonbox" data-cmd="more">分享</a>
+            <a href="javascript:void(0);" data-url="https://wnhby.github.io/se-notes/Flask-Web工程手册/ch2-Flask项目基本部署/" data-id="cjsbez08q002dczs60ngha7vk" class="leave-reply bdsharebuttonbox" data-cmd="more">分享</a>
         </div><!-- .comments-link -->
       </header><!-- .entry-header -->
 
@@ -245,7 +344,7 @@
 <blockquote>
 <p>体育&amp;户外用品推荐</p>
 </blockquote>
-<div align="center"> <a href="https://www.amazon.cn/B07HWB88Z5/dp/B07HWB88Z5/ref=as_sl_pc_tf_til?tag=momoda-23&linkCode=w00&linkId=14df5124f2165d9eb3d65252e60ed2cf&creativeASIN=B07HWB88Z5" target="_blank" rel="noopener"><img src="/se-notes/Flask-Web工程手册/ch2-Flask项目基本部署/../more/ads/amazon.gif" width="100%"></a> </div>
+<div align="center"> <a href="https://www.amazon.cn/B07HWB88Z5/dp/B07HWB88Z5/ref=as_sl_pc_tf_til?tag=momoda-23&linkCode=w00&linkId=14df5124f2165d9eb3d65252e60ed2cf&creativeASIN=B07HWB88Z5" target="_blank" rel="noopener"><img src="/se-notes/Flask-Web工程手册/ch2-Flask项目基本部署/../../../more/ads/amazon.gif" width="100%"></a> </div>
 
       
     </div><!-- .entry-content -->
@@ -259,106 +358,7 @@
     
   <span class="article-delim">&#8226;</span>
   <div class="article-category">
-  <a class="article-category-link" href="/categories/框架/">框架</a>, <a class="article-category-link" href="/categories/框架/python-web应用框架/">python-web应用框架</a>
-  </div>
-
-    
-  <span class="article-delim">&#8226;</span>
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/flask/">flask</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/web开发/">web开发</a></li></ul>
-
-    </footer>
-</article>
-
-
-
-
-
-
-  
-    <article id="post-se-notes/Flask-Web工程手册/ch1-创建Python虚拟环境" class="post-se-notes/Flask-Web工程手册/ch1-创建Python虚拟环境 post type-post status-publish format-standard hentry">
-    <!---->
-
-      <header class="entry-header">
-        
-        
-  
-    <h1 class="entry-title">
-      <a class="article-title" href="/se-notes/Flask-Web工程手册/ch1-创建Python虚拟环境/">ch1-创建Python虚拟环境</a>
-    </h1>
-  
-
-        
-        <div class="comments-link">
-            
-            <a href="javascript:void(0);" data-url="https://wnhby.github.io/se-notes/Flask-Web工程手册/ch1-创建Python虚拟环境/" data-id="cjsbbbeu80003e9s6q6zkw4cb" class="leave-reply bdsharebuttonbox" data-cmd="more">分享</a>
-        </div><!-- .comments-link -->
-      </header><!-- .entry-header -->
-
-    <div class="entry-content">
-      
-        <!-- TOC -->
-<ul>
-<li><a href="#%E4%BD%BF%E7%94%A8-virtualenv-%E8%99%9A%E6%8B%9F%E7%8E%AF%E5%A2%83">使用 virtualenv 虚拟环境</a><ul>
-<li><a href="#%E9%9C%80%E6%B1%82%E6%96%87%E4%BB%B6%E7%9A%84%E5%88%9B%E5%BB%BA%E5%8F%8A%E4%BD%BF%E7%94%A8">需求文件的创建及使用</a><ul>
-<li><a href="#ads">Ads</a></li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-<!-- /TOC -->
-<h1 id="使用-virtualenv-虚拟环境"><a href="#使用-virtualenv-虚拟环境" class="headerlink" title="使用 virtualenv 虚拟环境"></a>使用 virtualenv 虚拟环境</h1><p>virtualenv 是 Python 的虚拟环境，可以在同一台 PC 上隔离不同的开发环境。主要用于为不同的项目构建独立与隔离的三方库依赖。</p>
-<ol>
-<li>在系统中安装 virtualenv：<code>pip install virtualenv</code></li>
-<li>在项目目录中建立 virtualenv 虚拟环境：<code>virtualenv [环境名]</code> </li>
-<li>启动虚拟环境：<ul>
-<li><code>env_dir\Scripts\activate</code>(Windows)</li>
-<li><code># source env_dir/bin/activate</code>(Linux)</li>
-</ul>
-</li>
-<li>退出虚拟环境： <code>deactivate</code></li>
-</ol>
-<blockquote>
-<p>Note：python3 中有内置的虚拟环境，使用<code>python -m venv [环境名]</code>命令即可创建</p>
-</blockquote>
-<h2 id="需求文件的创建及使用"><a href="#需求文件的创建及使用" class="headerlink" title="需求文件的创建及使用"></a>需求文件的创建及使用</h2><p>Python项目中往往必须包含一个 requirements.txt 文件，用于记录所有依赖包及其精确的版本号，以便在新环境中部署。</p>
-<p>在虚拟环境中使用 pip 生成需求文件：</p>
-<blockquote>
-<p><code>(venv) $ pip freeze &gt; requirements.txt</code></p>
-</blockquote>
-<p>安装或升级包后，最好更新该文件。</p>
-<p>按照需求文件上的所列项，安装依赖包：</p>
-<blockquote>
-<p><code>(venv) $ pip install -r requirements.txt</code></p>
-</blockquote>
-<hr>
-<ul>
-<li><p><a href="/more/donate/index.html"><strong><em><font color="red">我觉得帮助到我了, 支持你一下.</font></em></strong></a><br>   </p>
-</li>
-<li><p><a href="https://www.paypal.me/momodainfo" target="_blank" rel="noopener"><strong><em><font color="red">If you think the article is helpful to you, you can reward me through paypal.</font></em></strong></a></p>
-</li>
-</ul>
-<h3 id="Ads"><a href="#Ads" class="headerlink" title="Ads"></a>Ads</h3><p><em>这是小广告! 如果有需要, 不妨支持一下吧~</em></p>
-<blockquote>
-<p> <a target="_blank" href="https://amazon.cn/gp/search?ie=UTF8&tag=momoda-23&linkCode=ur2&linkId=4a0e4fbec0cfa8dfe540ca999d0bf999&camp=536&creative=3200&index=books&keywords=编程">这些好书您看了吗?</a><img src="//ir-cn.amazon-adsystem.com/e/ir?t=momoda-23&l=ur2&o=28" width="1" height="1" border="0" alt="" style="border:none !important; margin:0px !important;"></p>
-</blockquote>
-<blockquote>
-<p>体育&amp;户外用品推荐</p>
-</blockquote>
-<div align="center"> <a href="https://www.amazon.cn/B07HWB88Z5/dp/B07HWB88Z5/ref=as_sl_pc_tf_til?tag=momoda-23&linkCode=w00&linkId=14df5124f2165d9eb3d65252e60ed2cf&creativeASIN=B07HWB88Z5" target="_blank" rel="noopener"><img src="/se-notes/Flask-Web工程手册/ch1-创建Python虚拟环境/../more/ads/amazon.gif" width="100%"></a> </div>
-      
-    </div><!-- .entry-content -->
-
-    <footer class="entry-meta">
-    <a href="/se-notes/Flask-Web工程手册/ch1-创建Python虚拟环境/">
-    <time datetime="2019-01-03T13:49:30.000Z" class="entry-date">
-        1月 3 2019
-    </time>
-</a>
-    
-  <span class="article-delim">&#8226;</span>
-  <div class="article-category">
-  <a class="article-category-link" href="/categories/框架/">框架</a>, <a class="article-category-link" href="/categories/框架/python-web应用框架/">python-web应用框架</a>
+  <a class="article-category-link" href="/categories/框架/">框架</a>, <a class="article-category-link" href="/categories/框架/python-web应用框架/">python-web应用框架</a>, <a class="article-category-link" href="/categories/框架/python-web应用框架/flask/">flask</a>
   </div>
 
     
@@ -389,7 +389,7 @@
         
         <div class="comments-link">
             
-            <a href="javascript:void(0);" data-url="https://wnhby.github.io/se-notes/Flask-Web工程手册/ch3-Flask常用扩展插件/" data-id="cjsbbbeub0005e9s6rjbwv2fy" class="leave-reply bdsharebuttonbox" data-cmd="more">分享</a>
+            <a href="javascript:void(0);" data-url="https://wnhby.github.io/se-notes/Flask-Web工程手册/ch3-Flask常用扩展插件/" data-id="cjsbez08s002fczs6fx0vuh1l" class="leave-reply bdsharebuttonbox" data-cmd="more">分享</a>
         </div><!-- .comments-link -->
       </header><!-- .entry-header -->
 
@@ -503,7 +503,7 @@
 <blockquote>
 <p>体育&amp;户外用品推荐</p>
 </blockquote>
-<div align="center"> <a href="https://www.amazon.cn/B07HWB88Z5/dp/B07HWB88Z5/ref=as_sl_pc_tf_til?tag=momoda-23&linkCode=w00&linkId=14df5124f2165d9eb3d65252e60ed2cf&creativeASIN=B07HWB88Z5" target="_blank" rel="noopener"><img src="/se-notes/Flask-Web工程手册/ch3-Flask常用扩展插件/../more/ads/amazon.gif" width="100%"></a> </div>
+<div align="center"> <a href="https://www.amazon.cn/B07HWB88Z5/dp/B07HWB88Z5/ref=as_sl_pc_tf_til?tag=momoda-23&linkCode=w00&linkId=14df5124f2165d9eb3d65252e60ed2cf&creativeASIN=B07HWB88Z5" target="_blank" rel="noopener"><img src="/se-notes/Flask-Web工程手册/ch3-Flask常用扩展插件/../../../more/ads/amazon.gif" width="100%"></a> </div>
       
     </div><!-- .entry-content -->
 
@@ -516,7 +516,7 @@
     
   <span class="article-delim">&#8226;</span>
   <div class="article-category">
-  <a class="article-category-link" href="/categories/框架/">框架</a>, <a class="article-category-link" href="/categories/框架/python-web应用框架/">python-web应用框架</a>
+  <a class="article-category-link" href="/categories/框架/">框架</a>, <a class="article-category-link" href="/categories/框架/python-web应用框架/">python-web应用框架</a>, <a class="article-category-link" href="/categories/框架/python-web应用框架/flask/">flask</a>
   </div>
 
     
@@ -547,7 +547,7 @@
         
         <div class="comments-link">
             
-            <a href="javascript:void(0);" data-url="https://wnhby.github.io/se-notes/Flask-Web工程手册/ch4-Linux服务器部署/" data-id="cjsbbbeud0006e9s61np1jewb" class="leave-reply bdsharebuttonbox" data-cmd="more">分享</a>
+            <a href="javascript:void(0);" data-url="https://wnhby.github.io/se-notes/Flask-Web工程手册/ch4-Linux服务器部署/" data-id="cjsbez08u002gczs6pbjtckhr" class="leave-reply bdsharebuttonbox" data-cmd="more">分享</a>
         </div><!-- .comments-link -->
       </header><!-- .entry-header -->
 
@@ -637,7 +637,7 @@
 <blockquote>
 <p>体育&amp;户外用品推荐</p>
 </blockquote>
-<div align="center"> <a href="https://www.amazon.cn/B07HWB88Z5/dp/B07HWB88Z5/ref=as_sl_pc_tf_til?tag=momoda-23&linkCode=w00&linkId=14df5124f2165d9eb3d65252e60ed2cf&creativeASIN=B07HWB88Z5" target="_blank" rel="noopener"><img src="/se-notes/Flask-Web工程手册/ch4-Linux服务器部署/../more/ads/amazon.gif" width="100%"></a> </div>
+<div align="center"> <a href="https://www.amazon.cn/B07HWB88Z5/dp/B07HWB88Z5/ref=as_sl_pc_tf_til?tag=momoda-23&linkCode=w00&linkId=14df5124f2165d9eb3d65252e60ed2cf&creativeASIN=B07HWB88Z5" target="_blank" rel="noopener"><img src="/se-notes/Flask-Web工程手册/ch4-Linux服务器部署/../../../more/ads/amazon.gif" width="100%"></a> </div>
       
     </div><!-- .entry-content -->
 
@@ -650,7 +650,7 @@
     
   <span class="article-delim">&#8226;</span>
   <div class="article-category">
-  <a class="article-category-link" href="/categories/框架/">框架</a>, <a class="article-category-link" href="/categories/框架/python-web应用框架/">python-web应用框架</a>
+  <a class="article-category-link" href="/categories/框架/">框架</a>, <a class="article-category-link" href="/categories/框架/python-web应用框架/">python-web应用框架</a>, <a class="article-category-link" href="/categories/框架/python-web应用框架/flask/">flask</a>
   </div>
 
     
@@ -681,7 +681,7 @@
         
         <div class="comments-link">
             
-            <a href="javascript:void(0);" data-url="https://wnhby.github.io/se-notes/Flask-Web工程手册/ch5-使用lsyncd进行文件实时备份/" data-id="cjsbbbeui0009e9s65f1pzowc" class="leave-reply bdsharebuttonbox" data-cmd="more">分享</a>
+            <a href="javascript:void(0);" data-url="https://wnhby.github.io/se-notes/Flask-Web工程手册/ch5-使用lsyncd进行文件实时备份/" data-id="cjsbez08x002jczs6shckfy5m" class="leave-reply bdsharebuttonbox" data-cmd="more">分享</a>
         </div><!-- .comments-link -->
       </header><!-- .entry-header -->
 
@@ -774,7 +774,7 @@
 <blockquote>
 <p>体育&amp;户外用品推荐</p>
 </blockquote>
-<div align="center"> <a href="https://www.amazon.cn/B07HWB88Z5/dp/B07HWB88Z5/ref=as_sl_pc_tf_til?tag=momoda-23&linkCode=w00&linkId=14df5124f2165d9eb3d65252e60ed2cf&creativeASIN=B07HWB88Z5" target="_blank" rel="noopener"><img src="/se-notes/Flask-Web工程手册/ch5-使用lsyncd进行文件实时备份/../more/ads/amazon.gif" width="100%"></a> </div>
+<div align="center"> <a href="https://www.amazon.cn/B07HWB88Z5/dp/B07HWB88Z5/ref=as_sl_pc_tf_til?tag=momoda-23&linkCode=w00&linkId=14df5124f2165d9eb3d65252e60ed2cf&creativeASIN=B07HWB88Z5" target="_blank" rel="noopener"><img src="/se-notes/Flask-Web工程手册/ch5-使用lsyncd进行文件实时备份/../../../more/ads/amazon.gif" width="100%"></a> </div>
       
     </div><!-- .entry-content -->
 
@@ -787,7 +787,209 @@
     
   <span class="article-delim">&#8226;</span>
   <div class="article-category">
-  <a class="article-category-link" href="/categories/框架/">框架</a>, <a class="article-category-link" href="/categories/框架/python-web应用框架/">python-web应用框架</a>
+  <a class="article-category-link" href="/categories/框架/">框架</a>, <a class="article-category-link" href="/categories/框架/python-web应用框架/">python-web应用框架</a>, <a class="article-category-link" href="/categories/框架/python-web应用框架/flask/">flask</a>
+  </div>
+
+    
+  <span class="article-delim">&#8226;</span>
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/flask/">flask</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/web开发/">web开发</a></li></ul>
+
+    </footer>
+</article>
+
+
+
+
+
+
+  
+    <article id="post-se-notes/Flask-Web工程手册/ch6-配置集群共享文件NFS服务器" class="post-se-notes/Flask-Web工程手册/ch6-配置集群共享文件NFS服务器 post type-post status-publish format-standard hentry">
+    <!---->
+
+      <header class="entry-header">
+        
+        
+  
+    <h1 class="entry-title">
+      <a class="article-title" href="/se-notes/Flask-Web工程手册/ch6-配置集群共享文件NFS服务器/">ch6-配置集群共享文件NFS服务器</a>
+    </h1>
+  
+
+        
+        <div class="comments-link">
+            
+            <a href="javascript:void(0);" data-url="https://wnhby.github.io/se-notes/Flask-Web工程手册/ch6-配置集群共享文件NFS服务器/" data-id="cjsbez08z002kczs65y70x9wu" class="leave-reply bdsharebuttonbox" data-cmd="more">分享</a>
+        </div><!-- .comments-link -->
+      </header><!-- .entry-header -->
+
+    <div class="entry-content">
+      
+        <!-- TOC -->
+<ul>
+<li><a href="#配置集群共享文件-nfs-服务器">配置集群共享文件 NFS 服务器</a><ul>
+<li><a href="#简介">简介</a></li>
+<li><a href="#安装与配置">安装与配置</a></li>
+<li><a href="#启动与挂载">启动与挂载</a></li>
+<li><a href="#nfs-的常用命令">NFS 的常用命令</a></li>
+<li><a href="#参考文档">参考文档</a><ul>
+<li><a href="#ads">Ads</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<!-- /TOC -->
+<h1 id="配置集群共享文件-NFS-服务器"><a href="#配置集群共享文件-NFS-服务器" class="headerlink" title="配置集群共享文件 NFS 服务器"></a>配置集群共享文件 NFS 服务器</h1><h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><p>在 Web 服务中往往需要涉及到一些不储存在数据库中的文件资源（比如用户上传的图片、文件等），而在 Web 服务器集群中，若每个服务器节点都有独立的文件资源存储的话，会造成节点间存储不一致的后果。因此比较成熟的解决方案是构建一个 NFS（Network File System）服务器专门提供服务器节点间的共享文件存储。当其他所有 Web 服务器挂载共享目录后，每次读写共享文件资源时实际上读写的是 NFS 服务器上的共享文件系统，这样服务器节点间的存储就可以保持一致性。</p>
+<h2 id="安装与配置"><a href="#安装与配置" class="headerlink" title="安装与配置"></a>安装与配置</h2><p>首先在服务器节点上安装 NFS 服务：<code>yum install nfs-utils rpcbind</code>，然后在客户端节点上安装 NFS 服务：<code>yum install nfs-utils</code>。</p>
+<p>配置 NFS 服务器（配置文件路径<code>/etc/exports</code>），配置文件中的每一行表示设置一个共享目录以及其有访问权限的主机地址。以下是一个说明示例：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"># 共享目录路径为“/home/share”，对所有主机可读，对地址为192.168.1.19的主机可读可写</span><br><span class="line">/home/share *(sync,ro,no_root_squash) 192.168.1.19(sync,rw,no_root_squash)</span><br><span class="line"></span><br><span class="line"># 共享目录路径为“/home/pub”，对192.168.152.0子网内的所有主机可读</span><br><span class="line">/home/pub 192.168.152.0/24(sync,ro,no_root_squash)</span><br></pre></td></tr></table></figure></p>
+<ul>
+<li>sync：设置NFS服务器同步写磁盘，这样不会轻易丢失数据，建议所有的NFS共享目录都使用该选项</li>
+<li>ro：设置输出的共享目录只读，与 rw 不能共同使用</li>
+<li>rw：设置输出的共享目录可读写，与 ro 不能共同使用</li>
+<li>root_squash：远程登录 NFS 主机后，使用该共享目录时相当于该目录的拥有者。但是如果是以 root 身份使用这个共享目录的时候，那么这个使用者（root）的权限将被压缩成为匿名使用者，即通常他的 UID 与 GID 都会变成nobody那个身份（较为安全）</li>
+<li>no_root_squash：远程登录 NFS 主机后，使用该共享目录时相当于该目录的拥有者，如果是 root 的话，那么对于这个共享的目录来说，他就具有 root 的权限（不安全）</li>
+<li>all_squash：不论登入 NFS 的使用者身份为何，他的身份都会被压缩成为匿名使用者，通常也就是 nobody</li>
+</ul>
+<h2 id="启动与挂载"><a href="#启动与挂载" class="headerlink" title="启动与挂载"></a>启动与挂载</h2><p>NFS 服务器启动 nfs 服务：<code>service nfs start</code>后， NFS 客户端即可进行挂载操作：<code>mount : </code>，如<code>mount 192.168.216.128:/home /mnt</code>。客户端卸载 NFS 共享时：<code>umount </code>。</p>
+<p>挂载完成，但是这只是临时挂载，客户端重启后 NFS 挂载就失效了，要设置永久挂载可以编辑文件：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">vim /etc/fstab </span><br><span class="line">&#123;&#123;NFS服务器地址&#125;&#125;:&#123;&#123;远程共享目录&#125;&#125; &#123;&#123;本地挂载目录&#125;&#125; nfs defaults 0 0</span><br></pre></td></tr></table></figure></p>
+<p>保存配置，执行mount -a 命令</p>
+<blockquote>
+<p>PS：客户端不需启动 nfs 服务，但需要安装 nfs 来支持挂载共享目录。客户端卸载共享目录时需保证当前工作目录不是所卸载的目录。</p>
+</blockquote>
+<h2 id="NFS-的常用命令"><a href="#NFS-的常用命令" class="headerlink" title="NFS 的常用命令"></a>NFS 的常用命令</h2><p>showmount 命令：</p>
+<ul>
+<li>showmount -e：显示 NFS 服务器的输出目录列表</li>
+<li>showmount -d：显示当前主机 NFS 服务器中已经被 NFS 客户机挂载使用的共享目录</li>
+<li>showmount -a：显示当前主机中 NFS 服务器的客户机信息</li>
+<li>showmount -a [主机]：显示指定主机中 NFS 服务器的客户机信息</li>
+</ul>
+<p>exportfs 命令：</p>
+<ul>
+<li>exportfs -rv：使 NFS 服务器重新读取 exports 文件中的设置</li>
+<li>exportfs -auv：停止当前主机中 NFS 服务器的所有目录输出</li>
+</ul>
+<h2 id="参考文档"><a href="#参考文档" class="headerlink" title="参考文档"></a>参考文档</h2><p><a href="http://www.swanlinux.net/2013/02/12/linux_nfs/" target="_blank" rel="noopener">Linux 系统中文件共享之 NFS</a></p>
+<p><a href="https://www.cnyunwei.cc/archives/148" target="_blank" rel="noopener">NFS 文件共享配置参数</a></p>
+<hr>
+<ul>
+<li><p><a href="/more/donate/index.html"><strong><em><font color="red">我觉得帮助到我了, 支持你一下.</font></em></strong></a><br>   </p>
+</li>
+<li><p><a href="https://www.paypal.me/momodainfo" target="_blank" rel="noopener"><strong><em><font color="red">If you think the article is helpful to you, you can reward me through paypal.</font></em></strong></a></p>
+</li>
+</ul>
+<h3 id="Ads"><a href="#Ads" class="headerlink" title="Ads"></a>Ads</h3><p><em>这是小广告! 如果有需要, 不妨支持一下吧~</em></p>
+<blockquote>
+<p> <a target="_blank" href="https://amazon.cn/gp/search?ie=UTF8&tag=momoda-23&linkCode=ur2&linkId=4a0e4fbec0cfa8dfe540ca999d0bf999&camp=536&creative=3200&index=books&keywords=编程">这些好书您看了吗?</a><img src="//ir-cn.amazon-adsystem.com/e/ir?t=momoda-23&l=ur2&o=28" width="1" height="1" border="0" alt="" style="border:none !important; margin:0px !important;"></p>
+</blockquote>
+<blockquote>
+<p>体育&amp;户外用品推荐</p>
+</blockquote>
+<div align="center"> <a href="https://www.amazon.cn/B07HWB88Z5/dp/B07HWB88Z5/ref=as_sl_pc_tf_til?tag=momoda-23&linkCode=w00&linkId=14df5124f2165d9eb3d65252e60ed2cf&creativeASIN=B07HWB88Z5" target="_blank" rel="noopener"><img src="/se-notes/Flask-Web工程手册/ch6-配置集群共享文件NFS服务器/../../../more/ads/amazon.gif" width="100%"></a> </div>
+      
+    </div><!-- .entry-content -->
+
+    <footer class="entry-meta">
+    <a href="/se-notes/Flask-Web工程手册/ch6-配置集群共享文件NFS服务器/">
+    <time datetime="2019-01-03T13:49:30.000Z" class="entry-date">
+        1月 3 2019
+    </time>
+</a>
+    
+  <span class="article-delim">&#8226;</span>
+  <div class="article-category">
+  <a class="article-category-link" href="/categories/框架/">框架</a>, <a class="article-category-link" href="/categories/框架/python-web应用框架/">python-web应用框架</a>, <a class="article-category-link" href="/categories/框架/python-web应用框架/flask/">flask</a>
+  </div>
+
+    
+  <span class="article-delim">&#8226;</span>
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/flask/">flask</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/web开发/">web开发</a></li></ul>
+
+    </footer>
+</article>
+
+
+
+
+
+
+  
+    <article id="post-se-notes/Flask-Web工程手册/ch7-Nginx安装与重写URL-CentOS7" class="post-se-notes/Flask-Web工程手册/ch7-Nginx安装与重写URL-CentOS7 post type-post status-publish format-standard hentry">
+    <!---->
+
+      <header class="entry-header">
+        
+        
+  
+    <h1 class="entry-title">
+      <a class="article-title" href="/se-notes/Flask-Web工程手册/ch7-Nginx安装与重写URL-CentOS7/">ch7-Nginx安装与重写URL-CentOS7</a>
+    </h1>
+  
+
+        
+        <div class="comments-link">
+            
+            <a href="javascript:void(0);" data-url="https://wnhby.github.io/se-notes/Flask-Web工程手册/ch7-Nginx安装与重写URL-CentOS7/" data-id="cjsbez092002oczs6ync1pfx0" class="leave-reply bdsharebuttonbox" data-cmd="more">分享</a>
+        </div><!-- .comments-link -->
+      </header><!-- .entry-header -->
+
+    <div class="entry-content">
+      
+        <!-- TOC -->
+<ul>
+<li><a href="#nginx%E5%AE%89%E8%A3%85%E4%B8%8E%E9%87%8D%E5%86%99urlcentos7">Nginx安装与重写URL（CentOS7）</a><ul>
+<li><a href="#nginx%E5%AE%89%E8%A3%85">Nginx安装</a></li>
+<li><a href="#%E9%87%8D%E5%86%99url">重写URL</a><ul>
+<li><a href="#ads">Ads</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<!-- /TOC -->
+<h1 id="Nginx安装与重写URL（CentOS7）"><a href="#Nginx安装与重写URL（CentOS7）" class="headerlink" title="Nginx安装与重写URL（CentOS7）"></a>Nginx安装与重写URL（CentOS7）</h1><h2 id="Nginx安装"><a href="#Nginx安装" class="headerlink" title="Nginx安装"></a>Nginx安装</h2><p>新建 /etc/yum.repos.d/nginx.repo：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">[nginx]</span><br><span class="line">name=nginx repo</span><br><span class="line">baseurl=http://nginx.org/packages/centos/7/$basearch/</span><br><span class="line">gpgcheck=0</span><br><span class="line">enabled=1</span><br></pre></td></tr></table></figure></p>
+<p>使用命令<code># yum install nginx</code>安装nginx。安装完成后使用命令<code># nginx</code>启动 nginx 。使用<code># nginx -v</code>查看 nginx 版本。并可通过在浏览器里直接访问机器的IP地址可查看 nginx 是否启动成功（<strong>需确保关闭 CentOS 的 SELinux 和防火墙服务</strong>）。</p>
+<h2 id="重写URL"><a href="#重写URL" class="headerlink" title="重写URL"></a>重写URL</h2><p>使用<code># nginx -t</code>命令查看当前 nginx 配置文件状态以及路径。在配置文件中的项 http{} 里可重写URL：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">server&#123;</span><br><span class="line">        listen 80;                  #设置监听端口</span><br><span class="line">        server_name 172.18.216.123; #决定配置哪几台服务器，值可为域名也可为IP地址</span><br><span class="line">        location / &#123;                #对匹配目录&quot;/&quot;进行操作。也可设置为其它的目录</span><br><span class="line">            rewrite / http://www.baidu.com break; #执行URL重写，支持正则表达式</span><br><span class="line">        &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>也可在配置文件的 server 块中写，此时是针对该服务器的全局配置。如：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">server &#123;</span><br><span class="line">    rewrite 规则 定向路径 重写类型;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<ul>
+<li>规则：可以是字符串或者正则来表示想匹配的目标url</li>
+<li>定向路径：表示匹配到规则后要定向的路径，如果规则里有正则，则可以使用 $index 来表示正则里的捕获分组</li>
+<li>重写类型：<ul>
+<li>last ：匹配重写后的URL，再一次对URL重写规则进行匹配。浏览器地址栏URL地址不变</li>
+<li>break；匹配重写URL后终止匹配，直接使用。浏览器地址栏URL地址不变</li>
+<li>redirect：返回302临时重定向，浏览器地址会显示跳转后的URL地址</li>
+<li>permanent：返回301永久重定向，浏览器地址栏会显示跳转后的URL地址</li>
+</ul>
+</li>
+</ul>
+<p>更多具体语法可参见官方文档 <a href="http://nginx.org/en/docs/http/ngx_http_rewrite_module.html" target="_blank" rel="noopener">Rewrite模块</a> 或中文技术博客 <a href="http://www.tuicool.com/articles/qEzMNrI" target="_blank" rel="noopener">Nginx配置URL重写</a>。</p>
+<hr>
+<ul>
+<li><p><a href="/more/donate/index.html"><strong><em><font color="red">我觉得帮助到我了, 支持你一下.</font></em></strong></a><br>   </p>
+</li>
+<li><p><a href="https://www.paypal.me/momodainfo" target="_blank" rel="noopener"><strong><em><font color="red">If you think the article is helpful to you, you can reward me through paypal.</font></em></strong></a></p>
+</li>
+</ul>
+<h3 id="Ads"><a href="#Ads" class="headerlink" title="Ads"></a>Ads</h3><p><em>这是小广告! 如果有需要, 不妨支持一下吧~</em></p>
+<blockquote>
+<p> <a target="_blank" href="https://amazon.cn/gp/search?ie=UTF8&tag=momoda-23&linkCode=ur2&linkId=4a0e4fbec0cfa8dfe540ca999d0bf999&camp=536&creative=3200&index=books&keywords=编程">这些好书您看了吗?</a><img src="//ir-cn.amazon-adsystem.com/e/ir?t=momoda-23&l=ur2&o=28" width="1" height="1" border="0" alt="" style="border:none !important; margin:0px !important;"></p>
+</blockquote>
+<blockquote>
+<p>体育&amp;户外用品推荐</p>
+</blockquote>
+<div align="center"> <a href="https://www.amazon.cn/B07HWB88Z5/dp/B07HWB88Z5/ref=as_sl_pc_tf_til?tag=momoda-23&linkCode=w00&linkId=14df5124f2165d9eb3d65252e60ed2cf&creativeASIN=B07HWB88Z5" target="_blank" rel="noopener"><img src="/se-notes/Flask-Web工程手册/ch7-Nginx安装与重写URL-CentOS7/../../../more/ads/amazon.gif" width="100%"></a> </div>
+      
+    </div><!-- .entry-content -->
+
+    <footer class="entry-meta">
+    <a href="/se-notes/Flask-Web工程手册/ch7-Nginx安装与重写URL-CentOS7/">
+    <time datetime="2019-01-03T13:49:30.000Z" class="entry-date">
+        1月 3 2019
+    </time>
+</a>
+    
+  <span class="article-delim">&#8226;</span>
+  <div class="article-category">
+  <a class="article-category-link" href="/categories/框架/">框架</a>, <a class="article-category-link" href="/categories/框架/python-web应用框架/">python-web应用框架</a>, <a class="article-category-link" href="/categories/框架/python-web应用框架/flask/">flask</a>
   </div>
 
     
@@ -818,7 +1020,7 @@
         
         <div class="comments-link">
             
-            <a href="javascript:void(0);" data-url="https://wnhby.github.io/se-notes/Flask-Web工程手册/ch8-高可用与负载均衡集群部署-Ubuntu/" data-id="cjsbbbeuk000ae9s6e1mwou93" class="leave-reply bdsharebuttonbox" data-cmd="more">分享</a>
+            <a href="javascript:void(0);" data-url="https://wnhby.github.io/se-notes/Flask-Web工程手册/ch8-高可用与负载均衡集群部署-Ubuntu/" data-id="cjsbez095002qczs6678orlbo" class="leave-reply bdsharebuttonbox" data-cmd="more">分享</a>
         </div><!-- .comments-link -->
       </header><!-- .entry-header -->
 
@@ -941,7 +1143,7 @@
 <blockquote>
 <p>体育&amp;户外用品推荐</p>
 </blockquote>
-<div align="center"> <a href="https://www.amazon.cn/B07HWB88Z5/dp/B07HWB88Z5/ref=as_sl_pc_tf_til?tag=momoda-23&linkCode=w00&linkId=14df5124f2165d9eb3d65252e60ed2cf&creativeASIN=B07HWB88Z5" target="_blank" rel="noopener"><img src="/se-notes/Flask-Web工程手册/ch8-高可用与负载均衡集群部署-Ubuntu/../more/ads/amazon.gif" width="100%"></a> </div>
+<div align="center"> <a href="https://www.amazon.cn/B07HWB88Z5/dp/B07HWB88Z5/ref=as_sl_pc_tf_til?tag=momoda-23&linkCode=w00&linkId=14df5124f2165d9eb3d65252e60ed2cf&creativeASIN=B07HWB88Z5" target="_blank" rel="noopener"><img src="/se-notes/Flask-Web工程手册/ch8-高可用与负载均衡集群部署-Ubuntu/../../../more/ads/amazon.gif" width="100%"></a> </div>
       
     </div><!-- .entry-content -->
 
@@ -954,209 +1156,7 @@
     
   <span class="article-delim">&#8226;</span>
   <div class="article-category">
-  <a class="article-category-link" href="/categories/框架/">框架</a>, <a class="article-category-link" href="/categories/框架/python-web应用框架/">python-web应用框架</a>
-  </div>
-
-    
-  <span class="article-delim">&#8226;</span>
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/flask/">flask</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/web开发/">web开发</a></li></ul>
-
-    </footer>
-</article>
-
-
-
-
-
-
-  
-    <article id="post-se-notes/Flask-Web工程手册/ch6-配置集群共享文件NFS服务器" class="post-se-notes/Flask-Web工程手册/ch6-配置集群共享文件NFS服务器 post type-post status-publish format-standard hentry">
-    <!---->
-
-      <header class="entry-header">
-        
-        
-  
-    <h1 class="entry-title">
-      <a class="article-title" href="/se-notes/Flask-Web工程手册/ch6-配置集群共享文件NFS服务器/">ch6-配置集群共享文件NFS服务器</a>
-    </h1>
-  
-
-        
-        <div class="comments-link">
-            
-            <a href="javascript:void(0);" data-url="https://wnhby.github.io/se-notes/Flask-Web工程手册/ch6-配置集群共享文件NFS服务器/" data-id="cjsbbbeur000ee9s627m5vk14" class="leave-reply bdsharebuttonbox" data-cmd="more">分享</a>
-        </div><!-- .comments-link -->
-      </header><!-- .entry-header -->
-
-    <div class="entry-content">
-      
-        <!-- TOC -->
-<ul>
-<li><a href="#配置集群共享文件-nfs-服务器">配置集群共享文件 NFS 服务器</a><ul>
-<li><a href="#简介">简介</a></li>
-<li><a href="#安装与配置">安装与配置</a></li>
-<li><a href="#启动与挂载">启动与挂载</a></li>
-<li><a href="#nfs-的常用命令">NFS 的常用命令</a></li>
-<li><a href="#参考文档">参考文档</a><ul>
-<li><a href="#ads">Ads</a></li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-<!-- /TOC -->
-<h1 id="配置集群共享文件-NFS-服务器"><a href="#配置集群共享文件-NFS-服务器" class="headerlink" title="配置集群共享文件 NFS 服务器"></a>配置集群共享文件 NFS 服务器</h1><h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><p>在 Web 服务中往往需要涉及到一些不储存在数据库中的文件资源（比如用户上传的图片、文件等），而在 Web 服务器集群中，若每个服务器节点都有独立的文件资源存储的话，会造成节点间存储不一致的后果。因此比较成熟的解决方案是构建一个 NFS（Network File System）服务器专门提供服务器节点间的共享文件存储。当其他所有 Web 服务器挂载共享目录后，每次读写共享文件资源时实际上读写的是 NFS 服务器上的共享文件系统，这样服务器节点间的存储就可以保持一致性。</p>
-<h2 id="安装与配置"><a href="#安装与配置" class="headerlink" title="安装与配置"></a>安装与配置</h2><p>首先在服务器节点上安装 NFS 服务：<code>yum install nfs-utils rpcbind</code>，然后在客户端节点上安装 NFS 服务：<code>yum install nfs-utils</code>。</p>
-<p>配置 NFS 服务器（配置文件路径<code>/etc/exports</code>），配置文件中的每一行表示设置一个共享目录以及其有访问权限的主机地址。以下是一个说明示例：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"># 共享目录路径为“/home/share”，对所有主机可读，对地址为192.168.1.19的主机可读可写</span><br><span class="line">/home/share *(sync,ro,no_root_squash) 192.168.1.19(sync,rw,no_root_squash)</span><br><span class="line"></span><br><span class="line"># 共享目录路径为“/home/pub”，对192.168.152.0子网内的所有主机可读</span><br><span class="line">/home/pub 192.168.152.0/24(sync,ro,no_root_squash)</span><br></pre></td></tr></table></figure></p>
-<ul>
-<li>sync：设置NFS服务器同步写磁盘，这样不会轻易丢失数据，建议所有的NFS共享目录都使用该选项</li>
-<li>ro：设置输出的共享目录只读，与 rw 不能共同使用</li>
-<li>rw：设置输出的共享目录可读写，与 ro 不能共同使用</li>
-<li>root_squash：远程登录 NFS 主机后，使用该共享目录时相当于该目录的拥有者。但是如果是以 root 身份使用这个共享目录的时候，那么这个使用者（root）的权限将被压缩成为匿名使用者，即通常他的 UID 与 GID 都会变成nobody那个身份（较为安全）</li>
-<li>no_root_squash：远程登录 NFS 主机后，使用该共享目录时相当于该目录的拥有者，如果是 root 的话，那么对于这个共享的目录来说，他就具有 root 的权限（不安全）</li>
-<li>all_squash：不论登入 NFS 的使用者身份为何，他的身份都会被压缩成为匿名使用者，通常也就是 nobody</li>
-</ul>
-<h2 id="启动与挂载"><a href="#启动与挂载" class="headerlink" title="启动与挂载"></a>启动与挂载</h2><p>NFS 服务器启动 nfs 服务：<code>service nfs start</code>后， NFS 客户端即可进行挂载操作：<code>mount : </code>，如<code>mount 192.168.216.128:/home /mnt</code>。客户端卸载 NFS 共享时：<code>umount </code>。</p>
-<p>挂载完成，但是这只是临时挂载，客户端重启后 NFS 挂载就失效了，要设置永久挂载可以编辑文件：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">vim /etc/fstab </span><br><span class="line">&#123;&#123;NFS服务器地址&#125;&#125;:&#123;&#123;远程共享目录&#125;&#125; &#123;&#123;本地挂载目录&#125;&#125; nfs defaults 0 0</span><br></pre></td></tr></table></figure></p>
-<p>保存配置，执行mount -a 命令</p>
-<blockquote>
-<p>PS：客户端不需启动 nfs 服务，但需要安装 nfs 来支持挂载共享目录。客户端卸载共享目录时需保证当前工作目录不是所卸载的目录。</p>
-</blockquote>
-<h2 id="NFS-的常用命令"><a href="#NFS-的常用命令" class="headerlink" title="NFS 的常用命令"></a>NFS 的常用命令</h2><p>showmount 命令：</p>
-<ul>
-<li>showmount -e：显示 NFS 服务器的输出目录列表</li>
-<li>showmount -d：显示当前主机 NFS 服务器中已经被 NFS 客户机挂载使用的共享目录</li>
-<li>showmount -a：显示当前主机中 NFS 服务器的客户机信息</li>
-<li>showmount -a [主机]：显示指定主机中 NFS 服务器的客户机信息</li>
-</ul>
-<p>exportfs 命令：</p>
-<ul>
-<li>exportfs -rv：使 NFS 服务器重新读取 exports 文件中的设置</li>
-<li>exportfs -auv：停止当前主机中 NFS 服务器的所有目录输出</li>
-</ul>
-<h2 id="参考文档"><a href="#参考文档" class="headerlink" title="参考文档"></a>参考文档</h2><p><a href="http://www.swanlinux.net/2013/02/12/linux_nfs/" target="_blank" rel="noopener">Linux 系统中文件共享之 NFS</a></p>
-<p><a href="https://www.cnyunwei.cc/archives/148" target="_blank" rel="noopener">NFS 文件共享配置参数</a></p>
-<hr>
-<ul>
-<li><p><a href="/more/donate/index.html"><strong><em><font color="red">我觉得帮助到我了, 支持你一下.</font></em></strong></a><br>   </p>
-</li>
-<li><p><a href="https://www.paypal.me/momodainfo" target="_blank" rel="noopener"><strong><em><font color="red">If you think the article is helpful to you, you can reward me through paypal.</font></em></strong></a></p>
-</li>
-</ul>
-<h3 id="Ads"><a href="#Ads" class="headerlink" title="Ads"></a>Ads</h3><p><em>这是小广告! 如果有需要, 不妨支持一下吧~</em></p>
-<blockquote>
-<p> <a target="_blank" href="https://amazon.cn/gp/search?ie=UTF8&tag=momoda-23&linkCode=ur2&linkId=4a0e4fbec0cfa8dfe540ca999d0bf999&camp=536&creative=3200&index=books&keywords=编程">这些好书您看了吗?</a><img src="//ir-cn.amazon-adsystem.com/e/ir?t=momoda-23&l=ur2&o=28" width="1" height="1" border="0" alt="" style="border:none !important; margin:0px !important;"></p>
-</blockquote>
-<blockquote>
-<p>体育&amp;户外用品推荐</p>
-</blockquote>
-<div align="center"> <a href="https://www.amazon.cn/B07HWB88Z5/dp/B07HWB88Z5/ref=as_sl_pc_tf_til?tag=momoda-23&linkCode=w00&linkId=14df5124f2165d9eb3d65252e60ed2cf&creativeASIN=B07HWB88Z5" target="_blank" rel="noopener"><img src="/se-notes/Flask-Web工程手册/ch6-配置集群共享文件NFS服务器/../more/ads/amazon.gif" width="100%"></a> </div>
-      
-    </div><!-- .entry-content -->
-
-    <footer class="entry-meta">
-    <a href="/se-notes/Flask-Web工程手册/ch6-配置集群共享文件NFS服务器/">
-    <time datetime="2019-01-03T13:49:30.000Z" class="entry-date">
-        1月 3 2019
-    </time>
-</a>
-    
-  <span class="article-delim">&#8226;</span>
-  <div class="article-category">
-  <a class="article-category-link" href="/categories/框架/">框架</a>, <a class="article-category-link" href="/categories/框架/python-web应用框架/">python-web应用框架</a>
-  </div>
-
-    
-  <span class="article-delim">&#8226;</span>
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/flask/">flask</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/web开发/">web开发</a></li></ul>
-
-    </footer>
-</article>
-
-
-
-
-
-
-  
-    <article id="post-se-notes/Flask-Web工程手册/ch7-Nginx安装与重写URL-CentOS7" class="post-se-notes/Flask-Web工程手册/ch7-Nginx安装与重写URL-CentOS7 post type-post status-publish format-standard hentry">
-    <!---->
-
-      <header class="entry-header">
-        
-        
-  
-    <h1 class="entry-title">
-      <a class="article-title" href="/se-notes/Flask-Web工程手册/ch7-Nginx安装与重写URL-CentOS7/">ch7-Nginx安装与重写URL-CentOS7</a>
-    </h1>
-  
-
-        
-        <div class="comments-link">
-            
-            <a href="javascript:void(0);" data-url="https://wnhby.github.io/se-notes/Flask-Web工程手册/ch7-Nginx安装与重写URL-CentOS7/" data-id="cjsbbbeut000ge9s6x77tm93z" class="leave-reply bdsharebuttonbox" data-cmd="more">分享</a>
-        </div><!-- .comments-link -->
-      </header><!-- .entry-header -->
-
-    <div class="entry-content">
-      
-        <!-- TOC -->
-<ul>
-<li><a href="#nginx%E5%AE%89%E8%A3%85%E4%B8%8E%E9%87%8D%E5%86%99urlcentos7">Nginx安装与重写URL（CentOS7）</a><ul>
-<li><a href="#nginx%E5%AE%89%E8%A3%85">Nginx安装</a></li>
-<li><a href="#%E9%87%8D%E5%86%99url">重写URL</a><ul>
-<li><a href="#ads">Ads</a></li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-<!-- /TOC -->
-<h1 id="Nginx安装与重写URL（CentOS7）"><a href="#Nginx安装与重写URL（CentOS7）" class="headerlink" title="Nginx安装与重写URL（CentOS7）"></a>Nginx安装与重写URL（CentOS7）</h1><h2 id="Nginx安装"><a href="#Nginx安装" class="headerlink" title="Nginx安装"></a>Nginx安装</h2><p>新建 /etc/yum.repos.d/nginx.repo：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">[nginx]</span><br><span class="line">name=nginx repo</span><br><span class="line">baseurl=http://nginx.org/packages/centos/7/$basearch/</span><br><span class="line">gpgcheck=0</span><br><span class="line">enabled=1</span><br></pre></td></tr></table></figure></p>
-<p>使用命令<code># yum install nginx</code>安装nginx。安装完成后使用命令<code># nginx</code>启动 nginx 。使用<code># nginx -v</code>查看 nginx 版本。并可通过在浏览器里直接访问机器的IP地址可查看 nginx 是否启动成功（<strong>需确保关闭 CentOS 的 SELinux 和防火墙服务</strong>）。</p>
-<h2 id="重写URL"><a href="#重写URL" class="headerlink" title="重写URL"></a>重写URL</h2><p>使用<code># nginx -t</code>命令查看当前 nginx 配置文件状态以及路径。在配置文件中的项 http{} 里可重写URL：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">server&#123;</span><br><span class="line">        listen 80;                  #设置监听端口</span><br><span class="line">        server_name 172.18.216.123; #决定配置哪几台服务器，值可为域名也可为IP地址</span><br><span class="line">        location / &#123;                #对匹配目录&quot;/&quot;进行操作。也可设置为其它的目录</span><br><span class="line">            rewrite / http://www.baidu.com break; #执行URL重写，支持正则表达式</span><br><span class="line">        &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>也可在配置文件的 server 块中写，此时是针对该服务器的全局配置。如：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">server &#123;</span><br><span class="line">    rewrite 规则 定向路径 重写类型;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<ul>
-<li>规则：可以是字符串或者正则来表示想匹配的目标url</li>
-<li>定向路径：表示匹配到规则后要定向的路径，如果规则里有正则，则可以使用 $index 来表示正则里的捕获分组</li>
-<li>重写类型：<ul>
-<li>last ：匹配重写后的URL，再一次对URL重写规则进行匹配。浏览器地址栏URL地址不变</li>
-<li>break；匹配重写URL后终止匹配，直接使用。浏览器地址栏URL地址不变</li>
-<li>redirect：返回302临时重定向，浏览器地址会显示跳转后的URL地址</li>
-<li>permanent：返回301永久重定向，浏览器地址栏会显示跳转后的URL地址</li>
-</ul>
-</li>
-</ul>
-<p>更多具体语法可参见官方文档 <a href="http://nginx.org/en/docs/http/ngx_http_rewrite_module.html" target="_blank" rel="noopener">Rewrite模块</a> 或中文技术博客 <a href="http://www.tuicool.com/articles/qEzMNrI" target="_blank" rel="noopener">Nginx配置URL重写</a>。</p>
-<hr>
-<ul>
-<li><p><a href="/more/donate/index.html"><strong><em><font color="red">我觉得帮助到我了, 支持你一下.</font></em></strong></a><br>   </p>
-</li>
-<li><p><a href="https://www.paypal.me/momodainfo" target="_blank" rel="noopener"><strong><em><font color="red">If you think the article is helpful to you, you can reward me through paypal.</font></em></strong></a></p>
-</li>
-</ul>
-<h3 id="Ads"><a href="#Ads" class="headerlink" title="Ads"></a>Ads</h3><p><em>这是小广告! 如果有需要, 不妨支持一下吧~</em></p>
-<blockquote>
-<p> <a target="_blank" href="https://amazon.cn/gp/search?ie=UTF8&tag=momoda-23&linkCode=ur2&linkId=4a0e4fbec0cfa8dfe540ca999d0bf999&camp=536&creative=3200&index=books&keywords=编程">这些好书您看了吗?</a><img src="//ir-cn.amazon-adsystem.com/e/ir?t=momoda-23&l=ur2&o=28" width="1" height="1" border="0" alt="" style="border:none !important; margin:0px !important;"></p>
-</blockquote>
-<blockquote>
-<p>体育&amp;户外用品推荐</p>
-</blockquote>
-<div align="center"> <a href="https://www.amazon.cn/B07HWB88Z5/dp/B07HWB88Z5/ref=as_sl_pc_tf_til?tag=momoda-23&linkCode=w00&linkId=14df5124f2165d9eb3d65252e60ed2cf&creativeASIN=B07HWB88Z5" target="_blank" rel="noopener"><img src="/se-notes/Flask-Web工程手册/ch7-Nginx安装与重写URL-CentOS7/../more/ads/amazon.gif" width="100%"></a> </div>
-      
-    </div><!-- .entry-content -->
-
-    <footer class="entry-meta">
-    <a href="/se-notes/Flask-Web工程手册/ch7-Nginx安装与重写URL-CentOS7/">
-    <time datetime="2019-01-03T13:49:30.000Z" class="entry-date">
-        1月 3 2019
-    </time>
-</a>
-    
-  <span class="article-delim">&#8226;</span>
-  <div class="article-category">
-  <a class="article-category-link" href="/categories/框架/">框架</a>, <a class="article-category-link" href="/categories/框架/python-web应用框架/">python-web应用框架</a>
+  <a class="article-category-link" href="/categories/框架/">框架</a>, <a class="article-category-link" href="/categories/框架/python-web应用框架/">python-web应用框架</a>, <a class="article-category-link" href="/categories/框架/python-web应用框架/flask/">flask</a>
   </div>
 
     
@@ -1200,15 +1200,15 @@
           </li>
         
           <li>
-            <a href="/se-notes/Linux基础/README/">Linux基础-README</a>
-          </li>
-        
-          <li>
-            <a href="/se-notes/云计算实践/区块链相关/区块链简介/">区块链简介</a>
+            <a href="/se-notes/Java基础/集合框架/">集合框架</a>
           </li>
         
           <li>
             <a href="/se-notes/云计算实践/集群高可用方案/Heartbeat双机热备方案/">Heartbeat双机热备方案</a>
+          </li>
+        
+          <li>
+            <a href="/se-notes/云计算实践/集群高可用方案/HAProxy+Keepalived高可用方案/">HAProxy+Keepalived高可用方案</a>
           </li>
         
       </ul>
@@ -1229,7 +1229,7 @@
   <aside class="widget">
     <h3 class="widget-title">Categories</h3>
     <div class="widget-content">
-      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Graphics/">Graphics</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Linux/">Linux</a><span class="category-list-count">7</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Linux/Shell/">Shell</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Linux/linux基础/">linux基础</a><span class="category-list-count">6</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/协议证书/">协议证书</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/协议证书/openssl/">openssl</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/数据库/">数据库</a><span class="category-list-count">4</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/数据库/数据库基础/">数据库基础</a><span class="category-list-count">3</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/框架/">框架</a><span class="category-list-count">9</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/框架/python-web应用框架/">python-web应用框架</a><span class="category-list-count">9</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/版本控制/">版本控制</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/版本控制/Git/">Git</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/编程语言/">编程语言</a><span class="category-list-count">13</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/编程语言/java/">java</a><span class="category-list-count">13</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/网络通讯/">网络通讯</a><span class="category-list-count">11</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/网络通讯/大小端/">大小端</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/网络通讯/计算机网络基础/">计算机网络基础</a><span class="category-list-count">10</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/路由器/">路由器</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/路由器/openwrt/">openwrt</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/通用技术/">通用技术</a><span class="category-list-count">13</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/通用技术/Docker/">Docker</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/通用技术/云计算实践/">云计算实践</a><span class="category-list-count">11</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/通用技术/云计算实践/kubernetes部署/">kubernetes部署</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/通用技术/云计算实践/区块链/">区块链</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/通用技术/云计算实践/集群高可用方案/">集群高可用方案</a><span class="category-list-count">4</span></li></ul></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/默认/">默认</a><span class="category-list-count">1</span></li></ul>
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Graphics/">Graphics</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Linux/">Linux</a><span class="category-list-count">7</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Linux/Shell/">Shell</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Linux/linux基础/">linux基础</a><span class="category-list-count">6</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/协议证书/">协议证书</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/协议证书/openssl/">openssl</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/数据库/">数据库</a><span class="category-list-count">4</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/数据库/数据库基础/">数据库基础</a><span class="category-list-count">3</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/框架/">框架</a><span class="category-list-count">9</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/框架/python-web应用框架/">python-web应用框架</a><span class="category-list-count">9</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/框架/python-web应用框架/flask/">flask</a><span class="category-list-count">9</span></li></ul></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/版本控制/">版本控制</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/版本控制/Git/">Git</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/编程语言/">编程语言</a><span class="category-list-count">13</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/编程语言/java/">java</a><span class="category-list-count">13</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/网络通讯/">网络通讯</a><span class="category-list-count">11</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/网络通讯/大小端/">大小端</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/网络通讯/计算机网络基础/">计算机网络基础</a><span class="category-list-count">10</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/路由器/">路由器</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/路由器/openwrt/">openwrt</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/通用技术/">通用技术</a><span class="category-list-count">13</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/通用技术/Docker/">Docker</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/通用技术/云计算实践/">云计算实践</a><span class="category-list-count">11</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/通用技术/云计算实践/kubernetes部署/">kubernetes部署</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/通用技术/云计算实践/区块链/">区块链</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/通用技术/云计算实践/集群高可用方案/">集群高可用方案</a><span class="category-list-count">4</span></li></ul></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/默认/">默认</a><span class="category-list-count">1</span></li></ul>
     </div>
   </aside>
 

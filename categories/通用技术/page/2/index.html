@@ -80,7 +80,7 @@
       <div id="main" class="wrapper">
         <div id="primary" class="site-content"><div id="content" role="main">
   
-    <article id="post-se-notes/云计算实践/区块链相关/区块链简介" class="post-se-notes/云计算实践/区块链相关/区块链简介 post type-post status-publish format-standard hentry">
+    <article id="post-se-notes/云计算实践/集群高可用方案/Heartbeat双机热备方案" class="post-se-notes/云计算实践/集群高可用方案/Heartbeat双机热备方案 post type-post status-publish format-standard hentry">
     <!---->
 
       <header class="entry-header">
@@ -88,14 +88,14 @@
         
   
     <h1 class="entry-title">
-      <a class="article-title" href="/se-notes/云计算实践/区块链相关/区块链简介/">区块链简介</a>
+      <a class="article-title" href="/se-notes/云计算实践/集群高可用方案/Heartbeat双机热备方案/">Heartbeat双机热备方案</a>
     </h1>
   
 
         
         <div class="comments-link">
             
-            <a href="javascript:void(0);" data-url="https://wnhby.github.io/se-notes/云计算实践/区块链相关/区块链简介/" data-id="cjsbbbf1w00ape9s66lm0th3x" class="leave-reply bdsharebuttonbox" data-cmd="more">分享</a>
+            <a href="javascript:void(0);" data-url="https://wnhby.github.io/se-notes/云计算实践/集群高可用方案/Heartbeat双机热备方案/" data-id="cjsbez0fs00dnczs6qa2z160p" class="leave-reply bdsharebuttonbox" data-cmd="more">分享</a>
         </div><!-- .comments-link -->
       </header><!-- .entry-header -->
 
@@ -103,9 +103,13 @@
       
         <!-- TOC -->
 <ul>
-<li><a href="#区块链简介">区块链简介</a></li>
-<li><a href="#应用领域">应用领域</a><ul>
-<li><a href="#基于区块链的征信系统与数据中心比较">基于区块链的征信系统（与数据中心比较）</a><ul>
+<li><a href="#heartbeat-%E9%83%A8%E7%BD%B2%E6%96%B9%E6%A1%88centos">Heartbeat 部署方案（CentOS）</a><ul>
+<li><a href="#%E5%AE%89%E8%A3%85">安装</a></li>
+<li><a href="#%E9%85%8D%E7%BD%AE">配置</a><ul>
+<li><a href="#%E8%AE%A4%E8%AF%81%E6%96%87%E4%BB%B6etchadauthkeys">认证文件（/etc/ha.d/authkeys）</a></li>
+<li><a href="#%E4%B8%BB%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6etchadhacf">主配置文件（/etc/ha.d/ha.cf）</a></li>
+<li><a href="#%E8%B5%84%E6%BA%90%E6%96%87%E4%BB%B6etchadharesources">资源文件（/etc/ha.d/haresources）</a></li>
+<li><a href="#%E5%8F%82%E8%80%83%E6%96%87%E6%A1%A3">参考文档</a></li>
 <li><a href="#ads">Ads</a></li>
 </ul>
 </li>
@@ -113,45 +117,50 @@
 </li>
 </ul>
 <!-- /TOC -->
-<h1 id="区块链简介"><a href="#区块链简介" class="headerlink" title="区块链简介"></a>区块链简介</h1><p>区块链技术是金融科技（FinTech）领域的一项重要技术创新。作为去中心化记账（Decentralized Ledger Technology，DLT）平台的核心技术，区块链被认为在金融、征信、物联网、经济贸易结算、资产管理等众多领域都拥有广泛的应用前景。</p>
-<p>把区块链想象成一个公共账本，这个账本：</p>
-<ol>
-<li>存放在区块链系统的各个节点上，每个节点都有一份完整的备份。</li>
-<li>每个节点的账本都记录着自区块链系统建立以来的所有交易。</li>
-<li>账本被分为若干个区块进行存储，每个区块包含一部分交易记录。每一个区块都会记录着前一区块的 id，形成一个链状结构，因而称为区块链。</li>
-<li>当发起一笔交易时，只需把交易信息广播到系统的 p2p 网络中，其他节点把该笔交易信息记录成一个新的区块连到区块链上，交易即可完成。</li>
-</ol>
-<p>区块链的重要特性（DACT）：</p>
-<ul>
-<li>Distributed（分布式的）：区块链系统中有多个独立节点，所有节点都共享同一份数据。</li>
-<li>Autonomous（自治的）：所有操作都由系统自动完成而不需要一个中心机构进行管理。</li>
-<li>Contractual（按照合约执行的）：数据是公开的不代表所有人可以随意访问区块链系统上的数据，系统有着最严格的权限设置。在系统约定一个共同合约后，只有确定权限的用户才可以访问加密的数据。</li>
-<li>Trackable（可追溯的）：区块链系统中所有交易都是可追溯的，添加交易信息需要得到系统的共识，因而数据不可篡改。</li>
-</ul>
-<blockquote>
-<p>区块链的意义在于：构建了更加可靠、值得信任的互联网，从根本上解决了价值转移和交换过程中出现的存在的欺诈与寻租现象。</p>
+<h1 id="Heartbeat-部署方案（CentOS）"><a href="#Heartbeat-部署方案（CentOS）" class="headerlink" title="Heartbeat 部署方案（CentOS）"></a>Heartbeat 部署方案（CentOS）</h1><blockquote>
+<p>注意：Heartbeat 方案本人还未有实践过</p>
 </blockquote>
-<h1 id="应用领域"><a href="#应用领域" class="headerlink" title="应用领域"></a>应用领域</h1><h2 id="基于区块链的征信系统（与数据中心比较）"><a href="#基于区块链的征信系统（与数据中心比较）" class="headerlink" title="基于区块链的征信系统（与数据中心比较）"></a>基于区块链的征信系统（与数据中心比较）</h2><p>征信：为防止在非即付经济交往中的交易双方收到损失而进行的一种信用评估。征信所提供的服务，就是向交易双方提供对方的背景和信用信息，解决交易信任的问题。</p>
-<p>在一个征信体系中，对金融机构有价值的客户可划分为优质客户（白名单）、中间客户、风险客户（黑名单）。白名单是主要服务对象，因为其意味着收益；而对黑名单则需要进行风险控制。但目前传统意义上的金融征信系统普遍存在局限性：</p>
+<h2 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h2><p>两种安装方式：</p>
 <ul>
-<li>目前大部分信用数据是一个个独立的信息孤岛（比如央行征信系统的数据），彼此并不联通。而完全开放征信系统数据又可能会造成虚假数据上传、金融机构核心业务信息被泄露等问题。</li>
-<li>即使是对于传统意义上的征信共享，多个机构共享的结果是把每个机构的数据汇总到一个庞大的数据中心系统，参与机构都在该系统上查询。但也会有问题：<ul>
-<li>系统是中心化的，一旦中心遭到攻击、篡改、上传虚假数据就会影响到所有数据的可靠性；同时也会出现人工误操作的情况。</li>
-<li>数据汇总与更新速度不可控，难以及时进行征信数据同步</li>
-<li>数据访问权限以及数据交换、共享问题：难以实现权限控制以及两个机构之间的私密数据有偿交换</li>
-<li>由于数据中心共享的透明性，有些机构会故意保留己方的核心业务数据以防泄露</li>
-<li>若要保证查询速度，则需要构建复杂的冗余系统；否则的话只有一个中心处理所有的请求，则系统速度可能会慢到不可用的程度</li>
+<li>主从节点都使用<code>yum install heartbeat*</code>命令安装 Heartbeat（须确保已安装 epel 扩展软件包源）。</li>
+<li>在 Linux-HA 官网下载 <a href="http://www.linux-ha.org/wiki/Downloads" target="_blank" rel="noopener">Heartbeat</a>。</li>
 </ul>
-</li>
-</ul>
-<p>而区块链技术是最适合用于解决征信问题的解决方案：</p>
+<h2 id="配置"><a href="#配置" class="headerlink" title="配置"></a>配置</h2><p>Heartbeat 主要的配置文件有 3 个，分别是 <strong>authkeys</strong>，<strong>ha.cf</strong> 和 <strong>haresources</strong>。其中 ha.cf 是主配置文件，haresource 用来配置要让 Heartbeat 托管的服务，authkey 是用来指定 Heartbeat 的认证方式。</p>
+<blockquote>
+<p>在 Heartbeat 安装后，默认并没有这三个文件，可以直接从解压的源码目录中找到。</p>
+</blockquote>
+<p>这里以 master/slave 两节点为例，示例的配置文件为 master 节点的。</p>
+<h3 id="认证文件（-etc-ha-d-authkeys）"><a href="#认证文件（-etc-ha-d-authkeys）" class="headerlink" title="认证文件（/etc/ha.d/authkeys）"></a>认证文件（/etc/ha.d/authkeys）</h3><p>该文件为 Heartbeat 的认证文件，该文件主要是用于集群中两个节点的认证，采用的算法和密钥（如果有的话）在集群中节点上必须相同。目前提供了 3 种算法：crc/md5/sha1。其中 crc 不能够提供认证，它只能够用于校验数据包是否损坏，而 sha1/md5 需要一个密钥来进行认证。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">auth 2</span><br><span class="line">#1 crc</span><br><span class="line">2 sha1 somewords</span><br><span class="line">#3 md5 somewords</span><br></pre></td></tr></table></figure>
+<p>以上示例中使用的是 sha1 算法，如果要换用其他算法只需要修改 auth 指令后面的数字，然后取消相应行的注释即可。</p>
+<blockquote>
+<p>注意：该文件的属性必须为600，否则 Heartbeat 启动将失败。且两个节点的 authkeys 文件内容及权限相同。</p>
+</blockquote>
+<h3 id="主配置文件（-etc-ha-d-ha-cf）"><a href="#主配置文件（-etc-ha-d-ha-cf）" class="headerlink" title="主配置文件（/etc/ha.d/ha.cf）"></a>主配置文件（/etc/ha.d/ha.cf）</h3><p>该文件是 Heartbeat 的主配置文件。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">keepalive 2</span><br><span class="line">warntime 5</span><br><span class="line">deadtime 30</span><br><span class="line">initdead 120</span><br><span class="line">udpport 6942</span><br><span class="line">bcast eth0</span><br><span class="line"># mcast eth0 225.0.0.1 694 1 0</span><br><span class="line">ucast eth1 &#123;&#123; slave的IP地址 &#125;&#125;</span><br><span class="line">auto_failback off</span><br><span class="line">watchdog /dev/watchdog</span><br><span class="line">node host41 host42</span><br><span class="line"># ping 172.16.12.1 ping_group group1 172.16.12.1</span><br><span class="line">respawn hacluster /usr/lib64/heartbeat/ipfail</span><br><span class="line">respawn hacluster /usr/lib64/heartbeat/dopd</span><br><span class="line">apiauth dopd gid=haclient uid=hacluster</span><br><span class="line">use_logd yes</span><br></pre></td></tr></table></figure>
 <ul>
-<li>把中心化的存储转化为去中心化的分布式存储，变统一中心节点查询为 p2p 查询，提高安全性与性能</li>
-<li>每个节点的数据完全同步</li>
-<li>数据无法被篡改，即使有虚假数据也可以迅速追溯到源头</li>
-<li>利用智能合约设置数据汇总与更新规则</li>
-<li>通过智能合约进行权限控制，拥有对应的访问权限才可访问对应的数据</li>
+<li>keepalive：发送心跳报文的间隔。默认单位为秒，也可以使用 500ms 来指代 500 毫秒，等同于 0.5。</li>
+<li>warntime：认为对方可能宕掉的间隔时间。</li>
+<li>deadtime：认为对方宕掉的间隔时间，超过这个时间，则认为对方已经宕掉。</li>
+<li>initdead：等待对方启动的最大时间。</li>
+<li>udpport：heartbeat 广播/单播通讯使用的 udp 端口。</li>
+<li>bcast：心跳所使用的网络接口。</li>
+<li>ucast：单播通讯，对方网络接口及IP地址。</li>
+<li>mcast：组播通讯，参数如右：通讯所用的接口 绑定的组播IP（224.0.0.0-239.255.255.255）通讯端口 ttl 是否允许环回。</li>
+<li>auto_failback：表示当主节点（即提供资源/服务的节点）正常之后是否将资源/服务切换回来。</li>
+<li>watchdog：看门狗定时器，如果节点一分钟内没有心跳，则重启节点。</li>
+<li>node：heartbeat 集群中的节点信息（节点的主机名: uname -n）。</li>
+<li>ping/ping_group：用于建立伪集群成员，作用是监测物理链路，如果该节点与伪集群成员不相通，那么该节点无权接管资源/服务。</li>
 </ul>
+<p>另一从节点（slave）需要将 ha.cf 文件中 ucast 的 IP 地址改为主节点（master）的 IP 地址。</p>
+<h3 id="资源文件（-etc-ha-d-haresources）"><a href="#资源文件（-etc-ha-d-haresources）" class="headerlink" title="资源文件（/etc/ha.d/haresources）"></a>资源文件（/etc/ha.d/haresources）</h3><p>haresources 文件用于指定双机系统的主节点、集群IP、子网掩码、广播地址以及启动的服务等集群资源。文件每一行可以包含一个或多个资源脚本名，资源之间使用空格隔开，参数之间使用两个冒号隔开。在两个节点上该文件必须完全一致，此文件的一般格式为：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">node-name network &lt;resource-group&gt;</span><br></pre></td></tr></table></figure></p>
+<p>node-name 表示主节点的主机名，必须和 ha.cf 文件中指定的节点名一致；network 用于设定集群的 IP 地址、子网掩码、网络设备标识等（这里指定的IP地址就是集群对外服务的IP地址），resource-group 用来指定需要 Heartbeat 托管的服务，也就是这些服务可以由 Heartbeat 来启动和关闭，如果要托管这些服务，必须将服务写成可以通过 start/stop 来启动和关闭的脚本，然后放到 /etc/init.d/ 或者 /etc/ha.d/resource.d/ 目录下，heartbeat 会根据脚本的名称自动去 /etc/init.d 或者 /etc/ha.d/resource.d/ 目录下找到相应脚本进行启动或关闭操作。</p>
+<p>以下是一个具体实例：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">node1 IPaddr::192.168.60.200/24/eth0/  Filesystem::/dev/sdb5::/webdata::ext3  httpd tomcat</span><br></pre></td></tr></table></figure></p>
+<p>其中，node1 是 HA 集群的主节点，IPaddr 为 HeartbeatH自带的一个执行脚本，Heartbeat 首先将执行<code>/etc/ha.d/resource.d/IPaddr 192.168.60.200/24 start</code>的操作，也就是虚拟出一个子网掩码为 255.255.255.0，IP为 192.168.60.200 的地址，此IP为 Heartbeat 对外提供服务的网络地址，同时指定此 IP 使用的网络接口为 eth0，接着，Heartbeat 将执行共享磁盘分区的挂载操作，<code>Filesystem::/dev/sdb5::/webdata::ext3</code>相当于在命令行下执行 mount 操作，即“mount –t ext3 /dev/sdb5 /webdata”，最后依次启动 httpd 和 tomcat 服务。</p>
+<blockquote>
+<p>注意：主节点和从节点中资源文件 haresources 一般要完全一致。</p>
+</blockquote>
+<h3 id="参考文档"><a href="#参考文档" class="headerlink" title="参考文档"></a>参考文档</h3><p><a href="http://ixdba.blog.51cto.com/2895551/548625" target="_blank" rel="noopener">Linux-HA开源软件Heartbeat（配置篇）</a><br><a href="https://github.com/chenzhiwei/linux/tree/master/heartbeat" target="_blank" rel="noopener">heartbeat配置相关</a></p>
 <hr>
 <ul>
 <li><p><a href="/more/donate/index.html"><strong><em><font color="red">我觉得帮助到我了, 支持你一下.</font></em></strong></a><br>   </p>
@@ -166,12 +175,12 @@
 <blockquote>
 <p>体育&amp;户外用品推荐</p>
 </blockquote>
-<div align="center"> <a href="https://www.amazon.cn/B07HWB88Z5/dp/B07HWB88Z5/ref=as_sl_pc_tf_til?tag=momoda-23&linkCode=w00&linkId=14df5124f2165d9eb3d65252e60ed2cf&creativeASIN=B07HWB88Z5" target="_blank" rel="noopener"><img src="/se-notes/云计算实践/区块链相关/区块链简介/../more/ads/amazon.gif" width="100%"></a> </div>
+<div align="center"> <a href="https://www.amazon.cn/B07HWB88Z5/dp/B07HWB88Z5/ref=as_sl_pc_tf_til?tag=momoda-23&linkCode=w00&linkId=14df5124f2165d9eb3d65252e60ed2cf&creativeASIN=B07HWB88Z5" target="_blank" rel="noopener"><img src="/se-notes/云计算实践/集群高可用方案/Heartbeat双机热备方案/../../../../more/ads/amazon.gif" width="100%"></a> </div>
       
     </div><!-- .entry-content -->
 
     <footer class="entry-meta">
-    <a href="/se-notes/云计算实践/区块链相关/区块链简介/">
+    <a href="/se-notes/云计算实践/集群高可用方案/Heartbeat双机热备方案/">
     <time datetime="2019-01-03T13:49:30.000Z" class="entry-date">
         1月 3 2019
     </time>
@@ -179,12 +188,12 @@
     
   <span class="article-delim">&#8226;</span>
   <div class="article-category">
-  <a class="article-category-link" href="/categories/通用技术/">通用技术</a>, <a class="article-category-link" href="/categories/通用技术/云计算实践/">云计算实践</a>, <a class="article-category-link" href="/categories/通用技术/云计算实践/区块链/">区块链</a>
+  <a class="article-category-link" href="/categories/通用技术/">通用技术</a>, <a class="article-category-link" href="/categories/通用技术/云计算实践/">云计算实践</a>, <a class="article-category-link" href="/categories/通用技术/云计算实践/集群高可用方案/">集群高可用方案</a>
   </div>
 
     
   <span class="article-delim">&#8226;</span>
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/云计算/">云计算</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/区块链/">区块链</a></li></ul>
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/云计算/">云计算</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/集群/">集群</a></li></ul>
 
     </footer>
 </article>
@@ -210,7 +219,7 @@
         
         <div class="comments-link">
             
-            <a href="javascript:void(0);" data-url="https://wnhby.github.io/se-notes/云计算实践/集群高可用方案/README/" data-id="cjsbbbf2100ave9s69lzss55a" class="leave-reply bdsharebuttonbox" data-cmd="more">分享</a>
+            <a href="javascript:void(0);" data-url="https://wnhby.github.io/se-notes/云计算实践/集群高可用方案/README/" data-id="cjsbez0fy00dvczs6lwqrhikd" class="leave-reply bdsharebuttonbox" data-cmd="more">分享</a>
         </div><!-- .comments-link -->
       </header><!-- .entry-header -->
 
@@ -293,7 +302,7 @@
 <blockquote>
 <p>体育&amp;户外用品推荐</p>
 </blockquote>
-<div align="center"> <a href="https://www.amazon.cn/B07HWB88Z5/dp/B07HWB88Z5/ref=as_sl_pc_tf_til?tag=momoda-23&linkCode=w00&linkId=14df5124f2165d9eb3d65252e60ed2cf&creativeASIN=B07HWB88Z5" target="_blank" rel="noopener"><img src="/se-notes/云计算实践/集群高可用方案/README/../more/ads/amazon.gif" width="100%"></a> </div>
+<div align="center"> <a href="https://www.amazon.cn/B07HWB88Z5/dp/B07HWB88Z5/ref=as_sl_pc_tf_til?tag=momoda-23&linkCode=w00&linkId=14df5124f2165d9eb3d65252e60ed2cf&creativeASIN=B07HWB88Z5" target="_blank" rel="noopener"><img src="/se-notes/云计算实践/集群高可用方案/README/../../../../more/ads/amazon.gif" width="100%"></a> </div>
 
       
     </div><!-- .entry-content -->
@@ -338,7 +347,7 @@
         
         <div class="comments-link">
             
-            <a href="javascript:void(0);" data-url="https://wnhby.github.io/docker-qq/" data-id="cjsa4yy4m0004hjs6y40ngqep" class="leave-reply bdsharebuttonbox" data-cmd="more">分享</a>
+            <a href="javascript:void(0);" data-url="https://wnhby.github.io/docker-qq/" data-id="cjsbez03j0004czs6cz50gkg9" class="leave-reply bdsharebuttonbox" data-cmd="more">分享</a>
         </div><!-- .comments-link -->
       </header><!-- .entry-header -->
 
@@ -422,15 +431,15 @@
           </li>
         
           <li>
-            <a href="/se-notes/Linux基础/README/">Linux基础-README</a>
-          </li>
-        
-          <li>
-            <a href="/se-notes/云计算实践/区块链相关/区块链简介/">区块链简介</a>
+            <a href="/se-notes/Java基础/集合框架/">集合框架</a>
           </li>
         
           <li>
             <a href="/se-notes/云计算实践/集群高可用方案/Heartbeat双机热备方案/">Heartbeat双机热备方案</a>
+          </li>
+        
+          <li>
+            <a href="/se-notes/云计算实践/集群高可用方案/HAProxy+Keepalived高可用方案/">HAProxy+Keepalived高可用方案</a>
           </li>
         
       </ul>
@@ -451,7 +460,7 @@
   <aside class="widget">
     <h3 class="widget-title">Categories</h3>
     <div class="widget-content">
-      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Graphics/">Graphics</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Linux/">Linux</a><span class="category-list-count">7</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Linux/Shell/">Shell</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Linux/linux基础/">linux基础</a><span class="category-list-count">6</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/协议证书/">协议证书</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/协议证书/openssl/">openssl</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/数据库/">数据库</a><span class="category-list-count">4</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/数据库/数据库基础/">数据库基础</a><span class="category-list-count">3</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/框架/">框架</a><span class="category-list-count">9</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/框架/python-web应用框架/">python-web应用框架</a><span class="category-list-count">9</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/版本控制/">版本控制</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/版本控制/Git/">Git</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/编程语言/">编程语言</a><span class="category-list-count">13</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/编程语言/java/">java</a><span class="category-list-count">13</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/网络通讯/">网络通讯</a><span class="category-list-count">11</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/网络通讯/大小端/">大小端</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/网络通讯/计算机网络基础/">计算机网络基础</a><span class="category-list-count">10</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/路由器/">路由器</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/路由器/openwrt/">openwrt</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/通用技术/">通用技术</a><span class="category-list-count">13</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/通用技术/Docker/">Docker</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/通用技术/云计算实践/">云计算实践</a><span class="category-list-count">11</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/通用技术/云计算实践/kubernetes部署/">kubernetes部署</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/通用技术/云计算实践/区块链/">区块链</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/通用技术/云计算实践/集群高可用方案/">集群高可用方案</a><span class="category-list-count">4</span></li></ul></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/默认/">默认</a><span class="category-list-count">1</span></li></ul>
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Graphics/">Graphics</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Linux/">Linux</a><span class="category-list-count">7</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Linux/Shell/">Shell</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Linux/linux基础/">linux基础</a><span class="category-list-count">6</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/协议证书/">协议证书</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/协议证书/openssl/">openssl</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/数据库/">数据库</a><span class="category-list-count">4</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/数据库/数据库基础/">数据库基础</a><span class="category-list-count">3</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/框架/">框架</a><span class="category-list-count">9</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/框架/python-web应用框架/">python-web应用框架</a><span class="category-list-count">9</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/框架/python-web应用框架/flask/">flask</a><span class="category-list-count">9</span></li></ul></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/版本控制/">版本控制</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/版本控制/Git/">Git</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/编程语言/">编程语言</a><span class="category-list-count">13</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/编程语言/java/">java</a><span class="category-list-count">13</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/网络通讯/">网络通讯</a><span class="category-list-count">11</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/网络通讯/大小端/">大小端</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/网络通讯/计算机网络基础/">计算机网络基础</a><span class="category-list-count">10</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/路由器/">路由器</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/路由器/openwrt/">openwrt</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/通用技术/">通用技术</a><span class="category-list-count">13</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/通用技术/Docker/">Docker</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/通用技术/云计算实践/">云计算实践</a><span class="category-list-count">11</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/通用技术/云计算实践/kubernetes部署/">kubernetes部署</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/通用技术/云计算实践/区块链/">区块链</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/通用技术/云计算实践/集群高可用方案/">集群高可用方案</a><span class="category-list-count">4</span></li></ul></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/默认/">默认</a><span class="category-list-count">1</span></li></ul>
     </div>
   </aside>
 

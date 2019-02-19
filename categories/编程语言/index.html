@@ -80,7 +80,7 @@
       <div id="main" class="wrapper">
         <div id="primary" class="site-content"><div id="content" role="main">
   
-    <article id="post-se-notes/Java基础/泛型" class="post-se-notes/Java基础/泛型 post type-post status-publish format-standard hentry">
+    <article id="post-se-notes/Java基础/多线程" class="post-se-notes/Java基础/多线程 post type-post status-publish format-standard hentry">
     <!---->
 
       <header class="entry-header">
@@ -88,14 +88,14 @@
         
   
     <h1 class="entry-title">
-      <a class="article-title" href="/se-notes/Java基础/泛型/">泛型</a>
+      <a class="article-title" href="/se-notes/Java基础/多线程/">多线程</a>
     </h1>
   
 
         
         <div class="comments-link">
             
-            <a href="javascript:void(0);" data-url="https://wnhby.github.io/se-notes/Java基础/泛型/" data-id="cjsbbbewr0023e9s6do6vo99y" class="leave-reply bdsharebuttonbox" data-cmd="more">分享</a>
+            <a href="javascript:void(0);" data-url="https://wnhby.github.io/se-notes/Java基础/多线程/" data-id="cjsbez09u003cczs6cm8n0pk5" class="leave-reply bdsharebuttonbox" data-cmd="more">分享</a>
         </div><!-- .comments-link -->
       </header><!-- .entry-header -->
 
@@ -103,53 +103,86 @@
       
         <!-- TOC -->
 <ul>
-<li><a href="#泛型">泛型</a><ul>
-<li><a href="#泛型类和泛型方法">泛型类和泛型方法</a></li>
-<li><a href="#原始类型和向后兼容">原始类型和向后兼容</a></li>
-<li><a href="#通配泛型">通配泛型</a></li>
-<li><a href="#消除泛型与使用泛型的限制">消除泛型与使用泛型的限制</a></li>
-<li><a href="#备注">备注</a><ul>
-<li><a href="#ads">Ads</a></li>
+<li><a href="#java-多线程">Java 多线程</a><ul>
+<li><a href="#创建任务和线程">创建任务和线程</a></li>
 </ul>
 </li>
+<li><a href="#thread类">Thread类</a></li>
+<li><a href="#线程池">线程池</a></li>
+<li><a href="#线程同步">线程同步</a><ul>
+<li><a href="#同步语句">同步语句</a></li>
 </ul>
 </li>
+<li><a href="#利用加锁同步">利用加锁同步</a></li>
+<li><a href="#volatile-关键字">Volatile 关键字</a><pre><code>- [使用场景](#使用场景)
+</code></pre></li>
+<li><a href="#线程间协作">线程间协作</a></li>
+<li><a href="#避免死锁">避免死锁</a><pre><code>- [Ads](#ads)
+</code></pre></li>
 </ul>
 <!-- /TOC -->
-<h1 id="泛型"><a href="#泛型" class="headerlink" title="泛型"></a>泛型</h1><p>泛型是指参数化类型的能力。定义了带泛型类型的类或方法，在编译过程中编译器会用具体类型替换它。主要优点在于能够在编译时而不是在运行时检测出错误。</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/* 使用泛型前 */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">Comparable</span></span>&#123;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">compareTo</span><span class="params">(object o)</span></span>;</span><br><span class="line">&#125; </span><br><span class="line"></span><br><span class="line"><span class="comment">/* 使用泛型后 */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">Comparable</span>&lt;<span class="title">T</span>&gt;</span>&#123;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">compareTo</span><span class="params">(T o)</span></span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h2 id="泛型类和泛型方法"><a href="#泛型类和泛型方法" class="headerlink" title="泛型类和泛型方法"></a>泛型类和泛型方法</h2><ul>
-<li>为了定义一个类为泛型类型，需要将泛型类型放在类名之后，如：<code>GenericStack&lt;E&gt;</code>。</li>
-<li>受限泛型类型：可将泛型制定为另外一种类型的子类型。如：<code>&lt;E extends GeometricObject&gt;</code>。</li>
-<li>为了定义一个方法为泛型类型，需要把泛型类型放在方法返回类型之前，如<code>&lt;E&gt; void max(E o1,E o2)</code>。</li>
-<li>为了调用泛型方法，需要将实际类型放在尖括号内作为方法名的前缀，如<code>GenericStack.&lt;String&gt;print(strings)</code>。</li>
-</ul>
-<h2 id="原始类型和向后兼容"><a href="#原始类型和向后兼容" class="headerlink" title="原始类型和向后兼容"></a>原始类型和向后兼容</h2><ul>
-<li><strong>使用</strong>泛型类时可以无需指定具体类型，如：<code>GenericStack stack = new GenericStack();</code>，其大体等价于<code>GenericStack&lt;Object&gt; stack = new GenericStack&lt;Object&gt;();</code>。</li>
-<li>像 GenericStack 和 ArrayList 这样不使用类型参数的泛型类称为”原始类型“。</li>
-<li>原始类型并不安全，但使用原始类型是为了向后兼容 JDK 较早的版本。</li>
-</ul>
-<h2 id="通配泛型"><a href="#通配泛型" class="headerlink" title="通配泛型"></a>通配泛型</h2><ul>
-<li>尽管 Integer 是 Number 的子类型，但是 <code>GenericStack&lt;Interger&gt;</code>并不是<code>GenericStack&lt;Number&gt;</code>的子类型。为了避免该问题，可以使用通配泛型类型。</li>
-<li>通配泛型有三种形式<code>?</code>、<code>? extends T</code>和<code>? super T</code>（此处的T代表某个泛型类型）：<ul>
-<li><code>?</code>：称为非受限通配，等价于<code>? extends Object</code>。</li>
-<li><code>? extends T</code>：称为受限通配，代表T的一个未知子类型。</li>
-<li><code>? super T</code>：称为下限通配，表示T的一个未知父类型。</li>
-</ul>
-</li>
-</ul>
-<h2 id="消除泛型与使用泛型的限制"><a href="#消除泛型与使用泛型的限制" class="headerlink" title="消除泛型与使用泛型的限制"></a>消除泛型与使用泛型的限制</h2><p>泛型是使用一种称为类型消除的方法来实现的：在编译时一旦编译器确认泛型类型是安全的，就会将它转换为原始类型。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/*编译器转换前*/</span></span><br><span class="line">ArrayList&lt;String&gt; list = <span class="keyword">new</span> ArrayList&lt;String&gt;();</span><br><span class="line">list.add(<span class="string">"Trump"</span>);</span><br><span class="line">String state = list.get(<span class="number">0</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">/*编译器转换后*/</span></span><br><span class="line">ArrayList list = <span class="keyword">new</span> ArrayList();</span><br><span class="line">list.add(<span class="string">"Trump"</span>);</span><br><span class="line">String state = (String)(list.get(<span class="number">0</span>));</span><br></pre></td></tr></table></figure></p>
-<p>由于泛型在运行时已被消除，因此对于如何使用泛型类型是有一些限制的：</p>
+<h1 id="Java-多线程"><a href="#Java-多线程" class="headerlink" title="Java 多线程"></a>Java 多线程</h1><p>一个程序可能包含多个并发运行的任务，线程是指一个任务从头至尾的执行流。Java 可以在一个程序中并发地启动多个线程，这些线程可以在多处理器系统上同时运行。</p>
+<h2 id="创建任务和线程"><a href="#创建任务和线程" class="headerlink" title="创建任务和线程"></a>创建任务和线程</h2><p>任务就是对象。为了创建任务，必须为任务定义一个实现了 Runnable 接口的类。Runnable 接口只包含了一个 run 方法，该方法告诉系统线程如何运行。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">TaskClass</span> <span class="keyword">implements</span> <span class="title">Runnable</span></span>&#123;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="title">TaskClass</span><span class="params">()</span></span>&#123;&#125;</span><br><span class="line">	</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span></span>&#123;</span><br><span class="line">	    <span class="comment">// Tell system how to run custom thread</span></span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>运行线程：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">TaskClass task = new TaskClass(); //根据任务类，创建任务</span><br><span class="line">Thread thread = new Thread(task); //创建任务的线程</span><br><span class="line">thread.start(); //启动线程</span><br></pre></td></tr></table></figure></p>
+<h1 id="Thread类"><a href="#Thread类" class="headerlink" title="Thread类"></a>Thread类</h1><p>Thread 类包含为任务而创建的线程的构造方法，以及控制线程的方法。</p>
 <ul>
-<li>不能使用<code>new E()</code>。</li>
-<li>不能使用<code>new E[]</code>。</li>
-<li>在静态环境下不允许类的参数是泛型类型。</li>
-<li>异常类不能是泛型的。</li>
+<li>方法 yield()：可为其他线程临时让出 CPU 时间。</li>
+<li>方法 sleep(long mills)：可以将线程设置为休眠以确保其他线程的执行，休眠时间为指定的毫秒数。也可能抛出必检异常，因此需要放到 try-catch 块中。</li>
+<li>方法 join()：使一个线程等待另一个线程的结束。</li>
+<li>Java 为每个线程都指定了一个优先级（1~10），可用 setPriority 方法设置优先级，用 getPriority 方法获取优先级。JVM 总是选择当前优先级最高的可运行线程，较低优先级的线程只有在没有比它更高优先级的线程运行时才能运行。</li>
 </ul>
-<h2 id="备注"><a href="#备注" class="headerlink" title="备注"></a>备注</h2><ul>
-<li>泛型类型必须是引用类型</li>
-<li>尽管在编译时<code>ArrayList&lt;String&gt;</code>与<code>ArrayList&lt;Integer&gt;</code>是两种类型，但是在运行时只有一个 ArrayList 类会被加载到 JVM 中</li>
+<blockquote>
+<p>注：由于 Thread 类也实现了 Runnable 接口，所以可以定义一个 Thread 的扩展类，在里面实现 run 方法来实现线程。但<strong>不推荐</strong>使用这种方式，因为把任务和运行任务的机制混在了一起。把任务从线程中分离出来是比较好的选择。</p>
+</blockquote>
+<h1 id="线程池"><a href="#线程池" class="headerlink" title="线程池"></a>线程池</h1><p>对于大量的任务而言，为每一个任务开始一个新线程是不够高效的。线程池是管理并发执行任务个数的理想办法。Java 提供 Executor 接口来执行线程池里的任务，提供 ExecutorService 接口来管理和控制任务。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">import java.util.concurrent.*;</span><br><span class="line"></span><br><span class="line">public class ExecutorDemo&#123;</span><br><span class="line">	public static void main(String[] args)&#123;</span><br><span class="line">		// 创建一个固定线程数的线程池</span><br><span class="line">		ExecutorService executor = Executors.newFixedThreadPool(3);</span><br><span class="line">		</span><br><span class="line">		// 或者按需创建线程池</span><br><span class="line">		// ExecutorService executor = Executors.newCachedThreadPool();</span><br><span class="line">		</span><br><span class="line">		// 执行任务（PrintChar实现了Runnable接口）</span><br><span class="line">		executor.execute(new PrintChar(&apos;a&apos;,100));</span><br><span class="line">		executor.execute(new PrintChar(&apos;b&apos;,100));</span><br><span class="line">		executor.execute(new PrintChar(&apos;c&apos;,100));</span><br><span class="line">		// 关闭执行器，之后便不能接受新的任务</span><br><span class="line">		executor.shutdown();</span><br><span class="line">		// 判断所有任务是否已结束，返回boolean型</span><br><span class="line">		executor.isTerminated();</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1 id="线程同步"><a href="#线程同步" class="headerlink" title="线程同步"></a>线程同步</h1><p>如果一个共享资源被多个线程同时访问，可能会遭到破坏。当任务1和任务2以一种会引起冲突的方式访问一个公共资源时，该问题称为<strong>竞争状态</strong>。如果一个类的对象在多线程程序中没有导致竞争状态，则称这样的类是<strong>线程安全的</strong>。</p>
+<p>为了避免竞争状态，应该防止多个线程同时进入程序的某一特定部分，这部分称为<strong>临界区</strong>。通过使用关键字 <strong>synchronized</strong> 来同步方法，以便一次只有一个线程可以访问该方法。如：<code>public synchronized void deposit(double amount)</code>。</p>
+<p>一个同步方法在执行之前需要加锁；调用一个对象的同步实例方法要求给该对象加锁；调用一个类的同步静态方法要求对该类加锁。如果一个线程调用一个对象上的同步实例方法（静态方法），首先给该对象（类）加锁，然后执行该方法，最后解锁。在解锁之前，另一个调用该对象（类）中该方法的线程将会被阻塞。</p>
+<h2 id="同步语句"><a href="#同步语句" class="headerlink" title="同步语句"></a>同步语句</h2><p>当执行方法中某一个代码块时，同步语句不仅可用于对 this 对象加锁，而且可用于对任何对象加锁。这个代码块称为“同步块”。由于同步语句允许设置同步方法中的部分代码而不必是整个方法，从而大大增强了程序的并发能力。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">synchronized(expr)&#123;</span><br><span class="line">	statements;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>表达式 expr 必须求出对象的引用。若对象已经被另一个线程锁定，则在解锁之前，该线程将被阻塞。当获准对一个对象加锁时，该线程执行同步块中语句，然后解除给对象加的锁。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">/*  任何同步实例方法可转换为同步语句。</span><br><span class="line">    以下两个实例方法是等价的。 */</span><br><span class="line">public synchronized void xMethod()&#123;</span><br><span class="line">	// method body</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">public void xMethod()&#123;</span><br><span class="line">	synchronized(this)&#123;</span><br><span class="line">		// method body</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1 id="利用加锁同步"><a href="#利用加锁同步" class="headerlink" title="利用加锁同步"></a>利用加锁同步</h1><p>同步的实例方法在执行方法之前都隐式地加锁，而 Java 也可以显式地加锁。</p>
+<p>一个锁是一个 Lock 接口的实例，它定义了加锁和释放锁的方法。<strong>ReentrantLock</strong> 类是为创建互斥锁的 Lock 的具体实现。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">import java.util.concurrent.locks.*</span><br><span class="line"></span><br><span class="line">public class Account&#123;</span><br><span class="line">    	private static Lock lock = new ReentrantLock();</span><br><span class="line">    	private int balance = 0;</span><br><span class="line">    	</span><br><span class="line">    	public int getBalancs()&#123;</span><br><span class="line">    		return this.balance;</span><br><span class="line">    	&#125;</span><br><span class="line">    	</span><br><span class="line">    	public void deposit(int amount)&#123;</span><br><span class="line">    		lock.lock(); // 加锁</span><br><span class="line">    		try&#123;</span><br><span class="line">    			int newBalance = balance + amount;</span><br><span class="line">    			Thread.sleep(5);</span><br><span class="line">    			balance = newBalance;</span><br><span class="line">    		&#125;</span><br><span class="line">    		catch(InterruptedException ex)&#123;   			</span><br><span class="line">    		&#125;</span><br><span class="line">    		finally&#123;</span><br><span class="line">    			lock.unlock(); // 解锁</span><br><span class="line">    		&#125;</span><br><span class="line">    	&#125;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+<h1 id="Volatile-关键字"><a href="#Volatile-关键字" class="headerlink" title="Volatile 关键字"></a>Volatile 关键字</h1><p>Java 提供了一种稍弱的同步机制，即 volatile 变量，用来确保将变量的更新操作立刻对其他线程可见。当把变量声明为 volatile 类型后，编译器与 JVM 都会注意到这个变量是共享的，因此不会将该变量上的操作与其他内存操作一起重排序，也不会使该变量被线程缓存。因此在读取 volatile 类型的变量时总会返回最新写入的值。volatile 修饰的变量<strong>不允许被线程缓存和重排序</strong>（不被缓存即直接修改内存），因此对其他线程实现了可见性。</p>
+<blockquote>
+<p><strong>指令重排序</strong>是编译器或运行时环境为了优化程序性能而采取的对指令进行重新排序执行的一种手段，因此多线程下指令执行的顺序可能是无法预测的。<strong>指令重排序不会影响单个线程的执行，但是会影响到线程并发执行的正确性</strong>。</p>
+</blockquote>
+<p>在访问 volatile 变量时不会执行加锁操作，也就不会使执行线程阻塞。因此 <strong>volatile 变量是一种比 sychronized 关键字更轻量级的同步机制</strong>。</p>
+<p><img src="http://images2015.cnblogs.com/blog/731716/201607/731716-20160708224602686-2141387366.png" alt="enter image description here"></p>
+<blockquote>
+<p>读写非 volatile 变量时，每个线程先从内存拷贝变量到 CPU 缓存中。如果计算机有多个 CPU ，每个线程可能在不同的 CPU 上被处理，这意味着每个线程可以拷贝到不同的 CPU cache 中。而声明变量是 volatile 的，JVM 保证了每次读变量都从内存中读，跳过 CPU cache 这一步。</p>
+</blockquote>
+<blockquote>
+<p>注意：volatile 只能让其所修饰的变量具有可见性（即更新后的操作会立即对其他线程可见），但不能保证具有原子性，因此也会有线程安全的问题。</p>
+</blockquote>
+<h3 id="使用场景"><a href="#使用场景" class="headerlink" title="使用场景"></a>使用场景</h3><p>synchronized 关键字是防止多个线程同时执行一段代码，那么就会很影响程序执行效率，而 volatile 关键字在某些情况下性能要优于 synchronized ，但要注意 volatile 关键字是无法替代 synchronized 关键字的，因为 volatile 关键字无法保证操作的原子性。</p>
+<p>通常来说，使用 volatile 必须具备以下条件：</p>
+<ol>
+<li>对变量的写操作不依赖于当前值</li>
+<li>该变量没有包含在具有其他变量的不变式中</li>
+</ol>
+<p>这些条件表明，可以被写入 volatile 变量的这些有效值独立于任何程序的状态，包括变量的当前状态。</p>
+<p><a href="http://blog.csdn.net/libing13820393394/article/details/48582999" target="_blank" rel="noopener">volatile 详解</a></p>
+<h1 id="线程间协作"><a href="#线程间协作" class="headerlink" title="线程间协作"></a>线程间协作</h1><p>通过保证在临界区上多个线程的相互排斥，线程同步完全可以避免竞争状态的发生，但是有时还需要线程之间的相互协作。Java 中使用<strong>条件</strong>来便于线程间通信，一个线程可以指定在某种条件下该做什么。</p>
+<p><strong>条件</strong>是通过调用 Lock 对象的 newCondition() 方法而创建的对象，一旦创建了条件，就可以使用 await()、signal()、signalAll() 方法来实现线程间的互相通信：</p>
+<ul>
+<li>await()：让当前线程处于等待状态，直到被唤醒</li>
+<li>signal()：唤醒一个等待的线程</li>
+<li>signalAll()：唤醒所有等待的线程</li>
 </ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br></pre></td><td class="code"><pre><span class="line">import java.util.concurrent.*;</span><br><span class="line">import java.util.concurrent.locks.*;</span><br><span class="line"></span><br><span class="line">public class TestLockCondition &#123;</span><br><span class="line"></span><br><span class="line">	private static Account account = new Account();</span><br><span class="line">	</span><br><span class="line">	public static void main(String[] args) &#123;</span><br><span class="line">		System.out.println(&quot;Thread 1\t\tThread 2\t\tBalance&quot;);</span><br><span class="line">		</span><br><span class="line">		ExecutorService executor = Executors.newFixedThreadPool(2);</span><br><span class="line">		executor.execute(new DepositTask());</span><br><span class="line">		executor.execute(new SubstactTask());</span><br><span class="line">		executor.shutdown();</span><br><span class="line">		</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	public static class DepositTask implements Runnable&#123;</span><br><span class="line"></span><br><span class="line">		@Override</span><br><span class="line">		public void run() &#123;</span><br><span class="line">			try&#123;</span><br><span class="line">				while(true)&#123;</span><br><span class="line">					account.deposit((int)(Math.random() * 10) + 2);</span><br><span class="line">					Thread.sleep(2000);</span><br><span class="line">				&#125;</span><br><span class="line">			&#125;</span><br><span class="line">			catch(Exception e)&#123;</span><br><span class="line">				e.printStackTrace();</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	public static class SubstactTask implements Runnable&#123;</span><br><span class="line"></span><br><span class="line">		@Override</span><br><span class="line">		public void run() &#123;</span><br><span class="line">			while(true)&#123;</span><br><span class="line">				account.substract((int)(Math.random() * 10)+1);</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">		</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	public static class Account&#123;</span><br><span class="line">		</span><br><span class="line">		private int balance = 0;</span><br><span class="line">		private Lock lock = new ReentrantLock();</span><br><span class="line">		private Condition condition = lock.newCondition();</span><br><span class="line">		</span><br><span class="line">		public int getBalance()&#123;</span><br><span class="line">			return balance;</span><br><span class="line">		&#125;</span><br><span class="line">		</span><br><span class="line">		public void substract(int amount)&#123;</span><br><span class="line">			lock.lock();</span><br><span class="line">			try&#123;</span><br><span class="line">				while(amount &gt; balance)&#123;</span><br><span class="line">					System.out.println(&quot;\t\t\twait for a deposit&quot;);</span><br><span class="line">					condition.await();</span><br><span class="line">				&#125;</span><br><span class="line">				balance -= amount;</span><br><span class="line">				System.out.println(&quot;\t\t\tSubstract &quot; + amount +&quot;\t\t&quot; + getBalance());</span><br><span class="line">			&#125;</span><br><span class="line">			catch(Exception e)&#123;</span><br><span class="line">				e.printStackTrace();</span><br><span class="line">			&#125;</span><br><span class="line">			finally&#123;</span><br><span class="line">				lock.unlock();</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">		</span><br><span class="line">		public void deposit(int amount)&#123;</span><br><span class="line">			lock.lock();</span><br><span class="line">			try&#123;</span><br><span class="line">				balance += amount;</span><br><span class="line">				System.out.println(&quot;Deposit &quot; + amount +&quot;\t\t\t\t\t&quot; + getBalance());</span><br><span class="line">				condition.signalAll();</span><br><span class="line">			&#125;</span><br><span class="line">			finally&#123;</span><br><span class="line">				lock.unlock();</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>一旦线程调用条件上的 await()，线程就进入等待状态，等待恢复的信号。如果忘记调用 signal()、signalAll() ，那么线程将永久等待下去。</p>
+</blockquote>
+<blockquote>
+<p>条件由 Lock 对象所创建，为了调用 await()、signal()、signalAll() 等方法，必须首先获取该条件对应的锁。如果没有获取锁就调用这些方法就会抛出异常。</p>
+</blockquote>
+<h1 id="避免死锁"><a href="#避免死锁" class="headerlink" title="避免死锁"></a>避免死锁</h1><p>有时两个或多个线程需要在几个共享对象上获取锁，可能会导致死锁，即：每个线程已经锁定一个对象，而且正在等待锁定另一个对象。</p>
+<p>使用<strong>资源排序</strong>可以轻易地避免死锁的发生。该技术是给每一个需要锁的对象指定一个顺序，确保每个线程都按照这个顺序来获得锁。</p>
 <hr>
 <ul>
 <li><p><a href="/more/donate/index.html"><strong><em><font color="red">我觉得帮助到我了, 支持你一下.</font></em></strong></a><br>   </p>
@@ -164,12 +197,12 @@
 <blockquote>
 <p>体育&amp;户外用品推荐</p>
 </blockquote>
-<div align="center"> <a href="https://www.amazon.cn/B07HWB88Z5/dp/B07HWB88Z5/ref=as_sl_pc_tf_til?tag=momoda-23&linkCode=w00&linkId=14df5124f2165d9eb3d65252e60ed2cf&creativeASIN=B07HWB88Z5" target="_blank" rel="noopener"><img src="/se-notes/Java基础/泛型/../more/ads/amazon.gif" width="100%"></a> </div>
+<div align="center"> <a href="https://www.amazon.cn/B07HWB88Z5/dp/B07HWB88Z5/ref=as_sl_pc_tf_til?tag=momoda-23&linkCode=w00&linkId=14df5124f2165d9eb3d65252e60ed2cf&creativeASIN=B07HWB88Z5" target="_blank" rel="noopener"><img src="/se-notes/Java基础/多线程/../../../more/ads/amazon.gif" width="100%"></a> </div>
       
     </div><!-- .entry-content -->
 
     <footer class="entry-meta">
-    <a href="/se-notes/Java基础/泛型/">
+    <a href="/se-notes/Java基础/多线程/">
     <time datetime="2019-01-03T13:49:30.000Z" class="entry-date">
         1月 3 2019
     </time>
@@ -208,7 +241,7 @@
         
         <div class="comments-link">
             
-            <a href="javascript:void(0);" data-url="https://wnhby.github.io/se-notes/Java基础/JVM基础/" data-id="cjsbbbew4001te9s6jmmgai7s" class="leave-reply bdsharebuttonbox" data-cmd="more">分享</a>
+            <a href="javascript:void(0);" data-url="https://wnhby.github.io/se-notes/Java基础/JVM基础/" data-id="cjsbez09b002uczs6s7th9meh" class="leave-reply bdsharebuttonbox" data-cmd="more">分享</a>
         </div><!-- .comments-link -->
       </header><!-- .entry-header -->
 
@@ -347,627 +380,13 @@
 <blockquote>
 <p>体育&amp;户外用品推荐</p>
 </blockquote>
-<p><div align="center"> <a href="https://www.amazon.cn/B07HWB88Z5/dp/B07HWB88Z5/ref=as_sl_pc_tf_til?tag=momoda-23&linkCode=w00&linkId=14df5124f2165d9eb3d65252e60ed2cf&creativeASIN=B07HWB88Z5" target="_blank" rel="noopener"><img src="/se-notes/Java基础/JVM基础/../more/ads/amazon.gif" width="100%"></a> </div>收</p>
+<p><div align="center"> <a href="https://www.amazon.cn/B07HWB88Z5/dp/B07HWB88Z5/ref=as_sl_pc_tf_til?tag=momoda-23&linkCode=w00&linkId=14df5124f2165d9eb3d65252e60ed2cf&creativeASIN=B07HWB88Z5" target="_blank" rel="noopener"><img src="/se-notes/Java基础/JVM基础/../../../more/ads/amazon.gif" width="100%"></a> </div>收</p>
 
       
     </div><!-- .entry-content -->
 
     <footer class="entry-meta">
     <a href="/se-notes/Java基础/JVM基础/">
-    <time datetime="2019-01-03T13:49:30.000Z" class="entry-date">
-        1月 3 2019
-    </time>
-</a>
-    
-  <span class="article-delim">&#8226;</span>
-  <div class="article-category">
-  <a class="article-category-link" href="/categories/编程语言/">编程语言</a>, <a class="article-category-link" href="/categories/编程语言/java/">java</a>
-  </div>
-
-    
-  <span class="article-delim">&#8226;</span>
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/java基础/">java基础</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/java语法/">java语法</a></li></ul>
-
-    </footer>
-</article>
-
-
-
-
-
-
-  
-    <article id="post-se-notes/Java基础/README" class="post-se-notes/Java基础/README post type-post status-publish format-standard hentry">
-    <!---->
-
-      <header class="entry-header">
-        
-        
-  
-    <h1 class="entry-title">
-      <a class="article-title" href="/se-notes/Java基础/README/">Java基础-README</a>
-    </h1>
-  
-
-        
-        <div class="comments-link">
-            
-            <a href="javascript:void(0);" data-url="https://wnhby.github.io/se-notes/Java基础/README/" data-id="cjsbbbewf001we9s6eqwgs70e" class="leave-reply bdsharebuttonbox" data-cmd="more">分享</a>
-        </div><!-- .comments-link -->
-      </header><!-- .entry-header -->
-
-    <div class="entry-content">
-      
-        <!-- TOC -->
-<ul>
-<li><a href="#java-特性与-c-比较">Java 特性（与 C++ 比较）</a></li>
-<li><a href="#java-数据类型">Java 数据类型</a></li>
-<li><a href="#方法调用过程">方法调用过程</a></li>
-<li><a href="#数组的复制">数组的复制</a></li>
-<li><a href="#基本类型变量和引用类型变量">基本类型变量和引用类型变量</a></li>
-<li><a href="#类的静态变量与方法">类的静态变量与方法</a></li>
-<li><a href="#不可变对象和类">不可变对象和类</a></li>
-<li><a href="#this引用">this引用</a></li>
-<li><a href="#多态与动态绑定">多态与动态绑定</a></li>
-<li><a href="#异常处理">异常处理</a></li>
-<li><a href="#文本io与二进制io">文本IO与二进制IO</a><pre><code>- [Ads](#ads)
-</code></pre></li>
-</ul>
-<!-- /TOC -->
-<h1 id="Java-特性（与-C-比较）"><a href="#Java-特性（与-C-比较）" class="headerlink" title="Java 特性（与 C++ 比较）"></a>Java 特性（与 C++ 比较）</h1><p>核心特性：</p>
-<ul>
-<li><strong>跨平台性</strong>：Java 一次编译可到处运行</li>
-<li><strong>自动内存管理</strong>：Java 没有指针，内存管理依靠垃圾自动回收</li>
-<li><strong>完全面向对象</strong>：所有函数和变量必须是类的一部分</li>
-</ul>
-<p>其他特性：</p>
-<ul>
-<li>强制异常规约</li>
-<li>内置字符串：Java 有内置类型</li>
-<li>操作符重载：不支持操作符重载</li>
-<li>执行速度慢</li>
-<li>不支持多重继承</li>
-<li>不支持默认函数参数</li>
-<li>不支持 goto 语句</li>
-</ul>
-<h1 id="Java-数据类型"><a href="#Java-数据类型" class="headerlink" title="Java 数据类型"></a>Java 数据类型</h1><p>JAVA 有八种基础的数据类型：</p>
-<ul>
-<li>整数型：byte(8 bits)、short(16 bits)、int(32 bits)、long(64 bits)</li>
-<li>浮点型：float(32 bits)、double(64 bits)</li>
-<li>字符型：char(16 bits)</li>
-<li>布尔型：boolean</li>
-</ul>
-<p><img src="https://cloud.githubusercontent.com/assets/22606175/24044502/7e59520e-0b56-11e7-83d8-b1b2988d2a62.jpg" alt="1489756357 1"></p>
-<h1 id="方法调用过程"><a href="#方法调用过程" class="headerlink" title="方法调用过程"></a>方法调用过程</h1><p>当调用一个方法时，系统将参数和局部变量存储在一个称为<strong>堆栈</strong>的内存区域中；当一个方法调用另一个方法时，调用者的堆栈保持不动，新开辟的堆栈处理新方法的调用；当一个方法结束返回到调用者时，其相应空间被释放。</p>
-<h1 id="数组的复制"><a href="#数组的复制" class="headerlink" title="数组的复制"></a>数组的复制</h1><p>复制数组一般有三种方法：</p>
-<ol>
-<li>使用循环语句逐个复制数组的元素</li>
-<li>使用 System 类的静态方法 arraycopy</li>
-<li>使用 clone 方法复制数组</li>
-</ol>
-<p>浅拷贝：使用一个已知实例对新创建实例的成员变量逐个赋值，这个方式被称为浅拷贝。</p>
-<p>深拷贝：当一个类的拷贝构造方法，不仅要复制对象的所有非引用成员变量值，还要为引用类型的成员变量创建新的实例，并且初始化为形参实例的值。这个方式称为深拷贝。</p>
-<h1 id="基本类型变量和引用类型变量"><a href="#基本类型变量和引用类型变量" class="headerlink" title="基本类型变量和引用类型变量"></a>基本类型变量和引用类型变量</h1><p>每个变量都代表一个存储值的内存位置，声明一个变量时就是在告诉编译器该变量存储何种类型的值。</p>
-<p>对基本类型变量而言，存储值是基本类型，对引用类型变量而言，对应内存所存储值是一个对象的引用，即对象的存储地址。</p>
-<p>当一个变量赋值给另一个变量时，对基本类型变量而言，就是将一个变量的实际值赋给了另一个变量；对引用类型变量而言，是将一个变量的引用赋给了另一个变量。</p>
-<p><img src="https://cloud.githubusercontent.com/assets/22606175/24067589/c2dde04e-0bb9-11e7-944e-0a2fafcbe3f0.jpg" alt="1489799001 1"></p>
-<h1 id="类的静态变量与方法"><a href="#类的静态变量与方法" class="headerlink" title="类的静态变量与方法"></a>类的静态变量与方法</h1><ul>
-<li>类的静态变量被同一个类的所有实例所共享。</li>
-<li>可以在不使用实例的情况下调用静态方法。（一般通过类名.方法名调用，无须创建对象）</li>
-<li>类的每一个实例都能访问该类的静态变量与静态方法。</li>
-<li>实例变量与实例方法只能在实例方法中使用，不能在静态方法中使用。</li>
-</ul>
-<h1 id="不可变对象和类"><a href="#不可变对象和类" class="headerlink" title="不可变对象和类"></a>不可变对象和类</h1><p>通常创建一个对象后，其内容是允许随后改变的。但是有时也需要创建一个一旦创建，其内容就不能再改变的对象。这种对象称为<strong>不可变对象</strong>，而它的类成为<strong>不可变类</strong>。</p>
-<p>要使一个类成为不可变的，必须满足如下要求：</p>
-<ol>
-<li>所有数据域都是私有的。</li>
-<li>没有修改器方法。</li>
-<li>没有一个访问器方法，它会返回一个指向可变数据域的引用。</li>
-</ol>
-<h1 id="this引用"><a href="#this引用" class="headerlink" title="this引用"></a>this引用</h1><p>关键字 this 指向调用对象本身的引用名，有两种常用的使用场景：</p>
-<ol>
-<li>在 set 方法中引用隐藏数据域（如<code>this.name = name</code>）</li>
-<li>让构造方法调用同一个类的另外一个构造方法</li>
-</ol>
-<h1 id="多态与动态绑定"><a href="#多态与动态绑定" class="headerlink" title="多态与动态绑定"></a>多态与动态绑定</h1><p>多态的定义：父类型的变量可以引用子类型的对象</p>
-<p>声明类型：引用变量在声明时的类型</p>
-<p>实际类型：引用变量所指向的对象的实际类</p>
-<p>当从引用变量调用实例方法时，由该引用变量的<strong>实际类型</strong>在<strong>运行时</strong>决定使用该方法的哪个实现；当引用变量访问数据域和静态方法时，由该引用变量的<strong>声明类型</strong>在<strong>编译时</strong>决定使用哪个方法。</p>
-<h1 id="异常处理"><a href="#异常处理" class="headerlink" title="异常处理"></a>异常处理</h1><p>异常处理的优势在于把“检测错误”从“处理错误”中分离出来。</p>
-<ul>
-<li>免检异常：RuntimeException、Error 以及其子类都是免检异常，通常反映程序中不可恢复的逻辑错误</li>
-<li>必检异常：除免检异常外的所有异常称为“必检异常”，编译器强制要求程序员处理的异常。</li>
-</ul>
-<p>常见的几种异常如下：</p>
-<ul>
-<li>NullPointerException - 空指针引用异常</li>
-<li>ClassCastException - 类型强制转换异常。</li>
-<li>IllegalArgumentException - 传递非法参数异常。</li>
-<li>ArithmeticException - 算术运算异常</li>
-<li>ArrayStoreException - 向数组中存放与声明类型不兼容对象异常</li>
-<li>IndexOutOfBoundsException - 下标越界异常</li>
-<li>NegativeArraySizeException - 创建一个大小为负数的数组错误异常</li>
-<li>UnsupportedOperationException - 不支持的操作异常</li>
-</ul>
-<h1 id="文本IO与二进制IO"><a href="#文本IO与二进制IO" class="headerlink" title="文本IO与二进制IO"></a>文本IO与二进制IO</h1><p>IO类分为文本IO与二进制IO，前者将数据解释成字符序列，后者将数据解释成原始的二进制数值。</p>
-<p>文本IO建立在二进制IO的基础之上，提供字符层面的编解码的抽象。当文本IO向文件写入一个字符时，JVM会自动把统一码转为文件指定的编码，而读取字符时把文件指定的编码转换为统一码。</p>
-<p>二进制IO不需要转换编码，当二进制IO向文件写入一个数值，就是将内存中的确切值复制到文件中。</p>
-<p><img src="https://cloud.githubusercontent.com/assets/22606175/24069192/e5da3f8e-0bdc-11e7-995c-f499aaa189cf.jpg" alt="1489814095 1"></p>
-<hr>
-<ul>
-<li><p><a href="/more/donate/index.html"><strong><em><font color="red">我觉得帮助到我了, 支持你一下.</font></em></strong></a><br>   </p>
-</li>
-<li><p><a href="https://www.paypal.me/momodainfo" target="_blank" rel="noopener"><strong><em><font color="red">If you think the article is helpful to you, you can reward me through paypal.</font></em></strong></a></p>
-</li>
-</ul>
-<h3 id="Ads"><a href="#Ads" class="headerlink" title="Ads"></a>Ads</h3><p><em>这是小广告! 如果有需要, 不妨支持一下吧~</em></p>
-<blockquote>
-<p> <a target="_blank" href="https://amazon.cn/gp/search?ie=UTF8&tag=momoda-23&linkCode=ur2&linkId=4a0e4fbec0cfa8dfe540ca999d0bf999&camp=536&creative=3200&index=books&keywords=编程">这些好书您看了吗?</a><img src="//ir-cn.amazon-adsystem.com/e/ir?t=momoda-23&l=ur2&o=28" width="1" height="1" border="0" alt="" style="border:none !important; margin:0px !important;"></p>
-</blockquote>
-<blockquote>
-<p>体育&amp;户外用品推荐</p>
-</blockquote>
-<div align="center"> <a href="https://www.amazon.cn/B07HWB88Z5/dp/B07HWB88Z5/ref=as_sl_pc_tf_til?tag=momoda-23&linkCode=w00&linkId=14df5124f2165d9eb3d65252e60ed2cf&creativeASIN=B07HWB88Z5" target="_blank" rel="noopener"><img src="/se-notes/Java基础/README/../more/ads/amazon.gif" width="100%"></a> </div>
-      
-    </div><!-- .entry-content -->
-
-    <footer class="entry-meta">
-    <a href="/se-notes/Java基础/README/">
-    <time datetime="2019-01-03T13:49:30.000Z" class="entry-date">
-        1月 3 2019
-    </time>
-</a>
-    
-  <span class="article-delim">&#8226;</span>
-  <div class="article-category">
-  <a class="article-category-link" href="/categories/编程语言/">编程语言</a>, <a class="article-category-link" href="/categories/编程语言/java/">java</a>
-  </div>
-
-    
-  <span class="article-delim">&#8226;</span>
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/java基础/">java基础</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/java语法/">java语法</a></li></ul>
-
-    </footer>
-</article>
-
-
-
-
-
-
-  
-    <article id="post-se-notes/Java基础/Spring基础装配" class="post-se-notes/Java基础/Spring基础装配 post type-post status-publish format-standard hentry">
-    <!---->
-
-      <header class="entry-header">
-        
-        
-  
-    <h1 class="entry-title">
-      <a class="article-title" href="/se-notes/Java基础/Spring基础装配/">Spring基础装配</a>
-    </h1>
-  
-
-        
-        <div class="comments-link">
-            
-            <a href="javascript:void(0);" data-url="https://wnhby.github.io/se-notes/Java基础/Spring基础装配/" data-id="cjsbbbewj001ye9s6cv180760" class="leave-reply bdsharebuttonbox" data-cmd="more">分享</a>
-        </div><!-- .comments-link -->
-      </header><!-- .entry-header -->
-
-    <div class="entry-content">
-      
-        <!-- TOC -->
-<ul>
-<li><a href="#自动化装配">自动化装配</a></li>
-<li><a href="#使用-java-代码装配-bean">使用 Java 代码装配 bean</a><pre><code>- [1. 创建配置类](#1-创建配置类)
-- [2. 声明简单的 bean](#2-声明简单的-bean)
-- [3. 借助 JavaConfig 实现注入](#3-借助-javaconfig-实现注入)
-</code></pre></li>
-<li><a href="#通过-xml-装配-bean">通过 XML 装配 bean</a><ul>
-<li><a href="#1-创建xml装配规范">1. 创建XML装配规范</a></li>
-<li><a href="#2-声明一个简单的-bean">2. 声明一个简单的 bean</a></li>
-<li><a href="#3-借助构造器注入初始化-bean">3. 借助构造器注入初始化 bean</a><ul>
-<li><a href="#使用constructor-arg声明">使用<code>&lt;constructor-arg&gt;</code>声明</a></li>
-<li><a href="#使用c-命名空间">使用c-命名空间</a></li>
-</ul>
-</li>
-<li><a href="#4-属性注入">4. 属性注入</a><ul>
-<li><a href="#p-命名空间">p-命名空间</a></li>
-<li><a href="#ads">Ads</a></li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-<!-- /TOC -->
-<p>Spring 提供了三种主要的装配机制来描述对 bean 的装配：</p>
-<ul>
-<li>在 XML 中进行显式配置</li>
-<li>在 Java 中进行显式配置</li>
-<li>隐式的 bean 发现机制和自动装配</li>
-</ul>
-<h1 id="自动化装配"><a href="#自动化装配" class="headerlink" title="自动化装配"></a>自动化装配</h1><p>Spring 从两个角度实现自动化装配：</p>
-<ul>
-<li>组件扫描：Spring 会自动发现应用上下文中所创建的 bean</li>
-<li>自动装配：Spring 自动满足 bean 之间的依赖</li>
-</ul>
-<p>以下以 CD 播放器为例阐述如何进行自动化装配：首先创建 CD 类，让 Spring 将其自动创建为 bean，然后创建一个 CDPlayer 类，让 Spring 把 CD bean 注入进来。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">/* 创建CD类并声明为bean */</span><br><span class="line">package main;</span><br><span class="line">import org.springframework.stereotype.Component;</span><br><span class="line"></span><br><span class="line">@Component // 该注解把该类声明为bean,也可以用Component(&quot;name&quot;)形式进行命名</span><br><span class="line">public class CD &#123;</span><br><span class="line">    private String message = &quot;this is my cd&quot;;</span><br><span class="line">    public void play()&#123;</span><br><span class="line">        System.out.println(message);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>但组件扫描是默认不启用的，因此还需要显式配置 Spring 从而让其寻找带有 @Component 注解的类并为其创建 bean。类 CDPlayerConfig 通过 Java 代码而非配置文件来定义了装配规则（虽然为空），并使用了 @ComponentScan 注解启用了组件扫描。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">package main;</span><br><span class="line">import org.springframework.context.annotation.ComponentScan;</span><br><span class="line">import org.springframework.context.annotation.Configuration;</span><br><span class="line"></span><br><span class="line">@Configuration</span><br><span class="line">@ComponentScan</span><br><span class="line">public class CDPlayerConfig &#123;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<blockquote>
-<p>@ComponentScan 默认会以配置类所在的包作为基础包来扫描组件。若想扫描多个基础包，则可以设置注解的属性如<code>@ComponentScan(basePackages={&quot;soundsystem&quot;,&quot;video&quot;})</code></p>
-</blockquote>
-<p>创建了这两个类后，现在我们可以对功能进行测试，观察 bean 是否注入成功。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">package main;</span><br><span class="line"></span><br><span class="line">import org.junit.Test;</span><br><span class="line">import org.junit.runner.RunWith;</span><br><span class="line">import org.springframework.beans.factory.annotation.Autowired;</span><br><span class="line">import org.springframework.test.context.ContextConfiguration;</span><br><span class="line">import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;</span><br><span class="line">import static org.junit.Assert.*;</span><br><span class="line"></span><br><span class="line">@RunWith(SpringJUnit4ClassRunner.class)</span><br><span class="line">@ContextConfiguration(classes = CDPlayerConfig.class) // 该注解指定从哪个配置类加载配置</span><br><span class="line">public class CDPlayerTest &#123;</span><br><span class="line">	// 使用 Autowird 自动装配；该注解可适用于类的任何方法上</span><br><span class="line">	// 若有且只有一个bean匹配依赖需求的话，则spring会加载这个bean；否则会抛出异常</span><br><span class="line">    @Autowired </span><br><span class="line">    private CD cd;</span><br><span class="line"></span><br><span class="line">    @Test</span><br><span class="line">    public void myTest()&#123;</span><br><span class="line">        assertNotNull(cd);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<h1 id="使用-Java-代码装配-bean"><a href="#使用-Java-代码装配-bean" class="headerlink" title="使用 Java 代码装配 bean"></a>使用 Java 代码装配 bean</h1><p>虽然很多场景下通过组件扫描和自动装配实现 Spring 的自动化配置是更为推荐的方式，但有时自动化配置的方案行不通，因此需要显式地配置 Spring。显式配置有两种方案：Java 和 XML，其中 JavaConfig 由于更为强大、类型安全以及对重构友好，因此是较好的方案。</p>
-<h3 id="1-创建配置类"><a href="#1-创建配置类" class="headerlink" title="1. 创建配置类"></a>1. 创建配置类</h3><p>创建 JavaConfig 类的关键在于为其添加 @Configuration 注解，表明该类是一个配置类，该类应该包含<strong>在 Spring 应用上下文中如何创建 bean</strong> 的细节。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">import org.springframework.context.annotation.Configuration;</span><br><span class="line"></span><br><span class="line">@Configuration</span><br><span class="line">public class CDPlayerConfig&#123;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h3 id="2-声明简单的-bean"><a href="#2-声明简单的-bean" class="headerlink" title="2. 声明简单的 bean"></a>2. 声明简单的 bean</h3><p>在 JavaConfig 中声明 bean，需要编写一个方法，该方法会创建所需类型的实例，然后为这个方法添加 @Bean 注解。@Bean 注解会告诉 Spring 这个方法会返回一个对象，该对象注册为 Spring 应用上下文中的 bean。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">// 声明一个返回CD类型的实例的bean</span><br><span class="line">@Bean</span><br><span class="line">public CD sgtPeppers()&#123;</span><br><span class="line">	return new SgtPeppers(); //此处SgtPeppers是CD的子类</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>默认情况下 bean 的 ID 与带有 @Bean 注解的方法名是一样的，也可以通过 @Bean(name=”name”) 的形式为其命名。</p>
-<h3 id="3-借助-JavaConfig-实现注入"><a href="#3-借助-JavaConfig-实现注入" class="headerlink" title="3. 借助 JavaConfig 实现注入"></a>3. 借助 JavaConfig 实现注入</h3><p>在配置中，我们往往需要声明一个依赖于其他 bean 的 bean，因此在声明一个复杂的 bean 时往往也需要同时注入其他的 bean。</p>
-<p>装配 bean 的最简单方式是引用创建 bean 的方法：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">@Bean // 带有@Bean注解的方法可以采用任何必要的Java功能来产生bean实例</span><br><span class="line">public CDPlayer cdPlayer()&#123;</span><br><span class="line">	return new CDPlayer(sgtPeppers());// sgtPeppers()是已经声明的、被@Bean所注解的方法</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<blockquote>
-<p>看起来 CD 是通过 sgtPeppers() 得到的，但实际上，由于 sgtPeppers() 方法上添加了 @Bean 注解，Spring 会拦截所有对它的调用，确保直接返回该方法的 bean，而不是每次都进行实际的调用。<strong>默认情况下，Spirng 中的 bean 都是单例</strong>。</p>
-</blockquote>
-<p>但也可用以下更容易理解的方式来装配 bean：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">@Bean</span><br><span class="line">public CDPlayer cdPlayer(CD cd)&#123;</span><br><span class="line">	CDPlayer cdPlayer = new CDPlayer(cd);</span><br><span class="line">	cdPlayer.setCD(cd);</span><br><span class="line">	return cdPlayer;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>此处 cdPlayer() 方法请求一个 CD 实例作为参数，当 Spring 调用 cdPlayer() 创建  CDPlayer bean 时，它会自动装配一个 CD bean 到配置方法中，而无需明确引用 CD 的 @Bean 方法。通过该方式引用其它的 bean 是最佳选择（因为它不会要求将 CD bean 声明到同一个配置类中，这样可以实现分散配置文件）。  </p>
-<h1 id="通过-XML-装配-bean"><a href="#通过-XML-装配-bean" class="headerlink" title="通过 XML 装配 bean"></a>通过 XML 装配 bean</h1><p>Spring 目前有了强大的自动化配置和基于 Java 的配置，XML不再是第一选择了。但是鉴于已经存在那么多基于 XML 的 Spring 配置，因此理解如何在 Spring 中使用 XML 还是很重要的。</p>
-<h2 id="1-创建XML装配规范"><a href="#1-创建XML装配规范" class="headerlink" title="1. 创建XML装配规范"></a>1. 创建XML装配规范</h2><p>最简单的 XML 配置如下：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot; ?&gt;</span><br><span class="line">&lt;beans xmlns=&quot;http://www.springframework.org/schema/beans&quot;</span><br><span class="line">	xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</span><br><span class="line">	xsi:schemaLocation=&quot;http://www.springframework.org/schema/beans </span><br><span class="line">       http://www.springframework.org/schema/beans/spring-beans-4.0.xsd</span><br><span class="line">       http://www.springframework.org/schema/context&quot;&gt;</span><br><span class="line">       </span><br><span class="line">	&lt;!-- configuration details go here --&gt;</span><br><span class="line"></span><br><span class="line">&lt;/beans&gt;</span><br></pre></td></tr></table></figure>
-<p>用于装配 bean 的最基本的 XML 元素包含在 spring-beans 模式中，它被定义为根命名空间。<code>&lt;beans&gt;</code> 是该模式中的一个元素，是所有 Spring 配置文件的根元素。</p>
-<h2 id="2-声明一个简单的-bean"><a href="#2-声明一个简单的-bean" class="headerlink" title="2. 声明一个简单的 bean"></a>2. 声明一个简单的 bean</h2><p>使用<code>&lt;bean&gt;</code>元素声明一个 bean，并设置 id 进行命名：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;bean id=&quot;cd1&quot; class=&quot;soundSystem.SgtPeppers&quot; /&gt;</span><br></pre></td></tr></table></figure></p>
-<h2 id="3-借助构造器注入初始化-bean"><a href="#3-借助构造器注入初始化-bean" class="headerlink" title="3. 借助构造器注入初始化 bean"></a>3. 借助构造器注入初始化 bean</h2><p>使用构造器注入 bean 引用时，有两种基本配置方案可选择：</p>
-<ul>
-<li><code>&lt;constructor-arg&gt;</code> 元素，特点是配置比较冗长</li>
-<li>使用 Spring 3 所引入的 c-命名空间，特点是配置比较简练，但无法装配<code>集合</code></li>
-</ul>
-<h3 id="使用-lt-constructor-arg-gt-声明"><a href="#使用-lt-constructor-arg-gt-声明" class="headerlink" title="使用&lt;constructor-arg&gt;声明"></a>使用<code>&lt;constructor-arg&gt;</code>声明</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">/* 声明CDPlayer并通过id引用已有的SgtPerpers bean*/</span><br><span class="line">&lt;bean id=“cdPlayer” class=&quot;soundSystem.CDPlayer&quot;&gt;</span><br><span class="line">	&lt;constructor-arg ref=&quot;sgtPerpers&quot; /&gt;</span><br><span class="line">&lt;/bean&gt;</span><br></pre></td></tr></table></figure>
-<p>当 Spring 遇到<code>&lt;bean&gt;</code>元素时，会创建一个 CDPlayer 实例，<code>&lt;constructor-arg&gt;</code> 元素表明要将一个 id 为 sgtPerpers 的 bean 引用传递到 CDPlayer 的构造器中。</p>
-<p>当把字面量注入构造器而不是引用时：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;bean id=“cdPlayer” class=&quot;soundSystem.CDPlayer&quot;&gt;</span><br><span class="line">	&lt;constructor-arg value=&quot;The Love&quot; /&gt;</span><br><span class="line">&lt;/bean&gt;</span><br></pre></td></tr></table></figure>
-<h3 id="使用c-命名空间"><a href="#使用c-命名空间" class="headerlink" title="使用c-命名空间"></a>使用c-命名空间</h3><p>在 XML 顶部声明其模式：<code>xmlns:c=&quot;http://www.springframework.org/schema/c&quot;</code>，就可用其来声明构造器参数了。</p>
-<p>一个典型的示例是 <code>c:cd-ref=&quot;compactDisc&quot;</code>，属性名以 <code>c:</code> 开头，即命名空间前缀，接下来是要装配的构造器参数名，之后是<code>-ref</code>，表示装配的是一个 bean 的引用，这个 bean 的 ID 为 <code>compactDisc</code>。</p>
-<p>也可使用参数索引替代直接使用参数名的方案，如：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&lt;!-- 由于xml不允许数字作为属性的首字符，因此添加一个下划线作后缀 --&gt;</span><br><span class="line">&lt;bean id=“cdPlayer” class=&quot;soundSystem.CDPlayer&quot; c:_0-ref=&quot;compactDisc&quot; /&gt;</span><br></pre></td></tr></table></figure>
-<p>也可以根本不标示参数（前提是只有一个构造器参数），如：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;bean id=“cdPlayer” class=&quot;soundSystem.CDPlayer&quot; c:_-ref=&quot;compactDisc&quot; /&gt;</span><br></pre></td></tr></table></figure>
-<p>当需要注入字面量而不是 bean 引用时：</p>
-<ul>
-<li><p>方案一：引用构造器参数的名字</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;bean id=“cdPlayer” class=&quot;soundSystem.CDPlayer&quot;</span><br><span class="line">	c:_title=&quot;My Love&quot;</span><br><span class="line">	c:_artist=&quot;ZZP&quot;&gt;</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>方案二：使用参数索引</p>
-</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;bean id=“cdPlayer” class=&quot;soundSystem.CDPlayer&quot;</span><br><span class="line">	c:_0=&quot;My Love&quot;</span><br><span class="line">	c:_1=&quot;ZZP&quot;&gt;</span><br></pre></td></tr></table></figure>
-<h2 id="4-属性注入"><a href="#4-属性注入" class="headerlink" title="4. 属性注入"></a>4. 属性注入</h2><p>假设需要属性注入的 CDPlayer 如下所示：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">public class CDPlayer &#123;</span><br><span class="line">	private CD cd;</span><br><span class="line">	</span><br><span class="line">	@Autowired</span><br><span class="line">	pulic setCd(CD cd)&#123;</span><br><span class="line">		this.cd = cd;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>声明为一个 bean：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;bean id=“cdPlayer” class=&quot;soundSystem.CDPlayer&quot;&gt;</span><br><span class="line">	&lt;property name=&quot;cd&quot; ref=&quot;cd&quot;&gt;</span><br><span class="line">&lt;/bean&gt;</span><br></pre></td></tr></table></figure></p>
-<p><code>&lt;property&gt;</code>元素为属性的 Setter 方法所提供的功能与 <code>&lt;constructor-arg&gt;</code> 提供的功能是一样的。本例中它引用了 ID 为 <code>CD</code> 的 bean（通过 ref 属性），并将其注入到 <code>cd</code> 属性中（通过 setCD() 方法）。</p>
-<h3 id="p-命名空间"><a href="#p-命名空间" class="headerlink" title="p-命名空间"></a>p-命名空间</h3><p> p-命名空间是作为<code>&lt;property&gt;</code>元素的替代方案，使用时需在 XML 顶部声明其模式：<code>xmlns:p=&quot;http://www.springframework.org/schema/p&quot;</code>。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&lt;bean id=“cdPlayer” </span><br><span class="line">	class=&quot;soundSystem.CDPlayer&quot; </span><br><span class="line">	p:cd-ref=&quot;cd&quot;/&gt;</span><br><span class="line">&lt;!--</span><br><span class="line">	首先属性的名字使用了&quot;p:&quot;前缀，表面设置的是一个属性；接下来是要注入的属性名，最后属性名称以&quot;-ref&quot;结尾，表明装配的是一个引用而非字面量。</span><br><span class="line">--&gt;</span><br></pre></td></tr></table></figure>
-<p>当需要注入字面量时，区别在于是否带有”-ref”后缀：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&lt;bean id=“cdPlayer” </span><br><span class="line">	class=&quot;soundSystem.CDPlayer&quot; </span><br><span class="line">	p:title=&quot;My Love&quot;</span><br><span class="line">	p:artist=&quot;ZZP&quot;/&gt;</span><br></pre></td></tr></table></figure>
-<blockquote>
-<p>注意：p-命名空间同样无法装配集合，但可以通过 util-命名空间（用于创建集合类型的bean）辅助实现装配集合的功能。</p>
-</blockquote>
-<hr>
-<ul>
-<li><p><a href="/more/donate/index.html"><strong><em><font color="red">我觉得帮助到我了, 支持你一下.</font></em></strong></a><br>   </p>
-</li>
-<li><p><a href="https://www.paypal.me/momodainfo" target="_blank" rel="noopener"><strong><em><font color="red">If you think the article is helpful to you, you can reward me through paypal.</font></em></strong></a></p>
-</li>
-</ul>
-<h3 id="Ads"><a href="#Ads" class="headerlink" title="Ads"></a>Ads</h3><p><em>这是小广告! 如果有需要, 不妨支持一下吧~</em></p>
-<blockquote>
-<p> <a target="_blank" href="https://amazon.cn/gp/search?ie=UTF8&tag=momoda-23&linkCode=ur2&linkId=4a0e4fbec0cfa8dfe540ca999d0bf999&camp=536&creative=3200&index=books&keywords=编程">这些好书您看了吗?</a><img src="//ir-cn.amazon-adsystem.com/e/ir?t=momoda-23&l=ur2&o=28" width="1" height="1" border="0" alt="" style="border:none !important; margin:0px !important;"></p>
-</blockquote>
-<blockquote>
-<p>体育&amp;户外用品推荐</p>
-</blockquote>
-<div align="center"> <a href="https://www.amazon.cn/B07HWB88Z5/dp/B07HWB88Z5/ref=as_sl_pc_tf_til?tag=momoda-23&linkCode=w00&linkId=14df5124f2165d9eb3d65252e60ed2cf&creativeASIN=B07HWB88Z5" target="_blank" rel="noopener"><img src="/se-notes/Java基础/Spring基础装配/../more/ads/amazon.gif" width="100%"></a> </div>
-      
-    </div><!-- .entry-content -->
-
-    <footer class="entry-meta">
-    <a href="/se-notes/Java基础/Spring基础装配/">
-    <time datetime="2019-01-03T13:49:30.000Z" class="entry-date">
-        1月 3 2019
-    </time>
-</a>
-    
-  <span class="article-delim">&#8226;</span>
-  <div class="article-category">
-  <a class="article-category-link" href="/categories/编程语言/">编程语言</a>, <a class="article-category-link" href="/categories/编程语言/java/">java</a>
-  </div>
-
-    
-  <span class="article-delim">&#8226;</span>
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/java基础/">java基础</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/java语法/">java语法</a></li></ul>
-
-    </footer>
-</article>
-
-
-
-
-
-
-  
-    <article id="post-se-notes/Java基础/Spring概述" class="post-se-notes/Java基础/Spring概述 post type-post status-publish format-standard hentry">
-    <!---->
-
-      <header class="entry-header">
-        
-        
-  
-    <h1 class="entry-title">
-      <a class="article-title" href="/se-notes/Java基础/Spring概述/">Spring概述</a>
-    </h1>
-  
-
-        
-        <div class="comments-link">
-            
-            <a href="javascript:void(0);" data-url="https://wnhby.github.io/se-notes/Java基础/Spring概述/" data-id="cjsbbbewl001ze9s6jug726in" class="leave-reply bdsharebuttonbox" data-cmd="more">分享</a>
-        </div><!-- .comments-link -->
-      </header><!-- .entry-header -->
-
-    <div class="entry-content">
-      
-        <!-- TOC -->
-<ul>
-<li><a href="#概述">概述</a></li>
-<li><a href="#依赖注入di">依赖注入（DI）</a></li>
-<li><a href="#面向切面编程aop">面向切面编程（AOP）</a></li>
-<li><a href="#spring-容器">Spring 容器</a><ul>
-<li><a href="#应用上下文">应用上下文</a></li>
-<li><a href="#bean-的生命周期">bean 的生命周期</a></li>
-</ul>
-</li>
-<li><a href="#spring-其他模块">Spring 其他模块</a><pre><code>- [Spring 容器](#spring-容器-1)
-- [AOP 模块](#aop-模块)
-- [数据访问和集成](#数据访问和集成)
-- [Web 与远程调用](#web-与远程调用)
-- [测试](#测试)
-- [Ads](#ads)
-</code></pre></li>
-</ul>
-<!-- /TOC -->
-<h1 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h1><p>Spring 是一个为了解决企业级应用开发的复杂性而创建的开源框架。Spring 不仅仅局限于服务器端开发，任何 Java 应用都能在简单性、可测试性和松耦合等方面从 Spring 中获益。<strong>简化 Java 开发是 Spring 最根本的使命</strong>。</p>
-<p>为了降低 Java 开发的复杂性，Spring 采取了以下策略：</p>
-<ul>
-<li>基于 POJO 的轻量级和最小侵入性编程（侵入性：强迫应用继承框架的类或接口从而和框架绑死）</li>
-<li>通过依赖注入和面向接口实现松耦合</li>
-<li>基于切面和惯例进行声明式编程</li>
-<li>通过切面和模板减少样板式代码</li>
-</ul>
-<h1 id="依赖注入（DI）"><a href="#依赖注入（DI）" class="headerlink" title="依赖注入（DI）"></a>依赖注入（DI）</h1><p>任何一个有实际意义的应用都由两个以上的类组成，这些类互相协作来完成特定的业务逻辑。但如果按照传统的做法，让每个对象负责管理与自己相互协作的对象（即所依赖的对象）的引用，将会导致高度耦合和难以测试的代码。</p>
-<blockquote>
-<p>耦合具有两面性：一方面紧密耦合的代码难以测试与复用，另一方面一定程度的耦合是必须的——完全没有耦合的代码什么也做不了。因此耦合是必须的，但应当谨慎管理。</p>
-</blockquote>
-<p>通过依赖注入（DI），对象的依赖关系将由系统中负责协调各对象的第三方组件在创建对象的时候进行设定，对象无需自行创建或管理它们的依赖关系，从而实现<strong>松耦合</strong>。而且如果一个对象只通过接口（而非具体实现）来表明依赖关系，则这种依赖就能在对象本身无感知的情况下，用不同的具体实现进行替换。</p>
-<p>创建应用组件之间协作的行为称为<strong>装配</strong>。Spring 有多种装配 bean 的方式，其中使用 XML 配置文件是一种常见的装配方式。</p>
-<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!-- knignt.xml  --&gt;</span></span><br><span class="line">&lt;?xml version="1.0" encoding="UTF-8" ?&gt;</span><br><span class="line"><span class="tag">&lt;<span class="name">beans</span> <span class="attr">xmlns</span>=<span class="string">"http://www.springframework.org/schema/beans"</span></span></span><br><span class="line"><span class="tag">	<span class="attr">xmlns:xsi</span>=<span class="string">"http://www.w3.org/2001/XMLSchema-instance"</span> </span></span><br><span class="line"><span class="tag">	<span class="attr">xsi:schemaLocation</span>=<span class="string">"http://www.springframework.org/schema/beans </span></span></span><br><span class="line"><span class="tag"><span class="string">       http://www.springframework.org/schema/beans/spring-beans-4.0.xsd"</span>&gt;</span></span><br><span class="line"><span class="comment">&lt;!-- 注入Quest bean --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">"knight"</span> <span class="attr">class</span>=<span class="string">"com.war.knights.BravaKnight"</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">constructor-arg</span> <span class="attr">ref</span>=<span class="string">"quest"</span> /&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">bean</span>&gt;</span></span><br><span class="line"><span class="comment">&lt;!-- 创建SavaGirlQuest bean --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">"quest"</span> <span class="attr">class</span>=<span class="string">"com.war.knights.SavaGirlQuest"</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">constructor-arg</span> <span class="attr">value</span>=<span class="string">"Mary"</span> /&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">bean</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;/<span class="name">beans</span>&gt;</span></span><br></pre></td></tr></table></figure>
-<p>Spring 也支持使用 <strong>Java 注解</strong> 来描述配置。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">import org.springframework.context.annotation.Bean;</span><br><span class="line">import org.springframework.context.annotation.Configuration;</span><br><span class="line"></span><br><span class="line">import com.war.knights.Knight;</span><br><span class="line">import com.war.knights.BraveKnight;</span><br><span class="line">import com.war.knights.Quest;</span><br><span class="line">import com.war.knights.SaveGirlQuest;</span><br><span class="line"></span><br><span class="line">@Configuration</span><br><span class="line">public class KnightConfig&#123;</span><br><span class="line">	@Bean</span><br><span class="line">	public Knight knight()&#123;</span><br><span class="line">		return new BraveKnignt(quest());</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	@Bean</span><br><span class="line">	public Quest quest()&#123;</span><br><span class="line">		return new SaveGirlQuest(&quot;Mary&quot;);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>Spring 通过应用上下文（Application Context）装载 bean 的定义并把它们组装起来。Spring 有多种应用上下文的实现，主要区别在于用何种方式加载配置。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">// 使用上下文加载配置文件并读取bean</span><br><span class="line">import org.springframework.context.support.ClassPathXmlApplicationContext;</span><br><span class="line"></span><br><span class="line">public class KnightMain&#123;</span><br><span class="line">	public static void main(String[] args) throws Exception&#123;</span><br><span class="line">		// 加载上下文</span><br><span class="line">		ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext(&quot;META-INF/spring/knight.xml&quot;);</span><br><span class="line">		// 获取 knight bean</span><br><span class="line">		Knight knight = context.getBean(Knight.class);</span><br><span class="line">		// 使用 knight</span><br><span class="line">		knight.embarkOnQuest();</span><br><span class="line">		context.close();</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>main() 方法基于 knight.xml 文件创建了 Spring 应用上下文，并调用上下文获取了 ID 为 knight 的 bean。注意：该类完全不知道骑士接受何种探险任务，而且完全没有意识到是由 BraveKnight 来执行的，只有 knight.xml 知道哪个骑士执行哪种探险任务。</p>
-<h1 id="面向切面编程（AOP）"><a href="#面向切面编程（AOP）" class="headerlink" title="面向切面编程（AOP）"></a>面向切面编程（AOP）</h1><p>DI 能够让相互协作的软件实体保持松耦合，而 AOP 则允许把遍布应用组件各处的系统职责从组件中分离出来。</p>
-<p>系统由不同组件组成，每个组件负责一块特定功能。除了实现自身核心的功能外，这些组件还经常承担着额外职责（诸如日志、事务管理、安全等，这些额外的职责经常融入到自身具有核心业务逻辑的组件中去）。<br>这些需额外承担的系统服务被称为<strong>横切关注点</strong>，因为它们会跨越系统的多个组件。</p>
-<p>如果按照传统方式把这些关注点分散到多个组件中去，则代码会有双重的复杂性：</p>
-<ul>
-<li>实现系统关注点功能的代码重复出现在多个组件中（即使把关注点抽象为了一个独立模块，其他模块只是调用其方法，但方法的调用还是会重复出现在各个模块中）。</li>
-<li>组件会因为那些与自身核心业务逻辑无关的代码而变得混乱。</li>
-</ul>
-<p>AOP 能够使这些服务模块化，并以声明的方式把它们应用到它们需要影响的组件中去。这样做的好处在于：这些组件会具有更高的内聚性与简单性（组件甚至不知道系统服务的存在）。</p>
-<p>下列 xml 文件使用了 Spring 的 aop 配置把 minstrel bean 声明为一个切面，以及声明 minstrel bean 的 embarkOnQuest 方法作为切点，并声明了切点执行时的前置方法与后置方法。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot; ?&gt;</span><br><span class="line">&lt;beans xmlns=&quot;http://www.springframework.org/schema/beans&quot;</span><br><span class="line">	xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot; </span><br><span class="line">	xmlns:aop=&quot;http://www.springframework.org/schema/aop&quot; </span><br><span class="line">	xsi:schemaLocation=&quot;http://www.springframework.org/schema/beans </span><br><span class="line">       http://www.springframework.org/schema/beans/spring-beans-4.0.xsd</span><br><span class="line">       http://www.springframework.org/schema/aop</span><br><span class="line">       http://www.springframework.org/schema/aop/spring-aop-4.0.xsd&quot;&gt;</span><br><span class="line">&lt;!-- 声明 minstrel --&gt;</span><br><span class="line">&lt;bean id=&quot;minstrel&quot; class=&quot;com.war.knights.Minstrel&quot;&gt;</span><br><span class="line">	&lt;constructor-arg ref=&quot;a common minstrel&quot; /&gt;</span><br><span class="line">&lt;/bean&gt;</span><br><span class="line"></span><br><span class="line">&lt;aop:config&gt;</span><br><span class="line">	&lt;aop:aspect ref=&quot;minstrel&quot;&gt;</span><br><span class="line">		&lt;!-- 定义切点 --&gt;</span><br><span class="line">		&lt;aop:pointcut id=&quot;embark&quot; expression=&quot;execution(* *.embarkOnQuest(..))&quot;/&gt;</span><br><span class="line">		&lt;!-- 声明前置通知 --&gt;</span><br><span class="line">		&lt;aop:before pointcut-ref=&quot;embark&quot; method=&quot;singBeforeQuest&quot;/&gt;</span><br><span class="line">		&lt;!-- 声明后置通知 --&gt;</span><br><span class="line">		&lt;aop:after pointcut-ref=&quot;embark&quot; method=&quot;singAfterQuest&quot;/&gt;</span><br><span class="line">	&lt;/aop:aspect&gt;</span><br><span class="line">&lt;/aop:config&gt;</span><br><span class="line"></span><br><span class="line">&lt;/beans&gt;</span><br></pre></td></tr></table></figure></p>
-<h1 id="Spring-容器"><a href="#Spring-容器" class="headerlink" title="Spring 容器"></a>Spring 容器</h1><p>在基于 Spring 的应用中，应用对象生存于 Spring 容器中。Spring 容器负责创建、装配和配置对象，并管理它们的整个生命周期。Spring 容器使用 DI 管理构成应用的组件，它会创建相互协作的组件之间的关联。</p>
-<p>Spring 自带了两种类型的容器实现：</p>
-<ul>
-<li>BeanFactory（bean 工厂）：最简单的容器，提供基本的 DI 支持。</li>
-<li>Application Context（应用上下文）：基于 BeanFactory 构建，并提供应用框架级别的服务。开发者一般使用应用上下文而非底层的 bean 工厂。</li>
-</ul>
-<h2 id="应用上下文"><a href="#应用上下文" class="headerlink" title="应用上下文"></a>应用上下文</h2><p>Spring 自带了多种类型的应用上下文：</p>
-<ul>
-<li>AnnotationConfigApplicationContext：从一个或多个基于 Java 的配置类中加载 Spring 应用上下文</li>
-<li>AnnotationConfigWebApplicationContext：从一个或多个基于 Java 的配置类中加载 Spring Web 应用上下文</li>
-<li>ClassPathXmlApplicationContext：从类路径下的一个或多个 XML 配置文件中加载上下文定义</li>
-<li>FileSystemXmlapplicationcontext：从文件系统下一个或多个 XML 配置文件加载上下文定义</li>
-<li>XmlWebApplicationContext：从 Web 应用下的一个或多个 XML 配置文件加载上下文定义</li>
-</ul>
-<p>上下文加载完毕后，就可以调用上下文的 getBean() 方法从 Spring 容器中获取 bean。</p>
-<h2 id="bean-的生命周期"><a href="#bean-的生命周期" class="headerlink" title="bean 的生命周期"></a>bean 的生命周期</h2><p><img src="http://upload-images.jianshu.io/upload_images/3131012-0fdb736b21c8cc31.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="bean 的生命周期"></p>
-<p><strong>ApplicationContext 容器中</strong>，Bean 的生命周期流程如上图所示，流程大致如下：</p>
-<ol>
-<li>容器启动，对 scope 为 singleton 且非懒加载的 bean 进行实例化</li>
-<li>按照 Bean 定义信息配置信息，注入所有的属性</li>
-<li>如果 Bean 实现了 BeanNameAware 接口，会回调该接口的 setBeanName() 方法，传入该 Bean 的 id ，此时该 Bean 就获得了自己在配置文件中的 id</li>
-<li>如果 Bean 实现了 BeanFactoryAware 接口,会回调该接口的 setBeanFactory() 方法，传入该 Bean 的 BeanFactory ，这样该 Bean 就获得了自己所在的 BeanFactory</li>
-<li>如果 Bean 实现了 ApplicationContextAware 接口,会回调该接口的 setApplicationContext() 方法，传入该 Bean 的 ApplicationContext，这样该 Bean 就获得了自己所在的 ApplicationContext</li>
-<li>如果 Bean 实现了 BeanPostProcessor 接口，则会回调该接口的 postProcessBeforeInitialzation() 方法</li>
-<li>如果 Bean 实现了 InitializingBean 接口，则会回调该接口的 afterPropertiesSet() 方法</li>
-<li>如果 Bean 配置了 init-method 方法，则会执行 init-method 配置的方法</li>
-<li>如果 Bean 实现了 BeanPostProcessor 接口，则会回调该接口的 postProcessAfterInitialization() 方法</li>
-<li>经过流程9之后，就可以正式使用该 Bean 了。对于 scope 为 singleton 的 Bean，Spring 的 IOC 容器中会缓存一份该 bean 的实例，而对于 scope 为 prototype 的 Bean，每次被调用都会 new 一个新的对象，其生命周期就交给调用方管理了，不再由 Spring 容器进行管理了</li>
-<li>容器关闭后，如果 Bean 实现了 DisposableBean 接口，则会回调该接口的 destroy() 方法</li>
-<li>如果 Bean 配置了 destroy-method 方法，则会执行 destroy-method 配置的方法。至此，整个Bean的生命周期结束</li>
-</ol>
-<h1 id="Spring-其他模块"><a href="#Spring-其他模块" class="headerlink" title="Spring 其他模块"></a>Spring 其他模块</h1><p>Spring 框架除了 DI 与 AOP 以外还有着其他大量模块，所有模块共同组成了一个构建在 Spring 核心框架之上的庞大生态圈。这些模块依据其所属功能可划分为六类。</p>
-<h3 id="Spring-容器-1"><a href="#Spring-容器-1" class="headerlink" title="Spring 容器"></a>Spring 容器</h3><p>容器是 Spring 框架最核心的部分，用于执行 bean 的创建、配置与管理。该模块包括了 bean 工厂，它为 Spring 提供了 DI 的功能。基于 bean 工厂，还有多种 Spring 应用上下文的实现，每一种都提供了配置 Spring 的不同方式。</p>
-<h3 id="AOP-模块"><a href="#AOP-模块" class="headerlink" title="AOP 模块"></a>AOP 模块</h3><p>AOP 可以把遍布系统的关注点（如事务和安全）从它们所应用的对象中解耦出来。</p>
-<h3 id="数据访问和集成"><a href="#数据访问和集成" class="headerlink" title="数据访问和集成"></a>数据访问和集成</h3><p>提供了模板化的 JDBC，并在多种数据库服务的错误信息上构建了语义丰富的异常层。以及允许使用 ORM 框架。</p>
-<h3 id="Web-与远程调用"><a href="#Web-与远程调用" class="headerlink" title="Web 与远程调用"></a>Web 与远程调用</h3><p>Web 与远程调用模块提供了自带的 MVC 框架，此外还提供了多种构建与其他应用交互的远程调用方案，以及对 REST API 的良好支持。</p>
-<h3 id="测试"><a href="#测试" class="headerlink" title="测试"></a>测试</h3><p>提供了自带的测试模块（如一系列的 mock 对象实现）</p>
-<hr>
-<ul>
-<li><p><a href="/more/donate/index.html"><strong><em><font color="red">我觉得帮助到我了, 支持你一下.</font></em></strong></a><br>   </p>
-</li>
-<li><p><a href="https://www.paypal.me/momodainfo" target="_blank" rel="noopener"><strong><em><font color="red">If you think the article is helpful to you, you can reward me through paypal.</font></em></strong></a></p>
-</li>
-</ul>
-<h3 id="Ads"><a href="#Ads" class="headerlink" title="Ads"></a>Ads</h3><p><em>这是小广告! 如果有需要, 不妨支持一下吧~</em></p>
-<blockquote>
-<p> <a target="_blank" href="https://amazon.cn/gp/search?ie=UTF8&tag=momoda-23&linkCode=ur2&linkId=4a0e4fbec0cfa8dfe540ca999d0bf999&camp=536&creative=3200&index=books&keywords=编程">这些好书您看了吗?</a><img src="//ir-cn.amazon-adsystem.com/e/ir?t=momoda-23&l=ur2&o=28" width="1" height="1" border="0" alt="" style="border:none !important; margin:0px !important;"></p>
-</blockquote>
-<blockquote>
-<p>体育&amp;户外用品推荐</p>
-</blockquote>
-<div align="center"> <a href="https://www.amazon.cn/B07HWB88Z5/dp/B07HWB88Z5/ref=as_sl_pc_tf_til?tag=momoda-23&linkCode=w00&linkId=14df5124f2165d9eb3d65252e60ed2cf&creativeASIN=B07HWB88Z5" target="_blank" rel="noopener"><img src="/se-notes/Java基础/Spring概述/../more/ads/amazon.gif" width="100%"></a> </div>
-      
-    </div><!-- .entry-content -->
-
-    <footer class="entry-meta">
-    <a href="/se-notes/Java基础/Spring概述/">
-    <time datetime="2019-01-03T13:49:30.000Z" class="entry-date">
-        1月 3 2019
-    </time>
-</a>
-    
-  <span class="article-delim">&#8226;</span>
-  <div class="article-category">
-  <a class="article-category-link" href="/categories/编程语言/">编程语言</a>, <a class="article-category-link" href="/categories/编程语言/java/">java</a>
-  </div>
-
-    
-  <span class="article-delim">&#8226;</span>
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/java基础/">java基础</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/java语法/">java语法</a></li></ul>
-
-    </footer>
-</article>
-
-
-
-
-
-
-  
-    <article id="post-se-notes/Java基础/多线程" class="post-se-notes/Java基础/多线程 post type-post status-publish format-standard hentry">
-    <!---->
-
-      <header class="entry-header">
-        
-        
-  
-    <h1 class="entry-title">
-      <a class="article-title" href="/se-notes/Java基础/多线程/">多线程</a>
-    </h1>
-  
-
-        
-        <div class="comments-link">
-            
-            <a href="javascript:void(0);" data-url="https://wnhby.github.io/se-notes/Java基础/多线程/" data-id="cjsbbbewp0022e9s609nphyjc" class="leave-reply bdsharebuttonbox" data-cmd="more">分享</a>
-        </div><!-- .comments-link -->
-      </header><!-- .entry-header -->
-
-    <div class="entry-content">
-      
-        <!-- TOC -->
-<ul>
-<li><a href="#java-多线程">Java 多线程</a><ul>
-<li><a href="#创建任务和线程">创建任务和线程</a></li>
-</ul>
-</li>
-<li><a href="#thread类">Thread类</a></li>
-<li><a href="#线程池">线程池</a></li>
-<li><a href="#线程同步">线程同步</a><ul>
-<li><a href="#同步语句">同步语句</a></li>
-</ul>
-</li>
-<li><a href="#利用加锁同步">利用加锁同步</a></li>
-<li><a href="#volatile-关键字">Volatile 关键字</a><pre><code>- [使用场景](#使用场景)
-</code></pre></li>
-<li><a href="#线程间协作">线程间协作</a></li>
-<li><a href="#避免死锁">避免死锁</a><pre><code>- [Ads](#ads)
-</code></pre></li>
-</ul>
-<!-- /TOC -->
-<h1 id="Java-多线程"><a href="#Java-多线程" class="headerlink" title="Java 多线程"></a>Java 多线程</h1><p>一个程序可能包含多个并发运行的任务，线程是指一个任务从头至尾的执行流。Java 可以在一个程序中并发地启动多个线程，这些线程可以在多处理器系统上同时运行。</p>
-<h2 id="创建任务和线程"><a href="#创建任务和线程" class="headerlink" title="创建任务和线程"></a>创建任务和线程</h2><p>任务就是对象。为了创建任务，必须为任务定义一个实现了 Runnable 接口的类。Runnable 接口只包含了一个 run 方法，该方法告诉系统线程如何运行。</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">TaskClass</span> <span class="keyword">implements</span> <span class="title">Runnable</span></span>&#123;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="title">TaskClass</span><span class="params">()</span></span>&#123;&#125;</span><br><span class="line">	</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span></span>&#123;</span><br><span class="line">	    <span class="comment">// Tell system how to run custom thread</span></span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>运行线程：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">TaskClass task = new TaskClass(); //根据任务类，创建任务</span><br><span class="line">Thread thread = new Thread(task); //创建任务的线程</span><br><span class="line">thread.start(); //启动线程</span><br></pre></td></tr></table></figure></p>
-<h1 id="Thread类"><a href="#Thread类" class="headerlink" title="Thread类"></a>Thread类</h1><p>Thread 类包含为任务而创建的线程的构造方法，以及控制线程的方法。</p>
-<ul>
-<li>方法 yield()：可为其他线程临时让出 CPU 时间。</li>
-<li>方法 sleep(long mills)：可以将线程设置为休眠以确保其他线程的执行，休眠时间为指定的毫秒数。也可能抛出必检异常，因此需要放到 try-catch 块中。</li>
-<li>方法 join()：使一个线程等待另一个线程的结束。</li>
-<li>Java 为每个线程都指定了一个优先级（1~10），可用 setPriority 方法设置优先级，用 getPriority 方法获取优先级。JVM 总是选择当前优先级最高的可运行线程，较低优先级的线程只有在没有比它更高优先级的线程运行时才能运行。</li>
-</ul>
-<blockquote>
-<p>注：由于 Thread 类也实现了 Runnable 接口，所以可以定义一个 Thread 的扩展类，在里面实现 run 方法来实现线程。但<strong>不推荐</strong>使用这种方式，因为把任务和运行任务的机制混在了一起。把任务从线程中分离出来是比较好的选择。</p>
-</blockquote>
-<h1 id="线程池"><a href="#线程池" class="headerlink" title="线程池"></a>线程池</h1><p>对于大量的任务而言，为每一个任务开始一个新线程是不够高效的。线程池是管理并发执行任务个数的理想办法。Java 提供 Executor 接口来执行线程池里的任务，提供 ExecutorService 接口来管理和控制任务。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">import java.util.concurrent.*;</span><br><span class="line"></span><br><span class="line">public class ExecutorDemo&#123;</span><br><span class="line">	public static void main(String[] args)&#123;</span><br><span class="line">		// 创建一个固定线程数的线程池</span><br><span class="line">		ExecutorService executor = Executors.newFixedThreadPool(3);</span><br><span class="line">		</span><br><span class="line">		// 或者按需创建线程池</span><br><span class="line">		// ExecutorService executor = Executors.newCachedThreadPool();</span><br><span class="line">		</span><br><span class="line">		// 执行任务（PrintChar实现了Runnable接口）</span><br><span class="line">		executor.execute(new PrintChar(&apos;a&apos;,100));</span><br><span class="line">		executor.execute(new PrintChar(&apos;b&apos;,100));</span><br><span class="line">		executor.execute(new PrintChar(&apos;c&apos;,100));</span><br><span class="line">		// 关闭执行器，之后便不能接受新的任务</span><br><span class="line">		executor.shutdown();</span><br><span class="line">		// 判断所有任务是否已结束，返回boolean型</span><br><span class="line">		executor.isTerminated();</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h1 id="线程同步"><a href="#线程同步" class="headerlink" title="线程同步"></a>线程同步</h1><p>如果一个共享资源被多个线程同时访问，可能会遭到破坏。当任务1和任务2以一种会引起冲突的方式访问一个公共资源时，该问题称为<strong>竞争状态</strong>。如果一个类的对象在多线程程序中没有导致竞争状态，则称这样的类是<strong>线程安全的</strong>。</p>
-<p>为了避免竞争状态，应该防止多个线程同时进入程序的某一特定部分，这部分称为<strong>临界区</strong>。通过使用关键字 <strong>synchronized</strong> 来同步方法，以便一次只有一个线程可以访问该方法。如：<code>public synchronized void deposit(double amount)</code>。</p>
-<p>一个同步方法在执行之前需要加锁；调用一个对象的同步实例方法要求给该对象加锁；调用一个类的同步静态方法要求对该类加锁。如果一个线程调用一个对象上的同步实例方法（静态方法），首先给该对象（类）加锁，然后执行该方法，最后解锁。在解锁之前，另一个调用该对象（类）中该方法的线程将会被阻塞。</p>
-<h2 id="同步语句"><a href="#同步语句" class="headerlink" title="同步语句"></a>同步语句</h2><p>当执行方法中某一个代码块时，同步语句不仅可用于对 this 对象加锁，而且可用于对任何对象加锁。这个代码块称为“同步块”。由于同步语句允许设置同步方法中的部分代码而不必是整个方法，从而大大增强了程序的并发能力。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">synchronized(expr)&#123;</span><br><span class="line">	statements;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>表达式 expr 必须求出对象的引用。若对象已经被另一个线程锁定，则在解锁之前，该线程将被阻塞。当获准对一个对象加锁时，该线程执行同步块中语句，然后解除给对象加的锁。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">/*  任何同步实例方法可转换为同步语句。</span><br><span class="line">    以下两个实例方法是等价的。 */</span><br><span class="line">public synchronized void xMethod()&#123;</span><br><span class="line">	// method body</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">public void xMethod()&#123;</span><br><span class="line">	synchronized(this)&#123;</span><br><span class="line">		// method body</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h1 id="利用加锁同步"><a href="#利用加锁同步" class="headerlink" title="利用加锁同步"></a>利用加锁同步</h1><p>同步的实例方法在执行方法之前都隐式地加锁，而 Java 也可以显式地加锁。</p>
-<p>一个锁是一个 Lock 接口的实例，它定义了加锁和释放锁的方法。<strong>ReentrantLock</strong> 类是为创建互斥锁的 Lock 的具体实现。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">import java.util.concurrent.locks.*</span><br><span class="line"></span><br><span class="line">public class Account&#123;</span><br><span class="line">    	private static Lock lock = new ReentrantLock();</span><br><span class="line">    	private int balance = 0;</span><br><span class="line">    	</span><br><span class="line">    	public int getBalancs()&#123;</span><br><span class="line">    		return this.balance;</span><br><span class="line">    	&#125;</span><br><span class="line">    	</span><br><span class="line">    	public void deposit(int amount)&#123;</span><br><span class="line">    		lock.lock(); // 加锁</span><br><span class="line">    		try&#123;</span><br><span class="line">    			int newBalance = balance + amount;</span><br><span class="line">    			Thread.sleep(5);</span><br><span class="line">    			balance = newBalance;</span><br><span class="line">    		&#125;</span><br><span class="line">    		catch(InterruptedException ex)&#123;   			</span><br><span class="line">    		&#125;</span><br><span class="line">    		finally&#123;</span><br><span class="line">    			lock.unlock(); // 解锁</span><br><span class="line">    		&#125;</span><br><span class="line">    	&#125;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
-<h1 id="Volatile-关键字"><a href="#Volatile-关键字" class="headerlink" title="Volatile 关键字"></a>Volatile 关键字</h1><p>Java 提供了一种稍弱的同步机制，即 volatile 变量，用来确保将变量的更新操作立刻对其他线程可见。当把变量声明为 volatile 类型后，编译器与 JVM 都会注意到这个变量是共享的，因此不会将该变量上的操作与其他内存操作一起重排序，也不会使该变量被线程缓存。因此在读取 volatile 类型的变量时总会返回最新写入的值。volatile 修饰的变量<strong>不允许被线程缓存和重排序</strong>（不被缓存即直接修改内存），因此对其他线程实现了可见性。</p>
-<blockquote>
-<p><strong>指令重排序</strong>是编译器或运行时环境为了优化程序性能而采取的对指令进行重新排序执行的一种手段，因此多线程下指令执行的顺序可能是无法预测的。<strong>指令重排序不会影响单个线程的执行，但是会影响到线程并发执行的正确性</strong>。</p>
-</blockquote>
-<p>在访问 volatile 变量时不会执行加锁操作，也就不会使执行线程阻塞。因此 <strong>volatile 变量是一种比 sychronized 关键字更轻量级的同步机制</strong>。</p>
-<p><img src="http://images2015.cnblogs.com/blog/731716/201607/731716-20160708224602686-2141387366.png" alt="enter image description here"></p>
-<blockquote>
-<p>读写非 volatile 变量时，每个线程先从内存拷贝变量到 CPU 缓存中。如果计算机有多个 CPU ，每个线程可能在不同的 CPU 上被处理，这意味着每个线程可以拷贝到不同的 CPU cache 中。而声明变量是 volatile 的，JVM 保证了每次读变量都从内存中读，跳过 CPU cache 这一步。</p>
-</blockquote>
-<blockquote>
-<p>注意：volatile 只能让其所修饰的变量具有可见性（即更新后的操作会立即对其他线程可见），但不能保证具有原子性，因此也会有线程安全的问题。</p>
-</blockquote>
-<h3 id="使用场景"><a href="#使用场景" class="headerlink" title="使用场景"></a>使用场景</h3><p>synchronized 关键字是防止多个线程同时执行一段代码，那么就会很影响程序执行效率，而 volatile 关键字在某些情况下性能要优于 synchronized ，但要注意 volatile 关键字是无法替代 synchronized 关键字的，因为 volatile 关键字无法保证操作的原子性。</p>
-<p>通常来说，使用 volatile 必须具备以下条件：</p>
-<ol>
-<li>对变量的写操作不依赖于当前值</li>
-<li>该变量没有包含在具有其他变量的不变式中</li>
-</ol>
-<p>这些条件表明，可以被写入 volatile 变量的这些有效值独立于任何程序的状态，包括变量的当前状态。</p>
-<p><a href="http://blog.csdn.net/libing13820393394/article/details/48582999" target="_blank" rel="noopener">volatile 详解</a></p>
-<h1 id="线程间协作"><a href="#线程间协作" class="headerlink" title="线程间协作"></a>线程间协作</h1><p>通过保证在临界区上多个线程的相互排斥，线程同步完全可以避免竞争状态的发生，但是有时还需要线程之间的相互协作。Java 中使用<strong>条件</strong>来便于线程间通信，一个线程可以指定在某种条件下该做什么。</p>
-<p><strong>条件</strong>是通过调用 Lock 对象的 newCondition() 方法而创建的对象，一旦创建了条件，就可以使用 await()、signal()、signalAll() 方法来实现线程间的互相通信：</p>
-<ul>
-<li>await()：让当前线程处于等待状态，直到被唤醒</li>
-<li>signal()：唤醒一个等待的线程</li>
-<li>signalAll()：唤醒所有等待的线程</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br></pre></td><td class="code"><pre><span class="line">import java.util.concurrent.*;</span><br><span class="line">import java.util.concurrent.locks.*;</span><br><span class="line"></span><br><span class="line">public class TestLockCondition &#123;</span><br><span class="line"></span><br><span class="line">	private static Account account = new Account();</span><br><span class="line">	</span><br><span class="line">	public static void main(String[] args) &#123;</span><br><span class="line">		System.out.println(&quot;Thread 1\t\tThread 2\t\tBalance&quot;);</span><br><span class="line">		</span><br><span class="line">		ExecutorService executor = Executors.newFixedThreadPool(2);</span><br><span class="line">		executor.execute(new DepositTask());</span><br><span class="line">		executor.execute(new SubstactTask());</span><br><span class="line">		executor.shutdown();</span><br><span class="line">		</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	public static class DepositTask implements Runnable&#123;</span><br><span class="line"></span><br><span class="line">		@Override</span><br><span class="line">		public void run() &#123;</span><br><span class="line">			try&#123;</span><br><span class="line">				while(true)&#123;</span><br><span class="line">					account.deposit((int)(Math.random() * 10) + 2);</span><br><span class="line">					Thread.sleep(2000);</span><br><span class="line">				&#125;</span><br><span class="line">			&#125;</span><br><span class="line">			catch(Exception e)&#123;</span><br><span class="line">				e.printStackTrace();</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	public static class SubstactTask implements Runnable&#123;</span><br><span class="line"></span><br><span class="line">		@Override</span><br><span class="line">		public void run() &#123;</span><br><span class="line">			while(true)&#123;</span><br><span class="line">				account.substract((int)(Math.random() * 10)+1);</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">		</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	public static class Account&#123;</span><br><span class="line">		</span><br><span class="line">		private int balance = 0;</span><br><span class="line">		private Lock lock = new ReentrantLock();</span><br><span class="line">		private Condition condition = lock.newCondition();</span><br><span class="line">		</span><br><span class="line">		public int getBalance()&#123;</span><br><span class="line">			return balance;</span><br><span class="line">		&#125;</span><br><span class="line">		</span><br><span class="line">		public void substract(int amount)&#123;</span><br><span class="line">			lock.lock();</span><br><span class="line">			try&#123;</span><br><span class="line">				while(amount &gt; balance)&#123;</span><br><span class="line">					System.out.println(&quot;\t\t\twait for a deposit&quot;);</span><br><span class="line">					condition.await();</span><br><span class="line">				&#125;</span><br><span class="line">				balance -= amount;</span><br><span class="line">				System.out.println(&quot;\t\t\tSubstract &quot; + amount +&quot;\t\t&quot; + getBalance());</span><br><span class="line">			&#125;</span><br><span class="line">			catch(Exception e)&#123;</span><br><span class="line">				e.printStackTrace();</span><br><span class="line">			&#125;</span><br><span class="line">			finally&#123;</span><br><span class="line">				lock.unlock();</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">		</span><br><span class="line">		public void deposit(int amount)&#123;</span><br><span class="line">			lock.lock();</span><br><span class="line">			try&#123;</span><br><span class="line">				balance += amount;</span><br><span class="line">				System.out.println(&quot;Deposit &quot; + amount +&quot;\t\t\t\t\t&quot; + getBalance());</span><br><span class="line">				condition.signalAll();</span><br><span class="line">			&#125;</span><br><span class="line">			finally&#123;</span><br><span class="line">				lock.unlock();</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<blockquote>
-<p>一旦线程调用条件上的 await()，线程就进入等待状态，等待恢复的信号。如果忘记调用 signal()、signalAll() ，那么线程将永久等待下去。</p>
-</blockquote>
-<blockquote>
-<p>条件由 Lock 对象所创建，为了调用 await()、signal()、signalAll() 等方法，必须首先获取该条件对应的锁。如果没有获取锁就调用这些方法就会抛出异常。</p>
-</blockquote>
-<h1 id="避免死锁"><a href="#避免死锁" class="headerlink" title="避免死锁"></a>避免死锁</h1><p>有时两个或多个线程需要在几个共享对象上获取锁，可能会导致死锁，即：每个线程已经锁定一个对象，而且正在等待锁定另一个对象。</p>
-<p>使用<strong>资源排序</strong>可以轻易地避免死锁的发生。该技术是给每一个需要锁的对象指定一个顺序，确保每个线程都按照这个顺序来获得锁。</p>
-<hr>
-<ul>
-<li><p><a href="/more/donate/index.html"><strong><em><font color="red">我觉得帮助到我了, 支持你一下.</font></em></strong></a><br>   </p>
-</li>
-<li><p><a href="https://www.paypal.me/momodainfo" target="_blank" rel="noopener"><strong><em><font color="red">If you think the article is helpful to you, you can reward me through paypal.</font></em></strong></a></p>
-</li>
-</ul>
-<h3 id="Ads"><a href="#Ads" class="headerlink" title="Ads"></a>Ads</h3><p><em>这是小广告! 如果有需要, 不妨支持一下吧~</em></p>
-<blockquote>
-<p> <a target="_blank" href="https://amazon.cn/gp/search?ie=UTF8&tag=momoda-23&linkCode=ur2&linkId=4a0e4fbec0cfa8dfe540ca999d0bf999&camp=536&creative=3200&index=books&keywords=编程">这些好书您看了吗?</a><img src="//ir-cn.amazon-adsystem.com/e/ir?t=momoda-23&l=ur2&o=28" width="1" height="1" border="0" alt="" style="border:none !important; margin:0px !important;"></p>
-</blockquote>
-<blockquote>
-<p>体育&amp;户外用品推荐</p>
-</blockquote>
-<div align="center"> <a href="https://www.amazon.cn/B07HWB88Z5/dp/B07HWB88Z5/ref=as_sl_pc_tf_til?tag=momoda-23&linkCode=w00&linkId=14df5124f2165d9eb3d65252e60ed2cf&creativeASIN=B07HWB88Z5" target="_blank" rel="noopener"><img src="/se-notes/Java基础/多线程/../more/ads/amazon.gif" width="100%"></a> </div>
-      
-    </div><!-- .entry-content -->
-
-    <footer class="entry-meta">
-    <a href="/se-notes/Java基础/多线程/">
     <time datetime="2019-01-03T13:49:30.000Z" class="entry-date">
         1月 3 2019
     </time>
@@ -1006,7 +425,7 @@
         
         <div class="comments-link">
             
-            <a href="javascript:void(0);" data-url="https://wnhby.github.io/se-notes/Java基础/Java基础知识/" data-id="cjsbbbew8001ue9s6pfmoifah" class="leave-reply bdsharebuttonbox" data-cmd="more">分享</a>
+            <a href="javascript:void(0);" data-url="https://wnhby.github.io/se-notes/Java基础/Java基础知识/" data-id="cjsbez09j0030czs6msr6r69q" class="leave-reply bdsharebuttonbox" data-cmd="more">分享</a>
         </div><!-- .comments-link -->
       </header><!-- .entry-header -->
 
@@ -1282,12 +701,800 @@
 <blockquote>
 <p>体育&amp;户外用品推荐</p>
 </blockquote>
-<div align="center"> <a href="https://www.amazon.cn/B07HWB88Z5/dp/B07HWB88Z5/ref=as_sl_pc_tf_til?tag=momoda-23&linkCode=w00&linkId=14df5124f2165d9eb3d65252e60ed2cf&creativeASIN=B07HWB88Z5" target="_blank" rel="noopener"><img src="/se-notes/Java基础/Java基础知识/../more/ads/amazon.gif" width="100%"></a> </div>
+<div align="center"> <a href="https://www.amazon.cn/B07HWB88Z5/dp/B07HWB88Z5/ref=as_sl_pc_tf_til?tag=momoda-23&linkCode=w00&linkId=14df5124f2165d9eb3d65252e60ed2cf&creativeASIN=B07HWB88Z5" target="_blank" rel="noopener"><img src="/se-notes/Java基础/Java基础知识/../../../more/ads/amazon.gif" width="100%"></a> </div>
       
     </div><!-- .entry-content -->
 
     <footer class="entry-meta">
     <a href="/se-notes/Java基础/Java基础知识/">
+    <time datetime="2019-01-03T13:49:30.000Z" class="entry-date">
+        1月 3 2019
+    </time>
+</a>
+    
+  <span class="article-delim">&#8226;</span>
+  <div class="article-category">
+  <a class="article-category-link" href="/categories/编程语言/">编程语言</a>, <a class="article-category-link" href="/categories/编程语言/java/">java</a>
+  </div>
+
+    
+  <span class="article-delim">&#8226;</span>
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/java基础/">java基础</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/java语法/">java语法</a></li></ul>
+
+    </footer>
+</article>
+
+
+
+
+
+
+  
+    <article id="post-se-notes/Java基础/README" class="post-se-notes/Java基础/README post type-post status-publish format-standard hentry">
+    <!---->
+
+      <header class="entry-header">
+        
+        
+  
+    <h1 class="entry-title">
+      <a class="article-title" href="/se-notes/Java基础/README/">Java基础-README</a>
+    </h1>
+  
+
+        
+        <div class="comments-link">
+            
+            <a href="javascript:void(0);" data-url="https://wnhby.github.io/se-notes/Java基础/README/" data-id="cjsbez09l0032czs613hwoi2e" class="leave-reply bdsharebuttonbox" data-cmd="more">分享</a>
+        </div><!-- .comments-link -->
+      </header><!-- .entry-header -->
+
+    <div class="entry-content">
+      
+        <!-- TOC -->
+<ul>
+<li><a href="#java-特性与-c-比较">Java 特性（与 C++ 比较）</a></li>
+<li><a href="#java-数据类型">Java 数据类型</a></li>
+<li><a href="#方法调用过程">方法调用过程</a></li>
+<li><a href="#数组的复制">数组的复制</a></li>
+<li><a href="#基本类型变量和引用类型变量">基本类型变量和引用类型变量</a></li>
+<li><a href="#类的静态变量与方法">类的静态变量与方法</a></li>
+<li><a href="#不可变对象和类">不可变对象和类</a></li>
+<li><a href="#this引用">this引用</a></li>
+<li><a href="#多态与动态绑定">多态与动态绑定</a></li>
+<li><a href="#异常处理">异常处理</a></li>
+<li><a href="#文本io与二进制io">文本IO与二进制IO</a><pre><code>- [Ads](#ads)
+</code></pre></li>
+</ul>
+<!-- /TOC -->
+<h1 id="Java-特性（与-C-比较）"><a href="#Java-特性（与-C-比较）" class="headerlink" title="Java 特性（与 C++ 比较）"></a>Java 特性（与 C++ 比较）</h1><p>核心特性：</p>
+<ul>
+<li><strong>跨平台性</strong>：Java 一次编译可到处运行</li>
+<li><strong>自动内存管理</strong>：Java 没有指针，内存管理依靠垃圾自动回收</li>
+<li><strong>完全面向对象</strong>：所有函数和变量必须是类的一部分</li>
+</ul>
+<p>其他特性：</p>
+<ul>
+<li>强制异常规约</li>
+<li>内置字符串：Java 有内置类型</li>
+<li>操作符重载：不支持操作符重载</li>
+<li>执行速度慢</li>
+<li>不支持多重继承</li>
+<li>不支持默认函数参数</li>
+<li>不支持 goto 语句</li>
+</ul>
+<h1 id="Java-数据类型"><a href="#Java-数据类型" class="headerlink" title="Java 数据类型"></a>Java 数据类型</h1><p>JAVA 有八种基础的数据类型：</p>
+<ul>
+<li>整数型：byte(8 bits)、short(16 bits)、int(32 bits)、long(64 bits)</li>
+<li>浮点型：float(32 bits)、double(64 bits)</li>
+<li>字符型：char(16 bits)</li>
+<li>布尔型：boolean</li>
+</ul>
+<p><img src="https://cloud.githubusercontent.com/assets/22606175/24044502/7e59520e-0b56-11e7-83d8-b1b2988d2a62.jpg" alt="1489756357 1"></p>
+<h1 id="方法调用过程"><a href="#方法调用过程" class="headerlink" title="方法调用过程"></a>方法调用过程</h1><p>当调用一个方法时，系统将参数和局部变量存储在一个称为<strong>堆栈</strong>的内存区域中；当一个方法调用另一个方法时，调用者的堆栈保持不动，新开辟的堆栈处理新方法的调用；当一个方法结束返回到调用者时，其相应空间被释放。</p>
+<h1 id="数组的复制"><a href="#数组的复制" class="headerlink" title="数组的复制"></a>数组的复制</h1><p>复制数组一般有三种方法：</p>
+<ol>
+<li>使用循环语句逐个复制数组的元素</li>
+<li>使用 System 类的静态方法 arraycopy</li>
+<li>使用 clone 方法复制数组</li>
+</ol>
+<p>浅拷贝：使用一个已知实例对新创建实例的成员变量逐个赋值，这个方式被称为浅拷贝。</p>
+<p>深拷贝：当一个类的拷贝构造方法，不仅要复制对象的所有非引用成员变量值，还要为引用类型的成员变量创建新的实例，并且初始化为形参实例的值。这个方式称为深拷贝。</p>
+<h1 id="基本类型变量和引用类型变量"><a href="#基本类型变量和引用类型变量" class="headerlink" title="基本类型变量和引用类型变量"></a>基本类型变量和引用类型变量</h1><p>每个变量都代表一个存储值的内存位置，声明一个变量时就是在告诉编译器该变量存储何种类型的值。</p>
+<p>对基本类型变量而言，存储值是基本类型，对引用类型变量而言，对应内存所存储值是一个对象的引用，即对象的存储地址。</p>
+<p>当一个变量赋值给另一个变量时，对基本类型变量而言，就是将一个变量的实际值赋给了另一个变量；对引用类型变量而言，是将一个变量的引用赋给了另一个变量。</p>
+<p><img src="https://cloud.githubusercontent.com/assets/22606175/24067589/c2dde04e-0bb9-11e7-944e-0a2fafcbe3f0.jpg" alt="1489799001 1"></p>
+<h1 id="类的静态变量与方法"><a href="#类的静态变量与方法" class="headerlink" title="类的静态变量与方法"></a>类的静态变量与方法</h1><ul>
+<li>类的静态变量被同一个类的所有实例所共享。</li>
+<li>可以在不使用实例的情况下调用静态方法。（一般通过类名.方法名调用，无须创建对象）</li>
+<li>类的每一个实例都能访问该类的静态变量与静态方法。</li>
+<li>实例变量与实例方法只能在实例方法中使用，不能在静态方法中使用。</li>
+</ul>
+<h1 id="不可变对象和类"><a href="#不可变对象和类" class="headerlink" title="不可变对象和类"></a>不可变对象和类</h1><p>通常创建一个对象后，其内容是允许随后改变的。但是有时也需要创建一个一旦创建，其内容就不能再改变的对象。这种对象称为<strong>不可变对象</strong>，而它的类成为<strong>不可变类</strong>。</p>
+<p>要使一个类成为不可变的，必须满足如下要求：</p>
+<ol>
+<li>所有数据域都是私有的。</li>
+<li>没有修改器方法。</li>
+<li>没有一个访问器方法，它会返回一个指向可变数据域的引用。</li>
+</ol>
+<h1 id="this引用"><a href="#this引用" class="headerlink" title="this引用"></a>this引用</h1><p>关键字 this 指向调用对象本身的引用名，有两种常用的使用场景：</p>
+<ol>
+<li>在 set 方法中引用隐藏数据域（如<code>this.name = name</code>）</li>
+<li>让构造方法调用同一个类的另外一个构造方法</li>
+</ol>
+<h1 id="多态与动态绑定"><a href="#多态与动态绑定" class="headerlink" title="多态与动态绑定"></a>多态与动态绑定</h1><p>多态的定义：父类型的变量可以引用子类型的对象</p>
+<p>声明类型：引用变量在声明时的类型</p>
+<p>实际类型：引用变量所指向的对象的实际类</p>
+<p>当从引用变量调用实例方法时，由该引用变量的<strong>实际类型</strong>在<strong>运行时</strong>决定使用该方法的哪个实现；当引用变量访问数据域和静态方法时，由该引用变量的<strong>声明类型</strong>在<strong>编译时</strong>决定使用哪个方法。</p>
+<h1 id="异常处理"><a href="#异常处理" class="headerlink" title="异常处理"></a>异常处理</h1><p>异常处理的优势在于把“检测错误”从“处理错误”中分离出来。</p>
+<ul>
+<li>免检异常：RuntimeException、Error 以及其子类都是免检异常，通常反映程序中不可恢复的逻辑错误</li>
+<li>必检异常：除免检异常外的所有异常称为“必检异常”，编译器强制要求程序员处理的异常。</li>
+</ul>
+<p>常见的几种异常如下：</p>
+<ul>
+<li>NullPointerException - 空指针引用异常</li>
+<li>ClassCastException - 类型强制转换异常。</li>
+<li>IllegalArgumentException - 传递非法参数异常。</li>
+<li>ArithmeticException - 算术运算异常</li>
+<li>ArrayStoreException - 向数组中存放与声明类型不兼容对象异常</li>
+<li>IndexOutOfBoundsException - 下标越界异常</li>
+<li>NegativeArraySizeException - 创建一个大小为负数的数组错误异常</li>
+<li>UnsupportedOperationException - 不支持的操作异常</li>
+</ul>
+<h1 id="文本IO与二进制IO"><a href="#文本IO与二进制IO" class="headerlink" title="文本IO与二进制IO"></a>文本IO与二进制IO</h1><p>IO类分为文本IO与二进制IO，前者将数据解释成字符序列，后者将数据解释成原始的二进制数值。</p>
+<p>文本IO建立在二进制IO的基础之上，提供字符层面的编解码的抽象。当文本IO向文件写入一个字符时，JVM会自动把统一码转为文件指定的编码，而读取字符时把文件指定的编码转换为统一码。</p>
+<p>二进制IO不需要转换编码，当二进制IO向文件写入一个数值，就是将内存中的确切值复制到文件中。</p>
+<p><img src="https://cloud.githubusercontent.com/assets/22606175/24069192/e5da3f8e-0bdc-11e7-995c-f499aaa189cf.jpg" alt="1489814095 1"></p>
+<hr>
+<ul>
+<li><p><a href="/more/donate/index.html"><strong><em><font color="red">我觉得帮助到我了, 支持你一下.</font></em></strong></a><br>   </p>
+</li>
+<li><p><a href="https://www.paypal.me/momodainfo" target="_blank" rel="noopener"><strong><em><font color="red">If you think the article is helpful to you, you can reward me through paypal.</font></em></strong></a></p>
+</li>
+</ul>
+<h3 id="Ads"><a href="#Ads" class="headerlink" title="Ads"></a>Ads</h3><p><em>这是小广告! 如果有需要, 不妨支持一下吧~</em></p>
+<blockquote>
+<p> <a target="_blank" href="https://amazon.cn/gp/search?ie=UTF8&tag=momoda-23&linkCode=ur2&linkId=4a0e4fbec0cfa8dfe540ca999d0bf999&camp=536&creative=3200&index=books&keywords=编程">这些好书您看了吗?</a><img src="//ir-cn.amazon-adsystem.com/e/ir?t=momoda-23&l=ur2&o=28" width="1" height="1" border="0" alt="" style="border:none !important; margin:0px !important;"></p>
+</blockquote>
+<blockquote>
+<p>体育&amp;户外用品推荐</p>
+</blockquote>
+<div align="center"> <a href="https://www.amazon.cn/B07HWB88Z5/dp/B07HWB88Z5/ref=as_sl_pc_tf_til?tag=momoda-23&linkCode=w00&linkId=14df5124f2165d9eb3d65252e60ed2cf&creativeASIN=B07HWB88Z5" target="_blank" rel="noopener"><img src="/se-notes/Java基础/README/../../../more/ads/amazon.gif" width="100%"></a> </div>
+      
+    </div><!-- .entry-content -->
+
+    <footer class="entry-meta">
+    <a href="/se-notes/Java基础/README/">
+    <time datetime="2019-01-03T13:49:30.000Z" class="entry-date">
+        1月 3 2019
+    </time>
+</a>
+    
+  <span class="article-delim">&#8226;</span>
+  <div class="article-category">
+  <a class="article-category-link" href="/categories/编程语言/">编程语言</a>, <a class="article-category-link" href="/categories/编程语言/java/">java</a>
+  </div>
+
+    
+  <span class="article-delim">&#8226;</span>
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/java基础/">java基础</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/java语法/">java语法</a></li></ul>
+
+    </footer>
+</article>
+
+
+
+
+
+
+  
+    <article id="post-se-notes/Java基础/Spring基础装配" class="post-se-notes/Java基础/Spring基础装配 post type-post status-publish format-standard hentry">
+    <!---->
+
+      <header class="entry-header">
+        
+        
+  
+    <h1 class="entry-title">
+      <a class="article-title" href="/se-notes/Java基础/Spring基础装配/">Spring基础装配</a>
+    </h1>
+  
+
+        
+        <div class="comments-link">
+            
+            <a href="javascript:void(0);" data-url="https://wnhby.github.io/se-notes/Java基础/Spring基础装配/" data-id="cjsbez09p0036czs6oi1vthyd" class="leave-reply bdsharebuttonbox" data-cmd="more">分享</a>
+        </div><!-- .comments-link -->
+      </header><!-- .entry-header -->
+
+    <div class="entry-content">
+      
+        <!-- TOC -->
+<ul>
+<li><a href="#自动化装配">自动化装配</a></li>
+<li><a href="#使用-java-代码装配-bean">使用 Java 代码装配 bean</a><pre><code>- [1. 创建配置类](#1-创建配置类)
+- [2. 声明简单的 bean](#2-声明简单的-bean)
+- [3. 借助 JavaConfig 实现注入](#3-借助-javaconfig-实现注入)
+</code></pre></li>
+<li><a href="#通过-xml-装配-bean">通过 XML 装配 bean</a><ul>
+<li><a href="#1-创建xml装配规范">1. 创建XML装配规范</a></li>
+<li><a href="#2-声明一个简单的-bean">2. 声明一个简单的 bean</a></li>
+<li><a href="#3-借助构造器注入初始化-bean">3. 借助构造器注入初始化 bean</a><ul>
+<li><a href="#使用constructor-arg声明">使用<code>&lt;constructor-arg&gt;</code>声明</a></li>
+<li><a href="#使用c-命名空间">使用c-命名空间</a></li>
+</ul>
+</li>
+<li><a href="#4-属性注入">4. 属性注入</a><ul>
+<li><a href="#p-命名空间">p-命名空间</a></li>
+<li><a href="#ads">Ads</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<!-- /TOC -->
+<p>Spring 提供了三种主要的装配机制来描述对 bean 的装配：</p>
+<ul>
+<li>在 XML 中进行显式配置</li>
+<li>在 Java 中进行显式配置</li>
+<li>隐式的 bean 发现机制和自动装配</li>
+</ul>
+<h1 id="自动化装配"><a href="#自动化装配" class="headerlink" title="自动化装配"></a>自动化装配</h1><p>Spring 从两个角度实现自动化装配：</p>
+<ul>
+<li>组件扫描：Spring 会自动发现应用上下文中所创建的 bean</li>
+<li>自动装配：Spring 自动满足 bean 之间的依赖</li>
+</ul>
+<p>以下以 CD 播放器为例阐述如何进行自动化装配：首先创建 CD 类，让 Spring 将其自动创建为 bean，然后创建一个 CDPlayer 类，让 Spring 把 CD bean 注入进来。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">/* 创建CD类并声明为bean */</span><br><span class="line">package main;</span><br><span class="line">import org.springframework.stereotype.Component;</span><br><span class="line"></span><br><span class="line">@Component // 该注解把该类声明为bean,也可以用Component(&quot;name&quot;)形式进行命名</span><br><span class="line">public class CD &#123;</span><br><span class="line">    private String message = &quot;this is my cd&quot;;</span><br><span class="line">    public void play()&#123;</span><br><span class="line">        System.out.println(message);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>但组件扫描是默认不启用的，因此还需要显式配置 Spring 从而让其寻找带有 @Component 注解的类并为其创建 bean。类 CDPlayerConfig 通过 Java 代码而非配置文件来定义了装配规则（虽然为空），并使用了 @ComponentScan 注解启用了组件扫描。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">package main;</span><br><span class="line">import org.springframework.context.annotation.ComponentScan;</span><br><span class="line">import org.springframework.context.annotation.Configuration;</span><br><span class="line"></span><br><span class="line">@Configuration</span><br><span class="line">@ComponentScan</span><br><span class="line">public class CDPlayerConfig &#123;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>@ComponentScan 默认会以配置类所在的包作为基础包来扫描组件。若想扫描多个基础包，则可以设置注解的属性如<code>@ComponentScan(basePackages={&quot;soundsystem&quot;,&quot;video&quot;})</code></p>
+</blockquote>
+<p>创建了这两个类后，现在我们可以对功能进行测试，观察 bean 是否注入成功。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">package main;</span><br><span class="line"></span><br><span class="line">import org.junit.Test;</span><br><span class="line">import org.junit.runner.RunWith;</span><br><span class="line">import org.springframework.beans.factory.annotation.Autowired;</span><br><span class="line">import org.springframework.test.context.ContextConfiguration;</span><br><span class="line">import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;</span><br><span class="line">import static org.junit.Assert.*;</span><br><span class="line"></span><br><span class="line">@RunWith(SpringJUnit4ClassRunner.class)</span><br><span class="line">@ContextConfiguration(classes = CDPlayerConfig.class) // 该注解指定从哪个配置类加载配置</span><br><span class="line">public class CDPlayerTest &#123;</span><br><span class="line">	// 使用 Autowird 自动装配；该注解可适用于类的任何方法上</span><br><span class="line">	// 若有且只有一个bean匹配依赖需求的话，则spring会加载这个bean；否则会抛出异常</span><br><span class="line">    @Autowired </span><br><span class="line">    private CD cd;</span><br><span class="line"></span><br><span class="line">    @Test</span><br><span class="line">    public void myTest()&#123;</span><br><span class="line">        assertNotNull(cd);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h1 id="使用-Java-代码装配-bean"><a href="#使用-Java-代码装配-bean" class="headerlink" title="使用 Java 代码装配 bean"></a>使用 Java 代码装配 bean</h1><p>虽然很多场景下通过组件扫描和自动装配实现 Spring 的自动化配置是更为推荐的方式，但有时自动化配置的方案行不通，因此需要显式地配置 Spring。显式配置有两种方案：Java 和 XML，其中 JavaConfig 由于更为强大、类型安全以及对重构友好，因此是较好的方案。</p>
+<h3 id="1-创建配置类"><a href="#1-创建配置类" class="headerlink" title="1. 创建配置类"></a>1. 创建配置类</h3><p>创建 JavaConfig 类的关键在于为其添加 @Configuration 注解，表明该类是一个配置类，该类应该包含<strong>在 Spring 应用上下文中如何创建 bean</strong> 的细节。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">import org.springframework.context.annotation.Configuration;</span><br><span class="line"></span><br><span class="line">@Configuration</span><br><span class="line">public class CDPlayerConfig&#123;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="2-声明简单的-bean"><a href="#2-声明简单的-bean" class="headerlink" title="2. 声明简单的 bean"></a>2. 声明简单的 bean</h3><p>在 JavaConfig 中声明 bean，需要编写一个方法，该方法会创建所需类型的实例，然后为这个方法添加 @Bean 注解。@Bean 注解会告诉 Spring 这个方法会返回一个对象，该对象注册为 Spring 应用上下文中的 bean。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">// 声明一个返回CD类型的实例的bean</span><br><span class="line">@Bean</span><br><span class="line">public CD sgtPeppers()&#123;</span><br><span class="line">	return new SgtPeppers(); //此处SgtPeppers是CD的子类</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>默认情况下 bean 的 ID 与带有 @Bean 注解的方法名是一样的，也可以通过 @Bean(name=”name”) 的形式为其命名。</p>
+<h3 id="3-借助-JavaConfig-实现注入"><a href="#3-借助-JavaConfig-实现注入" class="headerlink" title="3. 借助 JavaConfig 实现注入"></a>3. 借助 JavaConfig 实现注入</h3><p>在配置中，我们往往需要声明一个依赖于其他 bean 的 bean，因此在声明一个复杂的 bean 时往往也需要同时注入其他的 bean。</p>
+<p>装配 bean 的最简单方式是引用创建 bean 的方法：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">@Bean // 带有@Bean注解的方法可以采用任何必要的Java功能来产生bean实例</span><br><span class="line">public CDPlayer cdPlayer()&#123;</span><br><span class="line">	return new CDPlayer(sgtPeppers());// sgtPeppers()是已经声明的、被@Bean所注解的方法</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>看起来 CD 是通过 sgtPeppers() 得到的，但实际上，由于 sgtPeppers() 方法上添加了 @Bean 注解，Spring 会拦截所有对它的调用，确保直接返回该方法的 bean，而不是每次都进行实际的调用。<strong>默认情况下，Spirng 中的 bean 都是单例</strong>。</p>
+</blockquote>
+<p>但也可用以下更容易理解的方式来装配 bean：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">@Bean</span><br><span class="line">public CDPlayer cdPlayer(CD cd)&#123;</span><br><span class="line">	CDPlayer cdPlayer = new CDPlayer(cd);</span><br><span class="line">	cdPlayer.setCD(cd);</span><br><span class="line">	return cdPlayer;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>此处 cdPlayer() 方法请求一个 CD 实例作为参数，当 Spring 调用 cdPlayer() 创建  CDPlayer bean 时，它会自动装配一个 CD bean 到配置方法中，而无需明确引用 CD 的 @Bean 方法。通过该方式引用其它的 bean 是最佳选择（因为它不会要求将 CD bean 声明到同一个配置类中，这样可以实现分散配置文件）。  </p>
+<h1 id="通过-XML-装配-bean"><a href="#通过-XML-装配-bean" class="headerlink" title="通过 XML 装配 bean"></a>通过 XML 装配 bean</h1><p>Spring 目前有了强大的自动化配置和基于 Java 的配置，XML不再是第一选择了。但是鉴于已经存在那么多基于 XML 的 Spring 配置，因此理解如何在 Spring 中使用 XML 还是很重要的。</p>
+<h2 id="1-创建XML装配规范"><a href="#1-创建XML装配规范" class="headerlink" title="1. 创建XML装配规范"></a>1. 创建XML装配规范</h2><p>最简单的 XML 配置如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot; ?&gt;</span><br><span class="line">&lt;beans xmlns=&quot;http://www.springframework.org/schema/beans&quot;</span><br><span class="line">	xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</span><br><span class="line">	xsi:schemaLocation=&quot;http://www.springframework.org/schema/beans </span><br><span class="line">       http://www.springframework.org/schema/beans/spring-beans-4.0.xsd</span><br><span class="line">       http://www.springframework.org/schema/context&quot;&gt;</span><br><span class="line">       </span><br><span class="line">	&lt;!-- configuration details go here --&gt;</span><br><span class="line"></span><br><span class="line">&lt;/beans&gt;</span><br></pre></td></tr></table></figure>
+<p>用于装配 bean 的最基本的 XML 元素包含在 spring-beans 模式中，它被定义为根命名空间。<code>&lt;beans&gt;</code> 是该模式中的一个元素，是所有 Spring 配置文件的根元素。</p>
+<h2 id="2-声明一个简单的-bean"><a href="#2-声明一个简单的-bean" class="headerlink" title="2. 声明一个简单的 bean"></a>2. 声明一个简单的 bean</h2><p>使用<code>&lt;bean&gt;</code>元素声明一个 bean，并设置 id 进行命名：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;bean id=&quot;cd1&quot; class=&quot;soundSystem.SgtPeppers&quot; /&gt;</span><br></pre></td></tr></table></figure></p>
+<h2 id="3-借助构造器注入初始化-bean"><a href="#3-借助构造器注入初始化-bean" class="headerlink" title="3. 借助构造器注入初始化 bean"></a>3. 借助构造器注入初始化 bean</h2><p>使用构造器注入 bean 引用时，有两种基本配置方案可选择：</p>
+<ul>
+<li><code>&lt;constructor-arg&gt;</code> 元素，特点是配置比较冗长</li>
+<li>使用 Spring 3 所引入的 c-命名空间，特点是配置比较简练，但无法装配<code>集合</code></li>
+</ul>
+<h3 id="使用-lt-constructor-arg-gt-声明"><a href="#使用-lt-constructor-arg-gt-声明" class="headerlink" title="使用&lt;constructor-arg&gt;声明"></a>使用<code>&lt;constructor-arg&gt;</code>声明</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">/* 声明CDPlayer并通过id引用已有的SgtPerpers bean*/</span><br><span class="line">&lt;bean id=“cdPlayer” class=&quot;soundSystem.CDPlayer&quot;&gt;</span><br><span class="line">	&lt;constructor-arg ref=&quot;sgtPerpers&quot; /&gt;</span><br><span class="line">&lt;/bean&gt;</span><br></pre></td></tr></table></figure>
+<p>当 Spring 遇到<code>&lt;bean&gt;</code>元素时，会创建一个 CDPlayer 实例，<code>&lt;constructor-arg&gt;</code> 元素表明要将一个 id 为 sgtPerpers 的 bean 引用传递到 CDPlayer 的构造器中。</p>
+<p>当把字面量注入构造器而不是引用时：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;bean id=“cdPlayer” class=&quot;soundSystem.CDPlayer&quot;&gt;</span><br><span class="line">	&lt;constructor-arg value=&quot;The Love&quot; /&gt;</span><br><span class="line">&lt;/bean&gt;</span><br></pre></td></tr></table></figure>
+<h3 id="使用c-命名空间"><a href="#使用c-命名空间" class="headerlink" title="使用c-命名空间"></a>使用c-命名空间</h3><p>在 XML 顶部声明其模式：<code>xmlns:c=&quot;http://www.springframework.org/schema/c&quot;</code>，就可用其来声明构造器参数了。</p>
+<p>一个典型的示例是 <code>c:cd-ref=&quot;compactDisc&quot;</code>，属性名以 <code>c:</code> 开头，即命名空间前缀，接下来是要装配的构造器参数名，之后是<code>-ref</code>，表示装配的是一个 bean 的引用，这个 bean 的 ID 为 <code>compactDisc</code>。</p>
+<p>也可使用参数索引替代直接使用参数名的方案，如：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&lt;!-- 由于xml不允许数字作为属性的首字符，因此添加一个下划线作后缀 --&gt;</span><br><span class="line">&lt;bean id=“cdPlayer” class=&quot;soundSystem.CDPlayer&quot; c:_0-ref=&quot;compactDisc&quot; /&gt;</span><br></pre></td></tr></table></figure>
+<p>也可以根本不标示参数（前提是只有一个构造器参数），如：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;bean id=“cdPlayer” class=&quot;soundSystem.CDPlayer&quot; c:_-ref=&quot;compactDisc&quot; /&gt;</span><br></pre></td></tr></table></figure>
+<p>当需要注入字面量而不是 bean 引用时：</p>
+<ul>
+<li><p>方案一：引用构造器参数的名字</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;bean id=“cdPlayer” class=&quot;soundSystem.CDPlayer&quot;</span><br><span class="line">	c:_title=&quot;My Love&quot;</span><br><span class="line">	c:_artist=&quot;ZZP&quot;&gt;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>方案二：使用参数索引</p>
+</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;bean id=“cdPlayer” class=&quot;soundSystem.CDPlayer&quot;</span><br><span class="line">	c:_0=&quot;My Love&quot;</span><br><span class="line">	c:_1=&quot;ZZP&quot;&gt;</span><br></pre></td></tr></table></figure>
+<h2 id="4-属性注入"><a href="#4-属性注入" class="headerlink" title="4. 属性注入"></a>4. 属性注入</h2><p>假设需要属性注入的 CDPlayer 如下所示：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">public class CDPlayer &#123;</span><br><span class="line">	private CD cd;</span><br><span class="line">	</span><br><span class="line">	@Autowired</span><br><span class="line">	pulic setCd(CD cd)&#123;</span><br><span class="line">		this.cd = cd;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>声明为一个 bean：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;bean id=“cdPlayer” class=&quot;soundSystem.CDPlayer&quot;&gt;</span><br><span class="line">	&lt;property name=&quot;cd&quot; ref=&quot;cd&quot;&gt;</span><br><span class="line">&lt;/bean&gt;</span><br></pre></td></tr></table></figure></p>
+<p><code>&lt;property&gt;</code>元素为属性的 Setter 方法所提供的功能与 <code>&lt;constructor-arg&gt;</code> 提供的功能是一样的。本例中它引用了 ID 为 <code>CD</code> 的 bean（通过 ref 属性），并将其注入到 <code>cd</code> 属性中（通过 setCD() 方法）。</p>
+<h3 id="p-命名空间"><a href="#p-命名空间" class="headerlink" title="p-命名空间"></a>p-命名空间</h3><p> p-命名空间是作为<code>&lt;property&gt;</code>元素的替代方案，使用时需在 XML 顶部声明其模式：<code>xmlns:p=&quot;http://www.springframework.org/schema/p&quot;</code>。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&lt;bean id=“cdPlayer” </span><br><span class="line">	class=&quot;soundSystem.CDPlayer&quot; </span><br><span class="line">	p:cd-ref=&quot;cd&quot;/&gt;</span><br><span class="line">&lt;!--</span><br><span class="line">	首先属性的名字使用了&quot;p:&quot;前缀，表面设置的是一个属性；接下来是要注入的属性名，最后属性名称以&quot;-ref&quot;结尾，表明装配的是一个引用而非字面量。</span><br><span class="line">--&gt;</span><br></pre></td></tr></table></figure>
+<p>当需要注入字面量时，区别在于是否带有”-ref”后缀：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&lt;bean id=“cdPlayer” </span><br><span class="line">	class=&quot;soundSystem.CDPlayer&quot; </span><br><span class="line">	p:title=&quot;My Love&quot;</span><br><span class="line">	p:artist=&quot;ZZP&quot;/&gt;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>注意：p-命名空间同样无法装配集合，但可以通过 util-命名空间（用于创建集合类型的bean）辅助实现装配集合的功能。</p>
+</blockquote>
+<hr>
+<ul>
+<li><p><a href="/more/donate/index.html"><strong><em><font color="red">我觉得帮助到我了, 支持你一下.</font></em></strong></a><br>   </p>
+</li>
+<li><p><a href="https://www.paypal.me/momodainfo" target="_blank" rel="noopener"><strong><em><font color="red">If you think the article is helpful to you, you can reward me through paypal.</font></em></strong></a></p>
+</li>
+</ul>
+<h3 id="Ads"><a href="#Ads" class="headerlink" title="Ads"></a>Ads</h3><p><em>这是小广告! 如果有需要, 不妨支持一下吧~</em></p>
+<blockquote>
+<p> <a target="_blank" href="https://amazon.cn/gp/search?ie=UTF8&tag=momoda-23&linkCode=ur2&linkId=4a0e4fbec0cfa8dfe540ca999d0bf999&camp=536&creative=3200&index=books&keywords=编程">这些好书您看了吗?</a><img src="//ir-cn.amazon-adsystem.com/e/ir?t=momoda-23&l=ur2&o=28" width="1" height="1" border="0" alt="" style="border:none !important; margin:0px !important;"></p>
+</blockquote>
+<blockquote>
+<p>体育&amp;户外用品推荐</p>
+</blockquote>
+<div align="center"> <a href="https://www.amazon.cn/B07HWB88Z5/dp/B07HWB88Z5/ref=as_sl_pc_tf_til?tag=momoda-23&linkCode=w00&linkId=14df5124f2165d9eb3d65252e60ed2cf&creativeASIN=B07HWB88Z5" target="_blank" rel="noopener"><img src="/se-notes/Java基础/Spring基础装配/../../../more/ads/amazon.gif" width="100%"></a> </div>
+      
+    </div><!-- .entry-content -->
+
+    <footer class="entry-meta">
+    <a href="/se-notes/Java基础/Spring基础装配/">
+    <time datetime="2019-01-03T13:49:30.000Z" class="entry-date">
+        1月 3 2019
+    </time>
+</a>
+    
+  <span class="article-delim">&#8226;</span>
+  <div class="article-category">
+  <a class="article-category-link" href="/categories/编程语言/">编程语言</a>, <a class="article-category-link" href="/categories/编程语言/java/">java</a>
+  </div>
+
+    
+  <span class="article-delim">&#8226;</span>
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/java基础/">java基础</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/java语法/">java语法</a></li></ul>
+
+    </footer>
+</article>
+
+
+
+
+
+
+  
+    <article id="post-se-notes/Java基础/Spring概述" class="post-se-notes/Java基础/Spring概述 post type-post status-publish format-standard hentry">
+    <!---->
+
+      <header class="entry-header">
+        
+        
+  
+    <h1 class="entry-title">
+      <a class="article-title" href="/se-notes/Java基础/Spring概述/">Spring概述</a>
+    </h1>
+  
+
+        
+        <div class="comments-link">
+            
+            <a href="javascript:void(0);" data-url="https://wnhby.github.io/se-notes/Java基础/Spring概述/" data-id="cjsbez09r0038czs60ox6c1jv" class="leave-reply bdsharebuttonbox" data-cmd="more">分享</a>
+        </div><!-- .comments-link -->
+      </header><!-- .entry-header -->
+
+    <div class="entry-content">
+      
+        <!-- TOC -->
+<ul>
+<li><a href="#概述">概述</a></li>
+<li><a href="#依赖注入di">依赖注入（DI）</a></li>
+<li><a href="#面向切面编程aop">面向切面编程（AOP）</a></li>
+<li><a href="#spring-容器">Spring 容器</a><ul>
+<li><a href="#应用上下文">应用上下文</a></li>
+<li><a href="#bean-的生命周期">bean 的生命周期</a></li>
+</ul>
+</li>
+<li><a href="#spring-其他模块">Spring 其他模块</a><pre><code>- [Spring 容器](#spring-容器-1)
+- [AOP 模块](#aop-模块)
+- [数据访问和集成](#数据访问和集成)
+- [Web 与远程调用](#web-与远程调用)
+- [测试](#测试)
+- [Ads](#ads)
+</code></pre></li>
+</ul>
+<!-- /TOC -->
+<h1 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h1><p>Spring 是一个为了解决企业级应用开发的复杂性而创建的开源框架。Spring 不仅仅局限于服务器端开发，任何 Java 应用都能在简单性、可测试性和松耦合等方面从 Spring 中获益。<strong>简化 Java 开发是 Spring 最根本的使命</strong>。</p>
+<p>为了降低 Java 开发的复杂性，Spring 采取了以下策略：</p>
+<ul>
+<li>基于 POJO 的轻量级和最小侵入性编程（侵入性：强迫应用继承框架的类或接口从而和框架绑死）</li>
+<li>通过依赖注入和面向接口实现松耦合</li>
+<li>基于切面和惯例进行声明式编程</li>
+<li>通过切面和模板减少样板式代码</li>
+</ul>
+<h1 id="依赖注入（DI）"><a href="#依赖注入（DI）" class="headerlink" title="依赖注入（DI）"></a>依赖注入（DI）</h1><p>任何一个有实际意义的应用都由两个以上的类组成，这些类互相协作来完成特定的业务逻辑。但如果按照传统的做法，让每个对象负责管理与自己相互协作的对象（即所依赖的对象）的引用，将会导致高度耦合和难以测试的代码。</p>
+<blockquote>
+<p>耦合具有两面性：一方面紧密耦合的代码难以测试与复用，另一方面一定程度的耦合是必须的——完全没有耦合的代码什么也做不了。因此耦合是必须的，但应当谨慎管理。</p>
+</blockquote>
+<p>通过依赖注入（DI），对象的依赖关系将由系统中负责协调各对象的第三方组件在创建对象的时候进行设定，对象无需自行创建或管理它们的依赖关系，从而实现<strong>松耦合</strong>。而且如果一个对象只通过接口（而非具体实现）来表明依赖关系，则这种依赖就能在对象本身无感知的情况下，用不同的具体实现进行替换。</p>
+<p>创建应用组件之间协作的行为称为<strong>装配</strong>。Spring 有多种装配 bean 的方式，其中使用 XML 配置文件是一种常见的装配方式。</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!-- knignt.xml  --&gt;</span></span><br><span class="line">&lt;?xml version="1.0" encoding="UTF-8" ?&gt;</span><br><span class="line"><span class="tag">&lt;<span class="name">beans</span> <span class="attr">xmlns</span>=<span class="string">"http://www.springframework.org/schema/beans"</span></span></span><br><span class="line"><span class="tag">	<span class="attr">xmlns:xsi</span>=<span class="string">"http://www.w3.org/2001/XMLSchema-instance"</span> </span></span><br><span class="line"><span class="tag">	<span class="attr">xsi:schemaLocation</span>=<span class="string">"http://www.springframework.org/schema/beans </span></span></span><br><span class="line"><span class="tag"><span class="string">       http://www.springframework.org/schema/beans/spring-beans-4.0.xsd"</span>&gt;</span></span><br><span class="line"><span class="comment">&lt;!-- 注入Quest bean --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">"knight"</span> <span class="attr">class</span>=<span class="string">"com.war.knights.BravaKnight"</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">constructor-arg</span> <span class="attr">ref</span>=<span class="string">"quest"</span> /&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">bean</span>&gt;</span></span><br><span class="line"><span class="comment">&lt;!-- 创建SavaGirlQuest bean --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">"quest"</span> <span class="attr">class</span>=<span class="string">"com.war.knights.SavaGirlQuest"</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">constructor-arg</span> <span class="attr">value</span>=<span class="string">"Mary"</span> /&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">bean</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;/<span class="name">beans</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>Spring 也支持使用 <strong>Java 注解</strong> 来描述配置。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">import org.springframework.context.annotation.Bean;</span><br><span class="line">import org.springframework.context.annotation.Configuration;</span><br><span class="line"></span><br><span class="line">import com.war.knights.Knight;</span><br><span class="line">import com.war.knights.BraveKnight;</span><br><span class="line">import com.war.knights.Quest;</span><br><span class="line">import com.war.knights.SaveGirlQuest;</span><br><span class="line"></span><br><span class="line">@Configuration</span><br><span class="line">public class KnightConfig&#123;</span><br><span class="line">	@Bean</span><br><span class="line">	public Knight knight()&#123;</span><br><span class="line">		return new BraveKnignt(quest());</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	@Bean</span><br><span class="line">	public Quest quest()&#123;</span><br><span class="line">		return new SaveGirlQuest(&quot;Mary&quot;);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>Spring 通过应用上下文（Application Context）装载 bean 的定义并把它们组装起来。Spring 有多种应用上下文的实现，主要区别在于用何种方式加载配置。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">// 使用上下文加载配置文件并读取bean</span><br><span class="line">import org.springframework.context.support.ClassPathXmlApplicationContext;</span><br><span class="line"></span><br><span class="line">public class KnightMain&#123;</span><br><span class="line">	public static void main(String[] args) throws Exception&#123;</span><br><span class="line">		// 加载上下文</span><br><span class="line">		ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext(&quot;META-INF/spring/knight.xml&quot;);</span><br><span class="line">		// 获取 knight bean</span><br><span class="line">		Knight knight = context.getBean(Knight.class);</span><br><span class="line">		// 使用 knight</span><br><span class="line">		knight.embarkOnQuest();</span><br><span class="line">		context.close();</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>main() 方法基于 knight.xml 文件创建了 Spring 应用上下文，并调用上下文获取了 ID 为 knight 的 bean。注意：该类完全不知道骑士接受何种探险任务，而且完全没有意识到是由 BraveKnight 来执行的，只有 knight.xml 知道哪个骑士执行哪种探险任务。</p>
+<h1 id="面向切面编程（AOP）"><a href="#面向切面编程（AOP）" class="headerlink" title="面向切面编程（AOP）"></a>面向切面编程（AOP）</h1><p>DI 能够让相互协作的软件实体保持松耦合，而 AOP 则允许把遍布应用组件各处的系统职责从组件中分离出来。</p>
+<p>系统由不同组件组成，每个组件负责一块特定功能。除了实现自身核心的功能外，这些组件还经常承担着额外职责（诸如日志、事务管理、安全等，这些额外的职责经常融入到自身具有核心业务逻辑的组件中去）。<br>这些需额外承担的系统服务被称为<strong>横切关注点</strong>，因为它们会跨越系统的多个组件。</p>
+<p>如果按照传统方式把这些关注点分散到多个组件中去，则代码会有双重的复杂性：</p>
+<ul>
+<li>实现系统关注点功能的代码重复出现在多个组件中（即使把关注点抽象为了一个独立模块，其他模块只是调用其方法，但方法的调用还是会重复出现在各个模块中）。</li>
+<li>组件会因为那些与自身核心业务逻辑无关的代码而变得混乱。</li>
+</ul>
+<p>AOP 能够使这些服务模块化，并以声明的方式把它们应用到它们需要影响的组件中去。这样做的好处在于：这些组件会具有更高的内聚性与简单性（组件甚至不知道系统服务的存在）。</p>
+<p>下列 xml 文件使用了 Spring 的 aop 配置把 minstrel bean 声明为一个切面，以及声明 minstrel bean 的 embarkOnQuest 方法作为切点，并声明了切点执行时的前置方法与后置方法。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot; ?&gt;</span><br><span class="line">&lt;beans xmlns=&quot;http://www.springframework.org/schema/beans&quot;</span><br><span class="line">	xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot; </span><br><span class="line">	xmlns:aop=&quot;http://www.springframework.org/schema/aop&quot; </span><br><span class="line">	xsi:schemaLocation=&quot;http://www.springframework.org/schema/beans </span><br><span class="line">       http://www.springframework.org/schema/beans/spring-beans-4.0.xsd</span><br><span class="line">       http://www.springframework.org/schema/aop</span><br><span class="line">       http://www.springframework.org/schema/aop/spring-aop-4.0.xsd&quot;&gt;</span><br><span class="line">&lt;!-- 声明 minstrel --&gt;</span><br><span class="line">&lt;bean id=&quot;minstrel&quot; class=&quot;com.war.knights.Minstrel&quot;&gt;</span><br><span class="line">	&lt;constructor-arg ref=&quot;a common minstrel&quot; /&gt;</span><br><span class="line">&lt;/bean&gt;</span><br><span class="line"></span><br><span class="line">&lt;aop:config&gt;</span><br><span class="line">	&lt;aop:aspect ref=&quot;minstrel&quot;&gt;</span><br><span class="line">		&lt;!-- 定义切点 --&gt;</span><br><span class="line">		&lt;aop:pointcut id=&quot;embark&quot; expression=&quot;execution(* *.embarkOnQuest(..))&quot;/&gt;</span><br><span class="line">		&lt;!-- 声明前置通知 --&gt;</span><br><span class="line">		&lt;aop:before pointcut-ref=&quot;embark&quot; method=&quot;singBeforeQuest&quot;/&gt;</span><br><span class="line">		&lt;!-- 声明后置通知 --&gt;</span><br><span class="line">		&lt;aop:after pointcut-ref=&quot;embark&quot; method=&quot;singAfterQuest&quot;/&gt;</span><br><span class="line">	&lt;/aop:aspect&gt;</span><br><span class="line">&lt;/aop:config&gt;</span><br><span class="line"></span><br><span class="line">&lt;/beans&gt;</span><br></pre></td></tr></table></figure></p>
+<h1 id="Spring-容器"><a href="#Spring-容器" class="headerlink" title="Spring 容器"></a>Spring 容器</h1><p>在基于 Spring 的应用中，应用对象生存于 Spring 容器中。Spring 容器负责创建、装配和配置对象，并管理它们的整个生命周期。Spring 容器使用 DI 管理构成应用的组件，它会创建相互协作的组件之间的关联。</p>
+<p>Spring 自带了两种类型的容器实现：</p>
+<ul>
+<li>BeanFactory（bean 工厂）：最简单的容器，提供基本的 DI 支持。</li>
+<li>Application Context（应用上下文）：基于 BeanFactory 构建，并提供应用框架级别的服务。开发者一般使用应用上下文而非底层的 bean 工厂。</li>
+</ul>
+<h2 id="应用上下文"><a href="#应用上下文" class="headerlink" title="应用上下文"></a>应用上下文</h2><p>Spring 自带了多种类型的应用上下文：</p>
+<ul>
+<li>AnnotationConfigApplicationContext：从一个或多个基于 Java 的配置类中加载 Spring 应用上下文</li>
+<li>AnnotationConfigWebApplicationContext：从一个或多个基于 Java 的配置类中加载 Spring Web 应用上下文</li>
+<li>ClassPathXmlApplicationContext：从类路径下的一个或多个 XML 配置文件中加载上下文定义</li>
+<li>FileSystemXmlapplicationcontext：从文件系统下一个或多个 XML 配置文件加载上下文定义</li>
+<li>XmlWebApplicationContext：从 Web 应用下的一个或多个 XML 配置文件加载上下文定义</li>
+</ul>
+<p>上下文加载完毕后，就可以调用上下文的 getBean() 方法从 Spring 容器中获取 bean。</p>
+<h2 id="bean-的生命周期"><a href="#bean-的生命周期" class="headerlink" title="bean 的生命周期"></a>bean 的生命周期</h2><p><img src="http://upload-images.jianshu.io/upload_images/3131012-0fdb736b21c8cc31.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="bean 的生命周期"></p>
+<p><strong>ApplicationContext 容器中</strong>，Bean 的生命周期流程如上图所示，流程大致如下：</p>
+<ol>
+<li>容器启动，对 scope 为 singleton 且非懒加载的 bean 进行实例化</li>
+<li>按照 Bean 定义信息配置信息，注入所有的属性</li>
+<li>如果 Bean 实现了 BeanNameAware 接口，会回调该接口的 setBeanName() 方法，传入该 Bean 的 id ，此时该 Bean 就获得了自己在配置文件中的 id</li>
+<li>如果 Bean 实现了 BeanFactoryAware 接口,会回调该接口的 setBeanFactory() 方法，传入该 Bean 的 BeanFactory ，这样该 Bean 就获得了自己所在的 BeanFactory</li>
+<li>如果 Bean 实现了 ApplicationContextAware 接口,会回调该接口的 setApplicationContext() 方法，传入该 Bean 的 ApplicationContext，这样该 Bean 就获得了自己所在的 ApplicationContext</li>
+<li>如果 Bean 实现了 BeanPostProcessor 接口，则会回调该接口的 postProcessBeforeInitialzation() 方法</li>
+<li>如果 Bean 实现了 InitializingBean 接口，则会回调该接口的 afterPropertiesSet() 方法</li>
+<li>如果 Bean 配置了 init-method 方法，则会执行 init-method 配置的方法</li>
+<li>如果 Bean 实现了 BeanPostProcessor 接口，则会回调该接口的 postProcessAfterInitialization() 方法</li>
+<li>经过流程9之后，就可以正式使用该 Bean 了。对于 scope 为 singleton 的 Bean，Spring 的 IOC 容器中会缓存一份该 bean 的实例，而对于 scope 为 prototype 的 Bean，每次被调用都会 new 一个新的对象，其生命周期就交给调用方管理了，不再由 Spring 容器进行管理了</li>
+<li>容器关闭后，如果 Bean 实现了 DisposableBean 接口，则会回调该接口的 destroy() 方法</li>
+<li>如果 Bean 配置了 destroy-method 方法，则会执行 destroy-method 配置的方法。至此，整个Bean的生命周期结束</li>
+</ol>
+<h1 id="Spring-其他模块"><a href="#Spring-其他模块" class="headerlink" title="Spring 其他模块"></a>Spring 其他模块</h1><p>Spring 框架除了 DI 与 AOP 以外还有着其他大量模块，所有模块共同组成了一个构建在 Spring 核心框架之上的庞大生态圈。这些模块依据其所属功能可划分为六类。</p>
+<h3 id="Spring-容器-1"><a href="#Spring-容器-1" class="headerlink" title="Spring 容器"></a>Spring 容器</h3><p>容器是 Spring 框架最核心的部分，用于执行 bean 的创建、配置与管理。该模块包括了 bean 工厂，它为 Spring 提供了 DI 的功能。基于 bean 工厂，还有多种 Spring 应用上下文的实现，每一种都提供了配置 Spring 的不同方式。</p>
+<h3 id="AOP-模块"><a href="#AOP-模块" class="headerlink" title="AOP 模块"></a>AOP 模块</h3><p>AOP 可以把遍布系统的关注点（如事务和安全）从它们所应用的对象中解耦出来。</p>
+<h3 id="数据访问和集成"><a href="#数据访问和集成" class="headerlink" title="数据访问和集成"></a>数据访问和集成</h3><p>提供了模板化的 JDBC，并在多种数据库服务的错误信息上构建了语义丰富的异常层。以及允许使用 ORM 框架。</p>
+<h3 id="Web-与远程调用"><a href="#Web-与远程调用" class="headerlink" title="Web 与远程调用"></a>Web 与远程调用</h3><p>Web 与远程调用模块提供了自带的 MVC 框架，此外还提供了多种构建与其他应用交互的远程调用方案，以及对 REST API 的良好支持。</p>
+<h3 id="测试"><a href="#测试" class="headerlink" title="测试"></a>测试</h3><p>提供了自带的测试模块（如一系列的 mock 对象实现）</p>
+<hr>
+<ul>
+<li><p><a href="/more/donate/index.html"><strong><em><font color="red">我觉得帮助到我了, 支持你一下.</font></em></strong></a><br>   </p>
+</li>
+<li><p><a href="https://www.paypal.me/momodainfo" target="_blank" rel="noopener"><strong><em><font color="red">If you think the article is helpful to you, you can reward me through paypal.</font></em></strong></a></p>
+</li>
+</ul>
+<h3 id="Ads"><a href="#Ads" class="headerlink" title="Ads"></a>Ads</h3><p><em>这是小广告! 如果有需要, 不妨支持一下吧~</em></p>
+<blockquote>
+<p> <a target="_blank" href="https://amazon.cn/gp/search?ie=UTF8&tag=momoda-23&linkCode=ur2&linkId=4a0e4fbec0cfa8dfe540ca999d0bf999&camp=536&creative=3200&index=books&keywords=编程">这些好书您看了吗?</a><img src="//ir-cn.amazon-adsystem.com/e/ir?t=momoda-23&l=ur2&o=28" width="1" height="1" border="0" alt="" style="border:none !important; margin:0px !important;"></p>
+</blockquote>
+<blockquote>
+<p>体育&amp;户外用品推荐</p>
+</blockquote>
+<div align="center"> <a href="https://www.amazon.cn/B07HWB88Z5/dp/B07HWB88Z5/ref=as_sl_pc_tf_til?tag=momoda-23&linkCode=w00&linkId=14df5124f2165d9eb3d65252e60ed2cf&creativeASIN=B07HWB88Z5" target="_blank" rel="noopener"><img src="/se-notes/Java基础/Spring概述/../../../more/ads/amazon.gif" width="100%"></a> </div>
+      
+    </div><!-- .entry-content -->
+
+    <footer class="entry-meta">
+    <a href="/se-notes/Java基础/Spring概述/">
+    <time datetime="2019-01-03T13:49:30.000Z" class="entry-date">
+        1月 3 2019
+    </time>
+</a>
+    
+  <span class="article-delim">&#8226;</span>
+  <div class="article-category">
+  <a class="article-category-link" href="/categories/编程语言/">编程语言</a>, <a class="article-category-link" href="/categories/编程语言/java/">java</a>
+  </div>
+
+    
+  <span class="article-delim">&#8226;</span>
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/java基础/">java基础</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/java语法/">java语法</a></li></ul>
+
+    </footer>
+</article>
+
+
+
+
+
+
+  
+    <article id="post-se-notes/Java基础/Java-Servlet" class="post-se-notes/Java基础/Java-Servlet post type-post status-publish format-standard hentry">
+    <!---->
+
+      <header class="entry-header">
+        
+        
+  
+    <h1 class="entry-title">
+      <a class="article-title" href="/se-notes/Java基础/Java-Servlet/">Java-Servlet</a>
+    </h1>
+  
+
+        
+        <div class="comments-link">
+            
+            <a href="javascript:void(0);" data-url="https://wnhby.github.io/se-notes/Java基础/Java-Servlet/" data-id="cjsbez09f002wczs6rl8du2ib" class="leave-reply bdsharebuttonbox" data-cmd="more">分享</a>
+        </div><!-- .comments-link -->
+      </header><!-- .entry-header -->
+
+    <div class="entry-content">
+      
+        <!-- TOC -->
+<ul>
+<li><a href="#简介">简介</a></li>
+<li><a href="#生命周期">生命周期</a><pre><code>- [init() 方法](#init-方法)
+- [service() 方法](#service-方法)
+- [destroy() 方法](#destroy-方法)
+- [一个典型的 Servlet 生命周期图](#一个典型的-servlet-生命周期图)
+</code></pre></li>
+<li><a href="#面试题">面试题</a><pre><code>- [Servlet 和 GCI 的区别](#servlet-和-gci-的区别)
+- [Servlet 生命周期](#servlet-生命周期)
+- [Servle 和 JSP 的区别](#servle-和-jsp-的区别)
+- [JSP有哪些内置对象？作用是什么？](#jsp有哪些内置对象作用是什么)
+- [JSP有哪些基本动作？作用是什么？](#jsp有哪些基本动作作用是什么)
+- [JSP 中动态 INCLUDE 与静态 INCLUDE 的区别？](#jsp-中动态-include-与静态-include-的区别)
+- [四种会话跟踪技术作用域](#四种会话跟踪技术作用域)
+</code></pre></li>
+<li><a href="#参考文档">参考文档</a><pre><code>- [Ads](#ads)
+</code></pre></li>
+</ul>
+<!-- /TOC -->
+<h1 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h1><p>Java Servlet 是运行在 Web 服务器上的程序，它是作为来自 Web 浏览器或其他 HTTP 客户端的请求和 HTTP 服务器上的数据库或应用程序之间的中间层。</p>
+<p>Servlet 架构如下所示：</p>
+<p><img src="http://www.runoob.com/wp-content/uploads/2014/07/servlet-arch.jpg" alt="Servlet架构"></p>
+<p>Servlet 执行以下主要任务：</p>
+<ul>
+<li>读取客户端（浏览器）发送的数据</li>
+<li>处理数据并生成响应结果（该过程可能需要访问数据库等操作）</li>
+<li>发送响应数据到客户端（浏览器）</li>
+</ul>
+<h1 id="生命周期"><a href="#生命周期" class="headerlink" title="生命周期"></a>生命周期</h1><p>Servlet 生命周期可被定义为从创建直到毁灭的整个过程：</p>
+<ul>
+<li>Servlet 通过调用 init () 方法进行初始化。</li>
+<li>Servlet 调用 service() 方法来处理客户端的请求。</li>
+<li>Servlet 通过调用 destroy() 方法终止。</li>
+<li>Servlet 最后由 JVM 的垃圾回收器进行垃圾回收。</li>
+</ul>
+<h3 id="init-方法"><a href="#init-方法" class="headerlink" title="init() 方法"></a>init() 方法</h3><p>init 方法只能调用一次。它在第一次创建 Servlet 时被调用，在后续每次用户请求时不再调用。当用户调用一个 Servlet 时，就会创建一个 Servlet 实例，每一个用户请求都会产生一个新的线程，适当的时候移交给 doGet 或 doPost 方法。</p>
+<blockquote>
+<p>init() 方法简单地创建或加载一些数据，这些数据将被用于 Servlet 的整个生命周期。</p>
+</blockquote>
+<h3 id="service-方法"><a href="#service-方法" class="headerlink" title="service() 方法"></a>service() 方法</h3><p>service() 方法是执行实际任务的主要方法。Servlet 容器（即 Web 服务器）调用 service() 方法来处理来自客户端（浏览器）的请求，并把格式化的响应写回给客户端。</p>
+<p>每次服务器接收到一个 Servlet 请求时，服务器会产生一个新的线程并调用服务。service() 方法检查 HTTP 请求类型（GET、POST、PUT、DELETE 等），并在适当的时候调用 doGet、doPost、doPut，doDelete 等方法。</p>
+<blockquote>
+<p>service() 方法由容器调用，service 方法在适当的时候调用 doGet、doPost、doPut、doDelete 等方法。所以，开发者一般不用对 service() 方法做任何动作，只需要根据来自客户端的请求类型来重写 doGet() 或 doPost() 即可。</p>
+</blockquote>
+<h3 id="destroy-方法"><a href="#destroy-方法" class="headerlink" title="destroy() 方法"></a>destroy() 方法</h3><p>destroy() 方法只会被调用一次，在 Servlet 生命周期结束时被调用。destroy() 方法可以让 Servlet 关闭数据库连接、停止后台线程等清理活动。</p>
+<h3 id="一个典型的-Servlet-生命周期图"><a href="#一个典型的-Servlet-生命周期图" class="headerlink" title="一个典型的 Servlet 生命周期图"></a>一个典型的 Servlet 生命周期图</h3><p><img src="http://www.runoob.com/wp-content/uploads/2014/07/Servlet-LifeCycle.jpg" alt="生命周期图"></p>
+<ul>
+<li>第一个到达服务器的 HTTP 请求被委派到 Servlet 容器。</li>
+<li>Servlet 容器在调用 service() 方法之前加载 Servlet。</li>
+<li>然后 Servlet 容器处理由多个线程产生的多个请求，每个线程执行一个单一的 Servlet 实例的 service() 方法。</li>
+</ul>
+<h1 id="面试题"><a href="#面试题" class="headerlink" title="面试题"></a>面试题</h1><h3 id="Servlet-和-GCI-的区别"><a href="#Servlet-和-GCI-的区别" class="headerlink" title="Servlet 和 GCI 的区别"></a>Servlet 和 GCI 的区别</h3><p>Servlet 是基于 Java 编写的，处于服务器进程中，它能够通过多线程方式运行 service() 方法，一个实例可以服务于多个请求，而且一般不会销毁；而 CGI 对每个请求都生产新的进程，服务完成后销毁，所以从效率上低于 Servlet。</p>
+<h3 id="Servlet-生命周期"><a href="#Servlet-生命周期" class="headerlink" title="Servlet 生命周期"></a>Servlet 生命周期</h3><p>Servlet生命周期包括三部分：</p>
+<ul>
+<li>初始化：Web 容器加载 servlet，调用 init() 方法</li>
+<li>处理请求：当请求到达时，运行其 service() 方法。service() 自动派遣运行与请求相对应的 doXXX（doGet 或者 doPost）方法。</li>
+<li>销毁：服务结束，Web 容器会调用 servlet 的 distroy() 方法销毁 servlet。</li>
+</ul>
+<h3 id="Servle-和-JSP-的区别"><a href="#Servle-和-JSP-的区别" class="headerlink" title="Servle 和 JSP 的区别"></a>Servle 和 JSP 的区别</h3><p>服务器端有一个 JSP 容器，主要处理 JSP 页面请求，容器首先把 JSP 转成一个 Servlet，所有的 JSP 元素都会被转换为 Java 代码，然后编译这个 Servlet 类。</p>
+<p>Servlet 和 JSP 最主要的不同点在于，Servlet 的应用逻辑是在 Java 文件中，并且完全从表示层中的 HTML 里分离开来。而 JSP 的情况是 Java 和 HTML 可以组合成一个扩展名为 .jsp 的文件。JSP 侧重于视图，Servlet 主要用于控制逻辑。</p>
+<h3 id="JSP有哪些内置对象？作用是什么？"><a href="#JSP有哪些内置对象？作用是什么？" class="headerlink" title="JSP有哪些内置对象？作用是什么？"></a>JSP有哪些内置对象？作用是什么？</h3><p>JSP 共有以下 9 种基本内置组件：</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>名称</th>
+<th>作用</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td></td>
+<td>request</td>
+<td>包含用户端请求的信息</td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td>response</td>
+<td>包含服务器传回客户端的响应信息</td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td>page</td>
+<td>网页本身</td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td>pageContext</td>
+<td>管理网页属性</td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td>session</td>
+<td>与请求有关的会话</td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td>application</td>
+<td>伴随服务器的生命周期，为多个应用程序保存信息</td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td>out</td>
+<td>向客户端输出数据</td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td>config</td>
+<td>servlet的架构部件</td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td>exception</td>
+<td>针对错误页面才可使用</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h3 id="JSP有哪些基本动作？作用是什么？"><a href="#JSP有哪些基本动作？作用是什么？" class="headerlink" title="JSP有哪些基本动作？作用是什么？"></a>JSP有哪些基本动作？作用是什么？</h3><ul>
+<li>jsp:include：在页面被请求的时候引入一个文件。 </li>
+<li>jsp:useBean：寻找或者实例化一个JavaBean。 </li>
+<li>jsp:setProperty：设置 JavaBean 的属性。</li>
+<li>jsp:getProperty：输出某个 JavaBean 的属性。 </li>
+<li>jsp:forward：把请求转到一个新的页面。</li>
+<li>jsp:plugin：根据浏览器类型为 Java 插件生成 OBJECT 或 EMBED 标记</li>
+</ul>
+<h3 id="JSP-中动态-INCLUDE-与静态-INCLUDE-的区别？"><a href="#JSP-中动态-INCLUDE-与静态-INCLUDE-的区别？" class="headerlink" title="JSP 中动态 INCLUDE 与静态 INCLUDE 的区别？"></a>JSP 中动态 INCLUDE 与静态 INCLUDE 的区别？</h3><p>动态 INCLUDE 用 jsp:include 动作实现，它总是会检查所含文件中的变化，适合用于包含动态页面，并且可以带参数；静态 INCLUDE 用 include 伪码实现，不会检查所含文件的变化，适用于包含静态页面。</p>
+<h3 id="四种会话跟踪技术作用域"><a href="#四种会话跟踪技术作用域" class="headerlink" title="四种会话跟踪技术作用域"></a>四种会话跟踪技术作用域</h3><ul>
+<li>page：一个页面</li>
+<li>request：：一次请求，一个请求可能跨越多个 page</li>
+<li>session：一次会话，一个会话可能跨越多个 request</li>
+<li>application：代表与整个 Web 应用程序相关的对象和属性，跨越了整个 Web 应用程序。</li>
+</ul>
+<h1 id="参考文档"><a href="#参考文档" class="headerlink" title="参考文档"></a>参考文档</h1><p><a href="http://www.runoob.com/servlet/servlet-tutorial.html" target="_blank" rel="noopener">Servlet 教程</a></p>
+<hr>
+<ul>
+<li><p><a href="/more/donate/index.html"><strong><em><font color="red">我觉得帮助到我了, 支持你一下.</font></em></strong></a><br>   </p>
+</li>
+<li><p><a href="https://www.paypal.me/momodainfo" target="_blank" rel="noopener"><strong><em><font color="red">If you think the article is helpful to you, you can reward me through paypal.</font></em></strong></a></p>
+</li>
+</ul>
+<h3 id="Ads"><a href="#Ads" class="headerlink" title="Ads"></a>Ads</h3><p><em>这是小广告! 如果有需要, 不妨支持一下吧~</em></p>
+<blockquote>
+<p> <a target="_blank" href="https://amazon.cn/gp/search?ie=UTF8&tag=momoda-23&linkCode=ur2&linkId=4a0e4fbec0cfa8dfe540ca999d0bf999&camp=536&creative=3200&index=books&keywords=编程">这些好书您看了吗?</a><img src="//ir-cn.amazon-adsystem.com/e/ir?t=momoda-23&l=ur2&o=28" width="1" height="1" border="0" alt="" style="border:none !important; margin:0px !important;"></p>
+</blockquote>
+<blockquote>
+<p>体育&amp;户外用品推荐</p>
+</blockquote>
+<div align="center"> <a href="https://www.amazon.cn/B07HWB88Z5/dp/B07HWB88Z5/ref=as_sl_pc_tf_til?tag=momoda-23&linkCode=w00&linkId=14df5124f2165d9eb3d65252e60ed2cf&creativeASIN=B07HWB88Z5" target="_blank" rel="noopener"><img src="/se-notes/Java基础/Java-Servlet/../../../more/ads/amazon.gif" width="100%"></a> </div>
+      
+    </div><!-- .entry-content -->
+
+    <footer class="entry-meta">
+    <a href="/se-notes/Java基础/Java-Servlet/">
+    <time datetime="2019-01-03T13:49:30.000Z" class="entry-date">
+        1月 3 2019
+    </time>
+</a>
+    
+  <span class="article-delim">&#8226;</span>
+  <div class="article-category">
+  <a class="article-category-link" href="/categories/编程语言/">编程语言</a>, <a class="article-category-link" href="/categories/编程语言/java/">java</a>
+  </div>
+
+    
+  <span class="article-delim">&#8226;</span>
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/java基础/">java基础</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/java语法/">java语法</a></li></ul>
+
+    </footer>
+</article>
+
+
+
+
+
+
+  
+    <article id="post-se-notes/Java基础/泛型" class="post-se-notes/Java基础/泛型 post type-post status-publish format-standard hentry">
+    <!---->
+
+      <header class="entry-header">
+        
+        
+  
+    <h1 class="entry-title">
+      <a class="article-title" href="/se-notes/Java基础/泛型/">泛型</a>
+    </h1>
+  
+
+        
+        <div class="comments-link">
+            
+            <a href="javascript:void(0);" data-url="https://wnhby.github.io/se-notes/Java基础/泛型/" data-id="cjsbez09v003eczs6xt2kcom9" class="leave-reply bdsharebuttonbox" data-cmd="more">分享</a>
+        </div><!-- .comments-link -->
+      </header><!-- .entry-header -->
+
+    <div class="entry-content">
+      
+        <!-- TOC -->
+<ul>
+<li><a href="#泛型">泛型</a><ul>
+<li><a href="#泛型类和泛型方法">泛型类和泛型方法</a></li>
+<li><a href="#原始类型和向后兼容">原始类型和向后兼容</a></li>
+<li><a href="#通配泛型">通配泛型</a></li>
+<li><a href="#消除泛型与使用泛型的限制">消除泛型与使用泛型的限制</a></li>
+<li><a href="#备注">备注</a><ul>
+<li><a href="#ads">Ads</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<!-- /TOC -->
+<h1 id="泛型"><a href="#泛型" class="headerlink" title="泛型"></a>泛型</h1><p>泛型是指参数化类型的能力。定义了带泛型类型的类或方法，在编译过程中编译器会用具体类型替换它。主要优点在于能够在编译时而不是在运行时检测出错误。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/* 使用泛型前 */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">Comparable</span></span>&#123;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">compareTo</span><span class="params">(object o)</span></span>;</span><br><span class="line">&#125; </span><br><span class="line"></span><br><span class="line"><span class="comment">/* 使用泛型后 */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">Comparable</span>&lt;<span class="title">T</span>&gt;</span>&#123;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">compareTo</span><span class="params">(T o)</span></span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="泛型类和泛型方法"><a href="#泛型类和泛型方法" class="headerlink" title="泛型类和泛型方法"></a>泛型类和泛型方法</h2><ul>
+<li>为了定义一个类为泛型类型，需要将泛型类型放在类名之后，如：<code>GenericStack&lt;E&gt;</code>。</li>
+<li>受限泛型类型：可将泛型制定为另外一种类型的子类型。如：<code>&lt;E extends GeometricObject&gt;</code>。</li>
+<li>为了定义一个方法为泛型类型，需要把泛型类型放在方法返回类型之前，如<code>&lt;E&gt; void max(E o1,E o2)</code>。</li>
+<li>为了调用泛型方法，需要将实际类型放在尖括号内作为方法名的前缀，如<code>GenericStack.&lt;String&gt;print(strings)</code>。</li>
+</ul>
+<h2 id="原始类型和向后兼容"><a href="#原始类型和向后兼容" class="headerlink" title="原始类型和向后兼容"></a>原始类型和向后兼容</h2><ul>
+<li><strong>使用</strong>泛型类时可以无需指定具体类型，如：<code>GenericStack stack = new GenericStack();</code>，其大体等价于<code>GenericStack&lt;Object&gt; stack = new GenericStack&lt;Object&gt;();</code>。</li>
+<li>像 GenericStack 和 ArrayList 这样不使用类型参数的泛型类称为”原始类型“。</li>
+<li>原始类型并不安全，但使用原始类型是为了向后兼容 JDK 较早的版本。</li>
+</ul>
+<h2 id="通配泛型"><a href="#通配泛型" class="headerlink" title="通配泛型"></a>通配泛型</h2><ul>
+<li>尽管 Integer 是 Number 的子类型，但是 <code>GenericStack&lt;Interger&gt;</code>并不是<code>GenericStack&lt;Number&gt;</code>的子类型。为了避免该问题，可以使用通配泛型类型。</li>
+<li>通配泛型有三种形式<code>?</code>、<code>? extends T</code>和<code>? super T</code>（此处的T代表某个泛型类型）：<ul>
+<li><code>?</code>：称为非受限通配，等价于<code>? extends Object</code>。</li>
+<li><code>? extends T</code>：称为受限通配，代表T的一个未知子类型。</li>
+<li><code>? super T</code>：称为下限通配，表示T的一个未知父类型。</li>
+</ul>
+</li>
+</ul>
+<h2 id="消除泛型与使用泛型的限制"><a href="#消除泛型与使用泛型的限制" class="headerlink" title="消除泛型与使用泛型的限制"></a>消除泛型与使用泛型的限制</h2><p>泛型是使用一种称为类型消除的方法来实现的：在编译时一旦编译器确认泛型类型是安全的，就会将它转换为原始类型。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/*编译器转换前*/</span></span><br><span class="line">ArrayList&lt;String&gt; list = <span class="keyword">new</span> ArrayList&lt;String&gt;();</span><br><span class="line">list.add(<span class="string">"Trump"</span>);</span><br><span class="line">String state = list.get(<span class="number">0</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">/*编译器转换后*/</span></span><br><span class="line">ArrayList list = <span class="keyword">new</span> ArrayList();</span><br><span class="line">list.add(<span class="string">"Trump"</span>);</span><br><span class="line">String state = (String)(list.get(<span class="number">0</span>));</span><br></pre></td></tr></table></figure></p>
+<p>由于泛型在运行时已被消除，因此对于如何使用泛型类型是有一些限制的：</p>
+<ul>
+<li>不能使用<code>new E()</code>。</li>
+<li>不能使用<code>new E[]</code>。</li>
+<li>在静态环境下不允许类的参数是泛型类型。</li>
+<li>异常类不能是泛型的。</li>
+</ul>
+<h2 id="备注"><a href="#备注" class="headerlink" title="备注"></a>备注</h2><ul>
+<li>泛型类型必须是引用类型</li>
+<li>尽管在编译时<code>ArrayList&lt;String&gt;</code>与<code>ArrayList&lt;Integer&gt;</code>是两种类型，但是在运行时只有一个 ArrayList 类会被加载到 JVM 中</li>
+</ul>
+<hr>
+<ul>
+<li><p><a href="/more/donate/index.html"><strong><em><font color="red">我觉得帮助到我了, 支持你一下.</font></em></strong></a><br>   </p>
+</li>
+<li><p><a href="https://www.paypal.me/momodainfo" target="_blank" rel="noopener"><strong><em><font color="red">If you think the article is helpful to you, you can reward me through paypal.</font></em></strong></a></p>
+</li>
+</ul>
+<h3 id="Ads"><a href="#Ads" class="headerlink" title="Ads"></a>Ads</h3><p><em>这是小广告! 如果有需要, 不妨支持一下吧~</em></p>
+<blockquote>
+<p> <a target="_blank" href="https://amazon.cn/gp/search?ie=UTF8&tag=momoda-23&linkCode=ur2&linkId=4a0e4fbec0cfa8dfe540ca999d0bf999&camp=536&creative=3200&index=books&keywords=编程">这些好书您看了吗?</a><img src="//ir-cn.amazon-adsystem.com/e/ir?t=momoda-23&l=ur2&o=28" width="1" height="1" border="0" alt="" style="border:none !important; margin:0px !important;"></p>
+</blockquote>
+<blockquote>
+<p>体育&amp;户外用品推荐</p>
+</blockquote>
+<div align="center"> <a href="https://www.amazon.cn/B07HWB88Z5/dp/B07HWB88Z5/ref=as_sl_pc_tf_til?tag=momoda-23&linkCode=w00&linkId=14df5124f2165d9eb3d65252e60ed2cf&creativeASIN=B07HWB88Z5" target="_blank" rel="noopener"><img src="/se-notes/Java基础/泛型/../../../more/ads/amazon.gif" width="100%"></a> </div>
+      
+    </div><!-- .entry-content -->
+
+    <footer class="entry-meta">
+    <a href="/se-notes/Java基础/泛型/">
     <time datetime="2019-01-03T13:49:30.000Z" class="entry-date">
         1月 3 2019
     </time>
@@ -1326,7 +1533,7 @@
         
         <div class="comments-link">
             
-            <a href="javascript:void(0);" data-url="https://wnhby.github.io/se-notes/Java基础/设计模式——单例模式/" data-id="cjsbbbewu0027e9s6bsc304qz" class="leave-reply bdsharebuttonbox" data-cmd="more">分享</a>
+            <a href="javascript:void(0);" data-url="https://wnhby.github.io/se-notes/Java基础/设计模式——单例模式/" data-id="cjsbez09y003iczs6wzq3xpwl" class="leave-reply bdsharebuttonbox" data-cmd="more">分享</a>
         </div><!-- .comments-link -->
       </header><!-- .entry-header -->
 
@@ -1413,7 +1620,7 @@
 <blockquote>
 <p>体育&amp;户外用品推荐</p>
 </blockquote>
-<div align="center"> <a href="https://www.amazon.cn/B07HWB88Z5/dp/B07HWB88Z5/ref=as_sl_pc_tf_til?tag=momoda-23&linkCode=w00&linkId=14df5124f2165d9eb3d65252e60ed2cf&creativeASIN=B07HWB88Z5" target="_blank" rel="noopener"><img src="/se-notes/Java基础/设计模式——单例模式/../more/ads/amazon.gif" width="100%"></a> </div>
+<div align="center"> <a href="https://www.amazon.cn/B07HWB88Z5/dp/B07HWB88Z5/ref=as_sl_pc_tf_til?tag=momoda-23&linkCode=w00&linkId=14df5124f2165d9eb3d65252e60ed2cf&creativeASIN=B07HWB88Z5" target="_blank" rel="noopener"><img src="/se-notes/Java基础/设计模式——单例模式/../../../more/ads/amazon.gif" width="100%"></a> </div>
       
     </div><!-- .entry-content -->
 
@@ -1457,7 +1664,7 @@
         
         <div class="comments-link">
             
-            <a href="javascript:void(0);" data-url="https://wnhby.github.io/se-notes/Java基础/设计模式——工厂模式/" data-id="cjsbbbeww0029e9s6rbbabo6p" class="leave-reply bdsharebuttonbox" data-cmd="more">分享</a>
+            <a href="javascript:void(0);" data-url="https://wnhby.github.io/se-notes/Java基础/设计模式——工厂模式/" data-id="cjsbez0a0003kczs61y8ulayc" class="leave-reply bdsharebuttonbox" data-cmd="more">分享</a>
         </div><!-- .comments-link -->
       </header><!-- .entry-header -->
 
@@ -1586,119 +1793,12 @@
 <blockquote>
 <p>体育&amp;户外用品推荐</p>
 </blockquote>
-<div align="center"> <a href="https://www.amazon.cn/B07HWB88Z5/dp/B07HWB88Z5/ref=as_sl_pc_tf_til?tag=momoda-23&linkCode=w00&linkId=14df5124f2165d9eb3d65252e60ed2cf&creativeASIN=B07HWB88Z5" target="_blank" rel="noopener"><img src="/se-notes/Java基础/设计模式——工厂模式/../more/ads/amazon.gif" width="100%"></a> </div>
+<div align="center"> <a href="https://www.amazon.cn/B07HWB88Z5/dp/B07HWB88Z5/ref=as_sl_pc_tf_til?tag=momoda-23&linkCode=w00&linkId=14df5124f2165d9eb3d65252e60ed2cf&creativeASIN=B07HWB88Z5" target="_blank" rel="noopener"><img src="/se-notes/Java基础/设计模式——工厂模式/../../../more/ads/amazon.gif" width="100%"></a> </div>
       
     </div><!-- .entry-content -->
 
     <footer class="entry-meta">
     <a href="/se-notes/Java基础/设计模式——工厂模式/">
-    <time datetime="2019-01-03T13:49:30.000Z" class="entry-date">
-        1月 3 2019
-    </time>
-</a>
-    
-  <span class="article-delim">&#8226;</span>
-  <div class="article-category">
-  <a class="article-category-link" href="/categories/编程语言/">编程语言</a>, <a class="article-category-link" href="/categories/编程语言/java/">java</a>
-  </div>
-
-    
-  <span class="article-delim">&#8226;</span>
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/java基础/">java基础</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/java语法/">java语法</a></li></ul>
-
-    </footer>
-</article>
-
-
-
-
-
-
-  
-    <article id="post-se-notes/Java基础/设计模式——观察者模式" class="post-se-notes/Java基础/设计模式——观察者模式 post type-post status-publish format-standard hentry">
-    <!---->
-
-      <header class="entry-header">
-        
-        
-  
-    <h1 class="entry-title">
-      <a class="article-title" href="/se-notes/Java基础/设计模式——观察者模式/">设计模式——观察者模式</a>
-    </h1>
-  
-
-        
-        <div class="comments-link">
-            
-            <a href="javascript:void(0);" data-url="https://wnhby.github.io/se-notes/Java基础/设计模式——观察者模式/" data-id="cjsbbbewz002de9s6o93hyhq0" class="leave-reply bdsharebuttonbox" data-cmd="more">分享</a>
-        </div><!-- .comments-link -->
-      </header><!-- .entry-header -->
-
-    <div class="entry-content">
-      
-        <!-- TOC -->
-<ul>
-<li><a href="#观察者模式">观察者模式</a><ul>
-<li><a href="#观察者模式总结">观察者模式总结</a><ul>
-<li><a href="#ads">Ads</a></li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-<!-- /TOC -->
-<h1 id="观察者模式"><a href="#观察者模式" class="headerlink" title="观察者模式"></a>观察者模式</h1><p>观察者模式是使用频率最高的设计模式之一，它用于建立一种对象与对象之间的依赖关系，一个对象发生改变时将自动通知其他对象，其他对象将相应作出反应。在观察者模式中，发生改变的对象称为<strong>观察目标</strong>，而被通知的对象称为<strong>观察者</strong>，一个观察目标可以对应多个观察者，而且这些观察者之间可以没有任何相互联系，可以根据需要增加和删除观察者，使得系统更易于扩展。</p>
-<p>观察者模式(Observer Pattern)：定义对象之间的一种一对多依赖关系，使得每当一个对象状态发生改变时，其相关依赖对象皆得到通知并被自动更新。观察者模式的别名包括发布-订阅（Publish/Subscribe）模式、模型-视图（Model/View）模式、源-监听器（Source/Listener）模式或从属者（Dependents）模式。观察者模式是一种对象行为型模式。</p>
-<p><img src="http://my.csdn.net/uploads/201207/05/1341501815_4830.jpg" alt="enter image description here"></p>
-<p>在观察者模式结构图中包含如下几个角色：</p>
-<ul>
-<li>Subject（目标）：目标是指被观察的对象。在目标中定义了一个观察者集合，一个观察目标可以接受任意数量的观察者来观察，它提供一系列方法来增加和删除观察者对象，同时它定义了通知方法 notify() 。目标类可以是接口，也可以是抽象类或具体类。</li>
-<li>ConcreteSubject（具体目标）：具体目标是目标类的子类，通常它包含有经常发生改变的数据，当它的状态发生改变时，向它的各个观察者发出通知。</li>
-<li>Observer（观察者）：观察者将对观察目标的改变做出反应，观察者一般定义为接口，该接口声明了更新数据的方法 update()，因此又称为抽象观察者。</li>
-<li>ConcreteObserver（具体观察者）：在具体观察者中维护一个指向具体目标对象的引用。它存储具体观察者的有关状态，这些状态需要和具体目标的状态保持一致；它实现了在抽象观察者 Observer 中定义的 update() 方法。通常在实现时，可以调用具体目标类的 attach() 方法将自己添加到目标类的集合中或通过 detach() 方法将自己从目标类的集合中删除。</li>
-</ul>
-<p>观察者模式在 Java 语言中的地位非常重要。在 JDK 的 java.util 包中，提供了 Observable 类以及 Observer 接口，它们构成了JDK对观察者模式的支持。我们可以直接使用 Observer 接口和 Observable 类来作为观察者模式的抽象层，再自定义具体观察者类和具体观察目标类。</p>
-<p><img src="http://my.csdn.net/uploads/201207/06/1341504430_1842.jpg" alt="enter image description here"></p>
-<h2 id="观察者模式总结"><a href="#观察者模式总结" class="headerlink" title="观察者模式总结"></a>观察者模式总结</h2><p>观察者模式是一种使用频率非常高的设计模式，无论是移动应用、Web 应用或者桌面应用，观察者模式几乎无处不在，它为实现对象之间的联动提供了一套完整的解决方案，凡是涉及到一对一或者一对多的对象交互场景都可以使用观察者模式。观察者模式广泛应用于各种编程语言的 GUI 事件处理的实现，在基于事件的 XML 解析技术（如SAX2）以及 Web 事件处理中也都使用了观察者模式。</p>
-<p>观察者模式的主要优点如下：</p>
-<ul>
-<li>观察者模式可以实现表示层和数据逻辑层的分离，定义了稳定的消息更新传递机制，并抽象了更新接口，使得可以有各种各样不同的表示层充当具体观察者角色。</li>
-<li>观察者模式在观察目标和观察者之间建立一个抽象的耦合。观察目标只需要维持一个抽象观察者的集合，无须了解其具体观察者。由于观察目标和观察者没有紧密地耦合在一起，因此它们可以属于不同的抽象化层次。</li>
-<li>观察者模式支持广播通信，观察目标会向所有已注册的观察者对象发送通知，简化了一对多系统设计的难度。</li>
-<li><p>观察者模式满足“开闭原则”的要求，增加新的具体观察者无须修改原有系统代码，在具体观察者与观察目标之间不存在关联关系的情况下，增加新的观察目标也很方便</p>
-<p>观察者模式的主要缺点如下：</p>
-</li>
-<li><p>如果一个观察目标对象有很多直接和间接观察者，将所有的观察者都通知到会花费很多时间。</p>
-</li>
-<li>如果在观察者和观察目标之间存在循环依赖，观察目标会触发它们之间进行循环调用，可能导致系统崩溃。</li>
-<li>观察者模式没有相应的机制让观察者知道所观察的目标对象是怎么发生变化的，而仅仅只是知道观察目标发生了变化。</li>
-</ul>
-<p>在以下情况下可以考虑使用观察者模式：</p>
-<ul>
-<li>一个抽象模型有两个方面，其中一个方面依赖于另一个方面，将这两个方面封装在独立的对象中使它们可以各自独立地改变和复用。</li>
-<li>一个对象的改变将导致一个或多个其他对象也发生改变，而并不知道具体有多少对象将发生改变，也不知道这些对象是谁。</li>
-<li>需要在系统中创建一个触发链，A对象的行为将影响B对象，B对象的行为将影响C对象……，可以使用观察者模式创建一种链式触发机制。</li>
-</ul>
-<hr>
-<ul>
-<li><p><a href="/more/donate/index.html"><strong><em><font color="red">我觉得帮助到我了, 支持你一下.</font></em></strong></a><br>   </p>
-</li>
-<li><p><a href="https://www.paypal.me/momodainfo" target="_blank" rel="noopener"><strong><em><font color="red">If you think the article is helpful to you, you can reward me through paypal.</font></em></strong></a></p>
-</li>
-</ul>
-<h3 id="Ads"><a href="#Ads" class="headerlink" title="Ads"></a>Ads</h3><p><em>这是小广告! 如果有需要, 不妨支持一下吧~</em></p>
-<blockquote>
-<p> <a target="_blank" href="https://amazon.cn/gp/search?ie=UTF8&tag=momoda-23&linkCode=ur2&linkId=4a0e4fbec0cfa8dfe540ca999d0bf999&camp=536&creative=3200&index=books&keywords=编程">这些好书您看了吗?</a><img src="//ir-cn.amazon-adsystem.com/e/ir?t=momoda-23&l=ur2&o=28" width="1" height="1" border="0" alt="" style="border:none !important; margin:0px !important;"></p>
-</blockquote>
-<blockquote>
-<p>体育&amp;户外用品推荐</p>
-</blockquote>
-<div align="center"> <a href="https://www.amazon.cn/B07HWB88Z5/dp/B07HWB88Z5/ref=as_sl_pc_tf_til?tag=momoda-23&linkCode=w00&linkId=14df5124f2165d9eb3d65252e60ed2cf&creativeASIN=B07HWB88Z5" target="_blank" rel="noopener"><img src="/se-notes/Java基础/设计模式——观察者模式/../more/ads/amazon.gif" width="100%"></a> </div>
-      
-    </div><!-- .entry-content -->
-
-    <footer class="entry-meta">
-    <a href="/se-notes/Java基础/设计模式——观察者模式/">
     <time datetime="2019-01-03T13:49:30.000Z" class="entry-date">
         1月 3 2019
     </time>
@@ -1756,15 +1856,15 @@
           </li>
         
           <li>
-            <a href="/se-notes/Linux基础/README/">Linux基础-README</a>
-          </li>
-        
-          <li>
-            <a href="/se-notes/云计算实践/区块链相关/区块链简介/">区块链简介</a>
+            <a href="/se-notes/Java基础/集合框架/">集合框架</a>
           </li>
         
           <li>
             <a href="/se-notes/云计算实践/集群高可用方案/Heartbeat双机热备方案/">Heartbeat双机热备方案</a>
+          </li>
+        
+          <li>
+            <a href="/se-notes/云计算实践/集群高可用方案/HAProxy+Keepalived高可用方案/">HAProxy+Keepalived高可用方案</a>
           </li>
         
       </ul>
@@ -1785,7 +1885,7 @@
   <aside class="widget">
     <h3 class="widget-title">Categories</h3>
     <div class="widget-content">
-      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Graphics/">Graphics</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Linux/">Linux</a><span class="category-list-count">7</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Linux/Shell/">Shell</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Linux/linux基础/">linux基础</a><span class="category-list-count">6</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/协议证书/">协议证书</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/协议证书/openssl/">openssl</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/数据库/">数据库</a><span class="category-list-count">4</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/数据库/数据库基础/">数据库基础</a><span class="category-list-count">3</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/框架/">框架</a><span class="category-list-count">9</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/框架/python-web应用框架/">python-web应用框架</a><span class="category-list-count">9</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/版本控制/">版本控制</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/版本控制/Git/">Git</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/编程语言/">编程语言</a><span class="category-list-count">13</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/编程语言/java/">java</a><span class="category-list-count">13</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/网络通讯/">网络通讯</a><span class="category-list-count">11</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/网络通讯/大小端/">大小端</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/网络通讯/计算机网络基础/">计算机网络基础</a><span class="category-list-count">10</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/路由器/">路由器</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/路由器/openwrt/">openwrt</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/通用技术/">通用技术</a><span class="category-list-count">13</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/通用技术/Docker/">Docker</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/通用技术/云计算实践/">云计算实践</a><span class="category-list-count">11</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/通用技术/云计算实践/kubernetes部署/">kubernetes部署</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/通用技术/云计算实践/区块链/">区块链</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/通用技术/云计算实践/集群高可用方案/">集群高可用方案</a><span class="category-list-count">4</span></li></ul></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/默认/">默认</a><span class="category-list-count">1</span></li></ul>
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Graphics/">Graphics</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Linux/">Linux</a><span class="category-list-count">7</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Linux/Shell/">Shell</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Linux/linux基础/">linux基础</a><span class="category-list-count">6</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/协议证书/">协议证书</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/协议证书/openssl/">openssl</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/数据库/">数据库</a><span class="category-list-count">4</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/数据库/数据库基础/">数据库基础</a><span class="category-list-count">3</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/框架/">框架</a><span class="category-list-count">9</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/框架/python-web应用框架/">python-web应用框架</a><span class="category-list-count">9</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/框架/python-web应用框架/flask/">flask</a><span class="category-list-count">9</span></li></ul></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/版本控制/">版本控制</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/版本控制/Git/">Git</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/编程语言/">编程语言</a><span class="category-list-count">13</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/编程语言/java/">java</a><span class="category-list-count">13</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/网络通讯/">网络通讯</a><span class="category-list-count">11</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/网络通讯/大小端/">大小端</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/网络通讯/计算机网络基础/">计算机网络基础</a><span class="category-list-count">10</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/路由器/">路由器</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/路由器/openwrt/">openwrt</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/通用技术/">通用技术</a><span class="category-list-count">13</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/通用技术/Docker/">Docker</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/通用技术/云计算实践/">云计算实践</a><span class="category-list-count">11</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/通用技术/云计算实践/kubernetes部署/">kubernetes部署</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/通用技术/云计算实践/区块链/">区块链</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/通用技术/云计算实践/集群高可用方案/">集群高可用方案</a><span class="category-list-count">4</span></li></ul></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/默认/">默认</a><span class="category-list-count">1</span></li></ul>
     </div>
   </aside>
 

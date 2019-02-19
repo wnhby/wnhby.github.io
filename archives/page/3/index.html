@@ -80,6 +80,213 @@
       <div id="main" class="wrapper">
         <div id="primary" class="site-content"><div id="content" role="main">
   
+    <article id="post-se-notes/Java基础/Java-Servlet" class="post-se-notes/Java基础/Java-Servlet post type-post status-publish format-standard hentry">
+    <!---->
+
+      <header class="entry-header">
+        
+        
+  
+    <h1 class="entry-title">
+      <a class="article-title" href="/se-notes/Java基础/Java-Servlet/">Java-Servlet</a>
+    </h1>
+  
+
+        
+        <div class="comments-link">
+            
+            <a href="javascript:void(0);" data-url="https://wnhby.github.io/se-notes/Java基础/Java-Servlet/" data-id="cjsbez09f002wczs6rl8du2ib" class="leave-reply bdsharebuttonbox" data-cmd="more">分享</a>
+        </div><!-- .comments-link -->
+      </header><!-- .entry-header -->
+
+    <div class="entry-content">
+      
+        <!-- TOC -->
+<ul>
+<li><a href="#简介">简介</a></li>
+<li><a href="#生命周期">生命周期</a><pre><code>- [init() 方法](#init-方法)
+- [service() 方法](#service-方法)
+- [destroy() 方法](#destroy-方法)
+- [一个典型的 Servlet 生命周期图](#一个典型的-servlet-生命周期图)
+</code></pre></li>
+<li><a href="#面试题">面试题</a><pre><code>- [Servlet 和 GCI 的区别](#servlet-和-gci-的区别)
+- [Servlet 生命周期](#servlet-生命周期)
+- [Servle 和 JSP 的区别](#servle-和-jsp-的区别)
+- [JSP有哪些内置对象？作用是什么？](#jsp有哪些内置对象作用是什么)
+- [JSP有哪些基本动作？作用是什么？](#jsp有哪些基本动作作用是什么)
+- [JSP 中动态 INCLUDE 与静态 INCLUDE 的区别？](#jsp-中动态-include-与静态-include-的区别)
+- [四种会话跟踪技术作用域](#四种会话跟踪技术作用域)
+</code></pre></li>
+<li><a href="#参考文档">参考文档</a><pre><code>- [Ads](#ads)
+</code></pre></li>
+</ul>
+<!-- /TOC -->
+<h1 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h1><p>Java Servlet 是运行在 Web 服务器上的程序，它是作为来自 Web 浏览器或其他 HTTP 客户端的请求和 HTTP 服务器上的数据库或应用程序之间的中间层。</p>
+<p>Servlet 架构如下所示：</p>
+<p><img src="http://www.runoob.com/wp-content/uploads/2014/07/servlet-arch.jpg" alt="Servlet架构"></p>
+<p>Servlet 执行以下主要任务：</p>
+<ul>
+<li>读取客户端（浏览器）发送的数据</li>
+<li>处理数据并生成响应结果（该过程可能需要访问数据库等操作）</li>
+<li>发送响应数据到客户端（浏览器）</li>
+</ul>
+<h1 id="生命周期"><a href="#生命周期" class="headerlink" title="生命周期"></a>生命周期</h1><p>Servlet 生命周期可被定义为从创建直到毁灭的整个过程：</p>
+<ul>
+<li>Servlet 通过调用 init () 方法进行初始化。</li>
+<li>Servlet 调用 service() 方法来处理客户端的请求。</li>
+<li>Servlet 通过调用 destroy() 方法终止。</li>
+<li>Servlet 最后由 JVM 的垃圾回收器进行垃圾回收。</li>
+</ul>
+<h3 id="init-方法"><a href="#init-方法" class="headerlink" title="init() 方法"></a>init() 方法</h3><p>init 方法只能调用一次。它在第一次创建 Servlet 时被调用，在后续每次用户请求时不再调用。当用户调用一个 Servlet 时，就会创建一个 Servlet 实例，每一个用户请求都会产生一个新的线程，适当的时候移交给 doGet 或 doPost 方法。</p>
+<blockquote>
+<p>init() 方法简单地创建或加载一些数据，这些数据将被用于 Servlet 的整个生命周期。</p>
+</blockquote>
+<h3 id="service-方法"><a href="#service-方法" class="headerlink" title="service() 方法"></a>service() 方法</h3><p>service() 方法是执行实际任务的主要方法。Servlet 容器（即 Web 服务器）调用 service() 方法来处理来自客户端（浏览器）的请求，并把格式化的响应写回给客户端。</p>
+<p>每次服务器接收到一个 Servlet 请求时，服务器会产生一个新的线程并调用服务。service() 方法检查 HTTP 请求类型（GET、POST、PUT、DELETE 等），并在适当的时候调用 doGet、doPost、doPut，doDelete 等方法。</p>
+<blockquote>
+<p>service() 方法由容器调用，service 方法在适当的时候调用 doGet、doPost、doPut、doDelete 等方法。所以，开发者一般不用对 service() 方法做任何动作，只需要根据来自客户端的请求类型来重写 doGet() 或 doPost() 即可。</p>
+</blockquote>
+<h3 id="destroy-方法"><a href="#destroy-方法" class="headerlink" title="destroy() 方法"></a>destroy() 方法</h3><p>destroy() 方法只会被调用一次，在 Servlet 生命周期结束时被调用。destroy() 方法可以让 Servlet 关闭数据库连接、停止后台线程等清理活动。</p>
+<h3 id="一个典型的-Servlet-生命周期图"><a href="#一个典型的-Servlet-生命周期图" class="headerlink" title="一个典型的 Servlet 生命周期图"></a>一个典型的 Servlet 生命周期图</h3><p><img src="http://www.runoob.com/wp-content/uploads/2014/07/Servlet-LifeCycle.jpg" alt="生命周期图"></p>
+<ul>
+<li>第一个到达服务器的 HTTP 请求被委派到 Servlet 容器。</li>
+<li>Servlet 容器在调用 service() 方法之前加载 Servlet。</li>
+<li>然后 Servlet 容器处理由多个线程产生的多个请求，每个线程执行一个单一的 Servlet 实例的 service() 方法。</li>
+</ul>
+<h1 id="面试题"><a href="#面试题" class="headerlink" title="面试题"></a>面试题</h1><h3 id="Servlet-和-GCI-的区别"><a href="#Servlet-和-GCI-的区别" class="headerlink" title="Servlet 和 GCI 的区别"></a>Servlet 和 GCI 的区别</h3><p>Servlet 是基于 Java 编写的，处于服务器进程中，它能够通过多线程方式运行 service() 方法，一个实例可以服务于多个请求，而且一般不会销毁；而 CGI 对每个请求都生产新的进程，服务完成后销毁，所以从效率上低于 Servlet。</p>
+<h3 id="Servlet-生命周期"><a href="#Servlet-生命周期" class="headerlink" title="Servlet 生命周期"></a>Servlet 生命周期</h3><p>Servlet生命周期包括三部分：</p>
+<ul>
+<li>初始化：Web 容器加载 servlet，调用 init() 方法</li>
+<li>处理请求：当请求到达时，运行其 service() 方法。service() 自动派遣运行与请求相对应的 doXXX（doGet 或者 doPost）方法。</li>
+<li>销毁：服务结束，Web 容器会调用 servlet 的 distroy() 方法销毁 servlet。</li>
+</ul>
+<h3 id="Servle-和-JSP-的区别"><a href="#Servle-和-JSP-的区别" class="headerlink" title="Servle 和 JSP 的区别"></a>Servle 和 JSP 的区别</h3><p>服务器端有一个 JSP 容器，主要处理 JSP 页面请求，容器首先把 JSP 转成一个 Servlet，所有的 JSP 元素都会被转换为 Java 代码，然后编译这个 Servlet 类。</p>
+<p>Servlet 和 JSP 最主要的不同点在于，Servlet 的应用逻辑是在 Java 文件中，并且完全从表示层中的 HTML 里分离开来。而 JSP 的情况是 Java 和 HTML 可以组合成一个扩展名为 .jsp 的文件。JSP 侧重于视图，Servlet 主要用于控制逻辑。</p>
+<h3 id="JSP有哪些内置对象？作用是什么？"><a href="#JSP有哪些内置对象？作用是什么？" class="headerlink" title="JSP有哪些内置对象？作用是什么？"></a>JSP有哪些内置对象？作用是什么？</h3><p>JSP 共有以下 9 种基本内置组件：</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>名称</th>
+<th>作用</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td></td>
+<td>request</td>
+<td>包含用户端请求的信息</td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td>response</td>
+<td>包含服务器传回客户端的响应信息</td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td>page</td>
+<td>网页本身</td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td>pageContext</td>
+<td>管理网页属性</td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td>session</td>
+<td>与请求有关的会话</td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td>application</td>
+<td>伴随服务器的生命周期，为多个应用程序保存信息</td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td>out</td>
+<td>向客户端输出数据</td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td>config</td>
+<td>servlet的架构部件</td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td>exception</td>
+<td>针对错误页面才可使用</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h3 id="JSP有哪些基本动作？作用是什么？"><a href="#JSP有哪些基本动作？作用是什么？" class="headerlink" title="JSP有哪些基本动作？作用是什么？"></a>JSP有哪些基本动作？作用是什么？</h3><ul>
+<li>jsp:include：在页面被请求的时候引入一个文件。 </li>
+<li>jsp:useBean：寻找或者实例化一个JavaBean。 </li>
+<li>jsp:setProperty：设置 JavaBean 的属性。</li>
+<li>jsp:getProperty：输出某个 JavaBean 的属性。 </li>
+<li>jsp:forward：把请求转到一个新的页面。</li>
+<li>jsp:plugin：根据浏览器类型为 Java 插件生成 OBJECT 或 EMBED 标记</li>
+</ul>
+<h3 id="JSP-中动态-INCLUDE-与静态-INCLUDE-的区别？"><a href="#JSP-中动态-INCLUDE-与静态-INCLUDE-的区别？" class="headerlink" title="JSP 中动态 INCLUDE 与静态 INCLUDE 的区别？"></a>JSP 中动态 INCLUDE 与静态 INCLUDE 的区别？</h3><p>动态 INCLUDE 用 jsp:include 动作实现，它总是会检查所含文件中的变化，适合用于包含动态页面，并且可以带参数；静态 INCLUDE 用 include 伪码实现，不会检查所含文件的变化，适用于包含静态页面。</p>
+<h3 id="四种会话跟踪技术作用域"><a href="#四种会话跟踪技术作用域" class="headerlink" title="四种会话跟踪技术作用域"></a>四种会话跟踪技术作用域</h3><ul>
+<li>page：一个页面</li>
+<li>request：：一次请求，一个请求可能跨越多个 page</li>
+<li>session：一次会话，一个会话可能跨越多个 request</li>
+<li>application：代表与整个 Web 应用程序相关的对象和属性，跨越了整个 Web 应用程序。</li>
+</ul>
+<h1 id="参考文档"><a href="#参考文档" class="headerlink" title="参考文档"></a>参考文档</h1><p><a href="http://www.runoob.com/servlet/servlet-tutorial.html" target="_blank" rel="noopener">Servlet 教程</a></p>
+<hr>
+<ul>
+<li><p><a href="/more/donate/index.html"><strong><em><font color="red">我觉得帮助到我了, 支持你一下.</font></em></strong></a><br>   </p>
+</li>
+<li><p><a href="https://www.paypal.me/momodainfo" target="_blank" rel="noopener"><strong><em><font color="red">If you think the article is helpful to you, you can reward me through paypal.</font></em></strong></a></p>
+</li>
+</ul>
+<h3 id="Ads"><a href="#Ads" class="headerlink" title="Ads"></a>Ads</h3><p><em>这是小广告! 如果有需要, 不妨支持一下吧~</em></p>
+<blockquote>
+<p> <a target="_blank" href="https://amazon.cn/gp/search?ie=UTF8&tag=momoda-23&linkCode=ur2&linkId=4a0e4fbec0cfa8dfe540ca999d0bf999&camp=536&creative=3200&index=books&keywords=编程">这些好书您看了吗?</a><img src="//ir-cn.amazon-adsystem.com/e/ir?t=momoda-23&l=ur2&o=28" width="1" height="1" border="0" alt="" style="border:none !important; margin:0px !important;"></p>
+</blockquote>
+<blockquote>
+<p>体育&amp;户外用品推荐</p>
+</blockquote>
+<div align="center"> <a href="https://www.amazon.cn/B07HWB88Z5/dp/B07HWB88Z5/ref=as_sl_pc_tf_til?tag=momoda-23&linkCode=w00&linkId=14df5124f2165d9eb3d65252e60ed2cf&creativeASIN=B07HWB88Z5" target="_blank" rel="noopener"><img src="/se-notes/Java基础/Java-Servlet/../../../more/ads/amazon.gif" width="100%"></a> </div>
+      
+    </div><!-- .entry-content -->
+
+    <footer class="entry-meta">
+    <a href="/se-notes/Java基础/Java-Servlet/">
+    <time datetime="2019-01-03T13:49:30.000Z" class="entry-date">
+        1月 3 2019
+    </time>
+</a>
+    
+  <span class="article-delim">&#8226;</span>
+  <div class="article-category">
+  <a class="article-category-link" href="/categories/编程语言/">编程语言</a>, <a class="article-category-link" href="/categories/编程语言/java/">java</a>
+  </div>
+
+    
+  <span class="article-delim">&#8226;</span>
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/java基础/">java基础</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/java语法/">java语法</a></li></ul>
+
+    </footer>
+</article>
+
+
+
+
+
+
+  
     <article id="post-se-notes/Java基础/Java基础知识" class="post-se-notes/Java基础/Java基础知识 post type-post status-publish format-standard hentry">
     <!---->
 
@@ -95,7 +302,7 @@
         
         <div class="comments-link">
             
-            <a href="javascript:void(0);" data-url="https://wnhby.github.io/se-notes/Java基础/Java基础知识/" data-id="cjsbbbew8001ue9s6pfmoifah" class="leave-reply bdsharebuttonbox" data-cmd="more">分享</a>
+            <a href="javascript:void(0);" data-url="https://wnhby.github.io/se-notes/Java基础/Java基础知识/" data-id="cjsbez09j0030czs6msr6r69q" class="leave-reply bdsharebuttonbox" data-cmd="more">分享</a>
         </div><!-- .comments-link -->
       </header><!-- .entry-header -->
 
@@ -371,7 +578,7 @@
 <blockquote>
 <p>体育&amp;户外用品推荐</p>
 </blockquote>
-<div align="center"> <a href="https://www.amazon.cn/B07HWB88Z5/dp/B07HWB88Z5/ref=as_sl_pc_tf_til?tag=momoda-23&linkCode=w00&linkId=14df5124f2165d9eb3d65252e60ed2cf&creativeASIN=B07HWB88Z5" target="_blank" rel="noopener"><img src="/se-notes/Java基础/Java基础知识/../more/ads/amazon.gif" width="100%"></a> </div>
+<div align="center"> <a href="https://www.amazon.cn/B07HWB88Z5/dp/B07HWB88Z5/ref=as_sl_pc_tf_til?tag=momoda-23&linkCode=w00&linkId=14df5124f2165d9eb3d65252e60ed2cf&creativeASIN=B07HWB88Z5" target="_blank" rel="noopener"><img src="/se-notes/Java基础/Java基础知识/../../../more/ads/amazon.gif" width="100%"></a> </div>
       
     </div><!-- .entry-content -->
 
@@ -415,7 +622,7 @@
         
         <div class="comments-link">
             
-            <a href="javascript:void(0);" data-url="https://wnhby.github.io/se-notes/Java基础/README/" data-id="cjsbbbewf001we9s6eqwgs70e" class="leave-reply bdsharebuttonbox" data-cmd="more">分享</a>
+            <a href="javascript:void(0);" data-url="https://wnhby.github.io/se-notes/Java基础/README/" data-id="cjsbez09l0032czs613hwoi2e" class="leave-reply bdsharebuttonbox" data-cmd="more">分享</a>
         </div><!-- .comments-link -->
       </header><!-- .entry-header -->
 
@@ -530,7 +737,7 @@
 <blockquote>
 <p>体育&amp;户外用品推荐</p>
 </blockquote>
-<div align="center"> <a href="https://www.amazon.cn/B07HWB88Z5/dp/B07HWB88Z5/ref=as_sl_pc_tf_til?tag=momoda-23&linkCode=w00&linkId=14df5124f2165d9eb3d65252e60ed2cf&creativeASIN=B07HWB88Z5" target="_blank" rel="noopener"><img src="/se-notes/Java基础/README/../more/ads/amazon.gif" width="100%"></a> </div>
+<div align="center"> <a href="https://www.amazon.cn/B07HWB88Z5/dp/B07HWB88Z5/ref=as_sl_pc_tf_til?tag=momoda-23&linkCode=w00&linkId=14df5124f2165d9eb3d65252e60ed2cf&creativeASIN=B07HWB88Z5" target="_blank" rel="noopener"><img src="/se-notes/Java基础/README/../../../more/ads/amazon.gif" width="100%"></a> </div>
       
     </div><!-- .entry-content -->
 
@@ -574,7 +781,7 @@
         
         <div class="comments-link">
             
-            <a href="javascript:void(0);" data-url="https://wnhby.github.io/se-notes/Java基础/Spring基础装配/" data-id="cjsbbbewj001ye9s6cv180760" class="leave-reply bdsharebuttonbox" data-cmd="more">分享</a>
+            <a href="javascript:void(0);" data-url="https://wnhby.github.io/se-notes/Java基础/Spring基础装配/" data-id="cjsbez09p0036czs6oi1vthyd" class="leave-reply bdsharebuttonbox" data-cmd="more">分享</a>
         </div><!-- .comments-link -->
       </header><!-- .entry-header -->
 
@@ -691,7 +898,7 @@
 <blockquote>
 <p>体育&amp;户外用品推荐</p>
 </blockquote>
-<div align="center"> <a href="https://www.amazon.cn/B07HWB88Z5/dp/B07HWB88Z5/ref=as_sl_pc_tf_til?tag=momoda-23&linkCode=w00&linkId=14df5124f2165d9eb3d65252e60ed2cf&creativeASIN=B07HWB88Z5" target="_blank" rel="noopener"><img src="/se-notes/Java基础/Spring基础装配/../more/ads/amazon.gif" width="100%"></a> </div>
+<div align="center"> <a href="https://www.amazon.cn/B07HWB88Z5/dp/B07HWB88Z5/ref=as_sl_pc_tf_til?tag=momoda-23&linkCode=w00&linkId=14df5124f2165d9eb3d65252e60ed2cf&creativeASIN=B07HWB88Z5" target="_blank" rel="noopener"><img src="/se-notes/Java基础/Spring基础装配/../../../more/ads/amazon.gif" width="100%"></a> </div>
       
     </div><!-- .entry-content -->
 
@@ -735,7 +942,7 @@
         
         <div class="comments-link">
             
-            <a href="javascript:void(0);" data-url="https://wnhby.github.io/se-notes/Java基础/Spring概述/" data-id="cjsbbbewl001ze9s6jug726in" class="leave-reply bdsharebuttonbox" data-cmd="more">分享</a>
+            <a href="javascript:void(0);" data-url="https://wnhby.github.io/se-notes/Java基础/Spring概述/" data-id="cjsbez09r0038czs60ox6c1jv" class="leave-reply bdsharebuttonbox" data-cmd="more">分享</a>
         </div><!-- .comments-link -->
       </header><!-- .entry-header -->
 
@@ -839,7 +1046,7 @@
 <blockquote>
 <p>体育&amp;户外用品推荐</p>
 </blockquote>
-<div align="center"> <a href="https://www.amazon.cn/B07HWB88Z5/dp/B07HWB88Z5/ref=as_sl_pc_tf_til?tag=momoda-23&linkCode=w00&linkId=14df5124f2165d9eb3d65252e60ed2cf&creativeASIN=B07HWB88Z5" target="_blank" rel="noopener"><img src="/se-notes/Java基础/Spring概述/../more/ads/amazon.gif" width="100%"></a> </div>
+<div align="center"> <a href="https://www.amazon.cn/B07HWB88Z5/dp/B07HWB88Z5/ref=as_sl_pc_tf_til?tag=momoda-23&linkCode=w00&linkId=14df5124f2165d9eb3d65252e60ed2cf&creativeASIN=B07HWB88Z5" target="_blank" rel="noopener"><img src="/se-notes/Java基础/Spring概述/../../../more/ads/amazon.gif" width="100%"></a> </div>
       
     </div><!-- .entry-content -->
 
@@ -883,7 +1090,7 @@
         
         <div class="comments-link">
             
-            <a href="javascript:void(0);" data-url="https://wnhby.github.io/se-notes/Java基础/多线程/" data-id="cjsbbbewp0022e9s609nphyjc" class="leave-reply bdsharebuttonbox" data-cmd="more">分享</a>
+            <a href="javascript:void(0);" data-url="https://wnhby.github.io/se-notes/Java基础/多线程/" data-id="cjsbez09u003cczs6cm8n0pk5" class="leave-reply bdsharebuttonbox" data-cmd="more">分享</a>
         </div><!-- .comments-link -->
       </header><!-- .entry-header -->
 
@@ -985,7 +1192,7 @@
 <blockquote>
 <p>体育&amp;户外用品推荐</p>
 </blockquote>
-<div align="center"> <a href="https://www.amazon.cn/B07HWB88Z5/dp/B07HWB88Z5/ref=as_sl_pc_tf_til?tag=momoda-23&linkCode=w00&linkId=14df5124f2165d9eb3d65252e60ed2cf&creativeASIN=B07HWB88Z5" target="_blank" rel="noopener"><img src="/se-notes/Java基础/多线程/../more/ads/amazon.gif" width="100%"></a> </div>
+<div align="center"> <a href="https://www.amazon.cn/B07HWB88Z5/dp/B07HWB88Z5/ref=as_sl_pc_tf_til?tag=momoda-23&linkCode=w00&linkId=14df5124f2165d9eb3d65252e60ed2cf&creativeASIN=B07HWB88Z5" target="_blank" rel="noopener"><img src="/se-notes/Java基础/多线程/../../../more/ads/amazon.gif" width="100%"></a> </div>
       
     </div><!-- .entry-content -->
 
@@ -1029,7 +1236,7 @@
         
         <div class="comments-link">
             
-            <a href="javascript:void(0);" data-url="https://wnhby.github.io/se-notes/Java基础/泛型/" data-id="cjsbbbewr0023e9s6do6vo99y" class="leave-reply bdsharebuttonbox" data-cmd="more">分享</a>
+            <a href="javascript:void(0);" data-url="https://wnhby.github.io/se-notes/Java基础/泛型/" data-id="cjsbez09v003eczs6xt2kcom9" class="leave-reply bdsharebuttonbox" data-cmd="more">分享</a>
         </div><!-- .comments-link -->
       </header><!-- .entry-header -->
 
@@ -1098,7 +1305,7 @@
 <blockquote>
 <p>体育&amp;户外用品推荐</p>
 </blockquote>
-<div align="center"> <a href="https://www.amazon.cn/B07HWB88Z5/dp/B07HWB88Z5/ref=as_sl_pc_tf_til?tag=momoda-23&linkCode=w00&linkId=14df5124f2165d9eb3d65252e60ed2cf&creativeASIN=B07HWB88Z5" target="_blank" rel="noopener"><img src="/se-notes/Java基础/泛型/../more/ads/amazon.gif" width="100%"></a> </div>
+<div align="center"> <a href="https://www.amazon.cn/B07HWB88Z5/dp/B07HWB88Z5/ref=as_sl_pc_tf_til?tag=momoda-23&linkCode=w00&linkId=14df5124f2165d9eb3d65252e60ed2cf&creativeASIN=B07HWB88Z5" target="_blank" rel="noopener"><img src="/se-notes/Java基础/泛型/../../../more/ads/amazon.gif" width="100%"></a> </div>
       
     </div><!-- .entry-content -->
 
@@ -1142,7 +1349,7 @@
         
         <div class="comments-link">
             
-            <a href="javascript:void(0);" data-url="https://wnhby.github.io/se-notes/Java基础/设计模式——单例模式/" data-id="cjsbbbewu0027e9s6bsc304qz" class="leave-reply bdsharebuttonbox" data-cmd="more">分享</a>
+            <a href="javascript:void(0);" data-url="https://wnhby.github.io/se-notes/Java基础/设计模式——单例模式/" data-id="cjsbez09y003iczs6wzq3xpwl" class="leave-reply bdsharebuttonbox" data-cmd="more">分享</a>
         </div><!-- .comments-link -->
       </header><!-- .entry-header -->
 
@@ -1229,7 +1436,7 @@
 <blockquote>
 <p>体育&amp;户外用品推荐</p>
 </blockquote>
-<div align="center"> <a href="https://www.amazon.cn/B07HWB88Z5/dp/B07HWB88Z5/ref=as_sl_pc_tf_til?tag=momoda-23&linkCode=w00&linkId=14df5124f2165d9eb3d65252e60ed2cf&creativeASIN=B07HWB88Z5" target="_blank" rel="noopener"><img src="/se-notes/Java基础/设计模式——单例模式/../more/ads/amazon.gif" width="100%"></a> </div>
+<div align="center"> <a href="https://www.amazon.cn/B07HWB88Z5/dp/B07HWB88Z5/ref=as_sl_pc_tf_til?tag=momoda-23&linkCode=w00&linkId=14df5124f2165d9eb3d65252e60ed2cf&creativeASIN=B07HWB88Z5" target="_blank" rel="noopener"><img src="/se-notes/Java基础/设计模式——单例模式/../../../more/ads/amazon.gif" width="100%"></a> </div>
       
     </div><!-- .entry-content -->
 
@@ -1273,7 +1480,7 @@
         
         <div class="comments-link">
             
-            <a href="javascript:void(0);" data-url="https://wnhby.github.io/se-notes/Java基础/设计模式——工厂模式/" data-id="cjsbbbeww0029e9s6rbbabo6p" class="leave-reply bdsharebuttonbox" data-cmd="more">分享</a>
+            <a href="javascript:void(0);" data-url="https://wnhby.github.io/se-notes/Java基础/设计模式——工厂模式/" data-id="cjsbez0a0003kczs61y8ulayc" class="leave-reply bdsharebuttonbox" data-cmd="more">分享</a>
         </div><!-- .comments-link -->
       </header><!-- .entry-header -->
 
@@ -1402,7 +1609,7 @@
 <blockquote>
 <p>体育&amp;户外用品推荐</p>
 </blockquote>
-<div align="center"> <a href="https://www.amazon.cn/B07HWB88Z5/dp/B07HWB88Z5/ref=as_sl_pc_tf_til?tag=momoda-23&linkCode=w00&linkId=14df5124f2165d9eb3d65252e60ed2cf&creativeASIN=B07HWB88Z5" target="_blank" rel="noopener"><img src="/se-notes/Java基础/设计模式——工厂模式/../more/ads/amazon.gif" width="100%"></a> </div>
+<div align="center"> <a href="https://www.amazon.cn/B07HWB88Z5/dp/B07HWB88Z5/ref=as_sl_pc_tf_til?tag=momoda-23&linkCode=w00&linkId=14df5124f2165d9eb3d65252e60ed2cf&creativeASIN=B07HWB88Z5" target="_blank" rel="noopener"><img src="/se-notes/Java基础/设计模式——工厂模式/../../../more/ads/amazon.gif" width="100%"></a> </div>
       
     </div><!-- .entry-content -->
 
@@ -1446,7 +1653,7 @@
         
         <div class="comments-link">
             
-            <a href="javascript:void(0);" data-url="https://wnhby.github.io/se-notes/Java基础/设计模式——观察者模式/" data-id="cjsbbbewz002de9s6o93hyhq0" class="leave-reply bdsharebuttonbox" data-cmd="more">分享</a>
+            <a href="javascript:void(0);" data-url="https://wnhby.github.io/se-notes/Java基础/设计模式——观察者模式/" data-id="cjsbez0a2003oczs6z6ua0637" class="leave-reply bdsharebuttonbox" data-cmd="more">分享</a>
         </div><!-- .comments-link -->
       </header><!-- .entry-header -->
 
@@ -1509,165 +1716,12 @@
 <blockquote>
 <p>体育&amp;户外用品推荐</p>
 </blockquote>
-<div align="center"> <a href="https://www.amazon.cn/B07HWB88Z5/dp/B07HWB88Z5/ref=as_sl_pc_tf_til?tag=momoda-23&linkCode=w00&linkId=14df5124f2165d9eb3d65252e60ed2cf&creativeASIN=B07HWB88Z5" target="_blank" rel="noopener"><img src="/se-notes/Java基础/设计模式——观察者模式/../more/ads/amazon.gif" width="100%"></a> </div>
+<div align="center"> <a href="https://www.amazon.cn/B07HWB88Z5/dp/B07HWB88Z5/ref=as_sl_pc_tf_til?tag=momoda-23&linkCode=w00&linkId=14df5124f2165d9eb3d65252e60ed2cf&creativeASIN=B07HWB88Z5" target="_blank" rel="noopener"><img src="/se-notes/Java基础/设计模式——观察者模式/../../../more/ads/amazon.gif" width="100%"></a> </div>
       
     </div><!-- .entry-content -->
 
     <footer class="entry-meta">
     <a href="/se-notes/Java基础/设计模式——观察者模式/">
-    <time datetime="2019-01-03T13:49:30.000Z" class="entry-date">
-        1月 3 2019
-    </time>
-</a>
-    
-  <span class="article-delim">&#8226;</span>
-  <div class="article-category">
-  <a class="article-category-link" href="/categories/编程语言/">编程语言</a>, <a class="article-category-link" href="/categories/编程语言/java/">java</a>
-  </div>
-
-    
-  <span class="article-delim">&#8226;</span>
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/java基础/">java基础</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/java语法/">java语法</a></li></ul>
-
-    </footer>
-</article>
-
-
-
-
-
-
-  
-    <article id="post-se-notes/Java基础/设计模式——面向对象设计原则" class="post-se-notes/Java基础/设计模式——面向对象设计原则 post type-post status-publish format-standard hentry">
-    <!---->
-
-      <header class="entry-header">
-        
-        
-  
-    <h1 class="entry-title">
-      <a class="article-title" href="/se-notes/Java基础/设计模式——面向对象设计原则/">设计模式——面向对象设计原则</a>
-    </h1>
-  
-
-        
-        <div class="comments-link">
-            
-            <a href="javascript:void(0);" data-url="https://wnhby.github.io/se-notes/Java基础/设计模式——面向对象设计原则/" data-id="cjsbbbex8002fe9s62tkyp7r2" class="leave-reply bdsharebuttonbox" data-cmd="more">分享</a>
-        </div><!-- .comments-link -->
-      </header><!-- .entry-header -->
-
-    <div class="entry-content">
-      
-        <!-- TOC -->
-<ul>
-<li><a href="#面向对象设计原则">面向对象设计原则</a><ul>
-<li><a href="#单一职责原则">单一职责原则</a></li>
-<li><a href="#开闭原则">开闭原则</a></li>
-<li><a href="#里氏代换原则">里氏代换原则</a></li>
-<li><a href="#依赖倒转原则">依赖倒转原则</a></li>
-<li><a href="#接口隔离原则">接口隔离原则</a></li>
-<li><a href="#合成复用原则">合成复用原则</a></li>
-<li><a href="#迪米特法则">迪米特法则</a><ul>
-<li><a href="#ads">Ads</a></li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-<!-- /TOC -->
-<h1 id="面向对象设计原则"><a href="#面向对象设计原则" class="headerlink" title="面向对象设计原则"></a>面向对象设计原则</h1><p>对于面向对象软件系统的设计而言，在支持可维护性的同时，提高系统的可复用性是一个至关重要的问题，如何同时提高一个软件系统的可维护性和可复用性是面向对象设计需要解决的核心问题之一。在面向对象设计中，可维护性的复用是以设计原则为基础的。每一个原则都蕴含一些面向对象设计的思想，可以从不同的角度提升一个软件结构的设计水平。</p>
-<table>
-<thead>
-<tr>
-<th>设计原则名称</th>
-<th>定义</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>单一职责原则 (Single Responsibility Principle, SRP)</td>
-<td>一个类只负责一个功能领域中的相应职责</td>
-</tr>
-<tr>
-<td>开闭原则 (Open-Closed Principle, OCP)</td>
-<td>软件实体应对扩展开放，而对修改关闭</td>
-</tr>
-<tr>
-<td>里氏代换原则 (Liskov Substitution Principle, LSP)</td>
-<td>所有引用基类对象的地方能够透明地使用其子类的对象</td>
-</tr>
-<tr>
-<td>依赖倒转原则 (Dependence Inversion Principle, DIP)</td>
-<td>抽象不应该依赖于细节，细节应该依赖于抽象</td>
-</tr>
-<tr>
-<td>接口隔离原则 (Interface Segregation Principle, ISP)</td>
-<td>使用多个专门的接口，而不使用单一的总接口</td>
-</tr>
-<tr>
-<td>合成复用原则 (Composite Reuse Principle, CRP)</td>
-<td>尽量使用对象组合，而不是继承来达到复用的目的</td>
-</tr>
-<tr>
-<td>迪米特法则 (Law of Demeter, LoD)</td>
-<td>一个软件实体应当尽可能少地与其他实体发生相互作用</td>
-</tr>
-</tbody>
-</table>
-<h2 id="单一职责原则"><a href="#单一职责原则" class="headerlink" title="单一职责原则"></a>单一职责原则</h2><p>单一职责原则(Single Responsibility Principle, SRP)：一个类只负责一个功能领域中的相应职责。即对于一个类而言，应该只有一个引起它变化的原因。</p>
-<p>单一职责原则是最简单的面向对象设计原则，它用于控制类的粒度大小。在软件系统中，一个类（大到模块，小到方法）承担的职责越多，它被复用的可能性就越小，而且一个类承担的职责过多，就相当于将这些职责耦合在一起，当其中一个职责变化时，可能会影响其他职责的运作，因此要将这些职责进行分离。</p>
-<h2 id="开闭原则"><a href="#开闭原则" class="headerlink" title="开闭原则"></a>开闭原则</h2><p>开闭原则(Open-Closed Principle, OCP)：一个软件实体应当对扩展开放，对修改关闭。即软件实体应尽量在不修改原有代码的情况下进行扩展。</p>
-<p>任何软件都需要面临一个很重要的问题，即它们的需求会随时间的推移而发生变化。当软件系统需要面对新的需求时，我们应该尽量保证系统的设计框架是稳定的。如果一个软件设计符合开闭原则，那么可以非常方便地对系统进行扩展，而且在扩展时无须修改现有代码，使得软件系统在拥有适应性和灵活性的同时具备较好的稳定性和延续性。</p>
-<p>为了满足开闭原则，需要对系统进行抽象化设计，抽象化是开闭原则的关键。如果需要修改系统的行为，无须对抽象层进行任何改动，只需要增加新的具体类来实现新的业务功能，即可实现在不修改已有代码的基础上扩展系统的功能，达到开闭原则的要求。</p>
-<h2 id="里氏代换原则"><a href="#里氏代换原则" class="headerlink" title="里氏代换原则"></a>里氏代换原则</h2><p>里氏代换原则(Liskov Substitution Principle, LSP)：所有引用基类（父类）的地方必须能透明地使用其子类的对象。即在软件中将一个基类对象替换成它的子类对象，程序将不会产生任何错误和异常。</p>
-<p>里氏代换原则是实现开闭原则的重要方式之一，由于使用基类对象的地方都可以使用子类对象，因此在程序中尽量使用基类类型来对对象进行定义，而在运行时再确定其子类类型，用子类对象来替换父类对象。</p>
-<p>在使用里氏代换原则时需要注意如下几个问题：</p>
-<ul>
-<li>子类的所有方法必须在父类中声明，或子类必须实现父类中声明的所有方法。根据里氏代换原则，为了保证系统的扩展性，在程序中通常使用父类来进行定义，如果一个方法只存在子类中，在父类中不提供相应的声明，则无法在以父类定义的对象中使用该方法。</li>
-<li>我们在运用里氏代换原则时，尽量把父类设计为抽象类或者接口，让子类继承父类或实现父接口，并实现在父类中声明的方法，运行时，子类实例替换父类实例，我们可以很方便地扩展系统的功能，同时无须修改原有子类的代码，增加新的功能可以通过增加一个新的子类来实现。里氏代换原则是开闭原则的具体实现手段之一。</li>
-</ul>
-<h2 id="依赖倒转原则"><a href="#依赖倒转原则" class="headerlink" title="依赖倒转原则"></a>依赖倒转原则</h2><p>依赖倒转原则(Dependency Inversion Principle, DIP)：抽象不应该依赖于细节，细节应当依赖于抽象。换言之，要针对接口编程，而不是针对实现编程。</p>
-<p>依赖倒转原则要求我们在程序代码中传递参数时或在关联关系中，尽量引用层次高的抽象层类，即使用接口和抽象类进行变量类型声明、参数类型声明、方法返回类型声明，以及数据类型的转换等，而不要用具体类来做这些事情。为了确保该原则的应用，一个具体类应当只实现接口或抽象类中声明过的方法，而不要给出多余的方法，否则将无法调用到在子类中增加的新方法。</p>
-<p>在引入抽象层后，系统将具有很好的灵活性，在程序中尽量使用抽象层进行编程，而将具体类写在配置文件中，这样一来，如果系统行为发生变化，只需要对抽象层进行扩展，并修改配置文件，而无须修改原有系统的源代码，在不修改的情况下来扩展系统的功能，满足开闭原则的要求。</p>
-<p>在实现依赖倒转原则时，我们需要针对抽象层编程，而将具体类的对象通过依赖注入(DependencyInjection, DI)的方式注入到其他对象中，依赖注入是指当一个对象要与其他对象发生依赖关系时，通过抽象来注入所依赖的对象。常用的注入方式有三种，分别是：构造注入，设值注入（Setter注入）和接口注入。构造注入是指通过构造函数来传入具体类的对象，设值注入是指通过Setter方法来传入具体类的对象，而接口注入是指通过在接口中声明的业务方法来传入具体类的对象。这些方法在定义时使用的是抽象类型，在运行时再传入具体类型的对象，由子类对象来覆盖父类对象。</p>
-<h2 id="接口隔离原则"><a href="#接口隔离原则" class="headerlink" title="接口隔离原则"></a>接口隔离原则</h2><p>接口隔离原则(Interface Segregation Principle, ISP)：使用多个专门的接口，而不使用单一的总接口，即客户端不应该依赖那些它不需要的接口。</p>
-<p>根据接口隔离原则，当一个接口太大时，我们需要将它分割成一些更细小的接口，使用该接口的客户端仅需知道与之相关的方法即可。每一个接口应该承担一种相对独立的角色。</p>
-<p>在使用接口隔离原则时，我们需要注意控制接口的粒度，接口不能太小，如果太小会导致系统中接口泛滥，不利于维护；接口也不能太大，太大的接口将违背接口隔离原则，灵活性较差，使用起来很不方便。一般而言，接口中仅包含为某一类用户定制的方法即可，不应该强迫客户依赖于那些它们不用的方法。</p>
-<h2 id="合成复用原则"><a href="#合成复用原则" class="headerlink" title="合成复用原则"></a>合成复用原则</h2><p>合成复用原则(Composite Reuse Principle, CRP)：尽量使用对象组合，而不是继承来达到复用的目的。简言之：复用时要尽量使用组合/聚合关系（关联关系），少用继承。</p>
-<p>在面向对象设计中，可以通过两种方法在不同的环境中复用已有的设计和实现，即通过组合/聚合关系或通过继承，但首先应该考虑使用组合/聚合，组合/聚合可以使系统更加灵活，降低类与类之间的耦合度，一个类的变化对其他类造成的影响相对较少；其次才考虑继承，在使用继承时，需要严格遵循里氏代换原则，有效使用继承会有助于对问题的理解，降低复杂度，而滥用继承反而会增加系统构建和维护的难度以及系统的复杂度，因此需要慎重使用继承复用。</p>
-<p>通过继承来进行复用的主要问题在于继承复用会破坏系统的封装性，因为继承会将基类的实现细节暴露给子类，由于基类的内部细节通常对子类来说是可见的，所以这种复用又称“白箱”复用，如果基类发生改变，那么子类的实现也不得不发生改变；从基类继承而来的实现是静态的，不可能在运行时发生改变，没有足够的灵活性；而且继承只能在有限的环境中使用（如类没有声明为不能被继承）。</p>
-<h2 id="迪米特法则"><a href="#迪米特法则" class="headerlink" title="迪米特法则"></a>迪米特法则</h2><p>迪米特法则(Law of Demeter, LoD)：一个软件实体应当尽可能少地与其他实体发生相互作用。</p>
-<p>如果一个系统符合迪米特法则，那么当其中某一个模块发生修改时，就会尽量少地影响其他模块，扩展会相对容易，这是对软件实体之间通信的限制，迪米特法则要求限制软件实体之间通信的宽度和深度。迪米特法则可降低系统的耦合度，使类与类之间保持松散的耦合关系。</p>
-<p>在迪米特法则中，对于一个对象，其朋友包括以下几类：</p>
-<ul>
-<li>当前对象本身(this)；</li>
-<li>以参数形式传入到当前对象方法中的对象；</li>
-<li>当前对象的成员对象；</li>
-<li>如果当前对象的成员对象是一个集合，那么集合中的元素也都是朋友；</li>
-<li>当前对象所创建的对象。</li>
-</ul>
-<p>任何一个对象，如果满足上面的条件之一，就是当前对象的“朋友”，否则就是“陌生人”。在应用迪米特法则时，一个对象只能与直接朋友发生交互，不要与“陌生人”发生直接交互，这样做可以降低系统的耦合度，一个对象的改变不会给太多其他对象带来影响。</p>
-<hr>
-<ul>
-<li><p><a href="/more/donate/index.html"><strong><em><font color="red">我觉得帮助到我了, 支持你一下.</font></em></strong></a><br>   </p>
-</li>
-<li><p><a href="https://www.paypal.me/momodainfo" target="_blank" rel="noopener"><strong><em><font color="red">If you think the article is helpful to you, you can reward me through paypal.</font></em></strong></a></p>
-</li>
-</ul>
-<h3 id="Ads"><a href="#Ads" class="headerlink" title="Ads"></a>Ads</h3><p><em>这是小广告! 如果有需要, 不妨支持一下吧~</em></p>
-<blockquote>
-<p> <a target="_blank" href="https://amazon.cn/gp/search?ie=UTF8&tag=momoda-23&linkCode=ur2&linkId=4a0e4fbec0cfa8dfe540ca999d0bf999&camp=536&creative=3200&index=books&keywords=编程">这些好书您看了吗?</a><img src="//ir-cn.amazon-adsystem.com/e/ir?t=momoda-23&l=ur2&o=28" width="1" height="1" border="0" alt="" style="border:none !important; margin:0px !important;"></p>
-</blockquote>
-<blockquote>
-<p>体育&amp;户外用品推荐</p>
-</blockquote>
-<div align="center"> <a href="https://www.amazon.cn/B07HWB88Z5/dp/B07HWB88Z5/ref=as_sl_pc_tf_til?tag=momoda-23&linkCode=w00&linkId=14df5124f2165d9eb3d65252e60ed2cf&creativeASIN=B07HWB88Z5" target="_blank" rel="noopener"><img src="/se-notes/Java基础/设计模式——面向对象设计原则/../more/ads/amazon.gif" width="100%"></a> </div>
-      
-    </div><!-- .entry-content -->
-
-    <footer class="entry-meta">
-    <a href="/se-notes/Java基础/设计模式——面向对象设计原则/">
     <time datetime="2019-01-03T13:49:30.000Z" class="entry-date">
         1月 3 2019
     </time>
@@ -1725,15 +1779,15 @@
           </li>
         
           <li>
-            <a href="/se-notes/Linux基础/README/">Linux基础-README</a>
-          </li>
-        
-          <li>
-            <a href="/se-notes/云计算实践/区块链相关/区块链简介/">区块链简介</a>
+            <a href="/se-notes/Java基础/集合框架/">集合框架</a>
           </li>
         
           <li>
             <a href="/se-notes/云计算实践/集群高可用方案/Heartbeat双机热备方案/">Heartbeat双机热备方案</a>
+          </li>
+        
+          <li>
+            <a href="/se-notes/云计算实践/集群高可用方案/HAProxy+Keepalived高可用方案/">HAProxy+Keepalived高可用方案</a>
           </li>
         
       </ul>
@@ -1754,7 +1808,7 @@
   <aside class="widget">
     <h3 class="widget-title">Categories</h3>
     <div class="widget-content">
-      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Graphics/">Graphics</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Linux/">Linux</a><span class="category-list-count">7</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Linux/Shell/">Shell</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Linux/linux基础/">linux基础</a><span class="category-list-count">6</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/协议证书/">协议证书</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/协议证书/openssl/">openssl</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/数据库/">数据库</a><span class="category-list-count">4</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/数据库/数据库基础/">数据库基础</a><span class="category-list-count">3</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/框架/">框架</a><span class="category-list-count">9</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/框架/python-web应用框架/">python-web应用框架</a><span class="category-list-count">9</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/版本控制/">版本控制</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/版本控制/Git/">Git</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/编程语言/">编程语言</a><span class="category-list-count">13</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/编程语言/java/">java</a><span class="category-list-count">13</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/网络通讯/">网络通讯</a><span class="category-list-count">11</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/网络通讯/大小端/">大小端</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/网络通讯/计算机网络基础/">计算机网络基础</a><span class="category-list-count">10</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/路由器/">路由器</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/路由器/openwrt/">openwrt</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/通用技术/">通用技术</a><span class="category-list-count">13</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/通用技术/Docker/">Docker</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/通用技术/云计算实践/">云计算实践</a><span class="category-list-count">11</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/通用技术/云计算实践/kubernetes部署/">kubernetes部署</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/通用技术/云计算实践/区块链/">区块链</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/通用技术/云计算实践/集群高可用方案/">集群高可用方案</a><span class="category-list-count">4</span></li></ul></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/默认/">默认</a><span class="category-list-count">1</span></li></ul>
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Graphics/">Graphics</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Linux/">Linux</a><span class="category-list-count">7</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Linux/Shell/">Shell</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Linux/linux基础/">linux基础</a><span class="category-list-count">6</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/协议证书/">协议证书</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/协议证书/openssl/">openssl</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/数据库/">数据库</a><span class="category-list-count">4</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/数据库/数据库基础/">数据库基础</a><span class="category-list-count">3</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/框架/">框架</a><span class="category-list-count">9</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/框架/python-web应用框架/">python-web应用框架</a><span class="category-list-count">9</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/框架/python-web应用框架/flask/">flask</a><span class="category-list-count">9</span></li></ul></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/版本控制/">版本控制</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/版本控制/Git/">Git</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/编程语言/">编程语言</a><span class="category-list-count">13</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/编程语言/java/">java</a><span class="category-list-count">13</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/网络通讯/">网络通讯</a><span class="category-list-count">11</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/网络通讯/大小端/">大小端</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/网络通讯/计算机网络基础/">计算机网络基础</a><span class="category-list-count">10</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/路由器/">路由器</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/路由器/openwrt/">openwrt</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/通用技术/">通用技术</a><span class="category-list-count">13</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/通用技术/Docker/">Docker</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/通用技术/云计算实践/">云计算实践</a><span class="category-list-count">11</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/通用技术/云计算实践/kubernetes部署/">kubernetes部署</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/通用技术/云计算实践/区块链/">区块链</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/通用技术/云计算实践/集群高可用方案/">集群高可用方案</a><span class="category-list-count">4</span></li></ul></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/默认/">默认</a><span class="category-list-count">1</span></li></ul>
     </div>
   </aside>
 

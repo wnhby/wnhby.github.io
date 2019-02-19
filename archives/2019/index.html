@@ -95,7 +95,7 @@
         
         <div class="comments-link">
             
-            <a href="javascript:void(0);" data-url="https://wnhby.github.io/系统剩余空间查看/" data-id="cjsa4yy7p0014hjs6udawc60s" class="leave-reply bdsharebuttonbox" data-cmd="more">分享</a>
+            <a href="javascript:void(0);" data-url="https://wnhby.github.io/系统剩余空间查看/" data-id="cjsbez049000kczs6fmzvghwg" class="leave-reply bdsharebuttonbox" data-cmd="more">分享</a>
         </div><!-- .comments-link -->
       </header><!-- .entry-header -->
 
@@ -149,7 +149,7 @@
         
         <div class="comments-link">
             
-            <a href="javascript:void(0);" data-url="https://wnhby.github.io/数据库分类/" data-id="cjsa4yy7g0010hjs6owv4t4v0" class="leave-reply bdsharebuttonbox" data-cmd="more">分享</a>
+            <a href="javascript:void(0);" data-url="https://wnhby.github.io/数据库分类/" data-id="cjsbez040000eczs6sswwgyu7" class="leave-reply bdsharebuttonbox" data-cmd="more">分享</a>
         </div><!-- .comments-link -->
       </header><!-- .entry-header -->
 
@@ -201,7 +201,7 @@
 
 
   
-    <article id="post-se-notes/Linux基础/README" class="post-se-notes/Linux基础/README post type-post status-publish format-standard hentry">
+    <article id="post-se-notes/Java基础/集合框架" class="post-se-notes/Java基础/集合框架 post type-post status-publish format-standard hentry">
     <!---->
 
       <header class="entry-header">
@@ -209,14 +209,14 @@
         
   
     <h1 class="entry-title">
-      <a class="article-title" href="/se-notes/Linux基础/README/">Linux基础-README</a>
+      <a class="article-title" href="/se-notes/Java基础/集合框架/">集合框架</a>
     </h1>
   
 
         
         <div class="comments-link">
             
-            <a href="javascript:void(0);" data-url="https://wnhby.github.io/se-notes/Linux基础/README/" data-id="cjsbbbexj002le9s6ijaf02cm" class="leave-reply bdsharebuttonbox" data-cmd="more">分享</a>
+            <a href="javascript:void(0);" data-url="https://wnhby.github.io/se-notes/Java基础/集合框架/" data-id="cjsbez0a7003uczs6a6ca0576" class="leave-reply bdsharebuttonbox" data-cmd="more">分享</a>
         </div><!-- .comments-link -->
       </header><!-- .entry-header -->
 
@@ -224,215 +224,15 @@
       
         <!-- TOC -->
 <ul>
-<li><a href="#简介">简介</a></li>
-<li><a href="#操作系统的特征">操作系统的特征</a></li>
-<li><a href="#操作系统目标">操作系统目标</a></li>
-<li><a href="#操作系统的运行机制">操作系统的运行机制</a></li>
-<li><a href="#系统调用">系统调用</a><ul>
-<li><a href="#标准库函数">标准库函数</a></li>
-</ul>
-</li>
-<li><a href="#中断和异常">中断和异常</a></li>
-<li><a href="#用户态内核态">用户态、内核态</a></li>
-<li><a href="#-操作系统发展">* 操作系统发展</a><pre><code>- [手工操作阶段（此阶段无操作系统）](#手工操作阶段此阶段无操作系统)
-- [批处理阶段](#批处理阶段)
-- [分时操作系统](#分时操作系统)
-- [实时操作系统](#实时操作系统)
-- [分布式计算机系统](#分布式计算机系统)
-- [Ads](#ads)
-</code></pre></li>
-</ul>
-<!-- /TOC -->
-<h1 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h1><p>操作系统（Operating System, OS）是指控制和管理整个计算机系统的硬件和软件资源，并合理地组织调度计算机的工作和资源的分配，以提供给用户和其他软件方便的接口和环境的程序集合。计算机操作系统是随着计算机研究和应用的发展逐步形成并发展起来的，它是计算机系统中最基本的系统软件。</p>
-<blockquote>
-<p>操作系统三大功能：资源管理与分配、调度工作流程、封装接口与提供环境</p>
-</blockquote>
-<h1 id="操作系统的特征"><a href="#操作系统的特征" class="headerlink" title="操作系统的特征"></a>操作系统的特征</h1><p>操作系统是一种系统软件，但与其他的系统软件和应用软件有很大的不同，它有自己的基本特征。操作系统的基本特征包括<strong>并发</strong>、<strong>共享</strong>、<strong>虚拟</strong>和<strong>异步</strong>。</p>
-<ul>
-<li>并发（Concurrence）：并发是指多个事件在同一时间间隔内发生。操作系统的并发性是指计算机系统中同时存在多个运行着的程序，因此它具有处理和调度多个程序同时执行的能力。在操作系统中，引入进程的目的是使程序能并发执行。</li>
-<li>共享（Sharing）：资源共享是指系统中的资源可供内存中多个并发执行的进程共同使用。共享可分为以下两种资源共享方式：<ul>
-<li>互斥共享方式：系统中的某些资源，如打印机、磁带机，虽然它们可以提供给多个进程使用，但为使所打印或记录的结果不致造成混淆，应规定在一段时间内只允许一个进程访问该资源。</li>
-<li>同时访问方式：系统中还有另一类资源，允许在一段时间内由多个进程同时对它们进行访问。这里所谓的“同时”往往是宏观上的，而在微观上，这些进程可能是交替地对该资源进行访问即 “分时共享”。典型的可供多个进程“同时”访问的资源是磁盘设备，一些文件也可以被“同时”共享，即若干个用户同时访问该文件。</li>
-</ul>
-</li>
-</ul>
-<blockquote>
-<p>PS：并发和共享是操作系统两个最基本的特征，这两者之间又是互为存在条件的：资源共享是以程序的并发为条件的，若系统不允许程序并发执行，则自然不存在资源共享问题；若系统不能对资源共享实施有效的管理，也必将影响到程序的并发执行，甚至根本无法并发执行。</p>
-</blockquote>
-<ul>
-<li><p>虛拟（Virtual）：虚拟是指把一个物理上的实体变为若干个逻辑上的对应物。用于实现虚拟的技术，称为虚拟技术。在操作系统中利用了多种虚拟技术，分别用来实现虚拟处理器、虚拟内存和虚拟外部设备等。</p>
-<ul>
-<li>如在虚拟处理器技术中，利用多道程序设计技术（即同时把多个程序放入内存，并允许它们交替在CPU中运行），把一个物理上的 CPU 虚拟为多个逻辑上的 CPU 。</li>
-</ul>
-</li>
-<li><p>异步（Asynchronism）：在多道程序环境下，允许多个程序并发执行，但由于资源有限，进程的执行不是一贯到底，而是走走停停，以不可预知的速度向前推进，这就是进程的异步性。</p>
-</li>
-</ul>
-<h1 id="操作系统目标"><a href="#操作系统目标" class="headerlink" title="操作系统目标"></a>操作系统目标</h1><p>为了给多道程序提供良好的运行环境，操作系统作为计算机系统资源的管理者具有以下几方面的功能：</p>
-<ul>
-<li>处理机管理（进程线程管理）：在多道程序环境下，处理机的分配和运行都以进程（或线程）为基本单位，因而对处理机的管理可归结为对进程（或线程）的管理。并发时在计算机内同时运行多个进程，进程何时创建、何时撤销、如何管理、如何避免冲突、合理共享是进程管理的主要任务。</li>
-<li>存储器管理：存储器管理是为了给多道程序的运行提供良好的环境，方便用户使用以及提高内存的利用率。</li>
-<li>文件管理：计算机中的信息都是以文件的形式存在的，操作系统中负责文件管理的部分称为文件系统。</li>
-<li>设备管理：设备管理的主要任务是完成用户的I/O请求，方便用户使用各种设备。</li>
-</ul>
-<p>为方便用户使用计算机，操作系统还提供了用户接口。操作系统提供的接口主要分为两类，一类是命令接口，用户利用这些操作命令来组织和控制作业的执行；另一类是程序接口，编程人员可以使用它们来请求操作系统服务。</p>
-<h1 id="操作系统的运行机制"><a href="#操作系统的运行机制" class="headerlink" title="操作系统的运行机制"></a>操作系统的运行机制</h1><p>计算机系统中，通常 CPU 执行两种不同性质的程序：一种是操作系统内核程序；另一种是用户自编程序或系统外层的应用程序。对操作系统而言，这两种程序的作用不同，前者是后者的管理者，因此“管理程序”要执行一些特权指令，而“被管理程序”出于安全考虑不能执行这些指令。所谓特权指令，是指计算机中不允许用户直接使用的指令，如 I/O 指令、 置中断指令，存取用于内存保护的寄存器、送程序状态字到程序状态字寄存器等指令。操作系统在具体实现上划分了用户态和核心态，以严格区分两类程序。</p>
-<p>内核是计算机上配置的底层软件，是计算机功能的延伸。不同系统对内核的定义稍有区别，大多数<strong>操作系统内核</strong>包括以下四个方面：</p>
-<ul>
-<li><p>时钟管理：在计算机的各种部件中，时钟是最关键的设备。操作系统需要通过时钟管理，向用户提供标准的系统时间。另外通过时钟中断的管理，可以实现进程的切换。诸如，在分时操作系统中，釆用时间片轮转调度的实现；在实时系统中，按截止时间控制运行的实现；在批处理系统中，通过时钟管理来衡量一个作业的运行程度等。</p>
-</li>
-<li><p>中断机制：引入中断技术的初衷是提高多道程序运行环境中 CPU 的利用率，而且主要是针对外部设备的。后来逐步得到发展，形成了多种类型，成为操作系统各项操作的基础。例如，键盘或鼠标信息的输入、进程的管理和调度、系统功能的调用、设备驱动、文件访问等，无不依赖于中断机制。可以说，现代操作系统是靠中断驱动的软件。</p>
-</li>
-<li><p>原语：按层次结构设计的操作系统，底层是一些可被调用的公用小程序，它们各自完成一个规定的操作。其特点是：它们处于操作系统的最底层，是最接近硬件的部分。这些程序的运行具有原子性，运行时间较短，而且调用频繁。通常把具有这些特点的程序称为原语（Atomic Operation）。定义原语的直接方法是关闭中断，让它的所有动作不可分割地进行完再打开中断。系统中的设备驱动、CPU 切换、进程通信等功能中的部分操作都可以定义为原语，使它们成为内核的组成部分。</p>
-</li>
-<li><p>系统控制的数据结构及处理：系统中用来登记状态信息的数据结构很多，比如作业控制块、进程控制块(PCB)、设备控制块、各类链表、消息队列、缓冲区、空闲区登记表、内存分配表等。为了实现有效的管理，系统需要一些基本的操作，常见的操作有以下三种：</p>
-<ul>
-<li>进程管理：进程状态管理、进程调度和分派、创建与撤销进程控制块等。</li>
-<li>存储器管理：存储器的空间分配和回收、内存信息保护程序、代码对换程序等。</li>
-<li>设备管理：缓冲区管理、设备分配和回收等。</li>
-</ul>
-</li>
-</ul>
-<h1 id="系统调用"><a href="#系统调用" class="headerlink" title="系统调用"></a>系统调用</h1><p>所有的操作系统都提供多种服务的入口点，由此程序向内核请求服务。各种版本的 UNIX 实现都提供良好定义、数量有限、直接进入内核的入口点，这些入口点被称为系统调用。简单来说，系统调用就是操作系统提供的用于实现系统各种核心功能的许多子程序，如 read()、write()、open() 等。</p>
-<p>这些系统调用按功能大致可分为如下几类：</p>
-<ul>
-<li>设备管理。完成设备的请求或释放，以及设备启动等功能。</li>
-<li>文件管理。完成文件的读、写、创建及删除等功能。</li>
-<li>进程控制。完成进程的创建、撤销、阻塞及唤醒等功能。</li>
-<li>进程通信。完成进程之间的消息传递或信号传递等功能。</li>
-<li>内存管理。完成内存的分配、回收以及获取作业占用内存区大小及始址等功能。</li>
-</ul>
-<p>显然，系统调用运行在系统的核心态。通过系统调用的方式来使用系统功能，可以保证系统的稳定性和安全性，防止用户随意更改或访问系统的数据或命令。系统调用命令是由操作系统提供的一个或多个子程序模块实现的。</p>
-<p>这样，操作系统的运行环境可以理解为：用户通过操作系统运行上层程序（如系统提供的命令解释程序或用户自编程序），而这个上层程序的运行依赖于操作系统的底层管理程序提供服务支持，当需要管理程序服务时，系统则通过<code>硬件中断</code>机制进入核心态，运行底层管理程序；也可能是程序运行<code>出现异常</code>情况，被动地需要底层管理程序的服务，这时就通过异常处理来进入核心态。当底层管理程序运行结束时，用户程序需要继续运行，则通过相应的保存的程序现场退出中断处理程序或异常处理程序，返回断点处继续执行。</p>
-<p>下面列举一些由用户态转向核心态的例子：</p>
-<ul>
-<li>用户程序要求操作系统的服务，即系统调用。</li>
-<li>发生一次中断。</li>
-<li>用户程序中产生了一个错误状态。</li>
-<li>用户程序中企图执行一条特权指令。</li>
-<li>从核心态转向用户态由一条指令实现，这条指令也是特权命令。一般是中断返回指令。</li>
-</ul>
-<p>注意：由用户态进入核心态，不仅仅是状态需要切换。而且，所使用的堆栈也可能需要由用户堆栈切换为系统堆栈，但这个系统堆栈也是属于该进程的。</p>
-<h2 id="标准库函数"><a href="#标准库函数" class="headerlink" title="标准库函数"></a>标准库函数</h2><p>库函数顾名思义是把函数放到库里，是把一些常用到的函数编完放到一个文件里，供别人用。libc 就是一个 C 标准库，里面存放一些基本函数，这些基本函数都是被标准化了的，而且这些函数通常都是用汇编直接实现的，如 printf、scanf 等。</p>
-<p>标准库函数构建在系统调用接口之上，应用程序既可以使用标准库函数，也可以使用系统调用。如下图：</p>
-<p><img src="https://camo.githubusercontent.com/382fca944c80316687d2a8d2dfd54fadc17e8525/687474703a2f2f3778726c75392e636f6d312e7a302e676c622e636c6f7564646e2e636f6d2f4c696e75785f4f535f322e706e67" alt="enter image description here"></p>
-<p>系统调用和标准库函数的区别如下：</p>
-<ul>
-<li>从程序完成的功能来看，函数库提供的函数通常不需要操作系统的服务。系统调用是要求操作系统为用户提供某种服务，通常是涉及系统的硬件资源和一些敏感的软件资源等。</li>
-<li>从程序执行的空间来说，标准库函数是在用户空间内执行的，除非函数涉及到 I/O 操作等，一般是不会切到内核态的。系统调用则运行于内核空间。</li>
-<li>从程序的可移植性的角度来看，相对于系统调用，C 语言的标准备函数库具备较高的可移植性。因为在所有的 ANSI C 编译器版本中，标准库函数是相同的；系统调用与系统有关，各个操作系统的系统调用是不同的。</li>
-</ul>
-<p>［<a href="http://www.nowcoder.com/questionTerminal/06be659534644b8eb3f164f9f1085a9d" target="_blank" rel="noopener">系统调用函数</a>］  </p>
-<h1 id="中断和异常"><a href="#中断和异常" class="headerlink" title="中断和异常"></a>中断和异常</h1><ul>
-<li>中断(Interruption)，也称外中断，指来自 CPU 执行指令以外的事件的发生，如设备发出的 I/O 结束中断，表示设备输入/输出处理已经完成，希望处理机能够向设备发下一个输入 / 输出请求，同时让完成输入/输出后的程序继续运行。时钟中断，表示一个固定的时间片已到，让处理机处理计时、启动定时运行的任务等。这一类中断通常是与当前程序运行无关的事件，即它们与当前处理机运行的程序无关。</li>
-<li>异常(Exception)，也称内中断、例外或陷入(Trap)，指源自 CPU 执行指令内部的事件，如程序的非法操作码、地址越界、算术溢出、虚存系统的缺页以及专门的陷入指令等引起的事件。对异常的处理一般要依赖于当前程序的运行现场，而且异常不能被屏蔽，一旦出现应立即处理。</li>
-</ul>
-<h1 id="用户态、内核态"><a href="#用户态、内核态" class="headerlink" title="用户态、内核态"></a>用户态、内核态</h1><p>操作系统的很多操作会消耗系统的物理资源，例如创建一个新进程时，要做很多底层的工作，如分配物理内存，从父进程拷贝相关信息，拷贝设置页目录、页表等，这些操作显然不能让任何程序都可以做。</p>
-<p>我们知道，Intel 的 X86 架构的 CPU 提供了 0 到 3 四个特权级（在CPU的设计中，用户态指非特权状态。在此状态下，执行的代码被硬件限定，不能进行某些操作，比如写入其他进程的存储空间，以防止给操作系统带来安全隐患）。</p>
-<p>在 Linux 操作系统操作系统的设计中主要采用了0和3两个特权级，也就是我们通常所说的内核态和用户态。运行于用户态的进程可以执行的操作和访问的资源都受到极大的限制，而运行于内核态的进程则可以执行任何操作并且在资源的使用上也没有限制。</p>
-<p>当一个任务（进程）陷入内核代码中执行时，我们就称进程处于内核运行态（或简称为内核态）。此时处理器处于特权级最高的（0 级）内核代码中执行。每个进程都有自己的内核栈和用户栈，当进程处于内核态时，执行的内核代码会使用当前进程的内核栈。当进程在执行用户自己的代码时，则称其处于用户运行态（用户态），此时处理器在特权级最低的（3 级）用户代码中运行。简单来说在内核态下， CPU 可执行任何指令，在用户态下 CPU 只能执行非特权指令。</p>
-<p>Linux 进程的 4GB 地址空间，3G-4G 是内核态的地址空间，存放整个内核的代码和所有的内核模块，以及内核所维护的数据。用户运行一个程序，该程序所创建的进程运行在用户态，如果要执行文件操作，网络数据发送等操作，必须通过 write，send 等系统调用，这些系统调用会调用内核中的代码来完成操作。这时必须切换到 Ring 0，然后进入 3GB-4GB 中的内核地址空间去执行这些代码完成操作，完成后切换回Ring 3，回到用户态。当程序处于内核态时可以随意进入用户态。</p>
-<p>很多程序开始时运行于用户态，但在执行的过程中，一些操作需要在内核权限下才能执行，这就涉及到一个从用户态切换到内核态的过程。用户态切换到内核态的 3 种方式：</p>
-<ul>
-<li>系统调用：这是处于用户态的进程主动请求切换到内核态的一种方式。用户态的进程通过系统调用申请使用操作系统提供的系统调用服务例程来处理任务</li>
-<li>产生异常：CPU 执行运行在用户态下的程序时，发生了某些事先不可知的异常，这时会切换到内核态，如缺页异常</li>
-<li>外围设备的中断：当外围设备完成用户请求的操作后，会向 CPU 发出相应的中断信号，这时 CPU 会暂停执行下一条即将要执行的指令转而去执行与中断信号对应的处理程序，如果先前执行的指令是用户态下的程序，那么这个转换的过程自然也就发生了由用户态到内核态的切换    </li>
-</ul>
-<h1 id="操作系统发展"><a href="#操作系统发展" class="headerlink" title="* 操作系统发展"></a>* 操作系统发展</h1><h3 id="手工操作阶段（此阶段无操作系统）"><a href="#手工操作阶段（此阶段无操作系统）" class="headerlink" title="手工操作阶段（此阶段无操作系统）"></a>手工操作阶段（此阶段无操作系统）</h3><p>用户在计算机上算题的所有工作都要人工干预，如程序的装入、运行、结果的输出等。随着计算机硬件的发展，人机矛盾（速度和资源利用）越来越大，必须寻求新的解决办法。</p>
-<h3 id="批处理阶段"><a href="#批处理阶段" class="headerlink" title="批处理阶段"></a>批处理阶段</h3><p>为了解决人机矛盾及CPU和I/O设备之间速度不匹配的矛盾，出现了批处理系统。它按发展历程又分为单道批处理系统、多道批处理系统（多道程序设计技术出现以后）。</p>
-<ul>
-<li>单道批处理系统：系统对作业的处理是成批进行的，但内存中始终只保持一道作业。当该程序完成或发生异常情况时，才换入其后继程序进入内存运行。</li>
-<li>多道批处理系统：多道程序设计技术允许多个程序同时进入内存并运行。即同时把多个程序放入内存，并允许它们交替在CPU中运行，它们共享系统中的各种硬、软件资源。当一道程序因I/O请求而暂停运行时，CPU便立即转去运行另一道程序。它没有用某些机制提高某一技术方面的瓶颈问题，而是让系统的各个组成部分都尽量去“忙”，花费很少时间去切换任务，达到了系统各部件之间的并行工作，使其整体在单位时间内的效率翻倍。</li>
-</ul>
-<h3 id="分时操作系统"><a href="#分时操作系统" class="headerlink" title="分时操作系统"></a>分时操作系统</h3><p>把处理器的运行时间分成很短的时间片，按时间片轮流把处理器分配给各联机作业使用。若某个作业在分配给它的时间片内不能完成其计算，则该作业暂时停止运行，把处理器让给其他作业使用，等待下一轮再继续运行。由于计算机速度很快，作业运行轮转得很快，给每个用户的感觉好像是自己独占一台计算机。多道批处理是实现作业自动控制而无需人工干预的系统，而分时系统是实现人机交互的系统。</p>
-<p>分时系统具有与批处理系统不同的特征，其主要特征如下：</p>
-<ul>
-<li>同时性。同时性也称多路性，指允许多个终端用户同时使用一台计算机。</li>
-<li>交互性。用户能够方便地与系统进行人-机对话。</li>
-<li>独立性。系统中多个用户可以彼此独立地进行操作，互不干扰。</li>
-<li>及时性。用户请求能在很短时间内获得响应。</li>
-</ul>
-<h3 id="实时操作系统"><a href="#实时操作系统" class="headerlink" title="实时操作系统"></a>实时操作系统</h3><p>为了能在某个时间限制内完成某些紧急任务而不需时间片排队，诞生了实时操作系统。这里的时间限制可以分为两种情况：如果某个动作必须绝对地在规定的时刻（或规定的时间范围）发生，则称为硬实时系统。例如，飞行器的飞行自动控制系统，这类系统必须提供绝对保证，让某个特定的动作在规定的时间内完成。如果能够接受偶尔违反时间规定，并且不会引起任何永久性的损害，则称为软实时系统，如飞机订票系统、银行管理系统。</p>
-<p>在实时操作系统的控制下，计算机系统接收到外部信号后及时进行处理，并且要在严格的时限内处理完接收的事件。实时橾作系统的主要特点是及时性和可靠性。</p>
-<h3 id="分布式计算机系统"><a href="#分布式计算机系统" class="headerlink" title="分布式计算机系统"></a>分布式计算机系统</h3><p>分布式计算机系统是由多台计算机组成并满足下列条件的系统：系统中任意两台计算机通过通信方式交换信息；系统中的每一台计算机都具有同等的地位，即没有主机也没有从机；每台计算机上的资源为所有用户共享；系统中的任意若千台计算机都可以构成一个子系统，并且还能重构；任何工作都可以分布在几台计算机上，由它们并行工作、协同完成。</p>
-<p>用于管理分布式计算机系统的操作系统称为分布式计算机系统。该系统的主要特点是：分布性和并行性。分布式操作系统与网络操作系统本质上的不同之处在于分布式操作系统中，若干台计算机相互协同完成同一任务。</p>
-<p>分布式领域 CAP 理论：</p>
-<ul>
-<li>Consistency(一致性)，数据一致更新，所有数据变动都是同步的</li>
-<li>Availability(可用性)，好的响应性能</li>
-<li>Partition tolerance(分区容错性)：可靠性</li>
-</ul>
-<p>定理：任何分布式系统只可同时满足二点，没法三者兼顾。<br>忠告：架构师不要将精力浪费在如何设计能满足三者的完美分布式系统，而是应该进行取舍。</p>
-<p>［<a href="http://www.nowcoder.com/questionTerminal/3666684e8eb142369092da0a559925bb" target="_blank" rel="noopener">分布式系统三个指标</a>］</p>
-<hr>
-<ul>
-<li><p><a href="/more/donate/index.html"><strong><em><font color="red">我觉得帮助到我了, 支持你一下.</font></em></strong></a><br>   </p>
-</li>
-<li><p><a href="https://www.paypal.me/momodainfo" target="_blank" rel="noopener"><strong><em><font color="red">If you think the article is helpful to you, you can reward me through paypal.</font></em></strong></a></p>
-</li>
-</ul>
-<h3 id="Ads"><a href="#Ads" class="headerlink" title="Ads"></a>Ads</h3><p><em>这是小广告! 如果有需要, 不妨支持一下吧~</em></p>
-<blockquote>
-<p> <a target="_blank" href="https://amazon.cn/gp/search?ie=UTF8&tag=momoda-23&linkCode=ur2&linkId=4a0e4fbec0cfa8dfe540ca999d0bf999&camp=536&creative=3200&index=books&keywords=编程">这些好书您看了吗?</a><img src="//ir-cn.amazon-adsystem.com/e/ir?t=momoda-23&l=ur2&o=28" width="1" height="1" border="0" alt="" style="border:none !important; margin:0px !important;"></p>
-</blockquote>
-<blockquote>
-<p>体育&amp;户外用品推荐</p>
-</blockquote>
-<div align="center"> <a href="https://www.amazon.cn/B07HWB88Z5/dp/B07HWB88Z5/ref=as_sl_pc_tf_til?tag=momoda-23&linkCode=w00&linkId=14df5124f2165d9eb3d65252e60ed2cf&creativeASIN=B07HWB88Z5" target="_blank" rel="noopener"><img src="/se-notes/Linux基础/README/../more/ads/amazon.gif" width="100%"></a> </div>
-      
-    </div><!-- .entry-content -->
-
-    <footer class="entry-meta">
-    <a href="/se-notes/Linux基础/README/">
-    <time datetime="2019-01-03T13:49:30.000Z" class="entry-date">
-        1月 3 2019
-    </time>
-</a>
-    
-  <span class="article-delim">&#8226;</span>
-  <div class="article-category">
-  <a class="article-category-link" href="/categories/Linux/">Linux</a>, <a class="article-category-link" href="/categories/Linux/linux基础/">linux基础</a>
-  </div>
-
-    
-  <span class="article-delim">&#8226;</span>
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/linux/">linux</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/系统管理/">系统管理</a></li></ul>
-
-    </footer>
-</article>
-
-
-
-
-
-
-  
-    <article id="post-se-notes/云计算实践/区块链相关/区块链简介" class="post-se-notes/云计算实践/区块链相关/区块链简介 post type-post status-publish format-standard hentry">
-    <!---->
-
-      <header class="entry-header">
-        
-        
-  
-    <h1 class="entry-title">
-      <a class="article-title" href="/se-notes/云计算实践/区块链相关/区块链简介/">区块链简介</a>
-    </h1>
-  
-
-        
-        <div class="comments-link">
-            
-            <a href="javascript:void(0);" data-url="https://wnhby.github.io/se-notes/云计算实践/区块链相关/区块链简介/" data-id="cjsbbbf1w00ape9s66lm0th3x" class="leave-reply bdsharebuttonbox" data-cmd="more">分享</a>
-        </div><!-- .comments-link -->
-      </header><!-- .entry-header -->
-
-    <div class="entry-content">
-      
-        <!-- TOC -->
-<ul>
-<li><a href="#区块链简介">区块链简介</a></li>
-<li><a href="#应用领域">应用领域</a><ul>
-<li><a href="#基于区块链的征信系统与数据中心比较">基于区块链的征信系统（与数据中心比较）</a><ul>
+<li><a href="#java集合框架">Java集合框架</a><ul>
+<li><a href="#collection-接口">Collection 接口</a></li>
+<li><a href="#规则集">规则集</a></li>
+<li><a href="#比较器接口-comparator">比较器接口 Comparator</a></li>
+<li><a href="#线性表">线性表</a></li>
+<li><a href="#线性表与集合的静态方法">线性表与集合的静态方法</a></li>
+<li><a href="#队列与优先队列">队列与优先队列</a></li>
+<li><a href="#图">图</a></li>
+<li><a href="#备注">备注</a><ul>
 <li><a href="#ads">Ads</a></li>
 </ul>
 </li>
@@ -440,44 +240,49 @@
 </li>
 </ul>
 <!-- /TOC -->
-<h1 id="区块链简介"><a href="#区块链简介" class="headerlink" title="区块链简介"></a>区块链简介</h1><p>区块链技术是金融科技（FinTech）领域的一项重要技术创新。作为去中心化记账（Decentralized Ledger Technology，DLT）平台的核心技术，区块链被认为在金融、征信、物联网、经济贸易结算、资产管理等众多领域都拥有广泛的应用前景。</p>
-<p>把区块链想象成一个公共账本，这个账本：</p>
-<ol>
-<li>存放在区块链系统的各个节点上，每个节点都有一份完整的备份。</li>
-<li>每个节点的账本都记录着自区块链系统建立以来的所有交易。</li>
-<li>账本被分为若干个区块进行存储，每个区块包含一部分交易记录。每一个区块都会记录着前一区块的 id，形成一个链状结构，因而称为区块链。</li>
-<li>当发起一笔交易时，只需把交易信息广播到系统的 p2p 网络中，其他节点把该笔交易信息记录成一个新的区块连到区块链上，交易即可完成。</li>
-</ol>
-<p>区块链的重要特性（DACT）：</p>
+<h1 id="Java集合框架"><a href="#Java集合框架" class="headerlink" title="Java集合框架"></a>Java集合框架</h1><p>Java 集合框架是 Java 提供的几个能有效组织和操作数据的数据结构，支持两种类型的容器：<strong>集合</strong>与<strong>图</strong>。</p>
+<p>Java 集合框架支持三种主要类型的集合：规则集(Set)、线性表(List)和队列(Queue)。Set 的实例用于存储一组不重复的元素，List 的实例用于存储一个由元素构成的有序集合，Queue 的实例用于存储先进先出方式处理的对象。</p>
+<h2 id="Collection-接口"><a href="#Collection-接口" class="headerlink" title="Collection 接口"></a>Collection 接口</h2><p>Collection 接口是处理对象集合的根接口，提供了在集合中添加、删除元素与查询的基本操作。</p>
+<p><img src="https://cloud.githubusercontent.com/assets/22606175/23050156/8bd84046-f4fb-11e6-87d2-19eec8ebe1a9.jpg" alt="1487298378 1"></p>
+<p>AbstractCollection 类是提供 Collection 接口的部分实现的便利类。</p>
+<h2 id="规则集"><a href="#规则集" class="headerlink" title="规则集"></a>规则集</h2><p>Set 接口扩展了 Collection 接口，并未引入新的方法或常量，只是规定 Set 的实例不包含重复的元素。以下介绍 Set 接口的三个具体类。</p>
 <ul>
-<li>Distributed（分布式的）：区块链系统中有多个独立节点，所有节点都共享同一份数据。</li>
-<li>Autonomous（自治的）：所有操作都由系统自动完成而不需要一个中心机构进行管理。</li>
-<li>Contractual（按照合约执行的）：数据是公开的不代表所有人可以随意访问区块链系统上的数据，系统有着最严格的权限设置。在系统约定一个共同合约后，只有确定权限的用户才可以访问加密的数据。</li>
-<li>Trackable（可追溯的）：区块链系统中所有交易都是可追溯的，添加交易信息需要得到系统的共识，因而数据不可篡改。</li>
+<li>散列集 HashSet：以一个不可预知的顺序存储元素。</li>
+<li>链式散列集 LinkedHashSet：以元素被插入的顺序存储元素。</li>
+<li>树形集 TreeSet：存储已按照元素之间的比较原则排好序的元素；可使用元素的 Comparable 接口或者指定一个比较器。</li>
 </ul>
-<blockquote>
-<p>区块链的意义在于：构建了更加可靠、值得信任的互联网，从根本上解决了价值转移和交换过程中出现的存在的欺诈与寻租现象。</p>
-</blockquote>
-<h1 id="应用领域"><a href="#应用领域" class="headerlink" title="应用领域"></a>应用领域</h1><h2 id="基于区块链的征信系统（与数据中心比较）"><a href="#基于区块链的征信系统（与数据中心比较）" class="headerlink" title="基于区块链的征信系统（与数据中心比较）"></a>基于区块链的征信系统（与数据中心比较）</h2><p>征信：为防止在非即付经济交往中的交易双方收到损失而进行的一种信用评估。征信所提供的服务，就是向交易双方提供对方的背景和信用信息，解决交易信任的问题。</p>
-<p>在一个征信体系中，对金融机构有价值的客户可划分为优质客户（白名单）、中间客户、风险客户（黑名单）。白名单是主要服务对象，因为其意味着收益；而对黑名单则需要进行风险控制。但目前传统意义上的金融征信系统普遍存在局限性：</p>
+<p><img src="https://cloud.githubusercontent.com/assets/22606175/23050187/b0f06ca0-f4fb-11e6-9bbc-d7a555ad2247.jpg" alt="1487298438 1"></p>
+<h2 id="比较器接口-Comparator"><a href="#比较器接口-Comparator" class="headerlink" title="比较器接口 Comparator"></a>比较器接口 Comparator</h2><p>有时希望将元素插入到一个树集合中，而这些元素可能不是 java.lang.Comparable 的实例，此时可定义一个比较器来比较这些元素。若如此做，则需创建一个实现 java.util.Comparator 接口的比较器类。Comparator 接口有两个方法：compare 与 equals 。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> java.util.Comparator;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">UserComparator</span> <span class="keyword">implements</span> <span class="title">Comparator</span>&lt;<span class="title">User</span>&gt;,<span class="title">java</span>.<span class="title">io</span>.<span class="title">Serializable</span></span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">compare</span><span class="params">(User u1, User u2)</span></span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(u1.age &gt; u2.age)</span><br><span class="line">	        <span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">        <span class="keyword">else</span> <span class="keyword">if</span>(u1.age == u2.age)</span><br><span class="line">	        <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">else</span></span><br><span class="line">	        <span class="keyword">return</span> -<span class="number">1</span>; </span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>要想使用比较器，必须使用构造方法 TreeSet(Comparator comparator) 来创建一个有序集，它可使用比较器中的 compare 方法进行排序。</p>
+<h2 id="线性表"><a href="#线性表" class="headerlink" title="线性表"></a>线性表</h2><p>线性表不仅可以存储重复的元素，而且允许用户指定它们存储的位置。</p>
+<p><img src="https://cloud.githubusercontent.com/assets/22606175/23050131/60c443e6-f4fb-11e6-8ab7-b38b88be88f9.jpg" alt="1487298308 1"></p>
 <ul>
-<li>目前大部分信用数据是一个个独立的信息孤岛（比如央行征信系统的数据），彼此并不联通。而完全开放征信系统数据又可能会造成虚假数据上传、金融机构核心业务信息被泄露等问题。</li>
-<li>即使是对于传统意义上的征信共享，多个机构共享的结果是把每个机构的数据汇总到一个庞大的数据中心系统，参与机构都在该系统上查询。但也会有问题：<ul>
-<li>系统是中心化的，一旦中心遭到攻击、篡改、上传虚假数据就会影响到所有数据的可靠性；同时也会出现人工误操作的情况。</li>
-<li>数据汇总与更新速度不可控，难以及时进行征信数据同步</li>
-<li>数据访问权限以及数据交换、共享问题：难以实现权限控制以及两个机构之间的私密数据有偿交换</li>
-<li>由于数据中心共享的透明性，有些机构会故意保留己方的核心业务数据以防泄露</li>
-<li>若要保证查询速度，则需要构建复杂的冗余系统；否则的话只有一个中心处理所有的请求，则系统速度可能会慢到不可用的程度</li>
+<li>数组线性表类 ArrayList ：实现 List 接口的可变大小的数组。</li>
 </ul>
-</li>
-</ul>
-<p>而区块链技术是最适合用于解决征信问题的解决方案：</p>
+<p><img src="https://cloud.githubusercontent.com/assets/22606175/23050472/760d6ef6-f4fd-11e6-850d-85b0b45f86aa.png" alt="image"></p>
 <ul>
-<li>把中心化的存储转化为去中心化的分布式存储，变统一中心节点查询为 p2p 查询，提高安全性与性能</li>
-<li>每个节点的数据完全同步</li>
-<li>数据无法被篡改，即使有虚假数据也可以迅速追溯到源头</li>
-<li>利用智能合约设置数据汇总与更新规则</li>
-<li>通过智能合约进行权限控制，拥有对应的访问权限才可访问对应的数据</li>
+<li>链表类 LinkedList ：实现了 List 接口的一个链表。此外还额外提供了从线性表两端操作元素的方法。</li>
+</ul>
+<p><img src="https://cloud.githubusercontent.com/assets/22606175/23050484/8eb08772-f4fd-11e6-810a-a35985919977.jpg" alt="1487299246 1"></p>
+<h2 id="线性表与集合的静态方法"><a href="#线性表与集合的静态方法" class="headerlink" title="线性表与集合的静态方法"></a>线性表与集合的静态方法</h2><p>由于线性表不支持有序存储，因此 Collections 类提供了对线性表排序以及其他操作的静态方法。</p>
+<p><img src="https://cloud.githubusercontent.com/assets/22606175/23050534/e8646324-f4fd-11e6-8b83-8709dda04058.jpg" alt="1487299387 1"></p>
+<h2 id="队列与优先队列"><a href="#队列与优先队列" class="headerlink" title="队列与优先队列"></a>队列与优先队列</h2><p>队列是一种先进先出的数据结构，元素被追加到队尾，然后从队列头删除。而在优先队列中，元素被赋予优先级，当访问元素时，拥有最高优先级的元素首先被删除。</p>
+<p>java.util.Queue 接口用附加的插入、提取和检验操作来扩展 java.util.Collection 接口。由于 LinkedList 类实现了 Deque 接口，Deque 又扩展了 Queue 接口，因此可用 LinkedList 来创建一个队列。</p>
+<p><img src="https://cloud.githubusercontent.com/assets/22606175/23050593/48d031ac-f4fe-11e6-83af-27cdc80d83ea.jpg" alt="1487299554 1"></p>
+<p>java.util.PriorityQueue 类实现一个优先队列，默认情况下按照 Comparable 以元素的自然顺序来排序，也可以通过构造方法使用 Comparator 指定一个顺序。</p>
+<p><img src="https://cloud.githubusercontent.com/assets/22606175/23050629/88dee25c-f4fe-11e6-8a3a-345d144b0fd6.jpg" alt="1487299667 1"></p>
+<h2 id="图"><a href="#图" class="headerlink" title="图"></a>图</h2><p>图是一种按照键值存储元素的容器。图中不能有重复的键值，每个键值对应一个值。一个键值与它的对应值构成一个条目。</p>
+<p>java.util.Map 接口提供了查询、更新和获取集合的值或键值的方法。</p>
+<p><img src="https://cloud.githubusercontent.com/assets/22606175/23051214/39d9cd8a-f502-11e6-9adf-5bec2a1185d6.jpg" alt="1487301232 1"></p>
+<ul>
+<li>散列图 HashMap ：条目没有顺序。</li>
+<li>链式散裂图 LinkedHashMap：条目可按照某种顺序来获取，既可以是插入顺序也可以是最后一次访问的顺序。</li>
+<li>树形图 TreeMap ：条目按照 Comparable 或者指定比较器的顺序进行排序。</li>
+</ul>
+<p><img src="https://cloud.githubusercontent.com/assets/22606175/23051461/1f328c9a-f504-11e6-90fb-b1599f8fef12.jpg" alt="1487302061 1"></p>
+<h2 id="备注"><a href="#备注" class="headerlink" title="备注"></a>备注</h2><ul>
+<li>Java 集合框架中的所有实例类都实现了 Cloneable 和 Serializable 接口，因此它们的实例都是可复制和可序列化的。</li>
 </ul>
 <hr>
 <ul>
@@ -493,12 +298,12 @@
 <blockquote>
 <p>体育&amp;户外用品推荐</p>
 </blockquote>
-<div align="center"> <a href="https://www.amazon.cn/B07HWB88Z5/dp/B07HWB88Z5/ref=as_sl_pc_tf_til?tag=momoda-23&linkCode=w00&linkId=14df5124f2165d9eb3d65252e60ed2cf&creativeASIN=B07HWB88Z5" target="_blank" rel="noopener"><img src="/se-notes/云计算实践/区块链相关/区块链简介/../more/ads/amazon.gif" width="100%"></a> </div>
+<div align="center"> <a href="https://www.amazon.cn/B07HWB88Z5/dp/B07HWB88Z5/ref=as_sl_pc_tf_til?tag=momoda-23&linkCode=w00&linkId=14df5124f2165d9eb3d65252e60ed2cf&creativeASIN=B07HWB88Z5" target="_blank" rel="noopener"><img src="/se-notes/Java基础/集合框架/../../../more/ads/amazon.gif" width="100%"></a> </div>
       
     </div><!-- .entry-content -->
 
     <footer class="entry-meta">
-    <a href="/se-notes/云计算实践/区块链相关/区块链简介/">
+    <a href="/se-notes/Java基础/集合框架/">
     <time datetime="2019-01-03T13:49:30.000Z" class="entry-date">
         1月 3 2019
     </time>
@@ -506,12 +311,12 @@
     
   <span class="article-delim">&#8226;</span>
   <div class="article-category">
-  <a class="article-category-link" href="/categories/通用技术/">通用技术</a>, <a class="article-category-link" href="/categories/通用技术/云计算实践/">云计算实践</a>, <a class="article-category-link" href="/categories/通用技术/云计算实践/区块链/">区块链</a>
+  <a class="article-category-link" href="/categories/编程语言/">编程语言</a>, <a class="article-category-link" href="/categories/编程语言/java/">java</a>
   </div>
 
     
   <span class="article-delim">&#8226;</span>
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/云计算/">云计算</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/区块链/">区块链</a></li></ul>
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/java基础/">java基础</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/java语法/">java语法</a></li></ul>
 
     </footer>
 </article>
@@ -537,7 +342,7 @@
         
         <div class="comments-link">
             
-            <a href="javascript:void(0);" data-url="https://wnhby.github.io/se-notes/云计算实践/集群高可用方案/Heartbeat双机热备方案/" data-id="cjsbbbf1t00ane9s6qxd3prvi" class="leave-reply bdsharebuttonbox" data-cmd="more">分享</a>
+            <a href="javascript:void(0);" data-url="https://wnhby.github.io/se-notes/云计算实践/集群高可用方案/Heartbeat双机热备方案/" data-id="cjsbez0fs00dnczs6qa2z160p" class="leave-reply bdsharebuttonbox" data-cmd="more">分享</a>
         </div><!-- .comments-link -->
       </header><!-- .entry-header -->
 
@@ -617,7 +422,7 @@
 <blockquote>
 <p>体育&amp;户外用品推荐</p>
 </blockquote>
-<div align="center"> <a href="https://www.amazon.cn/B07HWB88Z5/dp/B07HWB88Z5/ref=as_sl_pc_tf_til?tag=momoda-23&linkCode=w00&linkId=14df5124f2165d9eb3d65252e60ed2cf&creativeASIN=B07HWB88Z5" target="_blank" rel="noopener"><img src="/se-notes/云计算实践/集群高可用方案/Heartbeat双机热备方案/../more/ads/amazon.gif" width="100%"></a> </div>
+<div align="center"> <a href="https://www.amazon.cn/B07HWB88Z5/dp/B07HWB88Z5/ref=as_sl_pc_tf_til?tag=momoda-23&linkCode=w00&linkId=14df5124f2165d9eb3d65252e60ed2cf&creativeASIN=B07HWB88Z5" target="_blank" rel="noopener"><img src="/se-notes/云计算实践/集群高可用方案/Heartbeat双机热备方案/../../../../more/ads/amazon.gif" width="100%"></a> </div>
       
     </div><!-- .entry-content -->
 
@@ -661,7 +466,7 @@
         
         <div class="comments-link">
             
-            <a href="javascript:void(0);" data-url="https://wnhby.github.io/se-notes/云计算实践/集群高可用方案/HAProxy+Keepalived高可用方案/" data-id="cjsbbbf1p00ame9s6a5tpw2sm" class="leave-reply bdsharebuttonbox" data-cmd="more">分享</a>
+            <a href="javascript:void(0);" data-url="https://wnhby.github.io/se-notes/云计算实践/集群高可用方案/HAProxy+Keepalived高可用方案/" data-id="cjsbez0fp00djczs63mrbi5a1" class="leave-reply bdsharebuttonbox" data-cmd="more">分享</a>
         </div><!-- .comments-link -->
       </header><!-- .entry-header -->
 
@@ -727,7 +532,7 @@
 <blockquote>
 <p>体育&amp;户外用品推荐</p>
 </blockquote>
-<div align="center"> <a href="https://www.amazon.cn/B07HWB88Z5/dp/B07HWB88Z5/ref=as_sl_pc_tf_til?tag=momoda-23&linkCode=w00&linkId=14df5124f2165d9eb3d65252e60ed2cf&creativeASIN=B07HWB88Z5" target="_blank" rel="noopener"><img src="/se-notes/云计算实践/集群高可用方案/HAProxy+Keepalived高可用方案/../more/ads/amazon.gif" width="100%"></a> </div>
+<div align="center"> <a href="https://www.amazon.cn/B07HWB88Z5/dp/B07HWB88Z5/ref=as_sl_pc_tf_til?tag=momoda-23&linkCode=w00&linkId=14df5124f2165d9eb3d65252e60ed2cf&creativeASIN=B07HWB88Z5" target="_blank" rel="noopener"><img src="/se-notes/云计算实践/集群高可用方案/HAProxy+Keepalived高可用方案/../../../../more/ads/amazon.gif" width="100%"></a> </div>
       
     </div><!-- .entry-content -->
 
@@ -756,7 +561,7 @@
 
 
   
-    <article id="post-se-notes/云计算实践/Kubernetes部署/k8s基础教程" class="post-se-notes/云计算实践/Kubernetes部署/k8s基础教程 post type-post status-publish format-standard hentry">
+    <article id="post-se-notes/云计算实践/区块链相关/区块链简介" class="post-se-notes/云计算实践/区块链相关/区块链简介 post type-post status-publish format-standard hentry">
     <!---->
 
       <header class="entry-header">
@@ -764,14 +569,14 @@
         
   
     <h1 class="entry-title">
-      <a class="article-title" href="/se-notes/云计算实践/Kubernetes部署/k8s基础教程/">k8s基础教程</a>
+      <a class="article-title" href="/se-notes/云计算实践/区块链相关/区块链简介/">区块链简介</a>
     </h1>
   
 
         
         <div class="comments-link">
             
-            <a href="javascript:void(0);" data-url="https://wnhby.github.io/se-notes/云计算实践/Kubernetes部署/k8s基础教程/" data-id="cjsbbbf19009ne9s68f8s8wpl" class="leave-reply bdsharebuttonbox" data-cmd="more">分享</a>
+            <a href="javascript:void(0);" data-url="https://wnhby.github.io/se-notes/云计算实践/区块链相关/区块链简介/" data-id="cjsbez0fm00dhczs6mlqodk61" class="leave-reply bdsharebuttonbox" data-cmd="more">分享</a>
         </div><!-- .comments-link -->
       </header><!-- .entry-header -->
 
@@ -779,19 +584,9 @@
       
         <!-- TOC -->
 <ul>
-<li><a href="#k8s-集群的介绍安装与配置实践版">K8S 集群的介绍、安装与配置（实践版）</a><pre><code>- [术语简介](#术语简介)
-</code></pre><ul>
-<li><a href="#1--事前准备">1.  事前准备</a></li>
-<li><a href="#2-配置-kubectl-与-minikube">2. 配置 kubectl 与 Minikube</a></li>
-<li><a href="#3-安装-virtualbox">3. 安装 VirtualBox</a></li>
-<li><a href="#4-使用-minikube-运行集群">4. 使用 Minikube 运行集群</a></li>
-<li><a href="#5-在集群上部署应用">5. 在集群上部署应用</a></li>
-<li><a href="#6-查看-pod-与-node">6. 查看 Pod 与 Node</a></li>
-<li><a href="#7-部署-service">7. 部署 Service</a></li>
-<li><a href="#8-调整应用规模">8. 调整应用规模</a></li>
-<li><a href="#9-执行滚动更新">9. 执行滚动更新</a></li>
-<li><a href="#注意事项">注意事项</a></li>
-<li><a href="#参考资料">参考资料</a><ul>
+<li><a href="#区块链简介">区块链简介</a></li>
+<li><a href="#应用领域">应用领域</a><ul>
+<li><a href="#基于区块链的征信系统与数据中心比较">基于区块链的征信系统（与数据中心比较）</a><ul>
 <li><a href="#ads">Ads</a></li>
 </ul>
 </li>
@@ -799,89 +594,45 @@
 </li>
 </ul>
 <!-- /TOC -->
-<h1 id="K8S-集群的介绍、安装与配置（实践版）"><a href="#K8S-集群的介绍、安装与配置（实践版）" class="headerlink" title="K8S 集群的介绍、安装与配置（实践版）"></a>K8S 集群的介绍、安装与配置（实践版）</h1><p>k8s 集群由一个 master 节点与多个 node 节点组成，所有节点均是在逻辑上独立的一个机器 。master 节点是管理整个集群的节点，而 node 节点是具体执行业务的节点，每个 node 都有一个 kubelet 作为其代理用于与 master 通信。</p>
-<p><img src="https://d33wubrfki0l68.cloudfront.net/99d9808dcbf2880a996ed50d308a186b5900cec9/40b94/docs/tutorials/kubernetes-basics/public/images/module_01_cluster.svg" alt="enter image description here"></p>
-<p>而在本教程中，我们介绍 k8s 集群的基本操作：将会在本地机器上部署一个<strong>单 Node 的 k8s 集群</strong>，并尝试在该集群上<strong>部署一个应用</strong>、<strong>配置暴露应用的服务</strong>、以及<strong>对应用进行规模调整与版本更新</strong>。</p>
-<h3 id="术语简介"><a href="#术语简介" class="headerlink" title="术语简介"></a>术语简介</h3><p><a href="https://kubernetes.io/docs/reference/generated/kubectl/kubectl/" target="_blank" rel="noopener">kubectl</a> 是 k8s 的命令行管理工具，管理 k8s 集群需要通过该系列命令进行。</p>
-<p> <a href="https://kubernetes.io/docs/getting-started-guides/minikube/" target="_blank" rel="noopener">Minikube</a> 是一个用于在本地上运行 kubernates 的工具插件。Minikube 可在本地机器上创建一个虚拟机（需要安装对应的虚拟机驱动，如 VirtualBox、KVM 等），从而运行一个单节点的 k8s 集群。原理图如下：</p>
-<p><img src="https://yqfile.alicdn.com/c03a43e0731ca579d1844fb44269fd2fd257bfb3.jpeg" alt="minikube 原理说明图"></p>
-<p><a href="https://www.virtualbox.org/" target="_blank" rel="noopener">VirtualBox</a> 是一款支持 x86 和 AMD64/Intel64 的开源虚拟机软件，支持 Window、Linux 等系统。在本教程中，我们把它作为 Minikube 的虚拟机驱动。</p>
-<h2 id="1-事前准备"><a href="#1-事前准备" class="headerlink" title="1.  事前准备"></a>1.  事前准备</h2><ul>
-<li>准备好一台操作系统为 Linux CentOS 7 系统、内存为 <strong>4G 以上</strong>的虚机（或物理机），完成换源与关闭防火墙和 SELinux</li>
-<li>需要在虚机上安装 VirtualBox 或 KVM 作为虚拟化软件（本教程介绍 VirtualBox 的安装）</li>
-<li>设置 CPU 支持虚拟化 VT-X（若是物理机则在BIOS上设置，若是虚机则在VMware里设置 ）</li>
-</ul>
-<h2 id="2-配置-kubectl-与-Minikube"><a href="#2-配置-kubectl-与-Minikube" class="headerlink" title="2. 配置 kubectl 与 Minikube"></a>2. 配置 kubectl 与 Minikube</h2><p>下载 kubectl 并配置到系统路径：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ curl -LO https://storage.googleapis.com/kubernetes-release/release/v1.9.1/bin/linux/amd64/kubectl</span><br><span class="line">$ chmod +x ./kubectl</span><br><span class="line">$ sudo mv ./kubectl /usr/local/bin/</span><br></pre></td></tr></table></figure></p>
-<blockquote>
-<p>注意 kubectl 的版本必须新于 k8s 服务器的版本，否则会出现校验错误。可通过 <code>curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt</code> 命令查询当前的最新稳定版本。</p>
-</blockquote>
-<p>下载 Minikube 并配置到系统路径：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ curl -Lo minikube https://storage.googleapis.com/minikube/releases/latest/minikube-linux-amd64 </span><br><span class="line">$ chmod +x ./minikube</span><br><span class="line">$ sudo mv ./minikube /usr/local/bin/</span><br></pre></td></tr></table></figure></p>
-<blockquote>
-<p>注意：由于本节所述的下载网址有时会无法通过 curl 命令访问，因此建议直接下载 kubectl 或 minikube 到本地再上传到虚机中。也可以通过其他途径如 <a href="https://github.com/kubernetes/minikube/releases" target="_blank" rel="noopener">minikube 的 github 下载地址</a> 进行下载。</p>
-</blockquote>
-<h2 id="3-安装-VirtualBox"><a href="#3-安装-VirtualBox" class="headerlink" title="3. 安装 VirtualBox"></a>3. 安装 VirtualBox</h2><p>本教程中 minikube 的虚拟机采用 VirtualBox ，安装步骤如下：</p>
+<h1 id="区块链简介"><a href="#区块链简介" class="headerlink" title="区块链简介"></a>区块链简介</h1><p>区块链技术是金融科技（FinTech）领域的一项重要技术创新。作为去中心化记账（Decentralized Ledger Technology，DLT）平台的核心技术，区块链被认为在金融、征信、物联网、经济贸易结算、资产管理等众多领域都拥有广泛的应用前景。</p>
+<p>把区块链想象成一个公共账本，这个账本：</p>
 <ol>
-<li>在官网下载对应系统的 VirtualBox rpm 包</li>
-<li>安装 VirtualBox 的依赖包：<code>yum install qt qt-x11 gcc gcc-c++ kernel-devel perl SDL</code></li>
-<li>安装 VirtualBox：<code>rpm -i VirtualBox-5.2-5.2.6_120293_el7-1.x86_64.rpm</code></li>
-<li>添加当前用户到 VirtualBox 创建的用户组 “vboxusers”：<code>usermod -a -G vboxusers </code></li>
+<li>存放在区块链系统的各个节点上，每个节点都有一份完整的备份。</li>
+<li>每个节点的账本都记录着自区块链系统建立以来的所有交易。</li>
+<li>账本被分为若干个区块进行存储，每个区块包含一部分交易记录。每一个区块都会记录着前一区块的 id，形成一个链状结构，因而称为区块链。</li>
+<li>当发起一笔交易时，只需把交易信息广播到系统的 p2p 网络中，其他节点把该笔交易信息记录成一个新的区块连到区块链上，交易即可完成。</li>
 </ol>
+<p>区块链的重要特性（DACT）：</p>
+<ul>
+<li>Distributed（分布式的）：区块链系统中有多个独立节点，所有节点都共享同一份数据。</li>
+<li>Autonomous（自治的）：所有操作都由系统自动完成而不需要一个中心机构进行管理。</li>
+<li>Contractual（按照合约执行的）：数据是公开的不代表所有人可以随意访问区块链系统上的数据，系统有着最严格的权限设置。在系统约定一个共同合约后，只有确定权限的用户才可以访问加密的数据。</li>
+<li>Trackable（可追溯的）：区块链系统中所有交易都是可追溯的，添加交易信息需要得到系统的共识，因而数据不可篡改。</li>
+</ul>
 <blockquote>
-<p>在 Linux 下，Minikube 也支持 –vm-driver=none 选项来在本机运行 Kubernetes 组件（此种方式尚未实验）。</p>
+<p>区块链的意义在于：构建了更加可靠、值得信任的互联网，从根本上解决了价值转移和交换过程中出现的存在的欺诈与寻租现象。</p>
 </blockquote>
-<h2 id="4-使用-Minikube-运行集群"><a href="#4-使用-Minikube-运行集群" class="headerlink" title="4. 使用 Minikube 运行集群"></a>4. 使用 Minikube 运行集群</h2><p>执行 <code>minikube start</code> 启动本地 k8s 集群。当正常启动成功时，出现以下输出：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">Starting local Kubernetes v1.8.0 cluster...</span><br><span class="line">Starting VM...</span><br><span class="line">Downloading Minikube ISO</span><br><span class="line"> 140.01 MB / 140.01 MB [============================================] 100.00% 0s</span><br><span class="line">Getting VM IP address...</span><br><span class="line">Moving files into cluster...</span><br><span class="line">Downloading localkube binary</span><br><span class="line"> 148.25 MB / 148.25 MB [============================================] 100.00% 0s</span><br><span class="line">Connecting to cluster...</span><br><span class="line">Setting up kubeconfig...</span><br><span class="line">Starting cluster components...</span><br><span class="line">Kubectl is now configured to use the cluster.</span><br><span class="line">Loading cached images from config file.</span><br></pre></td></tr></table></figure></p>
-<p>执行 <code>minikube status</code> 可查看当前集群状态，输出类似如下所示：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">minikube: Running</span><br><span class="line">cluster: Running</span><br><span class="line">kubectl: Correctly Configured: pointing to minikube-vm at 192.168.99.100</span><br></pre></td></tr></table></figure></p>
-<p>使用 <code>kubectl version</code> 可查看当前的 k8s 集群的客户端与服务端的版本；使用 <code>kubectl cluster-info</code> 可查看集群的详细部署情况；使用 <code>kubectl get nodes</code> 查看集群节点情况。</p>
-<h2 id="5-在集群上部署应用"><a href="#5-在集群上部署应用" class="headerlink" title="5. 在集群上部署应用"></a>5. 在集群上部署应用</h2><p>部署文件（Deployment）是用于指导 k8s 集群如何创建与维护应用实例的。</p>
-<p><img src="https://d33wubrfki0l68.cloudfront.net/152c845f25df8e69dd24dd7b0836a289747e258a/4a1d2/docs/tutorials/kubernetes-basics/public/images/module_02_first_app.svg" alt="enter image description here"></p>
-<p><code>kubectl run</code> 命令用于创建一个新的 Deployment，此命令需要提供 Deployment 的命名以及 app 镜像的地址。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"># 若需要在特定端口运行app，则用 --port 指明运行端口</span><br><span class="line">$ kubectl run kubernetes-bootcamp --image=docker.io/jocatalin/kubernetes-bootcamp:v1 --port=8080</span><br><span class="line"># 创建完成后可以查询 Deployment</span><br><span class="line">$ kubectl get deployments</span><br></pre></td></tr></table></figure></p>
-<p>Pod 是 k8s 集群管理的基本单位。当一个 Deployment 创建后，集群将会创建一个 Pod 来管理应用实例。一个 Pod 是一个 k8s 抽象，代表了一组（一个或多个）应用容器，且这些容器之间共享存储、网络等资源。</p>
-<p>默认情况下，集群中的 Pods 对外部网络是不可见的，但 kubectl 可以创建一个能够转发请求到集群端私有网络的代理：<code>kubectl proxy</code>，执行后的输出类似如下（注意当前终端会阻塞）：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ kubectl proxy</span><br><span class="line">Starting to serve on 127.0.0.1:8001</span><br></pre></td></tr></table></figure></p>
-<p>通过使用 <code>kubectl proxy</code> 所展示的地址，我们就可以直接访问 k8s API，例如 <code>curl http://127.0.0.1:8001/version</code> 就可获取当前 API Server 的版本。</p>
-<p>API Server 会自动根据 pod 的名字来为每个 pod 创建一个访问点（endpoint），该访问点也可以通过 proxy 来直接访问：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ export POD_NAME=$(kubectl get pods -o go-template --template &apos;&#123;&#123;range .items&#125;&#125;&#123;&#123;.metadata.name&#125;&#125;&#123;&#123;&quot;\n&quot;&#125;&#125;&#123;&#123;end&#125;&#125;&apos;)</span><br><span class="line">$ echo Name of the Pod: $POD_NAME</span><br><span class="line">$ curl http://localhost:8001/api/v1/proxy/namespaces/default/pods/$POD_NAME/</span><br></pre></td></tr></table></figure></p>
-<h2 id="6-查看-Pod-与-Node"><a href="#6-查看-Pod-与-Node" class="headerlink" title="6. 查看 Pod 与 Node"></a>6. 查看 Pod 与 Node</h2><p>一个 Pod 运行于一个 Node 上，Node 则是 k8s 集群中的执行业务的逻辑主机（虚拟机或者物理机），由 master 进行管理。一个 Node 可以拥有多个 Pod，且 master 可以在集群中的多个 node 之间自动调度 Pod。示意图如下：</p>
-<p><img src="https://d33wubrfki0l68.cloudfront.net/5cb72d407cbe2755e581b6de757e0d81760d5b86/a9df9/docs/tutorials/kubernetes-basics/public/images/module_03_nodes.svg" alt="enter image description here"></p>
-<p>常用的查询应用的命令包括：</p>
+<h1 id="应用领域"><a href="#应用领域" class="headerlink" title="应用领域"></a>应用领域</h1><h2 id="基于区块链的征信系统（与数据中心比较）"><a href="#基于区块链的征信系统（与数据中心比较）" class="headerlink" title="基于区块链的征信系统（与数据中心比较）"></a>基于区块链的征信系统（与数据中心比较）</h2><p>征信：为防止在非即付经济交往中的交易双方收到损失而进行的一种信用评估。征信所提供的服务，就是向交易双方提供对方的背景和信用信息，解决交易信任的问题。</p>
+<p>在一个征信体系中，对金融机构有价值的客户可划分为优质客户（白名单）、中间客户、风险客户（黑名单）。白名单是主要服务对象，因为其意味着收益；而对黑名单则需要进行风险控制。但目前传统意义上的金融征信系统普遍存在局限性：</p>
 <ul>
-<li><strong>kubectl get</strong> ： 列出资源</li>
-<li><strong>kubectl describe</strong> : 展示资源详情</li>
-<li><strong>kubectl logs</strong> : 打印某个 Pod 中的一个容器的日志</li>
-<li><strong>kubectl exec</strong> : 在一个 Pod 中的一个容器中执行命令</li>
+<li>目前大部分信用数据是一个个独立的信息孤岛（比如央行征信系统的数据），彼此并不联通。而完全开放征信系统数据又可能会造成虚假数据上传、金融机构核心业务信息被泄露等问题。</li>
+<li>即使是对于传统意义上的征信共享，多个机构共享的结果是把每个机构的数据汇总到一个庞大的数据中心系统，参与机构都在该系统上查询。但也会有问题：<ul>
+<li>系统是中心化的，一旦中心遭到攻击、篡改、上传虚假数据就会影响到所有数据的可靠性；同时也会出现人工误操作的情况。</li>
+<li>数据汇总与更新速度不可控，难以及时进行征信数据同步</li>
+<li>数据访问权限以及数据交换、共享问题：难以实现权限控制以及两个机构之间的私密数据有偿交换</li>
+<li>由于数据中心共享的透明性，有些机构会故意保留己方的核心业务数据以防泄露</li>
+<li>若要保证查询速度，则需要构建复杂的冗余系统；否则的话只有一个中心处理所有的请求，则系统速度可能会慢到不可用的程度</li>
 </ul>
-<h2 id="7-部署-Service"><a href="#7-部署-Service" class="headerlink" title="7. 部署 Service"></a>7. 部署 Service</h2><p>一个 Service 是集群中的一个抽象，它定义了一组逻辑相关的 Pods 以及如何访问它们的策略。Services 允许独立的 Pods 间的松耦合。</p>
-<p><img src="https://d33wubrfki0l68.cloudfront.net/cc38b0f3c0fd94e66495e3a4198f2096cdecd3d5/ace10/docs/tutorials/kubernetes-basics/public/images/module_04_services.svg" alt="enter image description here"></p>
-<p>Service 使用标签（Label）和选择器（Selector）来匹配一组 Pods。</p>
-<p><img src="https://d33wubrfki0l68.cloudfront.net/b964c59cdc1979dd4e1904c25f43745564ef6bee/f3351/docs/tutorials/kubernetes-basics/public/images/module_04_labels.svg" alt="enter image description here"></p>
-<p>尽管每个 Pod 都有自己独立的 IP，但是这些 IP 要是没有 Service 就无法被外部网络访问。Service 有以下配置模式：</p>
+</li>
+</ul>
+<p>而区块链技术是最适合用于解决征信问题的解决方案：</p>
 <ul>
-<li>ClusterIP（默认）： 赋予 Service 一个集群内部 IP 。这种模式使得服务只能在集群内可被访问。</li>
-<li>NodePort：通过 NAT 允许 Service 使用集群内一个 Node 的 IP。从而就可以使用 \&lt;NodeIP>:\&lt;NodePort> 的方式让该 Service 可被集群外部访问。</li>
-<li>LoadBalancer：创建一个外部负载均衡器，并赋予 Service 一个固定的外部 IP。</li>
-<li>ExternalName：不使用代理，赋予 Service 一个任意的名字（由配置文件中的 <code>externalName</code> 参数决定）</li>
+<li>把中心化的存储转化为去中心化的分布式存储，变统一中心节点查询为 p2p 查询，提高安全性与性能</li>
+<li>每个节点的数据完全同步</li>
+<li>数据无法被篡改，即使有虚假数据也可以迅速追溯到源头</li>
+<li>利用智能合约设置数据汇总与更新规则</li>
+<li>通过智能合约进行权限控制，拥有对应的访问权限才可访问对应的数据</li>
 </ul>
-<p>以下命令可创建一个名为 “kubernetes-bootcamp” 的 NodePort 模式的 Service（其对外部网络可见）。再使用 <code>describe service</code> 命令可查看某个 Service 的详情：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ kubectl expose deployment/kubernetes-bootcamp --type=&quot;NodePort&quot; --port 8080</span><br><span class="line">$ kubectl describe services/kubernetes-bootcamp</span><br></pre></td></tr></table></figure></p>
-<p>可设置环境变量 NODE_PORT，通过 \&lt;NodeIP>:\&lt;NodePort> 从外网访问该 Service：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ export NODE_PORT=$(kubectl get services/kubernetes-bootcamp -o go-template=&apos;&#123;&#123;(index .spec.ports 0).nodePort&#125;&#125;&apos;)</span><br><span class="line">$ echo NODE_PORT=$NODE_PORT</span><br><span class="line">$ curl host01:$NODE_PORT</span><br></pre></td></tr></table></figure></p>
-<p>接下来介绍 Label（标签）的使用。Deployment 会自动为 Pod 创建一个 Label，使用<code>kubectl describe</code>可以查看 Label 名字。使用带参的 <code>kubectl get</code> 命令可以查询特定 Label 的 Pod 或 Service。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ kubectl get pods -l run=kubernetes-bootcamp</span><br><span class="line">$ kubectl get services -l run=kubernetes-bootcamp</span><br></pre></td></tr></table></figure></p>
-<p>使用 <code>kubectl label</code> 命令为 Pod 增加一个新 Label 后，可用<code>kubectl describe</code>查询该 Pod 是否已有新 Label：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$ export POD_NAME=$(kubectl get pods -o go-template --template &apos;&#123;&#123;range .items&#125;&#125;&#123;&#123;.metadata.name&#125;&#125;&#123;&#123;&quot;\n&quot;&#125;&#125;&#123;&#123;end&#125;&#125;&apos;)</span><br><span class="line">$ echo Name of the Pod: $POD_NAME</span><br><span class="line">$ kubectl label pod $POD_NAME app=v1</span><br><span class="line">$ kubectl describe pods $POD_NAME</span><br></pre></td></tr></table></figure></p>
-<p>删除一个指定标签的 Service，之后便可测试到外部无法再通过 NodeIP 的方式访问到 app 了，但 app 仍在 Pod 中运行：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ kubectl delete service -l run=kubernetes-bootcamp</span><br><span class="line">$ curl host01:$NODE_PORT</span><br><span class="line">$ kubectl exec -ti $POD_NAME curl localhost:8080</span><br></pre></td></tr></table></figure></p>
-<h2 id="8-调整应用规模"><a href="#8-调整应用规模" class="headerlink" title="8. 调整应用规模"></a>8. 调整应用规模</h2><p>在之前的章节中，Deployment 只创建了一个 Pod 来运行应用，但当通信量增加时，就需要扩展应用数量来满足需求。实现的主要方式则是改变 Deployment 配置中的副本数量。应用规模变化的示意图如下：</p>
-<p><img src="https://d33wubrfki0l68.cloudfront.net/043eb67914e9474e30a303553d5a4c6c7301f378/0d8f6/docs/tutorials/kubernetes-basics/public/images/module_05_scaling1.svg" alt="enter image description here"></p>
-<p><img src="https://d33wubrfki0l68.cloudfront.net/30f75140a581110443397192d70a4cdb37df7bfc/b5f56/docs/tutorials/kubernetes-basics/public/images/module_05_scaling2.svg" alt="enter image description here"></p>
-<p>若当前集群已有一个 Deployment（假设名为”kubernetes-bootcamp”），则可使用<code>kubectl scale</code>命令来扩展副本数量到 4 个，之后便可以检查到 pods 数量发生了变化。同时该变化也被 Deployment 记录到日志，可在详情中查看。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$ kubectl scale deployments/kubernetes-bootcamp --replicas=4</span><br><span class="line">$ kubectl get deployments</span><br><span class="line">$ kubectl get pods -o wide</span><br><span class="line">$ kubectl describe deployments/kubernetes-bootcamp</span><br></pre></td></tr></table></figure></p>
-<h2 id="9-执行滚动更新"><a href="#9-执行滚动更新" class="headerlink" title="9. 执行滚动更新"></a>9. 执行滚动更新</h2><p>通常用户希望应用可一直被访问，而开发者希望应用可短时间内更新多次。而<strong>滚动更新</strong>能满足该要求，允许应用以零停机时间进行部署更新（通过新增的 Pods 来更新 Pods 实例）。默认情况下，更新过程中不可用 Pods 的最大数量与新创建 Pods 的最大数量相等。k8s 集群也可以回滚该更新。</p>
-<p><img src="https://d33wubrfki0l68.cloudfront.net/678bcc3281bfcc588e87c73ffdc73c7a8380aca9/703a2/docs/tutorials/kubernetes-basics/public/images/module_06_rollingupdates2.svg" alt="enter image description here"></p>
-<p><img src="https://d33wubrfki0l68.cloudfront.net/9b57c000ea41aca21842da9e1d596cf22f1b9561/91786/docs/tutorials/kubernetes-basics/public/images/module_06_rollingupdates3.svg" alt="enter image description here"></p>
-<p><img src="https://d33wubrfki0l68.cloudfront.net/6d8bc1ebb4dc67051242bc828d3ae849dbeedb93/fbfa8/docs/tutorials/kubernetes-basics/public/images/module_06_rollingupdates4.svg" alt="enter image description here"></p>
-<p>使用<code>set image</code>命令可进行镜像更新，<code>rollout status</code>命令可进行更新确认提交，<code>rollout undo</code>可进行更新回滚。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ kubectl set image deployments/kubernetes-bootcamp kubernetes-bootcamp=jocatalin/kubernetes-bootcamp:v2</span><br><span class="line">$ kubectl rollout status deployments/kubernetes-bootcamp</span><br><span class="line">$ kubectl rollout undo deployments/kubernetes-bootcamp</span><br></pre></td></tr></table></figure></p>
-<h2 id="注意事项"><a href="#注意事项" class="headerlink" title="注意事项"></a>注意事项</h2><ol>
-<li>机器的内存必须在4G以上，否则启动 VirtualBox 时会失败</li>
-<li>使用 curl 下载时，偶尔会因为网速问题无法下载成功。此时应当通过其他方式下载文件然后手动上传到系统中</li>
-<li>启动 minikube 时可能会存在 localkube 找不到对应文件的情况，这是因为 localkube 的镜像下载不成功。</li>
-</ol>
-<h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><p><a href="https://kubernetes.io/docs/getting-started-guides/minikube/#minikube-features" target="_blank" rel="noopener">Running Kubernetes Locally via Minikube</a>（来自官网）</p>
-<p><a href="https://linux.cn/article-8847-1.html" target="_blank" rel="noopener">Minikube：使用 Kubernetes 进行本地开发</a><br><!--stackedit_data:
-eyJoaXN0b3J5IjpbOTQ2MjI4MjY5XX0=
---></p>
 <hr>
 <ul>
 <li><p><a href="/more/donate/index.html"><strong><em><font color="red">我觉得帮助到我了, 支持你一下.</font></em></strong></a><br>   </p>
@@ -896,12 +647,12 @@ eyJoaXN0b3J5IjpbOTQ2MjI4MjY5XX0=
 <blockquote>
 <p>体育&amp;户外用品推荐</p>
 </blockquote>
-<div align="center"> <a href="https://www.amazon.cn/B07HWB88Z5/dp/B07HWB88Z5/ref=as_sl_pc_tf_til?tag=momoda-23&linkCode=w00&linkId=14df5124f2165d9eb3d65252e60ed2cf&creativeASIN=B07HWB88Z5" target="_blank" rel="noopener"><img src="/se-notes/云计算实践/Kubernetes部署/k8s基础教程/../more/ads/amazon.gif" width="100%"></a> </div>
+<div align="center"> <a href="https://www.amazon.cn/B07HWB88Z5/dp/B07HWB88Z5/ref=as_sl_pc_tf_til?tag=momoda-23&linkCode=w00&linkId=14df5124f2165d9eb3d65252e60ed2cf&creativeASIN=B07HWB88Z5" target="_blank" rel="noopener"><img src="/se-notes/云计算实践/区块链相关/区块链简介/../../../../more/ads/amazon.gif" width="100%"></a> </div>
       
     </div><!-- .entry-content -->
 
     <footer class="entry-meta">
-    <a href="/se-notes/云计算实践/Kubernetes部署/k8s基础教程/">
+    <a href="/se-notes/云计算实践/区块链相关/区块链简介/">
     <time datetime="2019-01-03T13:49:30.000Z" class="entry-date">
         1月 3 2019
     </time>
@@ -909,77 +660,12 @@ eyJoaXN0b3J5IjpbOTQ2MjI4MjY5XX0=
     
   <span class="article-delim">&#8226;</span>
   <div class="article-category">
-  <a class="article-category-link" href="/categories/通用技术/">通用技术</a>, <a class="article-category-link" href="/categories/通用技术/云计算实践/">云计算实践</a>, <a class="article-category-link" href="/categories/通用技术/云计算实践/kubernetes部署/">kubernetes部署</a>
+  <a class="article-category-link" href="/categories/通用技术/">通用技术</a>, <a class="article-category-link" href="/categories/通用技术/云计算实践/">云计算实践</a>, <a class="article-category-link" href="/categories/通用技术/云计算实践/区块链/">区块链</a>
   </div>
 
     
   <span class="article-delim">&#8226;</span>
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/docker/">docker</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/kubernetes/">kubernetes</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/云计算/">云计算</a></li></ul>
-
-    </footer>
-</article>
-
-
-
-
-
-
-  
-    <article id="post-Docker-Notes-by-CS-Notes" class="post-Docker-Notes-by-CS-Notes post type-post status-publish format-standard hentry">
-    <!---->
-
-      <header class="entry-header">
-        
-        
-  
-    <h1 class="entry-title">
-      <a class="article-title" href="/Docker-Notes-by-CS-Notes/">Docker-Notesby-CS-Notes.md</a>
-    </h1>
-  
-
-        
-        <div class="comments-link">
-            
-            <a href="javascript:void(0);" data-url="https://wnhby.github.io/Docker-Notes-by-CS-Notes/" data-id="cjsa4yy430001hjs67wlmlp22" class="leave-reply bdsharebuttonbox" data-cmd="more">分享</a>
-        </div><!-- .comments-link -->
-      </header><!-- .entry-header -->
-
-    <div class="entry-content">
-      
-        <!-- GFM-TOC -->
-<ul>
-<li><a href="#一解决的问题">一、解决的问题</a></li>
-<li><a href="#二与虚拟机的比较">二、与虚拟机的比较</a></li>
-<li><a href="#三优势">三、优势</a></li>
-<li><a href="#四使用场景">四、使用场景</a></li>
-<li><a href="#五镜像与容器">五、镜像与容器</a></li>
-<li><a href="#参考资料">参考资料</a><!-- GFM-TOC -->
-</li>
-</ul>
-<h1 id="一、解决的问题"><a href="#一、解决的问题" class="headerlink" title="一、解决的问题"></a>一、解决的问题</h1><p>由于不同的机器有不同的操作系统，以及不同的库和组件，在将一个应用部署到多台机器上需要进行大量的环境配置操作。</p>
-<p>Docker 主要解决环境配置问题，它是一种虚拟化技术，对进程进行隔离，被隔离的进程独立于宿主操作系统和其它隔离的进程。使用 Docker 可以不修改应用程序代码，不需要开发人员学习特定环境下的技术，就能够将现有的应用程序部署在其他机器中。</p>
-<div align="center"> <img src="/Docker-Notes-by-CS-Notes/pics/011f3ef6-d824-4d43-8b2c-36dab8eaaa72-1.png" width="400px"> </div><br><br><br># 二、与虚拟机的比较<br><br>虚拟机也是一种虚拟化技术，它与 Docker 最大的区别在于它是通过模拟硬件，并在硬件上安装操作系统来实现。<br><br><div align="center"> <img src="/Docker-Notes-by-CS-Notes/pics/71f61bc3-582d-4c27-8bdd-dc7fb135bf8f.png" width="250px"> </div><br><br><br><div align="center"> <img src="/Docker-Notes-by-CS-Notes/pics/7e873b60-44dc-4911-b080-defd5b8f0b49.png" width="250"> </div><br><br><br>## 启动速度<br><br>启动虚拟机需要启动虚拟机的操作系统，再启动应用，这个过程非常慢；<br><br>而启动 Docker 相当于启动宿主操作系统上的一个进程。<br><br>## 占用资源<br><br>虚拟机是一个完整的操作系统，需要占用大量的磁盘、内存和 CPU，一台机器只能开启几十个的虚拟机。<br><br>而 Docker 只是一个进程，只需要将应用以及相关的组件打包，在运行时占用很少的资源，一台机器可以开启成千上万个 Docker。<br><br># 三、优势<br><br>除了启动速度快以及占用资源少之外，Docker 具有以下优势：<br><br>## 更容易迁移<br><br>提供一致性的运行环境，可以在不同的机器上进行迁移，而不用担心环境变化导致无法运行。<br><br>## 更容易维护<br><br>使用分层技术和镜像，使得应用可以更容易复用重复部分。复用程度越高，维护工作也越容易。<br><br>## 更容易扩展<br><br>可以使用基础镜像进一步扩展得到新的镜像，并且官方和开源社区提供了大量的镜像，通过扩展这些镜像可以非常容易得到我们想要的镜像。<br><br># 四、使用场景<br><br>## 持续集成<br><br>持续集成指的是频繁地将代码集成到主干上，这样能够更快地发现错误。<br><br>Docker 具有轻量级以及隔离性的特点，在将代码集成到一个 Docker 中不会对其它 Docker 产生影响。<br><br>## 提供可伸缩的云服务<br><br>根据应用的负载情况，可以很容易地增加或者减少 Docker。<br><br>## 搭建微服务架构<br><br>Docker 轻量级的特点使得它很适合用于部署、维护、组合微服务。<br><br># 五、镜像与容器<br><br>镜像是一种静态的结构，可以看成面向对象里面的类，而容器是镜像的一个实例。<br><br>镜像包含着容器运行时所需要的代码以及其它组件，它是一种分层结构，每一层都是只读的（read-only layers）。构建镜像时，会一层一层构建，前一层是后一层的基础。镜像的这种分层存储结构很适合镜像的复用以及定制。<br><br>构建容器时，通过在镜像的基础上添加一个可写层（writable layer），用来保存着容器运行过程中的修改。<br><br><div align="center"> <img src="/Docker-Notes-by-CS-Notes/pics/docker-filesystems-busyboxrw.png"> </div><br><br><br># 参考资料<br><br>- <a href="https://blog.docker.com/2017/08/docker-101-introduction-docker-webinar-recap/" target="_blank" rel="noopener">DOCKER 101: INTRODUCTION TO DOCKER WEBINAR RECAP</a><br>- <a href="http://www.ruanyifeng.com/blog/2018/02/docker-tutorial.html" target="_blank" rel="noopener">Docker 入门教程</a><br>- <a href="http://www.bogotobogo.com/DevOps/Docker/Docker_Container_vs_Virtual_Machine.php" target="_blank" rel="noopener">Docker container vs Virtual machine</a><br>- <a href="https://linoxide.com/linux-how-to/dockerfile-create-docker-container/" target="_blank" rel="noopener">How to Create Docker Container using Dockerfile</a><br>- <a href="http://www.cnblogs.com/sammyliu/p/5877964.html" target="_blank" rel="noopener">理解 Docker（2）：Docker 镜像</a><br>- <a href="https://yeasy.gitbooks.io/docker_practice/introduction/why.html" target="_blank" rel="noopener">为什么要使用 Docker？</a><br>- <a href="https://www.docker.com/what-docker" target="_blank" rel="noopener">What is Docker</a><br>- <a href="http://www.ruanyifeng.com/blog/2015/09/continuous-integration.html" target="_blank" rel="noopener">持续集成是什么？</a><br><br>[转自]: <a href="https://github.com/CyC2018/" target="_blank" rel="noopener">https://github.com/CyC2018/</a><br><br><br>—<br><br><em> <a href="/more/donate/index.html"><strong><em><font color="red">我觉得帮助到我了, 支持你一下.</font></em></strong></a><br>   
-
-</em> <a href="https://www.paypal.me/momodainfo" target="_blank" rel="noopener"><strong><em><font color="red">If you think the article is helpful to you, you can reward me through paypal.</font></em></strong></a><br><br><br>### Ads<br><br><em>这是小广告! 如果有需要, 不妨支持一下吧~</em><br><br>&gt;  <a target="_blank" href="https://amazon.cn/gp/search?ie=UTF8&tag=momoda-23&linkCode=ur2&linkId=4a0e4fbec0cfa8dfe540ca999d0bf999&camp=536&creative=3200&index=books&keywords=编程">这些好书您看了吗?</a><img src="//ir-cn.amazon-adsystem.com/e/ir?t=momoda-23&l=ur2&o=28" width="1" height="1" border="0" alt="" style="border:none !important; margin:0px !important;"><br><br>&gt; 体育&amp;户外用品推荐<br><div align="center"> <a href="https://www.amazon.cn/B07HWB88Z5/dp/B07HWB88Z5/ref=as_sl_pc_tf_til?tag=momoda-23&linkCode=w00&linkId=14df5124f2165d9eb3d65252e60ed2cf&creativeASIN=B07HWB88Z5" target="_blank" rel="noopener"><img src="/Docker-Notes-by-CS-Notes/../more/ads/amazon.gif" width="100%"></a> </div>
-
-      
-    </div><!-- .entry-content -->
-
-    <footer class="entry-meta">
-    <a href="/Docker-Notes-by-CS-Notes/">
-    <time datetime="2019-01-03T13:49:30.000Z" class="entry-date">
-        1月 3 2019
-    </time>
-</a>
-    
-  <span class="article-delim">&#8226;</span>
-  <div class="article-category">
-  <a class="article-category-link" href="/categories/通用技术/">通用技术</a>, <a class="article-category-link" href="/categories/通用技术/Docker/">Docker</a>
-  </div>
-
-    
-  <span class="article-delim">&#8226;</span>
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/CS-Notes/">CS-Notes</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/docker/">docker</a></li></ul>
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/云计算/">云计算</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/区块链/">区块链</a></li></ul>
 
     </footer>
 </article>
@@ -1005,7 +691,7 @@ eyJoaXN0b3J5IjpbOTQ2MjI4MjY5XX0=
         
         <div class="comments-link">
             
-            <a href="javascript:void(0);" data-url="https://wnhby.github.io/se-notes/云计算实践/Kubernetes部署/kubeadm部署多节点集群/" data-id="cjsbbbf17009me9s6xiogcueo" class="leave-reply bdsharebuttonbox" data-cmd="more">分享</a>
+            <a href="javascript:void(0);" data-url="https://wnhby.github.io/se-notes/云计算实践/Kubernetes部署/kubeadm部署多节点集群/" data-id="cjsbez0fj00ddczs6a2nf0hds" class="leave-reply bdsharebuttonbox" data-cmd="more">分享</a>
         </div><!-- .comments-link -->
       </header><!-- .entry-header -->
 
@@ -1149,12 +835,246 @@ eyJoaXN0b3J5IjpbNDk4MTAzMDE2LDc3Nzg2ODE4OF19
 <blockquote>
 <p>体育&amp;户外用品推荐</p>
 </blockquote>
-<div align="center"> <a href="https://www.amazon.cn/B07HWB88Z5/dp/B07HWB88Z5/ref=as_sl_pc_tf_til?tag=momoda-23&linkCode=w00&linkId=14df5124f2165d9eb3d65252e60ed2cf&creativeASIN=B07HWB88Z5" target="_blank" rel="noopener"><img src="/se-notes/云计算实践/Kubernetes部署/kubeadm部署多节点集群/../more/ads/amazon.gif" width="100%"></a> </div>
+<div align="center"> <a href="https://www.amazon.cn/B07HWB88Z5/dp/B07HWB88Z5/ref=as_sl_pc_tf_til?tag=momoda-23&linkCode=w00&linkId=14df5124f2165d9eb3d65252e60ed2cf&creativeASIN=B07HWB88Z5" target="_blank" rel="noopener"><img src="/se-notes/云计算实践/Kubernetes部署/kubeadm部署多节点集群/../../../../more/ads/amazon.gif" width="100%"></a> </div>
       
     </div><!-- .entry-content -->
 
     <footer class="entry-meta">
     <a href="/se-notes/云计算实践/Kubernetes部署/kubeadm部署多节点集群/">
+    <time datetime="2019-01-03T13:49:30.000Z" class="entry-date">
+        1月 3 2019
+    </time>
+</a>
+    
+  <span class="article-delim">&#8226;</span>
+  <div class="article-category">
+  <a class="article-category-link" href="/categories/通用技术/">通用技术</a>, <a class="article-category-link" href="/categories/通用技术/云计算实践/">云计算实践</a>, <a class="article-category-link" href="/categories/通用技术/云计算实践/kubernetes部署/">kubernetes部署</a>
+  </div>
+
+    
+  <span class="article-delim">&#8226;</span>
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/docker/">docker</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/kubernetes/">kubernetes</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/云计算/">云计算</a></li></ul>
+
+    </footer>
+</article>
+
+
+
+
+
+
+  
+    <article id="post-Docker-Notes-by-CS-Notes" class="post-Docker-Notes-by-CS-Notes post type-post status-publish format-standard hentry">
+    <!---->
+
+      <header class="entry-header">
+        
+        
+  
+    <h1 class="entry-title">
+      <a class="article-title" href="/Docker-Notes-by-CS-Notes/">Docker-Notesby-CS-Notes.md</a>
+    </h1>
+  
+
+        
+        <div class="comments-link">
+            
+            <a href="javascript:void(0);" data-url="https://wnhby.github.io/Docker-Notes-by-CS-Notes/" data-id="cjsbez0320000czs66qlcwonu" class="leave-reply bdsharebuttonbox" data-cmd="more">分享</a>
+        </div><!-- .comments-link -->
+      </header><!-- .entry-header -->
+
+    <div class="entry-content">
+      
+        <!-- GFM-TOC -->
+<ul>
+<li><a href="#一解决的问题">一、解决的问题</a></li>
+<li><a href="#二与虚拟机的比较">二、与虚拟机的比较</a></li>
+<li><a href="#三优势">三、优势</a></li>
+<li><a href="#四使用场景">四、使用场景</a></li>
+<li><a href="#五镜像与容器">五、镜像与容器</a></li>
+<li><a href="#参考资料">参考资料</a><!-- GFM-TOC -->
+</li>
+</ul>
+<h1 id="一、解决的问题"><a href="#一、解决的问题" class="headerlink" title="一、解决的问题"></a>一、解决的问题</h1><p>由于不同的机器有不同的操作系统，以及不同的库和组件，在将一个应用部署到多台机器上需要进行大量的环境配置操作。</p>
+<p>Docker 主要解决环境配置问题，它是一种虚拟化技术，对进程进行隔离，被隔离的进程独立于宿主操作系统和其它隔离的进程。使用 Docker 可以不修改应用程序代码，不需要开发人员学习特定环境下的技术，就能够将现有的应用程序部署在其他机器中。</p>
+<div align="center"> <img src="/Docker-Notes-by-CS-Notes/pics/011f3ef6-d824-4d43-8b2c-36dab8eaaa72-1.png" width="400px"> </div><br><br><br># 二、与虚拟机的比较<br><br>虚拟机也是一种虚拟化技术，它与 Docker 最大的区别在于它是通过模拟硬件，并在硬件上安装操作系统来实现。<br><br><div align="center"> <img src="/Docker-Notes-by-CS-Notes/pics/71f61bc3-582d-4c27-8bdd-dc7fb135bf8f.png" width="250px"> </div><br><br><br><div align="center"> <img src="/Docker-Notes-by-CS-Notes/pics/7e873b60-44dc-4911-b080-defd5b8f0b49.png" width="250"> </div><br><br><br>## 启动速度<br><br>启动虚拟机需要启动虚拟机的操作系统，再启动应用，这个过程非常慢；<br><br>而启动 Docker 相当于启动宿主操作系统上的一个进程。<br><br>## 占用资源<br><br>虚拟机是一个完整的操作系统，需要占用大量的磁盘、内存和 CPU，一台机器只能开启几十个的虚拟机。<br><br>而 Docker 只是一个进程，只需要将应用以及相关的组件打包，在运行时占用很少的资源，一台机器可以开启成千上万个 Docker。<br><br># 三、优势<br><br>除了启动速度快以及占用资源少之外，Docker 具有以下优势：<br><br>## 更容易迁移<br><br>提供一致性的运行环境，可以在不同的机器上进行迁移，而不用担心环境变化导致无法运行。<br><br>## 更容易维护<br><br>使用分层技术和镜像，使得应用可以更容易复用重复部分。复用程度越高，维护工作也越容易。<br><br>## 更容易扩展<br><br>可以使用基础镜像进一步扩展得到新的镜像，并且官方和开源社区提供了大量的镜像，通过扩展这些镜像可以非常容易得到我们想要的镜像。<br><br># 四、使用场景<br><br>## 持续集成<br><br>持续集成指的是频繁地将代码集成到主干上，这样能够更快地发现错误。<br><br>Docker 具有轻量级以及隔离性的特点，在将代码集成到一个 Docker 中不会对其它 Docker 产生影响。<br><br>## 提供可伸缩的云服务<br><br>根据应用的负载情况，可以很容易地增加或者减少 Docker。<br><br>## 搭建微服务架构<br><br>Docker 轻量级的特点使得它很适合用于部署、维护、组合微服务。<br><br># 五、镜像与容器<br><br>镜像是一种静态的结构，可以看成面向对象里面的类，而容器是镜像的一个实例。<br><br>镜像包含着容器运行时所需要的代码以及其它组件，它是一种分层结构，每一层都是只读的（read-only layers）。构建镜像时，会一层一层构建，前一层是后一层的基础。镜像的这种分层存储结构很适合镜像的复用以及定制。<br><br>构建容器时，通过在镜像的基础上添加一个可写层（writable layer），用来保存着容器运行过程中的修改。<br><br><div align="center"> <img src="/Docker-Notes-by-CS-Notes/pics/docker-filesystems-busyboxrw.png"> </div><br><br><br># 参考资料<br><br>- <a href="https://blog.docker.com/2017/08/docker-101-introduction-docker-webinar-recap/" target="_blank" rel="noopener">DOCKER 101: INTRODUCTION TO DOCKER WEBINAR RECAP</a><br>- <a href="http://www.ruanyifeng.com/blog/2018/02/docker-tutorial.html" target="_blank" rel="noopener">Docker 入门教程</a><br>- <a href="http://www.bogotobogo.com/DevOps/Docker/Docker_Container_vs_Virtual_Machine.php" target="_blank" rel="noopener">Docker container vs Virtual machine</a><br>- <a href="https://linoxide.com/linux-how-to/dockerfile-create-docker-container/" target="_blank" rel="noopener">How to Create Docker Container using Dockerfile</a><br>- <a href="http://www.cnblogs.com/sammyliu/p/5877964.html" target="_blank" rel="noopener">理解 Docker（2）：Docker 镜像</a><br>- <a href="https://yeasy.gitbooks.io/docker_practice/introduction/why.html" target="_blank" rel="noopener">为什么要使用 Docker？</a><br>- <a href="https://www.docker.com/what-docker" target="_blank" rel="noopener">What is Docker</a><br>- <a href="http://www.ruanyifeng.com/blog/2015/09/continuous-integration.html" target="_blank" rel="noopener">持续集成是什么？</a><br><br>[转自]: <a href="https://github.com/CyC2018/" target="_blank" rel="noopener">https://github.com/CyC2018/</a><br><br><br>—<br><br><em> <a href="/more/donate/index.html"><strong><em><font color="red">我觉得帮助到我了, 支持你一下.</font></em></strong></a><br>   
+
+</em> <a href="https://www.paypal.me/momodainfo" target="_blank" rel="noopener"><strong><em><font color="red">If you think the article is helpful to you, you can reward me through paypal.</font></em></strong></a><br><br><br>### Ads<br><br><em>这是小广告! 如果有需要, 不妨支持一下吧~</em><br><br>&gt;  <a target="_blank" href="https://amazon.cn/gp/search?ie=UTF8&tag=momoda-23&linkCode=ur2&linkId=4a0e4fbec0cfa8dfe540ca999d0bf999&camp=536&creative=3200&index=books&keywords=编程">这些好书您看了吗?</a><img src="//ir-cn.amazon-adsystem.com/e/ir?t=momoda-23&l=ur2&o=28" width="1" height="1" border="0" alt="" style="border:none !important; margin:0px !important;"><br><br>&gt; 体育&amp;户外用品推荐<br><div align="center"> <a href="https://www.amazon.cn/B07HWB88Z5/dp/B07HWB88Z5/ref=as_sl_pc_tf_til?tag=momoda-23&linkCode=w00&linkId=14df5124f2165d9eb3d65252e60ed2cf&creativeASIN=B07HWB88Z5" target="_blank" rel="noopener"><img src="/Docker-Notes-by-CS-Notes/../more/ads/amazon.gif" width="100%"></a> </div>
+
+      
+    </div><!-- .entry-content -->
+
+    <footer class="entry-meta">
+    <a href="/Docker-Notes-by-CS-Notes/">
+    <time datetime="2019-01-03T13:49:30.000Z" class="entry-date">
+        1月 3 2019
+    </time>
+</a>
+    
+  <span class="article-delim">&#8226;</span>
+  <div class="article-category">
+  <a class="article-category-link" href="/categories/通用技术/">通用技术</a>, <a class="article-category-link" href="/categories/通用技术/Docker/">Docker</a>
+  </div>
+
+    
+  <span class="article-delim">&#8226;</span>
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/CS-Notes/">CS-Notes</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/docker/">docker</a></li></ul>
+
+    </footer>
+</article>
+
+
+
+
+
+
+  
+    <article id="post-se-notes/云计算实践/Kubernetes部署/k8s基础教程" class="post-se-notes/云计算实践/Kubernetes部署/k8s基础教程 post type-post status-publish format-standard hentry">
+    <!---->
+
+      <header class="entry-header">
+        
+        
+  
+    <h1 class="entry-title">
+      <a class="article-title" href="/se-notes/云计算实践/Kubernetes部署/k8s基础教程/">k8s基础教程</a>
+    </h1>
+  
+
+        
+        <div class="comments-link">
+            
+            <a href="javascript:void(0);" data-url="https://wnhby.github.io/se-notes/云计算实践/Kubernetes部署/k8s基础教程/" data-id="cjsbez0fh00dcczs6iq7s63wt" class="leave-reply bdsharebuttonbox" data-cmd="more">分享</a>
+        </div><!-- .comments-link -->
+      </header><!-- .entry-header -->
+
+    <div class="entry-content">
+      
+        <!-- TOC -->
+<ul>
+<li><a href="#k8s-集群的介绍安装与配置实践版">K8S 集群的介绍、安装与配置（实践版）</a><pre><code>- [术语简介](#术语简介)
+</code></pre><ul>
+<li><a href="#1--事前准备">1.  事前准备</a></li>
+<li><a href="#2-配置-kubectl-与-minikube">2. 配置 kubectl 与 Minikube</a></li>
+<li><a href="#3-安装-virtualbox">3. 安装 VirtualBox</a></li>
+<li><a href="#4-使用-minikube-运行集群">4. 使用 Minikube 运行集群</a></li>
+<li><a href="#5-在集群上部署应用">5. 在集群上部署应用</a></li>
+<li><a href="#6-查看-pod-与-node">6. 查看 Pod 与 Node</a></li>
+<li><a href="#7-部署-service">7. 部署 Service</a></li>
+<li><a href="#8-调整应用规模">8. 调整应用规模</a></li>
+<li><a href="#9-执行滚动更新">9. 执行滚动更新</a></li>
+<li><a href="#注意事项">注意事项</a></li>
+<li><a href="#参考资料">参考资料</a><ul>
+<li><a href="#ads">Ads</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<!-- /TOC -->
+<h1 id="K8S-集群的介绍、安装与配置（实践版）"><a href="#K8S-集群的介绍、安装与配置（实践版）" class="headerlink" title="K8S 集群的介绍、安装与配置（实践版）"></a>K8S 集群的介绍、安装与配置（实践版）</h1><p>k8s 集群由一个 master 节点与多个 node 节点组成，所有节点均是在逻辑上独立的一个机器 。master 节点是管理整个集群的节点，而 node 节点是具体执行业务的节点，每个 node 都有一个 kubelet 作为其代理用于与 master 通信。</p>
+<p><img src="https://d33wubrfki0l68.cloudfront.net/99d9808dcbf2880a996ed50d308a186b5900cec9/40b94/docs/tutorials/kubernetes-basics/public/images/module_01_cluster.svg" alt="enter image description here"></p>
+<p>而在本教程中，我们介绍 k8s 集群的基本操作：将会在本地机器上部署一个<strong>单 Node 的 k8s 集群</strong>，并尝试在该集群上<strong>部署一个应用</strong>、<strong>配置暴露应用的服务</strong>、以及<strong>对应用进行规模调整与版本更新</strong>。</p>
+<h3 id="术语简介"><a href="#术语简介" class="headerlink" title="术语简介"></a>术语简介</h3><p><a href="https://kubernetes.io/docs/reference/generated/kubectl/kubectl/" target="_blank" rel="noopener">kubectl</a> 是 k8s 的命令行管理工具，管理 k8s 集群需要通过该系列命令进行。</p>
+<p> <a href="https://kubernetes.io/docs/getting-started-guides/minikube/" target="_blank" rel="noopener">Minikube</a> 是一个用于在本地上运行 kubernates 的工具插件。Minikube 可在本地机器上创建一个虚拟机（需要安装对应的虚拟机驱动，如 VirtualBox、KVM 等），从而运行一个单节点的 k8s 集群。原理图如下：</p>
+<p><img src="https://yqfile.alicdn.com/c03a43e0731ca579d1844fb44269fd2fd257bfb3.jpeg" alt="minikube 原理说明图"></p>
+<p><a href="https://www.virtualbox.org/" target="_blank" rel="noopener">VirtualBox</a> 是一款支持 x86 和 AMD64/Intel64 的开源虚拟机软件，支持 Window、Linux 等系统。在本教程中，我们把它作为 Minikube 的虚拟机驱动。</p>
+<h2 id="1-事前准备"><a href="#1-事前准备" class="headerlink" title="1.  事前准备"></a>1.  事前准备</h2><ul>
+<li>准备好一台操作系统为 Linux CentOS 7 系统、内存为 <strong>4G 以上</strong>的虚机（或物理机），完成换源与关闭防火墙和 SELinux</li>
+<li>需要在虚机上安装 VirtualBox 或 KVM 作为虚拟化软件（本教程介绍 VirtualBox 的安装）</li>
+<li>设置 CPU 支持虚拟化 VT-X（若是物理机则在BIOS上设置，若是虚机则在VMware里设置 ）</li>
+</ul>
+<h2 id="2-配置-kubectl-与-Minikube"><a href="#2-配置-kubectl-与-Minikube" class="headerlink" title="2. 配置 kubectl 与 Minikube"></a>2. 配置 kubectl 与 Minikube</h2><p>下载 kubectl 并配置到系统路径：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ curl -LO https://storage.googleapis.com/kubernetes-release/release/v1.9.1/bin/linux/amd64/kubectl</span><br><span class="line">$ chmod +x ./kubectl</span><br><span class="line">$ sudo mv ./kubectl /usr/local/bin/</span><br></pre></td></tr></table></figure></p>
+<blockquote>
+<p>注意 kubectl 的版本必须新于 k8s 服务器的版本，否则会出现校验错误。可通过 <code>curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt</code> 命令查询当前的最新稳定版本。</p>
+</blockquote>
+<p>下载 Minikube 并配置到系统路径：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ curl -Lo minikube https://storage.googleapis.com/minikube/releases/latest/minikube-linux-amd64 </span><br><span class="line">$ chmod +x ./minikube</span><br><span class="line">$ sudo mv ./minikube /usr/local/bin/</span><br></pre></td></tr></table></figure></p>
+<blockquote>
+<p>注意：由于本节所述的下载网址有时会无法通过 curl 命令访问，因此建议直接下载 kubectl 或 minikube 到本地再上传到虚机中。也可以通过其他途径如 <a href="https://github.com/kubernetes/minikube/releases" target="_blank" rel="noopener">minikube 的 github 下载地址</a> 进行下载。</p>
+</blockquote>
+<h2 id="3-安装-VirtualBox"><a href="#3-安装-VirtualBox" class="headerlink" title="3. 安装 VirtualBox"></a>3. 安装 VirtualBox</h2><p>本教程中 minikube 的虚拟机采用 VirtualBox ，安装步骤如下：</p>
+<ol>
+<li>在官网下载对应系统的 VirtualBox rpm 包</li>
+<li>安装 VirtualBox 的依赖包：<code>yum install qt qt-x11 gcc gcc-c++ kernel-devel perl SDL</code></li>
+<li>安装 VirtualBox：<code>rpm -i VirtualBox-5.2-5.2.6_120293_el7-1.x86_64.rpm</code></li>
+<li>添加当前用户到 VirtualBox 创建的用户组 “vboxusers”：<code>usermod -a -G vboxusers </code></li>
+</ol>
+<blockquote>
+<p>在 Linux 下，Minikube 也支持 –vm-driver=none 选项来在本机运行 Kubernetes 组件（此种方式尚未实验）。</p>
+</blockquote>
+<h2 id="4-使用-Minikube-运行集群"><a href="#4-使用-Minikube-运行集群" class="headerlink" title="4. 使用 Minikube 运行集群"></a>4. 使用 Minikube 运行集群</h2><p>执行 <code>minikube start</code> 启动本地 k8s 集群。当正常启动成功时，出现以下输出：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">Starting local Kubernetes v1.8.0 cluster...</span><br><span class="line">Starting VM...</span><br><span class="line">Downloading Minikube ISO</span><br><span class="line"> 140.01 MB / 140.01 MB [============================================] 100.00% 0s</span><br><span class="line">Getting VM IP address...</span><br><span class="line">Moving files into cluster...</span><br><span class="line">Downloading localkube binary</span><br><span class="line"> 148.25 MB / 148.25 MB [============================================] 100.00% 0s</span><br><span class="line">Connecting to cluster...</span><br><span class="line">Setting up kubeconfig...</span><br><span class="line">Starting cluster components...</span><br><span class="line">Kubectl is now configured to use the cluster.</span><br><span class="line">Loading cached images from config file.</span><br></pre></td></tr></table></figure></p>
+<p>执行 <code>minikube status</code> 可查看当前集群状态，输出类似如下所示：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">minikube: Running</span><br><span class="line">cluster: Running</span><br><span class="line">kubectl: Correctly Configured: pointing to minikube-vm at 192.168.99.100</span><br></pre></td></tr></table></figure></p>
+<p>使用 <code>kubectl version</code> 可查看当前的 k8s 集群的客户端与服务端的版本；使用 <code>kubectl cluster-info</code> 可查看集群的详细部署情况；使用 <code>kubectl get nodes</code> 查看集群节点情况。</p>
+<h2 id="5-在集群上部署应用"><a href="#5-在集群上部署应用" class="headerlink" title="5. 在集群上部署应用"></a>5. 在集群上部署应用</h2><p>部署文件（Deployment）是用于指导 k8s 集群如何创建与维护应用实例的。</p>
+<p><img src="https://d33wubrfki0l68.cloudfront.net/152c845f25df8e69dd24dd7b0836a289747e258a/4a1d2/docs/tutorials/kubernetes-basics/public/images/module_02_first_app.svg" alt="enter image description here"></p>
+<p><code>kubectl run</code> 命令用于创建一个新的 Deployment，此命令需要提供 Deployment 的命名以及 app 镜像的地址。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"># 若需要在特定端口运行app，则用 --port 指明运行端口</span><br><span class="line">$ kubectl run kubernetes-bootcamp --image=docker.io/jocatalin/kubernetes-bootcamp:v1 --port=8080</span><br><span class="line"># 创建完成后可以查询 Deployment</span><br><span class="line">$ kubectl get deployments</span><br></pre></td></tr></table></figure></p>
+<p>Pod 是 k8s 集群管理的基本单位。当一个 Deployment 创建后，集群将会创建一个 Pod 来管理应用实例。一个 Pod 是一个 k8s 抽象，代表了一组（一个或多个）应用容器，且这些容器之间共享存储、网络等资源。</p>
+<p>默认情况下，集群中的 Pods 对外部网络是不可见的，但 kubectl 可以创建一个能够转发请求到集群端私有网络的代理：<code>kubectl proxy</code>，执行后的输出类似如下（注意当前终端会阻塞）：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ kubectl proxy</span><br><span class="line">Starting to serve on 127.0.0.1:8001</span><br></pre></td></tr></table></figure></p>
+<p>通过使用 <code>kubectl proxy</code> 所展示的地址，我们就可以直接访问 k8s API，例如 <code>curl http://127.0.0.1:8001/version</code> 就可获取当前 API Server 的版本。</p>
+<p>API Server 会自动根据 pod 的名字来为每个 pod 创建一个访问点（endpoint），该访问点也可以通过 proxy 来直接访问：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ export POD_NAME=$(kubectl get pods -o go-template --template &apos;&#123;&#123;range .items&#125;&#125;&#123;&#123;.metadata.name&#125;&#125;&#123;&#123;&quot;\n&quot;&#125;&#125;&#123;&#123;end&#125;&#125;&apos;)</span><br><span class="line">$ echo Name of the Pod: $POD_NAME</span><br><span class="line">$ curl http://localhost:8001/api/v1/proxy/namespaces/default/pods/$POD_NAME/</span><br></pre></td></tr></table></figure></p>
+<h2 id="6-查看-Pod-与-Node"><a href="#6-查看-Pod-与-Node" class="headerlink" title="6. 查看 Pod 与 Node"></a>6. 查看 Pod 与 Node</h2><p>一个 Pod 运行于一个 Node 上，Node 则是 k8s 集群中的执行业务的逻辑主机（虚拟机或者物理机），由 master 进行管理。一个 Node 可以拥有多个 Pod，且 master 可以在集群中的多个 node 之间自动调度 Pod。示意图如下：</p>
+<p><img src="https://d33wubrfki0l68.cloudfront.net/5cb72d407cbe2755e581b6de757e0d81760d5b86/a9df9/docs/tutorials/kubernetes-basics/public/images/module_03_nodes.svg" alt="enter image description here"></p>
+<p>常用的查询应用的命令包括：</p>
+<ul>
+<li><strong>kubectl get</strong> ： 列出资源</li>
+<li><strong>kubectl describe</strong> : 展示资源详情</li>
+<li><strong>kubectl logs</strong> : 打印某个 Pod 中的一个容器的日志</li>
+<li><strong>kubectl exec</strong> : 在一个 Pod 中的一个容器中执行命令</li>
+</ul>
+<h2 id="7-部署-Service"><a href="#7-部署-Service" class="headerlink" title="7. 部署 Service"></a>7. 部署 Service</h2><p>一个 Service 是集群中的一个抽象，它定义了一组逻辑相关的 Pods 以及如何访问它们的策略。Services 允许独立的 Pods 间的松耦合。</p>
+<p><img src="https://d33wubrfki0l68.cloudfront.net/cc38b0f3c0fd94e66495e3a4198f2096cdecd3d5/ace10/docs/tutorials/kubernetes-basics/public/images/module_04_services.svg" alt="enter image description here"></p>
+<p>Service 使用标签（Label）和选择器（Selector）来匹配一组 Pods。</p>
+<p><img src="https://d33wubrfki0l68.cloudfront.net/b964c59cdc1979dd4e1904c25f43745564ef6bee/f3351/docs/tutorials/kubernetes-basics/public/images/module_04_labels.svg" alt="enter image description here"></p>
+<p>尽管每个 Pod 都有自己独立的 IP，但是这些 IP 要是没有 Service 就无法被外部网络访问。Service 有以下配置模式：</p>
+<ul>
+<li>ClusterIP（默认）： 赋予 Service 一个集群内部 IP 。这种模式使得服务只能在集群内可被访问。</li>
+<li>NodePort：通过 NAT 允许 Service 使用集群内一个 Node 的 IP。从而就可以使用 \&lt;NodeIP>:\&lt;NodePort> 的方式让该 Service 可被集群外部访问。</li>
+<li>LoadBalancer：创建一个外部负载均衡器，并赋予 Service 一个固定的外部 IP。</li>
+<li>ExternalName：不使用代理，赋予 Service 一个任意的名字（由配置文件中的 <code>externalName</code> 参数决定）</li>
+</ul>
+<p>以下命令可创建一个名为 “kubernetes-bootcamp” 的 NodePort 模式的 Service（其对外部网络可见）。再使用 <code>describe service</code> 命令可查看某个 Service 的详情：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ kubectl expose deployment/kubernetes-bootcamp --type=&quot;NodePort&quot; --port 8080</span><br><span class="line">$ kubectl describe services/kubernetes-bootcamp</span><br></pre></td></tr></table></figure></p>
+<p>可设置环境变量 NODE_PORT，通过 \&lt;NodeIP>:\&lt;NodePort> 从外网访问该 Service：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ export NODE_PORT=$(kubectl get services/kubernetes-bootcamp -o go-template=&apos;&#123;&#123;(index .spec.ports 0).nodePort&#125;&#125;&apos;)</span><br><span class="line">$ echo NODE_PORT=$NODE_PORT</span><br><span class="line">$ curl host01:$NODE_PORT</span><br></pre></td></tr></table></figure></p>
+<p>接下来介绍 Label（标签）的使用。Deployment 会自动为 Pod 创建一个 Label，使用<code>kubectl describe</code>可以查看 Label 名字。使用带参的 <code>kubectl get</code> 命令可以查询特定 Label 的 Pod 或 Service。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ kubectl get pods -l run=kubernetes-bootcamp</span><br><span class="line">$ kubectl get services -l run=kubernetes-bootcamp</span><br></pre></td></tr></table></figure></p>
+<p>使用 <code>kubectl label</code> 命令为 Pod 增加一个新 Label 后，可用<code>kubectl describe</code>查询该 Pod 是否已有新 Label：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$ export POD_NAME=$(kubectl get pods -o go-template --template &apos;&#123;&#123;range .items&#125;&#125;&#123;&#123;.metadata.name&#125;&#125;&#123;&#123;&quot;\n&quot;&#125;&#125;&#123;&#123;end&#125;&#125;&apos;)</span><br><span class="line">$ echo Name of the Pod: $POD_NAME</span><br><span class="line">$ kubectl label pod $POD_NAME app=v1</span><br><span class="line">$ kubectl describe pods $POD_NAME</span><br></pre></td></tr></table></figure></p>
+<p>删除一个指定标签的 Service，之后便可测试到外部无法再通过 NodeIP 的方式访问到 app 了，但 app 仍在 Pod 中运行：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ kubectl delete service -l run=kubernetes-bootcamp</span><br><span class="line">$ curl host01:$NODE_PORT</span><br><span class="line">$ kubectl exec -ti $POD_NAME curl localhost:8080</span><br></pre></td></tr></table></figure></p>
+<h2 id="8-调整应用规模"><a href="#8-调整应用规模" class="headerlink" title="8. 调整应用规模"></a>8. 调整应用规模</h2><p>在之前的章节中，Deployment 只创建了一个 Pod 来运行应用，但当通信量增加时，就需要扩展应用数量来满足需求。实现的主要方式则是改变 Deployment 配置中的副本数量。应用规模变化的示意图如下：</p>
+<p><img src="https://d33wubrfki0l68.cloudfront.net/043eb67914e9474e30a303553d5a4c6c7301f378/0d8f6/docs/tutorials/kubernetes-basics/public/images/module_05_scaling1.svg" alt="enter image description here"></p>
+<p><img src="https://d33wubrfki0l68.cloudfront.net/30f75140a581110443397192d70a4cdb37df7bfc/b5f56/docs/tutorials/kubernetes-basics/public/images/module_05_scaling2.svg" alt="enter image description here"></p>
+<p>若当前集群已有一个 Deployment（假设名为”kubernetes-bootcamp”），则可使用<code>kubectl scale</code>命令来扩展副本数量到 4 个，之后便可以检查到 pods 数量发生了变化。同时该变化也被 Deployment 记录到日志，可在详情中查看。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$ kubectl scale deployments/kubernetes-bootcamp --replicas=4</span><br><span class="line">$ kubectl get deployments</span><br><span class="line">$ kubectl get pods -o wide</span><br><span class="line">$ kubectl describe deployments/kubernetes-bootcamp</span><br></pre></td></tr></table></figure></p>
+<h2 id="9-执行滚动更新"><a href="#9-执行滚动更新" class="headerlink" title="9. 执行滚动更新"></a>9. 执行滚动更新</h2><p>通常用户希望应用可一直被访问，而开发者希望应用可短时间内更新多次。而<strong>滚动更新</strong>能满足该要求，允许应用以零停机时间进行部署更新（通过新增的 Pods 来更新 Pods 实例）。默认情况下，更新过程中不可用 Pods 的最大数量与新创建 Pods 的最大数量相等。k8s 集群也可以回滚该更新。</p>
+<p><img src="https://d33wubrfki0l68.cloudfront.net/678bcc3281bfcc588e87c73ffdc73c7a8380aca9/703a2/docs/tutorials/kubernetes-basics/public/images/module_06_rollingupdates2.svg" alt="enter image description here"></p>
+<p><img src="https://d33wubrfki0l68.cloudfront.net/9b57c000ea41aca21842da9e1d596cf22f1b9561/91786/docs/tutorials/kubernetes-basics/public/images/module_06_rollingupdates3.svg" alt="enter image description here"></p>
+<p><img src="https://d33wubrfki0l68.cloudfront.net/6d8bc1ebb4dc67051242bc828d3ae849dbeedb93/fbfa8/docs/tutorials/kubernetes-basics/public/images/module_06_rollingupdates4.svg" alt="enter image description here"></p>
+<p>使用<code>set image</code>命令可进行镜像更新，<code>rollout status</code>命令可进行更新确认提交，<code>rollout undo</code>可进行更新回滚。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ kubectl set image deployments/kubernetes-bootcamp kubernetes-bootcamp=jocatalin/kubernetes-bootcamp:v2</span><br><span class="line">$ kubectl rollout status deployments/kubernetes-bootcamp</span><br><span class="line">$ kubectl rollout undo deployments/kubernetes-bootcamp</span><br></pre></td></tr></table></figure></p>
+<h2 id="注意事项"><a href="#注意事项" class="headerlink" title="注意事项"></a>注意事项</h2><ol>
+<li>机器的内存必须在4G以上，否则启动 VirtualBox 时会失败</li>
+<li>使用 curl 下载时，偶尔会因为网速问题无法下载成功。此时应当通过其他方式下载文件然后手动上传到系统中</li>
+<li>启动 minikube 时可能会存在 localkube 找不到对应文件的情况，这是因为 localkube 的镜像下载不成功。</li>
+</ol>
+<h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><p><a href="https://kubernetes.io/docs/getting-started-guides/minikube/#minikube-features" target="_blank" rel="noopener">Running Kubernetes Locally via Minikube</a>（来自官网）</p>
+<p><a href="https://linux.cn/article-8847-1.html" target="_blank" rel="noopener">Minikube：使用 Kubernetes 进行本地开发</a><br><!--stackedit_data:
+eyJoaXN0b3J5IjpbOTQ2MjI4MjY5XX0=
+--></p>
+<hr>
+<ul>
+<li><p><a href="/more/donate/index.html"><strong><em><font color="red">我觉得帮助到我了, 支持你一下.</font></em></strong></a><br>   </p>
+</li>
+<li><p><a href="https://www.paypal.me/momodainfo" target="_blank" rel="noopener"><strong><em><font color="red">If you think the article is helpful to you, you can reward me through paypal.</font></em></strong></a></p>
+</li>
+</ul>
+<h3 id="Ads"><a href="#Ads" class="headerlink" title="Ads"></a>Ads</h3><p><em>这是小广告! 如果有需要, 不妨支持一下吧~</em></p>
+<blockquote>
+<p> <a target="_blank" href="https://amazon.cn/gp/search?ie=UTF8&tag=momoda-23&linkCode=ur2&linkId=4a0e4fbec0cfa8dfe540ca999d0bf999&camp=536&creative=3200&index=books&keywords=编程">这些好书您看了吗?</a><img src="//ir-cn.amazon-adsystem.com/e/ir?t=momoda-23&l=ur2&o=28" width="1" height="1" border="0" alt="" style="border:none !important; margin:0px !important;"></p>
+</blockquote>
+<blockquote>
+<p>体育&amp;户外用品推荐</p>
+</blockquote>
+<div align="center"> <a href="https://www.amazon.cn/B07HWB88Z5/dp/B07HWB88Z5/ref=as_sl_pc_tf_til?tag=momoda-23&linkCode=w00&linkId=14df5124f2165d9eb3d65252e60ed2cf&creativeASIN=B07HWB88Z5" target="_blank" rel="noopener"><img src="/se-notes/云计算实践/Kubernetes部署/k8s基础教程/../../../../more/ads/amazon.gif" width="100%"></a> </div>
+      
+    </div><!-- .entry-content -->
+
+    <footer class="entry-meta">
+    <a href="/se-notes/云计算实践/Kubernetes部署/k8s基础教程/">
     <time datetime="2019-01-03T13:49:30.000Z" class="entry-date">
         1月 3 2019
     </time>
@@ -1193,7 +1113,7 @@ eyJoaXN0b3J5IjpbNDk4MTAzMDE2LDc3Nzg2ODE4OF19
         
         <div class="comments-link">
             
-            <a href="javascript:void(0);" data-url="https://wnhby.github.io/se-notes/云计算实践/集群高可用方案/LVS+Keepalived双机热备方案/" data-id="cjsbbbf1y00ase9s690ywus8e" class="leave-reply bdsharebuttonbox" data-cmd="more">分享</a>
+            <a href="javascript:void(0);" data-url="https://wnhby.github.io/se-notes/云计算实践/集群高可用方案/LVS+Keepalived双机热备方案/" data-id="cjsbez0fv00dqczs6hnygalkx" class="leave-reply bdsharebuttonbox" data-cmd="more">分享</a>
         </div><!-- .comments-link -->
       </header><!-- .entry-header -->
 
@@ -1249,7 +1169,7 @@ eyJoaXN0b3J5IjpbNDk4MTAzMDE2LDc3Nzg2ODE4OF19
 <blockquote>
 <p>体育&amp;户外用品推荐</p>
 </blockquote>
-<div align="center"> <a href="https://www.amazon.cn/B07HWB88Z5/dp/B07HWB88Z5/ref=as_sl_pc_tf_til?tag=momoda-23&linkCode=w00&linkId=14df5124f2165d9eb3d65252e60ed2cf&creativeASIN=B07HWB88Z5" target="_blank" rel="noopener"><img src="/se-notes/云计算实践/集群高可用方案/LVS+Keepalived双机热备方案/../more/ads/amazon.gif" width="100%"></a> </div>
+<div align="center"> <a href="https://www.amazon.cn/B07HWB88Z5/dp/B07HWB88Z5/ref=as_sl_pc_tf_til?tag=momoda-23&linkCode=w00&linkId=14df5124f2165d9eb3d65252e60ed2cf&creativeASIN=B07HWB88Z5" target="_blank" rel="noopener"><img src="/se-notes/云计算实践/集群高可用方案/LVS+Keepalived双机热备方案/../../../../more/ads/amazon.gif" width="100%"></a> </div>
       
     </div><!-- .entry-content -->
 
@@ -1312,15 +1232,15 @@ eyJoaXN0b3J5IjpbNDk4MTAzMDE2LDc3Nzg2ODE4OF19
           </li>
         
           <li>
-            <a href="/se-notes/Linux基础/README/">Linux基础-README</a>
-          </li>
-        
-          <li>
-            <a href="/se-notes/云计算实践/区块链相关/区块链简介/">区块链简介</a>
+            <a href="/se-notes/Java基础/集合框架/">集合框架</a>
           </li>
         
           <li>
             <a href="/se-notes/云计算实践/集群高可用方案/Heartbeat双机热备方案/">Heartbeat双机热备方案</a>
+          </li>
+        
+          <li>
+            <a href="/se-notes/云计算实践/集群高可用方案/HAProxy+Keepalived高可用方案/">HAProxy+Keepalived高可用方案</a>
           </li>
         
       </ul>
@@ -1341,7 +1261,7 @@ eyJoaXN0b3J5IjpbNDk4MTAzMDE2LDc3Nzg2ODE4OF19
   <aside class="widget">
     <h3 class="widget-title">Categories</h3>
     <div class="widget-content">
-      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Graphics/">Graphics</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Linux/">Linux</a><span class="category-list-count">7</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Linux/Shell/">Shell</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Linux/linux基础/">linux基础</a><span class="category-list-count">6</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/协议证书/">协议证书</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/协议证书/openssl/">openssl</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/数据库/">数据库</a><span class="category-list-count">4</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/数据库/数据库基础/">数据库基础</a><span class="category-list-count">3</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/框架/">框架</a><span class="category-list-count">9</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/框架/python-web应用框架/">python-web应用框架</a><span class="category-list-count">9</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/版本控制/">版本控制</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/版本控制/Git/">Git</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/编程语言/">编程语言</a><span class="category-list-count">13</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/编程语言/java/">java</a><span class="category-list-count">13</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/网络通讯/">网络通讯</a><span class="category-list-count">11</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/网络通讯/大小端/">大小端</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/网络通讯/计算机网络基础/">计算机网络基础</a><span class="category-list-count">10</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/路由器/">路由器</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/路由器/openwrt/">openwrt</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/通用技术/">通用技术</a><span class="category-list-count">13</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/通用技术/Docker/">Docker</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/通用技术/云计算实践/">云计算实践</a><span class="category-list-count">11</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/通用技术/云计算实践/kubernetes部署/">kubernetes部署</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/通用技术/云计算实践/区块链/">区块链</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/通用技术/云计算实践/集群高可用方案/">集群高可用方案</a><span class="category-list-count">4</span></li></ul></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/默认/">默认</a><span class="category-list-count">1</span></li></ul>
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Graphics/">Graphics</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Linux/">Linux</a><span class="category-list-count">7</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Linux/Shell/">Shell</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Linux/linux基础/">linux基础</a><span class="category-list-count">6</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/协议证书/">协议证书</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/协议证书/openssl/">openssl</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/数据库/">数据库</a><span class="category-list-count">4</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/数据库/数据库基础/">数据库基础</a><span class="category-list-count">3</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/框架/">框架</a><span class="category-list-count">9</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/框架/python-web应用框架/">python-web应用框架</a><span class="category-list-count">9</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/框架/python-web应用框架/flask/">flask</a><span class="category-list-count">9</span></li></ul></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/版本控制/">版本控制</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/版本控制/Git/">Git</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/编程语言/">编程语言</a><span class="category-list-count">13</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/编程语言/java/">java</a><span class="category-list-count">13</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/网络通讯/">网络通讯</a><span class="category-list-count">11</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/网络通讯/大小端/">大小端</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/网络通讯/计算机网络基础/">计算机网络基础</a><span class="category-list-count">10</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/路由器/">路由器</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/路由器/openwrt/">openwrt</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/通用技术/">通用技术</a><span class="category-list-count">13</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/通用技术/Docker/">Docker</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/通用技术/云计算实践/">云计算实践</a><span class="category-list-count">11</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/通用技术/云计算实践/kubernetes部署/">kubernetes部署</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/通用技术/云计算实践/区块链/">区块链</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/通用技术/云计算实践/集群高可用方案/">集群高可用方案</a><span class="category-list-count">4</span></li></ul></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/默认/">默认</a><span class="category-list-count">1</span></li></ul>
     </div>
   </aside>
 
